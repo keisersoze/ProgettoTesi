@@ -1,21 +1,16 @@
 package events;
 
-import java.util.PriorityQueue;
+public interface Scheduler {
+    /**
+     *
+     * @return restituisce un evento secondo le politiche di scheduling
+     */
+    Event scheduleEvent();
 
-public class Scheduler {
-    private PriorityQueue<Event> eventQueue;
-
-    public Scheduler() {
-        this.eventQueue = new PriorityQueue<Event>();
-    }
-
-    public Event scheduleEvent() {
-        return eventQueue.poll();
-    }
-
-    public void addEvent(Event e) {
-        eventQueue.add(e);
-    }
-
+    /**
+     * aggiunge {@code e} alla coda di eventi in attesa
+     * @param e elemento da aggiungere
+     */
+    void addEvent(Event e);
 
 }
