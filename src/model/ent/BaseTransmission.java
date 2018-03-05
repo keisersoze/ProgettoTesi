@@ -1,4 +1,4 @@
-package ent;
+package model.ent;
 
 public class BaseTransmission implements Transmission {
     private BaseSensor sender;
@@ -9,6 +9,7 @@ public class BaseTransmission implements Transmission {
         this.sender = sender;
         this.receiver = receiver;
     }
+
 
     @Override
     public void updateSnr(double x) {

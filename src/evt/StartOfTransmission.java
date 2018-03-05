@@ -1,6 +1,6 @@
 package evt;
 
-import ent.Sensor;
+import model.ent.Sensor;
 
 public class StartOfTransmission extends BaseEvent implements Event {
     private Sensor actor;

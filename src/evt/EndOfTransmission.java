@@ -1,6 +1,6 @@
 package evt;
 
-import ent.BaseTransmission;
+import model.ent.BaseTransmission;
 
 public class EndOfTransmission extends BaseEvent implements Event {
 

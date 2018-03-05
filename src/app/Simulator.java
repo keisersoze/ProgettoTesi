@@ -1,7 +1,6 @@
 package app;
 
-import ent.BaseSensor;
-import app.DefaultScheduler;
+import model.ent.BaseSensor;
 import evt.StartOfTransmission;
 
 public class Simulator {
@@ -18,9 +17,9 @@ public class Simulator {
         scheduler.addEvent(e2);
         scheduler.addEvent(e3);
         scheduler.addEvent(e4);
-        System.out.println(scheduler.scheduleEvent().getRemainingTime());
-        System.out.println(scheduler.scheduleEvent().getRemainingTime());
-        System.out.println(scheduler.scheduleEvent().getRemainingTime());
-        System.out.println(scheduler.scheduleEvent().getRemainingTime());
+        System.out.println(scheduler.scheduleEvent().getPriority());
+        System.out.println(scheduler.scheduleEvent().getPriority());
+        System.out.println(scheduler.scheduleEvent().getPriority());
+        System.out.println(scheduler.scheduleEvent().getPriority());
     }
 }

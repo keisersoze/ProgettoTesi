@@ -1,4 +1,4 @@
-package ent;
+package model.ent;
 
 public class BaseSensor implements Sensor {
     private double x,y,z;
