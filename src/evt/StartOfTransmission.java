@@ -1,11 +1,11 @@
-package events;
+package evt;
 
-import entities.SensorListener;
+import ent.Sensor;
 
 public class StartOfTransmission extends BaseEvent implements Event {
-    private SensorListener actor;
+    private Sensor actor;
 
-    public StartOfTransmission(double remainingTime, SensorListener actor) {
+    public StartOfTransmission(double remainingTime, Sensor actor) {
         super(remainingTime);
         this.actor=actor;
     }
@@ -15,7 +15,7 @@ public class StartOfTransmission extends BaseEvent implements Event {
 
     }
 
-    public SensorListener getTransmitter() {
+    public Sensor getTransmitter() {
         return actor;
     }
 }

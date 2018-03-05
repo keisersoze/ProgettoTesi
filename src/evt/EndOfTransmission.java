@@ -1,12 +1,12 @@
-package events;
+package evt;
 
-import entities.Transmission;
+import ent.BaseTransmission;
 
 public class EndOfTransmission extends BaseEvent implements Event {
 
-    private Transmission t;
+    private BaseTransmission t;
 
-    public EndOfTransmission(double remainingTime, Transmission t) {
+    public EndOfTransmission(double remainingTime, BaseTransmission t) {
         super(remainingTime);
         this.t = t;
     }
@@ -16,7 +16,7 @@ public class EndOfTransmission extends BaseEvent implements Event {
 
     }
 
-    public Transmission getTransmission() {
+    public BaseTransmission getTransmission() {
         return t;
     }
 }

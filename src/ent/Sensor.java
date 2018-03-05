@@ -1,6 +1,6 @@
-package entities;
+package ent;
 
-public interface SensorListener {
+public interface Sensor {
     double getX();
     double getY();
     double getZ();

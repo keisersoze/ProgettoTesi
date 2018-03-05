@@ -1,4 +1,6 @@
-package events;
+package app;
+
+import evt.Event;
 
 public interface Scheduler {
     /**

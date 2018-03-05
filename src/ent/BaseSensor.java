@@ -1,6 +1,6 @@
-package entities;
+package ent;
 
-public class Sensor implements SensorListener {
+public class BaseSensor implements Sensor {
     private double x,y,z;
 
     @Override

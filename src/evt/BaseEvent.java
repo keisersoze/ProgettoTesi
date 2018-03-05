@@ -1,4 +1,4 @@
-package events;
+package evt;
 
 public abstract class BaseEvent implements Event,Comparable<Event> {
     double remainingTime;
@@ -13,7 +13,12 @@ public abstract class BaseEvent implements Event,Comparable<Event> {
 
     @Override
     public int compareTo(Event o) {
-        return Double.compare(this.remainingTime,o.getRemaingTime());
+        return Double.compare(this.remainingTime,o.getRemainingTime());
+    }
+
+    @Override
+    public double getRemainingTime() {
+        return remainingTime;
     }
 
 }

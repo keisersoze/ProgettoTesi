@@ -1,13 +1,15 @@
-import entities.Sensor;
-import events.DefaultScheduler;
-import events.StartOfTransmission;
+package app;
+
+import ent.BaseSensor;
+import app.DefaultScheduler;
+import evt.StartOfTransmission;
 
 public class Simulator {
 
 
     public static void main(String[] args) {
         DefaultScheduler scheduler = new DefaultScheduler();
-        Sensor s1= new Sensor();
+        BaseSensor s1= new BaseSensor();
         StartOfTransmission e1= new StartOfTransmission(2,s1);
         StartOfTransmission e2= new StartOfTransmission(1.5,s1);
         StartOfTransmission e3= new StartOfTransmission(0.74,s1);

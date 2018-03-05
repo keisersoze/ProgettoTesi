@@ -1,8 +1,11 @@
-package events;
+package app;
+
+import app.Scheduler;
+import evt.Event;
 
 import java.util.PriorityQueue;
 
-public class DefaultScheduler implements  Scheduler{
+public class DefaultScheduler implements Scheduler {
     private PriorityQueue<Event> eventQueue;
 
     public DefaultScheduler() {
