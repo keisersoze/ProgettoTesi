@@ -1,6 +1,6 @@
 package evt;
 
-import model.ent.Sensor;
+import model.Sensor;
 
 public class StartOfTransmission extends BaseEvent implements Event {
     private Sensor actor;
@@ -10,10 +10,6 @@ public class StartOfTransmission extends BaseEvent implements Event {
         this.actor=actor;
     }
 
-    @Override
-    public void tick() {
-
-    }
 
     public Sensor getTransmitter() {
         return actor;

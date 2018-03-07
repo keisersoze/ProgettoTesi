@@ -1,6 +1,6 @@
 package evt;
 
-import model.ent.BaseTransmission;
+import model.BaseTransmission;
 
 public class EndOfTransmission extends BaseEvent implements Event {
 
@@ -11,10 +11,7 @@ public class EndOfTransmission extends BaseEvent implements Event {
         this.t = t;
     }
 
-    @Override
-    public void tick() {
 
-    }
 
     public BaseTransmission getTransmission() {
         return t;

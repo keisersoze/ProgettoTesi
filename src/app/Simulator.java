@@ -1,6 +1,6 @@
 package app;
 
-import model.ent.BaseSensor;
+import model.BaseSensor;
 import evt.StartOfTransmission;
 
 public class Simulator {

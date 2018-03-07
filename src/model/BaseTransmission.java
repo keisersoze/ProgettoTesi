@@ -1,4 +1,4 @@
-package model.ent;
+package model;
 
 public class BaseTransmission implements Transmission {
     private BaseSensor sender;

@@ -1,4 +1,4 @@
-package model.ent;
+package model;
 
 public interface Sensor {
     double getX();
