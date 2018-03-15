@@ -1,6 +1,6 @@
-package app;
+package evt;
 
-import app.Scheduler;
+import evt.Scheduler;
 import evt.Event;
 
 import java.util.PriorityQueue;

@@ -2,11 +2,11 @@ package evt;
 
 import model.BaseTransmission;
 
-public class EndOfTransmission extends BaseEvent implements Event {
+public class EndOfTransmissionEvent extends BaseEvent implements Event {
 
     private BaseTransmission t;
 
-    public EndOfTransmission(double remainingTime, BaseTransmission t) {
+    public EndOfTransmissionEvent(double remainingTime, BaseTransmission t) {
         super(remainingTime);
         this.t = t;
     }

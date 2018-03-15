@@ -4,7 +4,7 @@ import evt.listeners.Listener;
 
 import java.util.List;
 
-public abstract class BaseEvent implements Event,Comparable<Event> {
+public class BaseEvent implements Event,Comparable<Event> {
     private double remainingTime;
     private List<Listener> listenerList;
 
