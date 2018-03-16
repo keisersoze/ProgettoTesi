@@ -6,7 +6,7 @@ import evt.listeners.UpdateSNRListener;
 public class MoveEvent extends BaseEvent{
     public MoveEvent(double remainingTime) {
         super(remainingTime);
-        addEventListener(new MoveListener());
-        addEventListener(new UpdateSNRListener());
+        addListener(new MoveListener());
+        addListener(new UpdateSNRListener());
     }
 }

@@ -1,26 +1,48 @@
 package app;
 
-import evt.DefaultScheduler;
-import evt.StartOfTransmissionEvent;
-import model.BaseSensor;
+import app.stats.SamplesCollector;
+import evt.Event;
+import evt.StatisticsEvent;
+import evt.listeners.UpdateStatsListener;
+import evt.scheduler.DefaultScheduler;
+import evt.scheduler.Scheduler;
 
 public class SimulationInstance implements Runnable{
+    private SamplesCollector collector;
+    private double sim_time;
+    Scheduler scheduler;
+    public SimulationInstance(SamplesCollector s) {
+        collector = s;
+        scheduler = new DefaultScheduler();
+        sim_time = 0.0;
+
+    }
 
     @Override
     public void run() {
-        DefaultScheduler scheduler = new DefaultScheduler();
-        BaseSensor s1= new BaseSensor();
-        StartOfTransmissionEvent e1= new StartOfTransmissionEvent(2,s1);
-        StartOfTransmissionEvent e2= new StartOfTransmissionEvent(1.5,s1);
-        StartOfTransmissionEvent e3= new StartOfTransmissionEvent(0.74,s1);
-        StartOfTransmissionEvent e4= new StartOfTransmissionEvent(0.2,s1);
-        scheduler.addEvent(e1);
-        scheduler.addEvent(e2);
-        scheduler.addEvent(e3);
-        scheduler.addEvent(e4);
-        System.out.println(scheduler.scheduleEvent().getPriority());
-        System.out.println(scheduler.scheduleEvent().getPriority());
-        System.out.println(scheduler.scheduleEvent().getPriority());
-        System.out.println(scheduler.scheduleEvent().getPriority());
+        //inizializzazione
+
+        Event stats_evt = new StatisticsEvent(0);
+        stats_evt.addListener(new UpdateStatsListener(this));
+        scheduler.addEvent(stats_evt);
+
+        //avvio la simulazione
+        for (int i = 0; i < H2OSim.NEVENTS; i++) {
+            sim_time = scheduler.scheduleEvent().getTime();
+        }
+
+
+    }
+
+    public Scheduler getScheduler() {
+        return scheduler;
+    }
+
+    public double getSim_time() {
+        return sim_time;
+    }
+
+    public SamplesCollector getCollector() {
+        return collector;
     }
 }

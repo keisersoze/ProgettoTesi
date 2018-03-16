@@ -5,7 +5,7 @@ import evt.listeners.Listener;
 
 public interface Event {
 
-    void addEventListener(Listener l);
+    void addListener(Listener listener);
     /**
      * chiama tutte le callback associate all'evento
      */
@@ -15,7 +15,7 @@ public interface Event {
      * restituisce un valore che indica la priorità dell'evento
      * @return il valore che indica la priorità
      */
-    double getPriority();
+    double getTime();
 
 }
 

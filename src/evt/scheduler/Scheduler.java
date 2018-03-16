@@ -1,7 +1,10 @@
-package evt;
+package evt.scheduler;
 
 import evt.Event;
 
+/**
+ * Pattern strategy per lo scheduling
+ */
 public interface Scheduler {
     /**
      *
