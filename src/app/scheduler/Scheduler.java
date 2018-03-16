@@ -1,4 +1,4 @@
-package evt.scheduler;
+package app.scheduler;
 
 import evt.Event;
 

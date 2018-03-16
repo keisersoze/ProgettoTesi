@@ -4,8 +4,8 @@ import app.stats.SamplesCollector;
 import evt.Event;
 import evt.StatisticsEvent;
 import evt.listeners.UpdateStatsListener;
-import evt.scheduler.DefaultScheduler;
-import evt.scheduler.Scheduler;
+import app.scheduler.DefaultScheduler;
+import app.scheduler.Scheduler;
 
 public class SimulationInstance implements Runnable{
     private SamplesCollector collector;
@@ -28,9 +28,12 @@ public class SimulationInstance implements Runnable{
 
         //avvio la simulazione
         for (int i = 0; i < H2OSim.NEVENTS; i++) {
-            sim_time = scheduler.scheduleEvent().getTime();
+            Event event_scheduled = scheduler.scheduleEvent();
+            sim_time = event_scheduled.getTime();
+            event_scheduled.tick();
         }
 
+        System.out.println(sim_time);
 
     }
 

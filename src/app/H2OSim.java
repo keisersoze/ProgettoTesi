@@ -15,8 +15,8 @@ public class H2OSim {
 
     //parametri simulazione
     public static final int NTHREADS = 10;
-    public static final int NEVENTS = 5;
-    public static final double SAMPLING_INTERVAL = 50;
+    public static final int NEVENTS = 20;
+    public static final double SAMPLING_INTERVAL = 50; // descrive il tempo che intercorre i campionamenti per la statistiche
 
 
     public static void main(String[] args) {
@@ -32,6 +32,7 @@ public class H2OSim {
             istances.add(new Thread(new SimulationInstance(collector),String.valueOf(i)));
             istances.get(i).start();
         }
+
 
         //aspetta che tutte le istanze siano terminate
         for (int i = 0; i < NTHREADS; i++) {

@@ -1,7 +1,6 @@
-package evt.scheduler;
+package app.scheduler;
 
 import evt.Event;
-import evt.scheduler.Scheduler;
 
 import java.util.PriorityQueue;
 
@@ -17,9 +16,7 @@ public class DefaultScheduler implements Scheduler {
      * @return restituisce un evento con remaining time minore
      */
     public Event scheduleEvent() {
-        Event e = eventQueue.poll();
-        e.tick();
-        return e;
+        return eventQueue.poll();
     }
 
     /**
