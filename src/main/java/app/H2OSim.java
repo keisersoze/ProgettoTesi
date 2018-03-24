@@ -18,7 +18,7 @@ public class H2OSim {
     public static final int NTHREADS = 10;
     public static final int NEVENTS = 20;
     public static final double SAMPLING_INTERVAL = 50; // descrive il tempo che intercorre i campionamenti per la statistiche
-    public static final boolean DEMO_MODE = true;
+    public static final boolean DEMO_MODE = false;
 
     public static void main(String[] args) {
 
