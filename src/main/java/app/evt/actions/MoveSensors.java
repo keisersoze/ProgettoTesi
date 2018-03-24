@@ -1,4 +1,4 @@
-package evt.actions;
+package app.evt.actions;
 
 public class MoveSensors implements Action {
     @Override

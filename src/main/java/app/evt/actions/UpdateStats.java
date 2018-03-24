@@ -1,10 +1,10 @@
-package evt.actions;
+package app.evt.actions;
 
 import app.H2OSim;
 import app.SimulationInstance;
 import app.stats.StatsSample;
-import evt.Event;
-import evt.StatisticsEvent;
+import app.evt.Event;
+import app.evt.StatisticsEvent;
 
 public class UpdateStats implements Action {
     private SimulationInstance simulation;
