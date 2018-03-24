@@ -22,12 +22,12 @@ public class Demo extends SimpleApplication {
         blue.setMaterial(mat1);
 
         /** create a red box straight above the blue one at (1,3,1) */
-        Box box2 = new Box(1,1,1);
+        Box box2 = new Box(3,1,1);
         Geometry red = new Geometry("Box", box2);
         red.setLocalTranslation(new Vector3f(1,3,1));
         Material mat2 = new Material(assetManager,
                 "Common/MatDefs/Misc/Unshaded.j3md");
-        mat2.setColor("Color", ColorRGBA.Red);
+        mat2.setColor("Color", ColorRGBA.Blue);
         red.setMaterial(mat2);
 
         /** Create a pivot node at (0,0,0) and attach it to the root node */
