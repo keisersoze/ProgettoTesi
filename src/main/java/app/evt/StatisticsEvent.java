@@ -1,4 +1,4 @@
-package evt;
+package app.evt;
 
 public class StatisticsEvent extends BaseEvent implements Event {
 

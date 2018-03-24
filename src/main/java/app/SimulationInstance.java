@@ -1,9 +1,9 @@
 package app;
 
+import app.evt.StatisticsEvent;
 import app.stats.SamplesCollector;
-import evt.Event;
-import evt.StatisticsEvent;
-import evt.actions.UpdateStats;
+import app.evt.Event;
+import app.evt.actions.UpdateStats;
 import app.scheduler.DefaultScheduler;
 import app.scheduler.Scheduler;
 

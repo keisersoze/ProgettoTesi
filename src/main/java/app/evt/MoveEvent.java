@@ -1,7 +1,7 @@
-package evt;
+package app.evt;
 
-import evt.actions.MoveSensors;
-import evt.actions.UpdateSNR;
+import app.evt.actions.MoveSensors;
+import app.evt.actions.UpdateSNR;
 
 public class MoveEvent extends BaseEvent{
     public MoveEvent(double remainingTime) {

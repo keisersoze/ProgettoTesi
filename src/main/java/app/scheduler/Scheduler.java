@@ -1,6 +1,6 @@
 package app.scheduler;
 
-import evt.Event;
+import app.evt.Event;
 
 /**
  * Pattern strategy per lo scheduling

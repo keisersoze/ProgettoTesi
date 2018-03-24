@@ -1,6 +1,6 @@
-package evt;
+package app.evt;
 
-import evt.actions.Action;
+import app.evt.actions.Action;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package model;
+package app.model;
 
 public class BaseTransmission implements Transmission {
     private BaseSensor sender;

@@ -22,8 +22,6 @@ public class H2OSim {
 
     public static void main(String[] args) {
 
-
-
         if(DEMO_MODE){
             Demo d = new Demo();
             d.start();

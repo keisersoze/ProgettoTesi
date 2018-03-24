@@ -9,10 +9,6 @@ import com.jme3.math.ColorRGBA;
 
 public class Demo extends SimpleApplication {
 
-
-
-
-
     public void simpleInitApp() {
         Box b = new Box(1, 1, 1); // create cube shape
         Geometry geom = new Geometry("Box", b);  // create cube geometry from the shape

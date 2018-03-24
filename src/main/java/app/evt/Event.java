@@ -1,7 +1,7 @@
 
-package evt;
+package app.evt;
 
-import evt.actions.Action;
+import app.evt.actions.Action;
 
 public interface Event {
 
