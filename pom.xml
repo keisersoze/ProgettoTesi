@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.jme3</groupId>
-    <artifactId>H2OSim</artifactId>
+    <groupId>com.mycompany</groupId>
+    <artifactId>jme3-example</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>JME3 maven project</name>
 
     <properties>
-        <maven.compiler.source>1.6</maven.compiler.source>
-        <maven.compiler.target>1.6</maven.compiler.target>
-
         <jme3_g>org.jmonkeyengine</jme3_g>
         <jme3_v>3.2.0-stable</jme3_v>
     </properties>
@@ -40,18 +40,5 @@
             <artifactId>jme3-lwjgl</artifactId>
             <version>${jme3_v}</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.jogamp.gluegen</groupId>
-            <artifactId>gluegen-rt-main</artifactId>
-            <version>2.3.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jogamp.jogl</groupId>
-            <artifactId>jogl-all-main</artifactId>
-            <version>2.3.1</version>
-        </dependency>
-
     </dependencies>
-
 </project>

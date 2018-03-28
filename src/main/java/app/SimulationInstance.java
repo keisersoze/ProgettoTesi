@@ -1,16 +1,17 @@
 package app;
 
-import app.evt.StatisticsEvent;
-import app.stats.SamplesCollector;
 import app.evt.Event;
+import app.evt.StatisticsEvent;
 import app.evt.actions.UpdateStats;
 import app.scheduler.DefaultScheduler;
 import app.scheduler.Scheduler;
+import app.stats.SamplesCollector;
 
-public class SimulationInstance implements Runnable{
+public class SimulationInstance implements Runnable {
+    Scheduler scheduler;
     private SamplesCollector collector;
     private double sim_time;
-    Scheduler scheduler;
+
     public SimulationInstance(SamplesCollector s) {
         collector = s;
         scheduler = new DefaultScheduler();

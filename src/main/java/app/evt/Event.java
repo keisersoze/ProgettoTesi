@@ -1,4 +1,3 @@
-
 package app.evt;
 
 import app.evt.actions.Action;
@@ -6,6 +5,7 @@ import app.evt.actions.Action;
 public interface Event {
 
     void addListener(Action action);
+
     /**
      * chiama tutte le callback associate all'evento
      */
@@ -13,6 +13,7 @@ public interface Event {
 
     /**
      * restituisce un valore che indica la priorità dell'evento
+     *
      * @return il valore che indica la priorità
      */
     double getTime();

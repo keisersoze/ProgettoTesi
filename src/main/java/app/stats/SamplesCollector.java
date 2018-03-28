@@ -6,23 +6,23 @@ import java.util.List;
 import java.util.Map;
 
 public class SamplesCollector {
-    private Map <String,List<Sample>> sources;
+    private Map<String, List<Sample>> sources;
 
     public SamplesCollector() {
-        sources = new HashMap ();
+        sources = new HashMap();
 
     }
 
 
-    public void addStatSource(String source){
-        sources.put(source,new ArrayList<Sample>());
+    public void addStatSource(String source) {
+        sources.put(source, new ArrayList<Sample>());
     }
 
-    public List<Sample> getSourceSamples(String source ){
+    public List<Sample> getSourceSamples(String source) {
         return sources.get(source);
     }
 
-    public synchronized void update(String source, Sample sample){
+    public synchronized void update(String source, Sample sample) {
         sources.get(source).add(sample);
     }
 }

@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="H2OSim" target="1.6" />
+      <module name="H2OSim" target="1.5" />
       <module name="ProgettoeTesi" target="1.5" />
     </bytecodeTargetLevel>
   </component>

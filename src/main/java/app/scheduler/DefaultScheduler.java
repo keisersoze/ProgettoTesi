@@ -12,7 +12,6 @@ public class DefaultScheduler implements Scheduler {
     }
 
     /**
-     *
      * @return restituisce un evento con remaining time minore
      */
     public Event scheduleEvent() {
@@ -21,6 +20,7 @@ public class DefaultScheduler implements Scheduler {
 
     /**
      * aggiunge {@code e} alla coda di eventi in attesa
+     *
      * @param e elemento da aggiungere
      */
     public void addEvent(Event e) {

@@ -5,7 +5,7 @@ import app.evt.actions.Action;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BaseEvent implements Event,Comparable<Event> {
+public class BaseEvent implements Event, Comparable<Event> {
     private double time;
     private List<Action> actionList;
 
@@ -16,16 +16,18 @@ public class BaseEvent implements Event,Comparable<Event> {
 
     /**
      * confronta la tempo di se stesso con quello di {@code o}
+     *
      * @param o evento sul quale è operato il confronto
      * @return un valore che indica l'esito del confronto
      */
 
     public int compareTo(Event o) {
-        return Double.compare(this.getTime(),o.getTime());
+        return Double.compare(this.getTime(), o.getTime());
     }
 
     /**
      * restituisce
+     *
      * @return la proprità time
      */
 
@@ -38,13 +40,12 @@ public class BaseEvent implements Event,Comparable<Event> {
      */
 
     public void tick() {
-        for (Action l: actionList) {
+        for (Action l : actionList) {
             l.update();
         }
     }
 
     /**
-     *
      * @param l
      */
 
