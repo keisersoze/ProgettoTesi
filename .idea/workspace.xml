@@ -2,80 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a0d43c75-5a5d-45e1-90b0-15f48f62e267" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jogamp_gluegen_gluegen_rt_2_3_1.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jogamp_gluegen_gluegen_rt_main_2_3_1.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jogamp_gluegen_gluegen_rt_natives_android_aarch64_2_3_1.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jogamp_gluegen_gluegen_rt_natives_android_armv6_2_3_1.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jogamp_gluegen_gluegen_rt_natives_linux_amd64_2_3_1.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jogamp_gluegen_gluegen_rt_natives_linux_armv6_2_3_1.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jogamp_gluegen_gluegen_rt_natives_linux_armv6hf_2_3_1.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jogamp_gluegen_gluegen_rt_natives_linux_i586_2_3_1.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jogamp_gluegen_gluegen_rt_natives_macosx_universal_2_3_1.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jogamp_gluegen_gluegen_rt_natives_solaris_amd64_2_3_1.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jogamp_gluegen_gluegen_rt_natives_solaris_i586_2_3_1.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jogamp_gluegen_gluegen_rt_natives_windows_amd64_2_3_1.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jogamp_gluegen_gluegen_rt_natives_windows_i586_2_3_1.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jogamp_jogl_jogl_all_2_3_1.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jogamp_jogl_jogl_all_main_2_3_1.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jogamp_jogl_jogl_all_natives_android_aarch64_2_3_1.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jogamp_jogl_jogl_all_natives_android_armv6_2_3_1.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jogamp_jogl_jogl_all_natives_linux_amd64_2_3_1.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jogamp_jogl_jogl_all_natives_linux_armv6_2_3_1.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jogamp_jogl_jogl_all_natives_linux_armv6hf_2_3_1.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jogamp_jogl_jogl_all_natives_linux_i586_2_3_1.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jogamp_jogl_jogl_all_natives_macosx_universal_2_3_1.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jogamp_jogl_jogl_all_natives_solaris_amd64_2_3_1.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jogamp_jogl_jogl_all_natives_solaris_i586_2_3_1.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jogamp_jogl_jogl_all_natives_windows_amd64_2_3_1.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jogamp_jogl_jogl_all_natives_windows_i586_2_3_1.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/H2OSim.iml" afterPath="$PROJECT_DIR$/H2OSim.iml" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/Demo.java" afterPath="$PROJECT_DIR$/src/main/java/app/Demo.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/H2OSim.java" afterPath="$PROJECT_DIR$/src/main/java/app/H2OSim.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/SimulationInstance.java" afterPath="$PROJECT_DIR$/src/main/java/app/SimulationInstance.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/evt/BaseEvent.java" afterPath="$PROJECT_DIR$/src/main/java/app/evt/BaseEvent.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/evt/Event.java" afterPath="$PROJECT_DIR$/src/main/java/app/evt/Event.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/evt/MoveEvent.java" afterPath="$PROJECT_DIR$/src/main/java/app/evt/MoveEvent.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/evt/actions/UpdateStats.java" afterPath="$PROJECT_DIR$/src/main/java/app/evt/actions/UpdateStats.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/model/BaseSensor.java" afterPath="$PROJECT_DIR$/src/main/java/app/model/BaseSensor.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/model/Sensor.java" afterPath="$PROJECT_DIR$/src/main/java/app/model/Sensor.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/scheduler/DefaultScheduler.java" afterPath="$PROJECT_DIR$/src/main/java/app/scheduler/DefaultScheduler.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/scheduler/Scheduler.java" afterPath="$PROJECT_DIR$/src/main/java/app/scheduler/Scheduler.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/stats/SamplesCollector.java" afterPath="$PROJECT_DIR$/src/main/java/app/stats/SamplesCollector.java" />
       <change beforePath="$PROJECT_DIR$/target/classes/app/Demo.class" afterPath="$PROJECT_DIR$/target/classes/app/Demo.class" />
-      <change beforePath="$PROJECT_DIR$/target/classes/app/H2OSim.class" afterPath="$PROJECT_DIR$/target/classes/app/H2OSim.class" />
-      <change beforePath="$PROJECT_DIR$/target/classes/app/SimulationInstance.class" afterPath="$PROJECT_DIR$/target/classes/app/SimulationInstance.class" />
       <change beforePath="$PROJECT_DIR$/target/classes/app/evt/BaseEvent.class" afterPath="$PROJECT_DIR$/target/classes/app/evt/BaseEvent.class" />
-      <change beforePath="$PROJECT_DIR$/target/classes/app/evt/Event.class" afterPath="$PROJECT_DIR$/target/classes/app/evt/Event.class" />
-      <change beforePath="$PROJECT_DIR$/target/classes/app/evt/MoveEvent.class" afterPath="$PROJECT_DIR$/target/classes/app/evt/MoveEvent.class" />
-      <change beforePath="$PROJECT_DIR$/target/classes/app/evt/StatisticsEvent.class" afterPath="$PROJECT_DIR$/target/classes/app/evt/StatisticsEvent.class" />
-      <change beforePath="$PROJECT_DIR$/target/classes/app/evt/actions/Action.class" afterPath="$PROJECT_DIR$/target/classes/app/evt/actions/Action.class" />
-      <change beforePath="$PROJECT_DIR$/target/classes/app/evt/actions/MoveSensors.class" afterPath="$PROJECT_DIR$/target/classes/app/evt/actions/MoveSensors.class" />
-      <change beforePath="$PROJECT_DIR$/target/classes/app/evt/actions/StartTransmission.class" afterPath="$PROJECT_DIR$/target/classes/app/evt/actions/StartTransmission.class" />
-      <change beforePath="$PROJECT_DIR$/target/classes/app/evt/actions/UpdateSNR.class" afterPath="$PROJECT_DIR$/target/classes/app/evt/actions/UpdateSNR.class" />
       <change beforePath="$PROJECT_DIR$/target/classes/app/evt/actions/UpdateStats.class" afterPath="$PROJECT_DIR$/target/classes/app/evt/actions/UpdateStats.class" />
-      <change beforePath="$PROJECT_DIR$/target/classes/app/evt/architet/DataLinkLayer.class" afterPath="$PROJECT_DIR$/target/classes/app/evt/architet/DataLinkLayer.class" />
-      <change beforePath="$PROJECT_DIR$/target/classes/app/evt/architet/NetworkLayer.class" afterPath="$PROJECT_DIR$/target/classes/app/evt/architet/NetworkLayer.class" />
-      <change beforePath="$PROJECT_DIR$/target/classes/app/evt/architet/TransportLayer.class" afterPath="$PROJECT_DIR$/target/classes/app/evt/architet/TransportLayer.class" />
-      <change beforePath="$PROJECT_DIR$/target/classes/app/model/BaseSensor.class" afterPath="$PROJECT_DIR$/target/classes/app/model/BaseSensor.class" />
-      <change beforePath="$PROJECT_DIR$/target/classes/app/model/BaseTransmission.class" afterPath="$PROJECT_DIR$/target/classes/app/model/BaseTransmission.class" />
-      <change beforePath="$PROJECT_DIR$/target/classes/app/model/Sensor.class" afterPath="$PROJECT_DIR$/target/classes/app/model/Sensor.class" />
-      <change beforePath="$PROJECT_DIR$/target/classes/app/model/Transmission.class" afterPath="$PROJECT_DIR$/target/classes/app/model/Transmission.class" />
       <change beforePath="$PROJECT_DIR$/target/classes/app/scheduler/DefaultScheduler.class" afterPath="$PROJECT_DIR$/target/classes/app/scheduler/DefaultScheduler.class" />
-      <change beforePath="$PROJECT_DIR$/target/classes/app/scheduler/Scheduler.class" afterPath="$PROJECT_DIR$/target/classes/app/scheduler/Scheduler.class" />
-      <change beforePath="$PROJECT_DIR$/target/classes/app/stats/Sample.class" afterPath="$PROJECT_DIR$/target/classes/app/stats/Sample.class" />
-      <change beforePath="$PROJECT_DIR$/target/classes/app/stats/SamplesCollector.class" afterPath="$PROJECT_DIR$/target/classes/app/stats/SamplesCollector.class" />
-      <change beforePath="$PROJECT_DIR$/target/classes/app/stats/StatsSample.class" afterPath="$PROJECT_DIR$/target/classes/app/stats/StatsSample.class" />
-      <change beforePath="$PROJECT_DIR$/target/site/dependencies.html" afterPath="$PROJECT_DIR$/target/site/dependencies.html" />
-      <change beforePath="$PROJECT_DIR$/target/site/dependency-convergence.html" afterPath="$PROJECT_DIR$/target/site/dependency-convergence.html" />
-      <change beforePath="$PROJECT_DIR$/target/site/dependency-info.html" afterPath="$PROJECT_DIR$/target/site/dependency-info.html" />
-      <change beforePath="$PROJECT_DIR$/target/site/index.html" afterPath="$PROJECT_DIR$/target/site/index.html" />
-      <change beforePath="$PROJECT_DIR$/target/site/plugin-management.html" afterPath="$PROJECT_DIR$/target/site/plugin-management.html" />
-      <change beforePath="$PROJECT_DIR$/target/site/plugins.html" afterPath="$PROJECT_DIR$/target/site/plugins.html" />
-      <change beforePath="$PROJECT_DIR$/target/site/project-info.html" afterPath="$PROJECT_DIR$/target/site/project-info.html" />
-      <change beforePath="$PROJECT_DIR$/target/site/project-summary.html" afterPath="$PROJECT_DIR$/target/site/project-summary.html" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -87,7 +20,46 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf>
+      <file leaf-file-name="Demo.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/app/Demo.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-88">
+              <caret line="51" column="9" lean-forward="true" selection-start-line="51" selection-start-column="9" selection-end-line="51" selection-end-column="9" />
+              <folding>
+                <element signature="method#sphereWithTexture#0;class#Demo#0" expanded="false" />
+                <element signature="method#linkBetweenGeometries#0;class#Demo#0" expanded="false" />
+                <element signature="method#grid#0;class#Demo#0" expanded="false" />
+                <element signature="method#line#0;class#Demo#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ColorRGBA.java" pinned="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/org/jmonkeyengine/jme3-core/3.2.0-stable/jme3-core-3.2.0-stable-sources.jar!/com/jme3/math/ColorRGBA.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1035">
+              <caret line="98" column="34" lean-forward="false" selection-start-line="98" selection-start-column="34" selection-end-line="98" selection-end-column="34" />
+              <folding>
+                <element signature="e#4664#4665#0" expanded="true" />
+                <element signature="e#4700#4701#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="H2OSim.iml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/H2OSim.iml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" column="64" lean-forward="false" selection-start-line="2" selection-start-column="64" selection-end-line="2" selection-end-column="64" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -141,7 +113,6 @@
         <option value="$PROJECT_DIR$/src/main/java/model/BaseSensor.java" />
         <option value="$PROJECT_DIR$/src/main/java/app/SimulationInstance.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/H2OSim.iml" />
         <option value="$PROJECT_DIR$/src/main/java/app/evt/actions/UpdateStats.java" />
         <option value="$PROJECT_DIR$/src/main/java/app/evt/architet/TransportLayer.java" />
         <option value="$PROJECT_DIR$/src/main/java/app/evt/architet/NetworkLayer.java" />
@@ -164,6 +135,7 @@
         <option value="$PROJECT_DIR$/src/main/java/app/stats/SamplesCollector.java" />
         <option value="$PROJECT_DIR$/src/main/java/app/stats/StatsSample.java" />
         <option value="$PROJECT_DIR$/src/main/java/app/H2OSim.java" />
+        <option value="$PROJECT_DIR$/H2OSim.iml" />
         <option value="$PROJECT_DIR$/src/main/java/app/Demo.java" />
       </list>
     </option>
@@ -201,8 +173,7 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-125" />
+  <component name="ProjectFrameBounds">
     <option name="y" value="22" />
     <option name="width" value="1440" />
     <option name="height" value="878" />
@@ -215,16 +186,7 @@
             <id />
           </State>
           <State>
-            <id>Android &gt; Lint &gt; Correctness</id>
-          </State>
-          <State>
-            <id>Android &gt; Lint &gt; Usability &gt; Typography</id>
-          </State>
-          <State>
-            <id>Assignment issuesGroovy</id>
-          </State>
-          <State>
-            <id>Assignment issuesJava</id>
+            <id>Bitwise operation issuesJava</id>
           </State>
           <State>
             <id>Control flow issuesJava</id>
@@ -236,33 +198,18 @@
             <id>Java</id>
           </State>
           <State>
-            <id>Potentially confusing code constructsGroovy</id>
+            <id>Numeric issuesJava</id>
           </State>
           <State>
-            <id>Probable bugsGroovy</id>
+            <id>Potentially confusing code constructsGroovy</id>
           </State>
           <State>
             <id>Probable bugsJava</id>
           </State>
-          <State>
-            <id>Spelling</id>
-          </State>
-          <State>
-            <id>Threading issuesGroovy</id>
-          </State>
-          <State>
-            <id>Threading issuesJava</id>
-          </State>
-          <State>
-            <id>UI Form Problems</id>
-          </State>
-          <State>
-            <id>XPath</id>
-          </State>
         </expanded-state>
         <selected-state>
           <State>
-            <id>SpellCheckingInspection</id>
+            <id>Probable bugsJava</id>
           </State>
         </selected-state>
       </profile-state>
@@ -286,7 +233,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="AndroidView" />
       <pane id="PackagesPane">
         <subPane>
           <expand>
@@ -303,6 +250,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
@@ -314,19 +262,33 @@
             <path>
               <item name="H2OSim" type="b2602c69:ProjectViewProjectNode" />
               <item name="ProgettoTesi" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="H2OSim" type="b2602c69:ProjectViewProjectNode" />
               <item name="ProgettoTesi" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="Textures" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="H2OSim" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ProgettoTesi" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="H2OSim" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ProgettoTesi" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -496,6 +458,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1440" height="878" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32911393" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -505,24 +468,24 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43888888" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3337469" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32911393" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3337469" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32911393" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22569445" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32630098" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22569445" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24964234" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3994374" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3994374" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32630098" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -539,49 +502,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk-9.0.4.jdk/Contents/Home/lib/src.zip!/java.base/jdk/internal/loader/BuiltinClassLoader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="593" column="0" lean-forward="false" selection-start-line="593" selection-start-column="0" selection-end-line="593" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/evt/EndOfTransmissionEvent.java" />
-    <entry file="file://$PROJECT_DIR$/.idea/libraries/Maven__net_java_jinput_jinput_platform_natives_linux_2_0_5.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/libraries/Maven__org_jmonkeyengine_jme3_desktop_3_2_0_stable.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/libraries/Maven__net_java_jinput_jinput_2_0_5.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/misc.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/vcs.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -648,43 +568,18 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/app/Demo2.java" />
-    <entry file="jar://$MAVEN_REPOSITORY$/org/jmonkeyengine/jme3-core/3.2.0-stable/jme3-core-3.2.0-stable-sources.jar!/com/jme3/material/Material.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="163">
-          <caret line="475" column="0" lean-forward="false" selection-start-line="475" selection-start-column="0" selection-end-line="475" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="630">
           <caret line="42" column="19" lean-forward="false" selection-start-line="42" selection-start-column="19" selection-end-line="42" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/H2OSim.iml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="65" lean-forward="false" selection-start-line="4" selection-start-column="65" selection-end-line="4" selection-end-column="65" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/jmonkeyengine/jme3-core/3.2.0-stable/jme3-core-3.2.0-stable-sources.jar!/com/jme3/scene/shape/Sphere.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="870">
-          <caret line="101" column="11" lean-forward="false" selection-start-line="101" selection-start-column="11" selection-end-line="101" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/jmonkeyengine/jme3-core/3.2.0-stable/jme3-core-3.2.0-stable-sources.jar!/com/jme3/scene/shape/Sphere.java" />
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -692,9 +587,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#728#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -702,9 +594,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-309">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#6798#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -717,7 +606,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -725,7 +613,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -733,7 +620,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -741,9 +627,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -751,7 +634,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -759,7 +641,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -767,7 +648,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -775,7 +655,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="2" column="17" lean-forward="false" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -783,7 +662,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="7" column="31" lean-forward="false" selection-start-line="7" selection-start-column="31" selection-end-line="7" selection-end-column="31" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -791,7 +669,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="5" column="17" lean-forward="false" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -799,7 +676,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="9" lean-forward="true" selection-start-line="0" selection-start-column="9" selection-end-line="0" selection-end-column="9" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -807,7 +683,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -815,7 +690,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -823,15 +697,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/app/Demo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="13" column="0" lean-forward="true" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -839,7 +704,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="7" column="17" lean-forward="false" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -847,15 +711,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="10" column="44" lean-forward="false" selection-start-line="10" selection-start-column="44" selection-end-line="10" selection-end-column="44" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#209#210#0" expanded="true" />
-            <element signature="e#269#270#0" expanded="true" />
-            <element signature="e#384#385#0" expanded="true" />
-            <element signature="e#424#425#0" expanded="true" />
-            <element signature="e#579#580#0" expanded="true" />
-            <element signature="e#612#613#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -863,7 +718,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="2" column="17" lean-forward="false" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -871,7 +725,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="2" column="17" lean-forward="false" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -887,7 +740,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="2" column="17" lean-forward="false" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -895,7 +747,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -904,7 +755,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="8" lean-forward="false" selection-start-line="0" selection-start-column="8" selection-end-line="0" selection-end-column="8" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -913,7 +764,124 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/H2OSim.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="64" lean-forward="false" selection-start-line="2" selection-start-column="64" selection-end-line="2" selection-end-column="64" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/jmonkeyengine/jme3-core/3.2.0-stable/jme3-core-3.2.0-stable.jar!/com/jme3/app/SimpleApplication.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-718">
+          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding>
+            <marker date="1522249279750" expanded="false" signature="0:104" ph="/.../" />
+            <marker date="1522249279750" expanded="false" signature="136:739" ph="..." />
+            <marker date="1522249279750" expanded="true" signature="1406:1521" ph="{...}" />
+            <marker date="1522249279750" expanded="true" signature="1579:1815" ph="{...}" />
+            <marker date="1522249279750" expanded="true" signature="1841:2197" ph="{...}" />
+            <marker date="1522249279750" expanded="false" signature="2238:2249" ph=" { " />
+            <marker date="1522249279750" expanded="false" signature="2268:2274" ph=" }" />
+            <marker date="1522249279750" expanded="false" signature="2304:2315" ph=" { " />
+            <marker date="1522249279750" expanded="false" signature="2335:2341" ph=" }" />
+            <marker date="1522249279750" expanded="false" signature="2372:2383" ph=" { " />
+            <marker date="1522249279750" expanded="false" signature="2404:2410" ph=" }" />
+            <marker date="1522249279750" expanded="false" signature="2447:2458" ph=" { " />
+            <marker date="1522249279750" expanded="false" signature="2483:2489" ph=" }" />
+            <marker date="1522249279750" expanded="false" signature="2544:2555" ph=" { " />
+            <marker date="1522249279750" expanded="false" signature="2588:2594" ph=" }" />
+            <marker date="1522249279750" expanded="false" signature="2634:2645" ph=" { " />
+            <marker date="1522249279750" expanded="false" signature="2710:2716" ph=" }" />
+            <marker date="1522249279750" expanded="true" signature="2747:4265" ph="{...}" />
+            <marker date="1522249279750" expanded="true" signature="4292:5603" ph="{...}" />
+            <marker date="1522249279750" expanded="true" signature="5649:5836" ph="{...}" />
+            <marker date="1522249279750" expanded="true" signature="5887:6079" ph="{...}" />
+            <marker date="1522249279750" expanded="true" signature="6164:6171" ph="{}" />
+            <marker date="1522249279750" expanded="true" signature="6220:6227" ph="{}" />
+            <marker date="1522249279750" expanded="true" signature="6291:6849" ph="{...}" />
+            <marker date="1522249279750" expanded="true" signature="6329:6340" ph="{}" />
+            <marker date="1522249279750" expanded="true" signature="6410:6843" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/jmonkeyengine/jme3-core/3.2.0-stable/jme3-core-3.2.0-stable-sources.jar!/com/jme3/export/Savable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="41" column="17" lean-forward="false" selection-start-line="41" selection-start-column="17" selection-end-line="41" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk-9.0.4.jdk/Contents/Home/lib/src.zip!/java.base/java/lang/Cloneable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="52" column="17" lean-forward="false" selection-start-line="52" selection-start-column="17" selection-end-line="52" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/jmonkeyengine/jme3-core/3.2.0-stable/jme3-core-3.2.0-stable-sources.jar!/com/jme3/renderer/Camera.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="63" column="44" lean-forward="true" selection-start-line="63" selection-start-column="44" selection-end-line="63" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/jmonkeyengine/jme3-core/3.2.0-stable/jme3-core-3.2.0-stable-sources.jar!/com/jme3/input/FlyByCamera.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="82" column="18" lean-forward="true" selection-start-line="82" selection-start-column="18" selection-end-line="82" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/jmonkeyengine/jme3-core/3.2.0-stable/jme3-core-3.2.0-stable-sources.jar!/com/jme3/app/SimpleApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="302">
+          <caret line="194" column="44" lean-forward="false" selection-start-line="194" selection-start-column="41" selection-end-line="194" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/jmonkeyengine/jme3-core/3.2.0-stable/jme3-core-3.2.0-stable-sources.jar!/com/jme3/material/Material.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="658" column="16" lean-forward="false" selection-start-line="658" selection-start-column="16" selection-end-line="658" selection-end-column="16" />
+          <folding>
+            <element signature="e#23082#23083#0" expanded="true" />
+            <element signature="e#23136#23137#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/jmonkeyengine/jme3-core/3.2.0-stable/jme3-core-3.2.0-stable-sources.jar!/com/jme3/math/ColorRGBA.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1035">
+          <caret line="98" column="34" lean-forward="false" selection-start-line="98" selection-start-column="34" selection-end-line="98" selection-end-column="34" />
+          <folding>
+            <element signature="e#4664#4665#0" expanded="true" />
+            <element signature="e#4700#4701#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/app/Demo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-88">
+          <caret line="51" column="9" lean-forward="true" selection-start-line="51" selection-start-column="9" selection-end-line="51" selection-end-column="9" />
+          <folding>
+            <element signature="method#sphereWithTexture#0;class#Demo#0" expanded="false" />
+            <element signature="method#linkBetweenGeometries#0;class#Demo#0" expanded="false" />
+            <element signature="method#grid#0;class#Demo#0" expanded="false" />
+            <element signature="method#line#0;class#Demo#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
