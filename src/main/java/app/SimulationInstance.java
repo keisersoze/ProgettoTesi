@@ -1,41 +1,41 @@
 package app;
 
-import app.evt.Event;
-import app.evt.StatisticsEvent;
-import app.evt.actions.UpdateStats;
-import app.scheduler.DefaultScheduler;
-import app.scheduler.Scheduler;
-import app.stats.SamplesCollector;
+import app.core.events.Event;
+import app.core.events.StatisticsEvent;
+import app.core.scheduler.DefaultScheduler;
+import app.core.scheduler.Scheduler;
+import app.stats.Collector;
 
-public class SimulationInstance implements Runnable {
+public class SimulationInstance implements Runnable, SimContext {
     Scheduler scheduler;
-    private SamplesCollector collector;
+    private Collector collector;
     private double sim_time;
 
-    public SimulationInstance(SamplesCollector s) {
-        collector = s;
-        scheduler = new DefaultScheduler();
+    public SimulationInstance(Collector collector, Scheduler scheduler) {
+        this.collector = collector;
+        this.scheduler = scheduler;
         sim_time = 0.0;
-
     }
 
 
     public void run() {
+
         //inizializzazione
 
-        Event stats_evt = new StatisticsEvent(0);
-        stats_evt.addListener(new UpdateStats(this));
+        // creo l'evento che richiama la funzionalità di campionamento per le statistiche
+        Event stats_evt = new StatisticsEvent(0,this);
+
+        //imposto gli eventi periodici
+        stats_evt.setInterval(50);
+
+        //aggiungo gli eventi periodici allo scheduler
         scheduler.addEvent(stats_evt);
 
         //avvio la simulazione
         for (int i = 0; i < H2OSim.NEVENTS; i++) {
-            Event event_scheduled = scheduler.scheduleEvent();
-            sim_time = event_scheduled.getTime();
-            event_scheduled.tick();
+            sim_time = scheduler.scheduleEvent().tick().getTime();
         }
-
         System.out.println(sim_time);
-
     }
 
     public Scheduler getScheduler() {
@@ -46,7 +46,7 @@ public class SimulationInstance implements Runnable {
         return sim_time;
     }
 
-    public SamplesCollector getCollector() {
+    public Collector getCollector() {
         return collector;
     }
 }
