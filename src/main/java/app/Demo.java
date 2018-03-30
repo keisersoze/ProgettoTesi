@@ -16,29 +16,34 @@ import com.jme3.texture.Texture;
 
 import java.util.ArrayList;
 
+import static app.H2OSim.FINISHED;
+
 public class Demo extends SimpleApplication {
 
-    Node pivot;
+    private ArrayList<Geometry> array_sphere;
+    private ArrayList<Geometry> array_line;
+    private boolean charged = false;
+    Vector3f campo;
 
     public void simpleInitApp() {
-
+        campo = new Vector3f(100, 30, 100);
         DirectionalLight dl = new DirectionalLight();
         dl.setColor(ColorRGBA.White);
         dl.setDirection(new Vector3f(-.5f, -.5f, -.5f).normalizeLocal());
         rootNode.addLight(dl);
 
-        pivot = new Node("pivot");
+        Node pivot = new Node("pivot");
         rootNode.attachChild(pivot); // put this node in the scene
 
         Vector3f cam_position = new Vector3f(0, 0, 50);
         cam.setLocation(cam_position);
         flyCam.setMoveSpeed(8);
 
-        ArrayList<Geometry> array_sphere = new ArrayList<>();
-        ArrayList<Geometry> array_line = new ArrayList<>();
+        array_sphere = new ArrayList<>();
+        array_line = new ArrayList<>();
 
         for (int i = 0; i < 60; i++) {
-            Vector3f sphere_position = new Vector3f(random(-10, 10), random(-10, 10), random(-10, 10));
+            Vector3f sphere_position = new Vector3f(random(-campo.x, campo.x), random(-campo.y, campo.y), random(-campo.z, campo.z));
             Geometry sphere = sphereWithTexture(
                     30,
                     30,
@@ -67,11 +72,12 @@ public class Demo extends SimpleApplication {
         for (Geometry line : array_line) {
             pivot.attachChild(line);
         }
-        grid(20, 2);
+        grid();
+        charged = true;
     }
 
-    private float random(int min, int max) {
-        return (float) min + (int) (Math.random() * ((max - min) + 1));
+    private float random(float min, float max) {
+        return min + (int) (Math.random() * ((max - min) + 1));
     }
 
     private Geometry sphereWithTexture(int zSamples, int radialSamples, float raggio, Vector3f posizione, String texturePath, ColorRGBA colore) {
@@ -118,28 +124,51 @@ public class Demo extends SimpleApplication {
         return lineGeometry;
     }
 
-    private void grid(int n, float distance) {
-        float inizio = -n / 2;
-        float fine = n / 2;
-        for (float i = inizio; i <= fine; i += distance) {
-            for (float j = inizio; j <= fine; j += distance) {
+    private void grid() {
+        for (float i = -campo.x; i <= campo.x; i += campo.x / 10) {
+            for (float j = -campo.y; j <= campo.y; j += campo.y / 10) {
                 rootNode.attachChild(line(
-                        new Vector3f(i, -j, -10),
-                        new Vector3f(i, j, -10),
+                        new Vector3f(i, j, -campo.z),
+                        new Vector3f(i, -j, -campo.z),
                         new ColorRGBA(229, 239, 255, 0.001f))
                 );
                 rootNode.attachChild(line(
-                        new Vector3f(i, -10, j),
-                        new Vector3f(-i, -10, j),
+                        new Vector3f(-i, j, -campo.z),
+                        new Vector3f(i, j, -campo.z),
+                        new ColorRGBA(229, 239, 255, 0.001f))
+                );
+
+            }
+        }
+        for (float i = -campo.y; i <= campo.y; i += campo.y / 10) {
+            for (float j = -campo.z; j <= campo.z; j += campo.z / 10) {
+                rootNode.attachChild(line(
+                        new Vector3f(campo.x, i, j),
+                        new Vector3f(campo.x, i, -j),
                         new ColorRGBA(229, 239, 255, 0.001f))
                 );
                 rootNode.attachChild(line(
-                        new Vector3f(10, i, j),
-                        new Vector3f(10, i, -j),
+                        new Vector3f(campo.x, -i, j),
+                        new Vector3f(campo.x, i, j),
                         new ColorRGBA(229, 239, 255, 0.001f))
                 );
             }
         }
+        for (float i = -campo.x; i <= campo.x; i += campo.x / 10) {
+            for (float j = -campo.z; j <= campo.z; j += campo.z / 10) {
+                rootNode.attachChild(line(
+                        new Vector3f(i, -campo.y, j),
+                        new Vector3f(-i, -campo.y, j),
+                        new ColorRGBA(229, 239, 255, 0.001f))
+                );
+                rootNode.attachChild(line(
+                        new Vector3f(i, -campo.y, -j),
+                        new Vector3f(i, -campo.y, j),
+                        new ColorRGBA(229, 239, 255, 0.001f))
+                );
+            }
+        }
+
     }
 
     private Geometry line(Vector3f inizio, Vector3f fine, ColorRGBA colore) {
@@ -157,4 +186,15 @@ public class Demo extends SimpleApplication {
         return lineGeometry;
     }
 
+    public ArrayList<Geometry> getArray_sphere() {
+        return array_sphere;
+    }
+
+    public ArrayList<Geometry> getArray_line() {
+        return array_line;
+    }
+
+    public boolean isCharged() {
+        return charged;
+    }
 }

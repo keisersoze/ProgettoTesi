@@ -9,9 +9,8 @@
         <module name="H2OSim" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="H2OSim" target="1.5" />
-      <module name="ProgettoeTesi" target="1.5" />
+    <bytecodeTargetLevel target="1.8">
+      <module name="H2OSim" target="1.9" />
     </bytecodeTargetLevel>
   </component>
 </project>
