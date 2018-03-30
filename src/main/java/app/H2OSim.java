@@ -16,7 +16,6 @@ public class H2OSim {
     public static final int NEVENTS = 100;
     public static final double SAMPLING_INTERVAL = 50; // descrive il tempo che intercorre i campionamenti per la statistiche
     public static final boolean DEMO_MODE = true;
-    public static boolean FINISHED = false;
     private static H2OSim ourInstance = new H2OSim();
 
     public static H2OSim getInstance() {
@@ -28,16 +27,20 @@ public class H2OSim {
             Demo d = new Demo();
             d.start();
 
-            while (d.getArray_line() == null || !d.isCharged()) { Thread.sleep(0,1); }
+            while (d.getArray_line() == null || !d.isCharged()) {
+                Thread.sleep(0, 1);
+            }
 
-//            while (true) {
-//                Material lineMaterial = new Material(d.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
-//
-//                lineMaterial.setColor("Color", ColorRGBA.randomColor());
-//                Geometry geo = d.getArray_line().get((int) (Math.random() * d.getArray_line().size()));
-//                geo.setMaterial(lineMaterial);
-//                Thread.sleep(100,1);
-//            }
+            // Proviamo a fare un po' di discoteca
+            int i = 0;
+            while (i++ != 5000) {
+                Material lineMaterial = new Material(d.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
+
+                lineMaterial.setColor("Color", ColorRGBA.randomColor());
+                Geometry geo = d.getArray_line().get((int) (Math.random() * d.getArray_line().size()));
+                geo.setMaterial(lineMaterial);
+                Thread.sleep(30);
+            }
         } else {
             //inizializzazione
             BaseCollector collector = new BaseCollector();

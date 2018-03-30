@@ -16,14 +16,12 @@ import com.jme3.texture.Texture;
 
 import java.util.ArrayList;
 
-import static app.H2OSim.FINISHED;
-
 public class Demo extends SimpleApplication {
 
+    Vector3f campo;
     private ArrayList<Geometry> array_sphere;
     private ArrayList<Geometry> array_line;
     private boolean charged = false;
-    Vector3f campo;
 
     public void simpleInitApp() {
         campo = new Vector3f(100, 30, 100);
@@ -37,7 +35,7 @@ public class Demo extends SimpleApplication {
 
         Vector3f cam_position = new Vector3f(0, 0, 50);
         cam.setLocation(cam_position);
-        flyCam.setMoveSpeed(8);
+        flyCam.setMoveSpeed(10);
 
         array_sphere = new ArrayList<>();
         array_line = new ArrayList<>();
@@ -47,7 +45,7 @@ public class Demo extends SimpleApplication {
             Geometry sphere = sphereWithTexture(
                     30,
                     30,
-                    0.1f,
+                    0.5f,
                     sphere_position,
                     null,
                     new ColorRGBA(0f / 255f, 96f / 255f, 255f / 255f, 1f)
