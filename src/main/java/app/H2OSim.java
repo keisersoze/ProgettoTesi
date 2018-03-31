@@ -1,7 +1,10 @@
 package app;
 
-import app.core.scheduler.impl.DefaultScheduler;
-import app.stats.impl.BaseCollector;
+import app.core.scheduler.DefaultScheduler;
+import app.stats.BaseCollector;
+import com.jme3.material.Material;
+import com.jme3.math.ColorRGBA;
+import com.jme3.scene.Geometry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,16 +22,29 @@ public class H2OSim {
         return ourInstance;
     }
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws InterruptedException {
         if (DEMO_MODE) {
             Demo d = new Demo();
             d.start();
 
+            while (d.getArray_line() == null || !d.isCharged()) {
+                Thread.sleep(0, 1);
+            }
+
+            // Proviamo a fare un po' di discoteca
+            int i = 0;
+            while (i++ != 5000) {
+                Material lineMaterial = new Material(d.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
+
+                lineMaterial.setColor("Color", ColorRGBA.randomColor());
+                Geometry geo = d.getArray_line().get((int) (Math.random() * d.getArray_line().size()));
+                geo.setMaterial(lineMaterial);
+                Thread.sleep(30);
+            }
         } else {
             //inizializzazione
             BaseCollector collector = new BaseCollector();
-            List<Thread> istances = new ArrayList();
+            List<Thread> istances = new ArrayList<>();
 
             //avvio dei thread
             for (int i = 0; i < NTHREADS; i++) {
