@@ -1,9 +1,9 @@
-package app.core.actions.impl;
+package app.core.actions.impl.logic;
 
 import app.SimContext;
 import app.core.actions.Action;
 
-public class StartTransmission implements Action {
+public class UpdateSNR implements Action {
 
     @Override
     public void execute(SimContext context) {

@@ -1,13 +1,13 @@
 package app.model.impl;
 
-import app.model.Transmission;
+import app.model.Frame;
 
-public class BaseTransmission implements Transmission {
+public class BaseFrame implements Frame {
     private BaseSensor sender;
     private BaseSensor receiver;
     private double snr;
 
-    public BaseTransmission(BaseSensor sender, BaseSensor receiver) {
+    public BaseFrame(BaseSensor sender, BaseSensor receiver) {
         this.sender = sender;
         this.receiver = receiver;
     }

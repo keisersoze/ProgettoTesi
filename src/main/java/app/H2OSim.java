@@ -1,7 +1,11 @@
 package app;
 
-import app.core.scheduler.DefaultScheduler;
-import app.stats.BaseCollector;
+
+import app.core.scheduler.impl.DefaultScheduler;
+import app.model.Sensor;
+import app.model.impl.BaseSensor;
+import app.model.impl.V3FSensor;
+import app.stats.impl.BaseCollector;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.scene.Geometry;
@@ -15,7 +19,7 @@ public class H2OSim {
     public static final int NTHREADS = 10;
     public static final int NEVENTS = 100;
     public static final double SAMPLING_INTERVAL = 50; // descrive il tempo che intercorre i campionamenti per la statistiche
-    public static final boolean DEMO_MODE = true;
+    public static final boolean DEMO_MODE = false;
     private static H2OSim ourInstance = new H2OSim();
 
     public static H2OSim getInstance() {
@@ -23,6 +27,17 @@ public class H2OSim {
     }
 
     public static void main(String[] args) throws InterruptedException {
+
+        Sensor s1,s2,s3,s4;
+        s1= new V3FSensor(3,3,3);
+        s2= new V3FSensor(0,0,0);
+
+        s3= new BaseSensor(3,3,3);
+        s4= new BaseSensor(0,0,0);
+
+        System.out.println(s1.getEuclideanDistance(s2));
+        System.out.println(s3.getEuclideanDistance(s4));
+
         if (DEMO_MODE) {
             Demo d = new Demo();
             d.start();

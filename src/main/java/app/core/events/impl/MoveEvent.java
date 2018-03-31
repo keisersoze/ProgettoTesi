@@ -1,8 +1,8 @@
 package app.core.events.impl;
 
 import app.SimContext;
-import app.core.actions.impl.MoveSensors;
-import app.core.actions.impl.UpdateSNR;
+import app.core.actions.impl.logic.MoveSensors;
+import app.core.actions.impl.logic.UpdateSNR;
 
 public class MoveEvent extends BaseEvent {
 

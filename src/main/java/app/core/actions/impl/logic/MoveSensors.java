@@ -1,4 +1,4 @@
-package app.core.actions.impl;
+package app.core.actions.impl.logic;
 
 import app.SimContext;
 import app.core.actions.Action;

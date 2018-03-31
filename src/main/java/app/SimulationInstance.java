@@ -3,18 +3,23 @@ package app;
 import app.core.events.Event;
 import app.core.events.impl.StatisticsEvent;
 import app.core.scheduler.Scheduler;
+import app.model.Sensor;
 import app.stats.Collector;
+
+import java.util.List;
 
 public class SimulationInstance implements Runnable, SimContext {
 
     private final Scheduler scheduler;
     private final Collector collector;
+    private final List<Sensor> sensors;
     private double sim_time;
 
     public SimulationInstance(Collector collector, Scheduler scheduler) {
         this.collector = collector;
         this.scheduler = scheduler;
         sim_time = 0.0;
+        sensors = null;
     }
 
 
@@ -44,6 +49,11 @@ public class SimulationInstance implements Runnable, SimContext {
 
     public double getSim_time() {
         return sim_time;
+    }
+
+    @Override
+    public List<Sensor> getSensors() {
+        return null;
     }
 
     public Collector getCollector() {

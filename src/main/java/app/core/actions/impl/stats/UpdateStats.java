@@ -1,4 +1,4 @@
-package app.core.actions.impl;
+package app.core.actions.impl.stats;
 
 import app.SimContext;
 import app.core.actions.Action;

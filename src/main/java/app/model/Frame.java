@@ -1,5 +1,5 @@
 package app.model;
 
-public interface Transmission {
+public interface Frame {
     void updateSnr(double x);
 }

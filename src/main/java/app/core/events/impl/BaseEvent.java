@@ -2,7 +2,7 @@ package app.core.events.impl;
 
 import app.SimContext;
 import app.core.actions.Action;
-import app.core.actions.impl.RescheduleEvent;
+import app.core.actions.impl.utility.RescheduleEvent;
 import app.core.events.Event;
 
 import java.util.ArrayList;

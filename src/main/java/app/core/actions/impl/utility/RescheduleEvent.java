@@ -1,4 +1,4 @@
-package app.core.actions.impl;
+package app.core.actions.impl.utility;
 
 import app.SimContext;
 import app.H2OSim;

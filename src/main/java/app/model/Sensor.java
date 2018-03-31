@@ -1,16 +1,16 @@
 package app.model;
 
+import com.jme3.math.Vector3f;
+
 import java.util.List;
 
 public interface Sensor {
 
-    double[] getPosVector();
+    float getX();
 
-    double getX();
+    float getY();
 
-    double getY();
-
-    double getZ();
+    float getZ();
 
     List<Sensor> getNeighbors();
 
