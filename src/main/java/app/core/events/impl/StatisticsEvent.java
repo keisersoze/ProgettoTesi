@@ -8,6 +8,6 @@ public class StatisticsEvent extends BaseEvent implements Event {
 
     public StatisticsEvent(double time, SimContext context) {
         super(time, context);
-        addListener(new UpdateStats());
+        addAction(new UpdateStats());
     }
 }

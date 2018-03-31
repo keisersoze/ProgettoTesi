@@ -47,7 +47,7 @@ public class SimulationInstance implements Runnable, SimContext {
         return scheduler;
     }
 
-    public double getSim_time() {
+    public double getSimTime() {
         return sim_time;
     }
 

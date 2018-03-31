@@ -9,7 +9,7 @@ import java.util.List;
 public interface SimContext {
     Scheduler getScheduler();
     Collector getCollector();
-    double getSim_time();
+    double getSimTime();
     List<Sensor> getSensors();
 
 }

@@ -1,6 +1,5 @@
 package app.core.actions.impl.utility;
 
-import app.H2OSim;
 import app.SimContext;
 import app.core.actions.Action;
 import app.core.events.Event;
@@ -12,11 +11,11 @@ public class RescheduleExpRandom implements Action {
 
     private static final MersenneTwister MERSENNE_TWISTER = new MersenneTwister();
 
-    double rate;
+    float rate;
     Event e;
 
 
-    public RescheduleExpRandom(double rate, Event e) {
+    public RescheduleExpRandom(float rate, Event e) {
         this.rate = rate;
         this.e = e;
     }
@@ -24,8 +23,7 @@ public class RescheduleExpRandom implements Action {
     @Override
     public void execute(SimContext context) {
 
-
-        e.setTime(-log(MERSENNE_TWISTER.nextDouble()) / rate + H2OSim.SAMPLING_INTERVAL);
+        e.updateTime(-log(MERSENNE_TWISTER.nextDouble()) / rate);
         context.getScheduler().addEvent(e);
 
     }
