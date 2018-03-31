@@ -1,7 +1,7 @@
 package app;
 
-import app.core.scheduler.DefaultScheduler;
-import app.stats.BaseCollector;
+import app.core.scheduler.impl.DefaultScheduler;
+import app.stats.impl.BaseCollector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ public class H2OSim {
     public static final int NTHREADS = 10;
     public static final int NEVENTS = 100;
     public static final double SAMPLING_INTERVAL = 50; // descrive il tempo che intercorre i campionamenti per la statistiche
-    public static final boolean DEMO_MODE = false;
+    public static final boolean DEMO_MODE = true;
     private static H2OSim ourInstance = new H2OSim();
 
     public static H2OSim getInstance() {

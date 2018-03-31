@@ -1,14 +1,14 @@
 package app;
 
 import app.core.events.Event;
-import app.core.events.StatisticsEvent;
-import app.core.scheduler.DefaultScheduler;
+import app.core.events.impl.StatisticsEvent;
 import app.core.scheduler.Scheduler;
 import app.stats.Collector;
 
 public class SimulationInstance implements Runnable, SimContext {
-    Scheduler scheduler;
-    private Collector collector;
+
+    private final Scheduler scheduler;
+    private final Collector collector;
     private double sim_time;
 
     public SimulationInstance(Collector collector, Scheduler scheduler) {
