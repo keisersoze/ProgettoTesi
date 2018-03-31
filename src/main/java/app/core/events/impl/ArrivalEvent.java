@@ -5,9 +5,9 @@ import app.core.actions.impl.logic.HandleArrival;
 import app.core.actions.impl.utility.RescheduleExpRandom;
 
 public class ArrivalEvent extends BaseEvent {
-    public ArrivalEvent(double time, SimContext context, float rate) {
+    public ArrivalEvent(double time, SimContext context) {
         super(time, context);
         addAction(new HandleArrival());
-        addAction(new RescheduleExpRandom(rate,this));
+        addAction(new RescheduleExpRandom(this));
     }
 }

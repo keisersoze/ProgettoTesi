@@ -42,4 +42,11 @@ public class V3FSensor implements Sensor{
         vs2.add(s.getX(),s.getY(),s.getZ());
         return posVector.distance(vs2);
     }
+
+    @Override
+    public boolean isSink() {
+        return false;
+    }
+
+
 }

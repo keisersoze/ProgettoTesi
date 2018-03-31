@@ -9,17 +9,26 @@ import app.stats.impl.BaseCollector;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.scene.Geometry;
+import org.apache.commons.math3.random.MersenneTwister;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class H2OSim {
+
     //parametri simulazione
+    public static final int MU = 3;
+    public static final int LAMDA = 3;
     public static final int NTHREADS = 10;
     public static final int NEVENTS = 100;
     public static final double SAMPLING_INTERVAL = 50; // descrive il tempo che intercorre i campionamenti per la statistiche
     public static final boolean DEMO_MODE = false;
+
+    //risorse condivise
+    public static final MersenneTwister MERSENNE_TWISTER = new MersenneTwister();
+
+    //pattern singleton per avere accesso alle risorse condivise
     private static H2OSim ourInstance = new H2OSim();
 
     public static H2OSim getInstance() {
