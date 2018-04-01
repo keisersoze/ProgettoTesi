@@ -1,6 +1,5 @@
 package app.stats;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface Collector {

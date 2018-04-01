@@ -8,8 +8,11 @@ import java.util.List;
 
 public interface SimContext {
     Scheduler getScheduler();
+
     Collector getCollector();
+
     double getSim_time();
+
     List<Sensor> getSensors();
 
 }

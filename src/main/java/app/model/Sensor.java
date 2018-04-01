@@ -1,7 +1,5 @@
 package app.model;
 
-import com.jme3.math.Vector3f;
-
 import java.util.List;
 
 public interface Sensor {
@@ -11,6 +9,14 @@ public interface Sensor {
     float getY();
 
     float getZ();
+
+    void setX(float x);
+
+    void setY(float y);
+
+    void setZ(float z);
+
+    void setPosition(float x, float y, float z);
 
     List<Sensor> getNeighbors();
 

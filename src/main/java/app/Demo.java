@@ -1,5 +1,8 @@
 package app;
 
+import app.core.scheduler.Scheduler;
+import app.model.Sensor;
+import app.stats.Collector;
 import com.jme3.app.SimpleApplication;
 import com.jme3.light.DirectionalLight;
 import com.jme3.material.Material;
@@ -13,15 +16,27 @@ import com.jme3.scene.Node;
 import com.jme3.scene.VertexBuffer;
 import com.jme3.scene.shape.Sphere;
 import com.jme3.texture.Texture;
+import javafx.util.Pair;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
-public class Demo extends SimpleApplication {
+public class Demo extends SimpleApplication implements SimContext{
 
-    Vector3f campo;
-    private ArrayList<Geometry> array_sphere;
-    private ArrayList<Geometry> array_line;
+    private Vector3f campo;
     private boolean charged = false;
+    private HashMap<Pair, Geometry> lines = new HashMap<>();
+    private final Scheduler scheduler;
+    private final Collector collector;
+    private final List<Sensor> sensors;
+    private double sim_time;
+
+    public Demo (Collector collector, Scheduler scheduler) {
+        this.collector = collector;
+        this.scheduler = scheduler;
+        sim_time = 0.0;
+        sensors = null;
+    }
 
     public void simpleInitApp() {
         campo = new Vector3f(100, 30, 100);
@@ -33,44 +48,11 @@ public class Demo extends SimpleApplication {
         Node pivot = new Node("pivot");
         rootNode.attachChild(pivot); // put this node in the scene
 
-        Vector3f cam_position = new Vector3f(0, 0, 50);
+        Vector3f cam_position = new Vector3f(0, 50, 0);
         cam.setLocation(cam_position);
         flyCam.setMoveSpeed(10);
 
-        array_sphere = new ArrayList<>();
-        array_line = new ArrayList<>();
-
-        for (int i = 0; i < 60; i++) {
-            Vector3f sphere_position = new Vector3f(random(-campo.x, campo.x), random(-campo.y, campo.y), random(-campo.z, campo.z));
-            Geometry sphere = sphereWithTexture(
-                    30,
-                    30,
-                    0.5f,
-                    sphere_position,
-                    null,
-                    new ColorRGBA(0f / 255f, 96f / 255f, 255f / 255f, 1f)
-            );
-
-            array_sphere.add(sphere);
-        }
-
-
-        for (Geometry sphere_1 : array_sphere) {
-            for (Geometry sphere_2 : array_sphere) {
-                array_line.add(
-                        linkBetweenGeometries(sphere_1, sphere_2, new ColorRGBA(15f / 255f, 221f / 255f, 25f / 255f, 0.13f))
-                );
-            }
-        }
-
-        /* Attach the two boxes to the *pivot* node. (And transitively to the root node.) */
-        for (Geometry sphere : array_sphere) {
-            pivot.attachChild(sphere);
-        }
-        for (Geometry line : array_line) {
-            pivot.attachChild(line);
-        }
-        grid();
+        grid(true);
         charged = true;
     }
 
@@ -78,9 +60,9 @@ public class Demo extends SimpleApplication {
         return min + (int) (Math.random() * ((max - min) + 1));
     }
 
-    private Geometry sphereWithTexture(int zSamples, int radialSamples, float raggio, Vector3f posizione, String texturePath, ColorRGBA colore) {
+    public Geometry sphereWithTexture(int zSamples, int radialSamples, float radius, Vector3f posizione, String texturePath, ColorRGBA color) {
 
-        Sphere sphere = new Sphere(zSamples, radialSamples, raggio);
+        Sphere sphere = new Sphere(zSamples, radialSamples, radius);
         Geometry sphere_geometry = new Geometry("Sphere", sphere);
 
         sphere_geometry.setLocalTranslation(posizione);
@@ -91,38 +73,48 @@ public class Demo extends SimpleApplication {
             Texture sphere_texture = assetManager.loadTexture(texturePath);
             sphere_material.setTexture("ColorMap", sphere_texture);
         } else {
-            sphere_material.setColor("Color", colore);
+            sphere_material.setColor("Color", color);
         }
 
         sphere_geometry.setMaterial(sphere_material);
         sphere_geometry.updateModelBound();
+        rootNode.attachChild(sphere_geometry);
 
         return sphere_geometry;
     }
 
-    private Geometry linkBetweenGeometries(Geometry g1, Geometry g2, ColorRGBA color) {
+    public Geometry linkBetweenGeometries(Geometry g1, Geometry g2, ColorRGBA color) {
         Vector3f position_1 = g1.getLocalTranslation();
         Vector3f position_2 = g2.getLocalTranslation();
+        Pair<Geometry, Geometry> pair = new Pair<>(g1, g2);
 
-        Mesh lineMesh = new Mesh();
-        lineMesh.setMode(Mesh.Mode.Lines);
-        lineMesh.setBuffer(VertexBuffer.Type.Position, 3, new float[]{position_1.x, position_1.y, position_1.z, position_2.x, position_2.y, position_2.z});
-        lineMesh.setBuffer(VertexBuffer.Type.Index, 2, new short[]{0, 1});
 
-        Geometry lineGeometry = new Geometry("line", lineMesh);
-        Material lineMaterial = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+        if (!lines.containsKey(pair)) {
+            Mesh lineMesh = new Mesh();
+            lineMesh.setMode(Mesh.Mode.Lines);
+            lineMesh.setBuffer(VertexBuffer.Type.Position, 3, new float[]{position_1.x, position_1.y, position_1.z, position_2.x, position_2.y, position_2.z});
+            lineMesh.setBuffer(VertexBuffer.Type.Index, 2, new short[]{0, 1});
 
-        lineMaterial.setColor("Color", color);
-        lineMaterial.getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
+            Geometry lineGeometry = lineGeometry = new Geometry("line", lineMesh);
+            Material lineMaterial = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
 
-        lineGeometry.setMaterial(lineMaterial);
-        lineGeometry.updateModelBound();
-        lineGeometry.setQueueBucket(RenderQueue.Bucket.Translucent);
+            lineMaterial.setColor("Color", color);
+            lineMaterial.getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
 
-        return lineGeometry;
+            lineGeometry.setMaterial(lineMaterial);
+            lineGeometry.updateModelBound();
+            lineGeometry.setQueueBucket(RenderQueue.Bucket.Translucent);
+            rootNode.attachChild(lineGeometry);
+            lines.put(pair, lineGeometry);
+        } else {
+            lines.get(pair).getMaterial().setColor("Color", color);
+            lines.get(pair).getMesh().setBuffer(VertexBuffer.Type.Position, 3, new float[]{position_1.x, position_1.y, position_1.z, position_2.x, position_2.y, position_2.z});
+        }
+
+        return lines.get(pair);
     }
 
-    private void grid() {
+    private void grid(boolean simple) {
         for (float i = -campo.x; i <= campo.x; i += campo.x / 10) {
             for (float j = -campo.y; j <= campo.y; j += campo.y / 10) {
                 rootNode.attachChild(line(
@@ -130,11 +122,13 @@ public class Demo extends SimpleApplication {
                         new Vector3f(i, -j, -campo.z),
                         new ColorRGBA(229, 239, 255, 0.001f))
                 );
-                rootNode.attachChild(line(
-                        new Vector3f(-i, j, -campo.z),
-                        new Vector3f(i, j, -campo.z),
-                        new ColorRGBA(229, 239, 255, 0.001f))
-                );
+                if (!simple) {
+                    rootNode.attachChild(line(
+                            new Vector3f(-i, j, -campo.z),
+                            new Vector3f(i, j, -campo.z),
+                            new ColorRGBA(229, 239, 255, 0.001f))
+                    );
+                }
 
             }
         }
@@ -145,11 +139,13 @@ public class Demo extends SimpleApplication {
                         new Vector3f(campo.x, i, -j),
                         new ColorRGBA(229, 239, 255, 0.001f))
                 );
-                rootNode.attachChild(line(
-                        new Vector3f(campo.x, -i, j),
-                        new Vector3f(campo.x, i, j),
-                        new ColorRGBA(229, 239, 255, 0.001f))
-                );
+                if (!simple) {
+                    rootNode.attachChild(line(
+                            new Vector3f(campo.x, -i, j),
+                            new Vector3f(campo.x, i, j),
+                            new ColorRGBA(229, 239, 255, 0.001f))
+                    );
+                }
             }
         }
         for (float i = -campo.x; i <= campo.x; i += campo.x / 10) {
@@ -159,11 +155,13 @@ public class Demo extends SimpleApplication {
                         new Vector3f(-i, -campo.y, j),
                         new ColorRGBA(229, 239, 255, 0.001f))
                 );
-                rootNode.attachChild(line(
-                        new Vector3f(i, -campo.y, -j),
-                        new Vector3f(i, -campo.y, j),
-                        new ColorRGBA(229, 239, 255, 0.001f))
-                );
+                if (!simple) {
+                    rootNode.attachChild(line(
+                            new Vector3f(i, -campo.y, -j),
+                            new Vector3f(i, -campo.y, j),
+                            new ColorRGBA(229, 239, 255, 0.001f))
+                    );
+                }
             }
         }
 
@@ -184,15 +182,27 @@ public class Demo extends SimpleApplication {
         return lineGeometry;
     }
 
-    public ArrayList<Geometry> getArray_sphere() {
-        return array_sphere;
-    }
-
-    public ArrayList<Geometry> getArray_line() {
-        return array_line;
-    }
-
     public boolean isCharged() {
         return charged;
+    }
+
+    @Override
+    public Scheduler getScheduler() {
+        return scheduler;
+    }
+
+    @Override
+    public Collector getCollector() {
+        return collector;
+    }
+
+    @Override
+    public double getSim_time() {
+        return sim_time;
+    }
+
+    @Override
+    public List<Sensor> getSensors() {
+        return sensors;
     }
 }

@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BaseEvent implements Event, Comparable<Event> {
+    SimContext context;
     private double time;
     private List<Action> actionList;
-    SimContext context;
 
     public BaseEvent(double time, SimContext context) {
         this.time = time;
@@ -35,18 +35,18 @@ public class BaseEvent implements Event, Comparable<Event> {
         return time;
     }
 
-    @Override
-    public SimContext getContext() {
-        return context;
-    }
-
     public void setTime(double time) {
         this.time = time;
     }
 
     @Override
+    public SimContext getContext() {
+        return context;
+    }
+
+    @Override
     public void setInterval(double interval) {
-            addListener(new RescheduleEvent(this,interval));
+        addListener(new RescheduleEvent(this, interval));
     }
 
     /**

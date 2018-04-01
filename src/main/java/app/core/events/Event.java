@@ -22,15 +22,14 @@ public interface Event {
     /**
      *
      */
-    void setInterval(double interval);
-
-    /**
-     *
-     */
     void setTime(double time);
 
     /**
      *
+     */
+    void setInterval(double interval);
+
+    /**
      * @return
      */
     SimContext getContext();

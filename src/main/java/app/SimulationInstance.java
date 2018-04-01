@@ -28,7 +28,7 @@ public class SimulationInstance implements Runnable, SimContext {
         //inizializzazione
 
         // creo l'evento che richiama la funzionalità di campionamento per le statistiche
-        Event stats_evt = new StatisticsEvent(0,this);
+        Event stats_evt = new StatisticsEvent(0, this);
 
         //imposto gli eventi periodici
         stats_evt.setInterval(50);

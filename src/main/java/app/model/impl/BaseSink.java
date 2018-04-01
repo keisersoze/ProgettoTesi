@@ -3,9 +3,9 @@ package app.model.impl;
 import app.model.Sink;
 
 public class BaseSink implements Sink {
-    private static final int N_DIMENSIONS =3;
+    private static final int N_DIMENSIONS = 3;
 
-    private float [] posVector;
+    private float[] posVector;
 
     public BaseSink(float x, float y, float z) {
         posVector = new float[N_DIMENSIONS];
@@ -13,7 +13,6 @@ public class BaseSink implements Sink {
         this.posVector[2] = y;
         this.posVector[3] = z;
     }
-
 
 
     @Override
