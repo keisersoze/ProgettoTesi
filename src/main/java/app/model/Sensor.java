@@ -6,13 +6,13 @@ public interface Sensor {
 
     float getX();
 
-    float getY();
-
-    float getZ();
-
     void setX(float x);
 
+    float getY();
+
     void setY(float y);
+
+    float getZ();
 
     void setZ(float z);
 

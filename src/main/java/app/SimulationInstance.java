@@ -3,7 +3,6 @@ package app;
 import app.core.events.Event;
 import app.core.events.impl.StatisticsEvent;
 import app.core.scheduler.Scheduler;
-import app.model.Frame;
 import app.model.Sensor;
 import app.stats.Collector;
 
@@ -27,7 +26,7 @@ public class SimulationInstance implements Runnable, SimContext {
         sim_time = 0.0;
         sensors = new ArrayList<>();
 
-        nframes=0;
+        nframes = 0;
     }
 
 

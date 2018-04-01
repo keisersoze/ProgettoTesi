@@ -5,7 +5,7 @@ import app.model.Sensor;
 import java.util.List;
 
 public class BaseSink implements Sensor {
-    private static final int N_DIMENSIONS =3;
+    private static final int N_DIMENSIONS = 3;
 
     private float[] posVector;
 
@@ -23,13 +23,35 @@ public class BaseSink implements Sensor {
     }
 
     @Override
+    public void setX(float x) {
+        posVector[1] = x;
+    }
+
+    @Override
     public float getY() {
         return posVector[2];
     }
 
     @Override
+    public void setY(float y) {
+        posVector[2] = y;
+    }
+
+    @Override
     public float getZ() {
         return posVector[3];
+    }
+
+    @Override
+    public void setZ(float z) {
+        posVector[3] = z;
+    }
+
+    @Override
+    public void setPosition(float x, float y, float z) {
+        posVector[1] = x;
+        posVector[2] = y;
+        posVector[3] = z;
     }
 
     @Override

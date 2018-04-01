@@ -15,7 +15,7 @@ public class BaseEvent implements Event, Comparable<Event> {
 
     public BaseEvent(double time, SimContext context) {
         this.context = context;
-        this.time = context.getSimTime()+time;
+        this.time = context.getSimTime() + time;
         actionList = new ArrayList();
     }
 
@@ -35,22 +35,18 @@ public class BaseEvent implements Event, Comparable<Event> {
         return time;
     }
 
-    public void setTime(double time) {
-        this.time = time;
-    }
-
     @Override
     public SimContext getContext() {
         return context;
     }
 
     public void updateTime(double time) {
-        this.time= context.getSimTime()+time;
+        this.time = context.getSimTime() + time;
     }
 
     @Override
     public void setInterval(double interval) {
-            addAction(new RescheduleEvent(this,interval));
+        addAction(new RescheduleEvent(this, interval));
     }
 
     /**

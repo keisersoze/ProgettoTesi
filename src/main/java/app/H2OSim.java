@@ -2,15 +2,11 @@ package app;
 
 
 import app.core.scheduler.impl.DefaultScheduler;
-import app.model.Sensor;
 import app.model.impl.V3FSensor;
 import app.stats.impl.BaseCollector;
-import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
-import com.jme3.math.Vector3f;
-import com.jme3.scene.Geometry;
-import org.apache.commons.math3.random.MersenneTwister;
 import com.jme3.scene.Spatial;
+import org.apache.commons.math3.random.MersenneTwister;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,21 +21,19 @@ public class H2OSim {
     public static final int NTHREADS = 10;
     public static final int NEVENTS = 100;
     public static final double SAMPLING_INTERVAL = 50; // descrive il tempo che intercorre i campionamenti per la statistiche
-    public static ArrayList<V3FSensor> arraySensor;
-    public static final boolean DEMO_MODE = false;
-
+    public static final boolean DEMO_MODE = true;
     //risorse condivise
     public static final MersenneTwister MERSENNE_TWISTER = new MersenneTwister();
-
+    public static ArrayList<V3FSensor> arraySensor;
+    public static Demo d;
     //pattern singleton per avere accesso alle risorse condivise
     private static H2OSim ourInstance = new H2OSim();
-    public static Demo d;
+
     public static H2OSim getInstance() {
         return ourInstance;
     }
 
     public static void main(String[] args) throws InterruptedException {
-
 
 
         if (DEMO_MODE) {
@@ -63,7 +57,7 @@ public class H2OSim {
             /* Muove i sensori avanti e indietro all'infinito*/
             double i = 0;
             while (true) {
-                s1.setPosition((float)Math.cos(i) * 5 , 0, (float)Math.sin(i) * 5);                                         // Offset dal centro
+                s1.setPosition((float) Math.cos(i) * 5, 0, (float) Math.sin(i) * 5);                                         // Offset dal centro
                 d.enqueue((Callable<Spatial>) () -> d.linkBetweenGeometries(s1.getGeometry(), s2.getGeometry(), ColorRGBA.Green));    // Crea una line
                 Thread.sleep(16, 666);                                                                                  //  Velocità di refresh
                 i += 0.05;                                                                                                           //  Velocità di rotazione

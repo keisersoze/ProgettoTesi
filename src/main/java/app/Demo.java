@@ -21,17 +21,17 @@ import javafx.util.Pair;
 import java.util.HashMap;
 import java.util.List;
 
-public class Demo extends SimpleApplication implements SimContext{
+public class Demo extends SimpleApplication implements SimContext {
 
-    private Vector3f campo;
-    private boolean charged = false;
-    private HashMap<Pair, Geometry> lines = new HashMap<>();
     private final Scheduler scheduler;
     private final Collector collector;
     private final List<Sensor> sensors;
+    private Vector3f campo;
+    private boolean charged = false;
+    private HashMap<Pair, Geometry> lines = new HashMap<>();
     private double sim_time;
 
-    public Demo (Collector collector, Scheduler scheduler) {
+    public Demo(Collector collector, Scheduler scheduler) {
         this.collector = collector;
         this.scheduler = scheduler;
         sim_time = 0.0;
@@ -197,12 +197,17 @@ public class Demo extends SimpleApplication implements SimContext{
     }
 
     @Override
-    public double getSim_time() {
+    public double getSimTime() {
         return sim_time;
     }
 
     @Override
     public List<Sensor> getSensors() {
         return sensors;
+    }
+
+    @Override
+    public void frameArrived() {
+
     }
 }

@@ -5,7 +5,6 @@ import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Spatial;
-import org.apache.commons.math3.ml.distance.EuclideanDistance;
 
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -68,7 +67,7 @@ public class V3FSensor implements Sensor {
         });
     }
 
-    public void setPositionVector3f(Vector3f position){
+    public void setPositionVector3f(Vector3f position) {
         setPosition(position.x, position.y, position.z);
     }
 

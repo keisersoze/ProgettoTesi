@@ -1,6 +1,5 @@
 package app.model.impl;
 
-import app.model.Frame;
 import app.model.Sensor;
 import app.model.Trasmission;
 

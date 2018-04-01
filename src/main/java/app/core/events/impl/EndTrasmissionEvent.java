@@ -8,7 +8,7 @@ import app.model.Frame;
 public class EndTrasmissionEvent extends BaseEvent {
     public EndTrasmissionEvent(double time, SimContext context, Frame frame) {
         super(time, context);
-        addAction(new HandleEndTrasmission(context,frame));
+        addAction(new HandleEndTrasmission(context, frame));
         addAction(new UpdateSNR());
     }
 }

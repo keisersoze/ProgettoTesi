@@ -22,7 +22,7 @@ public interface Event {
     /**
      *
      */
-    void setTime(double time);
+    void setInterval(double interval);
 
 
     /**

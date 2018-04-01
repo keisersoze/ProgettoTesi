@@ -18,14 +18,14 @@ public class HandleEndTrasmission implements Action {
     @Override
     public void execute(SimContext context) {
         if (frame.getCurrentTransmission().isSuccessfull()) {//se la trasmissione è andata a buon fine
-            if (!frame.getCurrentTransmission().getReceiver().isSink()){ // se non è ancora arrivato
+            if (!frame.getCurrentTransmission().getReceiver().isSink()) { // se non è ancora arrivato
 
                 frame.setCurrentOwner(frame.getCurrentTransmission().getReceiver()); // il frame arriva a destinazione
                 frame.setCurrentTransmission(null);// nessuna trasmissione è più associata al frame
 
-                context.getScheduler().addEvent(new TrasmissionEvent(0,context,frame));
+                context.getScheduler().addEvent(new TrasmissionEvent(0, context, frame));
 
-            }else {
+            } else {
                 context.frameArrived();// aggiorna il context segnalando che un frame è arrivato
             }
         }

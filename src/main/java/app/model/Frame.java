@@ -7,11 +7,11 @@ public interface Frame {
 
     public Trasmission getCurrentTransmission();
 
+    public void setCurrentTransmission(Trasmission currentTransmission);
+
     public Sensor getSender();
 
     public Sensor getCurrentOwner();
-
-    public void setCurrentTransmission(Trasmission currentTransmission);
 
     public void setCurrentOwner(Sensor currentOwner);
 
