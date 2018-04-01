@@ -1,9 +1,11 @@
 package app.model.impl;
 
-import app.model.Sink;
+import app.model.Sensor;
 
-public class BaseSink implements Sink {
-    private static final int N_DIMENSIONS = 3;
+import java.util.List;
+
+public class BaseSink implements Sensor {
+    private static final int N_DIMENSIONS =3;
 
     private float[] posVector;
 
@@ -28,5 +30,20 @@ public class BaseSink implements Sink {
     @Override
     public float getZ() {
         return posVector[3];
+    }
+
+    @Override
+    public List<Sensor> getNeighbors() {
+        return null;
+    }
+
+    @Override
+    public double getEuclideanDistance(Sensor s) {
+        return 0;
+    }
+
+    @Override
+    public boolean isSink() {
+        return true;
     }
 }

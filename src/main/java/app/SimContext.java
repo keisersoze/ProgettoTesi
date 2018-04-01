@@ -1,6 +1,7 @@
 package app;
 
 import app.core.scheduler.Scheduler;
+import app.model.Frame;
 import app.model.Sensor;
 import app.stats.Collector;
 
@@ -10,9 +11,8 @@ public interface SimContext {
     Scheduler getScheduler();
 
     Collector getCollector();
-
-    double getSim_time();
-
+    double getSimTime();
     List<Sensor> getSensors();
+    void frameArrived();
 
 }

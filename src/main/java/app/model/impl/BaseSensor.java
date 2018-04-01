@@ -77,4 +77,9 @@ public class BaseSensor implements Sensor {
 
         return EUCLIDEAN_DISTANCE.compute(vs1, vs2);
     }
+
+    @Override
+    public boolean isSink() {
+        return false;
+    }
 }

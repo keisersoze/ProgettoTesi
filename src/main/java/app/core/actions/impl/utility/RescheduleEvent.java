@@ -17,7 +17,7 @@ public class RescheduleEvent implements Action {
     @Override
     public void execute(SimContext context) {
         //aggiunge il prossimo evento per la raccolta delle stats
-        e.setTime(e.getTime() + H2OSim.SAMPLING_INTERVAL);
+        e.updateTime(H2OSim.SAMPLING_INTERVAL);
         context.getScheduler().addEvent(e);
     }
 }

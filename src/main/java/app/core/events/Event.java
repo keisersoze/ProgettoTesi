@@ -5,7 +5,7 @@ import app.core.actions.Action;
 
 public interface Event {
 
-    void addListener(Action action);
+    void addAction(Action action);
 
     /**
      * chiama tutte le callback associate all'evento
@@ -24,10 +24,11 @@ public interface Event {
      */
     void setTime(double time);
 
+
     /**
      *
      */
-    void setInterval(double interval);
+    void updateTime(double time);
 
     /**
      * @return

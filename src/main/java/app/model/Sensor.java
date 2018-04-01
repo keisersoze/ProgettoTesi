@@ -22,4 +22,7 @@ public interface Sensor {
 
     double getEuclideanDistance(Sensor s);
 
+    boolean isSink();
+
+
 }

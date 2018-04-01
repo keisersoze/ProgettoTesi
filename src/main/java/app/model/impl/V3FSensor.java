@@ -94,4 +94,11 @@ public class V3FSensor implements Sensor {
     public Geometry getGeometry() {
         return sensor;
     }
+
+    @Override
+    public boolean isSink() {
+        return false;
+    }
+
+
 }

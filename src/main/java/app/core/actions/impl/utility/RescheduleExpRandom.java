@@ -10,22 +10,17 @@ import static org.apache.commons.math3.util.FastMath.log;
 
 public class RescheduleExpRandom implements Action {
 
-    private static final MersenneTwister MERSENNE_TWISTER = new MersenneTwister();
-
-    double rate;
     Event e;
 
 
-    public RescheduleExpRandom(double rate, Event e) {
-        this.rate = rate;
+    public RescheduleExpRandom( Event e) {
         this.e = e;
     }
 
     @Override
     public void execute(SimContext context) {
 
-
-        e.setTime(-log(MERSENNE_TWISTER.nextDouble()) / rate + H2OSim.SAMPLING_INTERVAL);
+        e.updateTime(-log(H2OSim.MERSENNE_TWISTER.nextDouble()) / H2OSim.LAMDA);
         context.getScheduler().addEvent(e);
 
     }

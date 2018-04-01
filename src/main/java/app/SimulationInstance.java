@@ -3,9 +3,11 @@ package app;
 import app.core.events.Event;
 import app.core.events.impl.StatisticsEvent;
 import app.core.scheduler.Scheduler;
+import app.model.Frame;
 import app.model.Sensor;
 import app.stats.Collector;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SimulationInstance implements Runnable, SimContext {
@@ -15,11 +17,17 @@ public class SimulationInstance implements Runnable, SimContext {
     private final List<Sensor> sensors;
     private double sim_time;
 
+    //Dati statistici che vengono utilizzati dal collector
+    private int nframes; // numero di frame arrivati ai sink
+
     public SimulationInstance(Collector collector, Scheduler scheduler) {
+
         this.collector = collector;
         this.scheduler = scheduler;
         sim_time = 0.0;
-        sensors = null;
+        sensors = new ArrayList<>();
+
+        nframes=0;
     }
 
 
@@ -47,7 +55,7 @@ public class SimulationInstance implements Runnable, SimContext {
         return scheduler;
     }
 
-    public double getSim_time() {
+    public double getSimTime() {
         return sim_time;
     }
 
@@ -59,4 +67,13 @@ public class SimulationInstance implements Runnable, SimContext {
     public Collector getCollector() {
         return collector;
     }
+
+
+    // metodi per l'update dei dati statistici
+
+    @Override
+    public void frameArrived() {
+        nframes++;
+    }
+
 }
