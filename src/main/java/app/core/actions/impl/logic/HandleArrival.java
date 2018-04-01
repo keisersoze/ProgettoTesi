@@ -12,13 +12,11 @@ import java.util.List;
 
 public class HandleArrival implements Action {
 
-    private static final MersenneTwister MERSENNE_TWISTER = new MersenneTwister();
-
     @Override
     public void execute(SimContext context) {
 
         List<Sensor> sensors= context.getSensors();
-        Sensor s = sensors.get(MERSENNE_TWISTER.nextInt(sensors.size())); //prendo un sensore a caso
+        Sensor s = sensors.get(H2OSim.MERSENNE_TWISTER.nextInt(sensors.size())); //prendo un sensore a caso
 
         context.getScheduler().addEvent(new TrasmissionEvent(0,context,new BaseFrame(H2OSim.MU,s,s)));
 

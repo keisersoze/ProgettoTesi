@@ -11,7 +11,7 @@ import app.model.impl.BaseTrasmission;
 public class TrasmissionEvent extends BaseEvent{
     public TrasmissionEvent(double time, SimContext context,Frame frame) {
         super(time, context);
-        addAction(new HandleTrasmission(frame,this));
+        addAction(new HandleTrasmission(frame));
         addAction(new UpdateSNR());
     }
 }
