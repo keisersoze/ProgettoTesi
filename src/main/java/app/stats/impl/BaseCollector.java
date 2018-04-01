@@ -12,7 +12,7 @@ public class BaseCollector implements Collector {
     private Map<String, List<Sample>> sources;
 
     public BaseCollector() {
-        sources = new HashMap();
+        sources = new HashMap<>();
 
     }
 

@@ -1,5 +1,6 @@
 package app.model.impl;
 
+import app.Canvas;
 import app.model.Sensor;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
@@ -8,18 +9,16 @@ import com.jme3.scene.Spatial;
 
 import java.util.List;
 import java.util.concurrent.Callable;
-
-import static app.H2OSim.d;
+import java.util.concurrent.ExecutionException;
 
 public class V3FSensor implements Sensor {
-    private static final int N_DIMENSIONS = 3;
-
     private Geometry sensor;
+    private Canvas canvas;
 
-    public V3FSensor(float x, float y, float z) {
+    public V3FSensor(float x, float y, float z, Canvas canvas) {
         Vector3f position = new Vector3f(x, y, z);
-
-        sensor = d.sphereWithTexture(
+        this.canvas = canvas;
+        sensor = canvas.sphereWithTexture(
                 30,
                 30,
                 0.5f,
@@ -61,16 +60,21 @@ public class V3FSensor implements Sensor {
 
     @Override
     public void setPosition(float x, float y, float z) {
-        d.enqueue((Callable<Spatial>) () -> {
-            sensor.setLocalTranslation(new Vector3f(x, y, z));
-            return sensor;
-        });
+        try {
+            canvas.enqueue((Callable<Spatial>) () -> {
+                sensor.setLocalTranslation(new Vector3f(x, y, z));
+                return sensor;
+            }).get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setPositionVector3f(Vector3f position) {
         setPosition(position.x, position.y, position.z);
     }
 
+    @Override
     public Vector3f getPosition() {
         return sensor.getLocalTranslation();
     }
@@ -86,7 +90,8 @@ public class V3FSensor implements Sensor {
         return sensor.getLocalTranslation().distance(vs2);
     }
 
-    public void offsetPosition(float x, float y, float z) {
+    @Override
+    public void setOffsetPosition(float x, float y, float z) {
         setPositionVector3f(sensor.getLocalTranslation().add(x, y, z));
     }
 

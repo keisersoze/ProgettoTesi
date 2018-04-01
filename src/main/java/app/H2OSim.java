@@ -18,14 +18,14 @@ public class H2OSim {
     //parametri simulazione
     public static final int MU = 3;
     public static final int LAMDA = 3;
-    public static final int NTHREADS = 10;
+    public static final int NTHREADS = 2;
     public static final int NEVENTS = 100;
     public static final double SAMPLING_INTERVAL = 50; // descrive il tempo che intercorre i campionamenti per la statistiche
-    public static final boolean DEMO_MODE = true;
+    public static final boolean CANVAS_MODE = false;
     //risorse condivise
     public static final MersenneTwister MERSENNE_TWISTER = new MersenneTwister();
     public static ArrayList<V3FSensor> arraySensor;
-    public static Demo d;
+    public static Canvas canvas;
     //pattern singleton per avere accesso alle risorse condivise
     private static H2OSim ourInstance = new H2OSim();
 
@@ -36,18 +36,18 @@ public class H2OSim {
     public static void main(String[] args) throws InterruptedException {
 
 
-        if (DEMO_MODE) {
-            d = new Demo(null, null);
+        if (CANVAS_MODE) {
+            canvas = new Canvas(null, null);
             V3FSensor s1, s2;
 
-            d.start();
+            canvas.start();
 
-            while (!d.isCharged()) {
+            while (!canvas.isCharged()) {
                 Thread.sleep(1);
             }
 
-            s1 = new V3FSensor(0, 0, 0);
-            s2 = new V3FSensor(0, 0, 0);
+            s1 = new V3FSensor(0, 0, 0, canvas);
+            s2 = new V3FSensor(0, 0, 0, canvas);
 
             arraySensor = new ArrayList<>();
 
@@ -57,10 +57,11 @@ public class H2OSim {
             /* Muove i sensori avanti e indietro all'infinito*/
             double i = 0;
             while (true) {
-                s1.setPosition((float) Math.cos(i) * 5, 0, (float) Math.sin(i) * 5);                                         // Offset dal centro
-                d.enqueue((Callable<Spatial>) () -> d.linkBetweenGeometries(s1.getGeometry(), s2.getGeometry(), ColorRGBA.Green));    // Crea una line
-                Thread.sleep(16, 666);                                                                                  //  Velocità di refresh
-                i += 0.05;                                                                                                           //  Velocità di rotazione
+                s1.setPosition((float) Math.cos(i) * 5, (float) Math.sin(i) * 5, (float) Math.sin(i) * 5);
+                s2.setPosition((float) Math.cos(i) * 15, (float) Math.sin(i) * 15, (float) Math.sin(i) * 15);
+                canvas.enqueue((Callable<Spatial>) () -> canvas.linkBetweenGeometries(s1.getGeometry(), s2.getGeometry(), ColorRGBA.Green));
+                Thread.sleep(16, 666);
+                i += 0.05;
             }
 
         } else {

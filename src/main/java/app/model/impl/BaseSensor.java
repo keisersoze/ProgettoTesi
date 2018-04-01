@@ -1,6 +1,7 @@
 package app.model.impl;
 
 import app.model.Sensor;
+import com.jme3.math.Vector3f;
 import org.apache.commons.math3.ml.distance.EuclideanDistance;
 
 import java.util.List;
@@ -10,51 +11,51 @@ public class BaseSensor implements Sensor {
     private static final EuclideanDistance EUCLIDEAN_DISTANCE = new EuclideanDistance();
     private static final int N_DIMENSIONS = 3;
 
-    private float[] posVector;
+    private Vector3f position;
 
     public BaseSensor(float x, float y, float z) {
-        posVector = new float[N_DIMENSIONS];
-        this.posVector[0] = x;
-        this.posVector[1] = y;
-        this.posVector[2] = z;
+        position = new Vector3f(x, y, z);
     }
 
 
     @Override
     public float getX() {
-        return posVector[0];
+        return position.x;
     }
 
     @Override
     public void setX(float x) {
-        posVector[0] = x;
+        position.setX(x);
     }
 
     @Override
     public float getY() {
-        return posVector[1];
+        return position.y;
     }
 
     @Override
     public void setY(float y) {
-        posVector[0] = y;
+        position.setY(y);
     }
 
     @Override
     public float getZ() {
-        return posVector[2];
+        return position.z;
     }
 
     @Override
     public void setZ(float z) {
-        posVector[0] = z;
+        position.setZ(z);
     }
 
     @Override
     public void setPosition(float x, float y, float z) {
-        setX(x);
-        setY(y);
-        setZ(z);
+        position.set(x, y, z);
+    }
+
+    @Override
+    public Vector3f getPosition() {
+        return position;
     }
 
     @Override
@@ -64,22 +65,16 @@ public class BaseSensor implements Sensor {
 
     @Override
     public double getEuclideanDistance(Sensor s) {
-
-        double[] vs2 = new double[N_DIMENSIONS];
-        vs2[0] = s.getX();
-        vs2[1] = s.getY();
-        vs2[2] = s.getZ();
-
-        double[] vs1 = new double[N_DIMENSIONS];
-        vs1[0] = (double) posVector[0];
-        vs1[1] = (double) posVector[1];
-        vs1[2] = (double) posVector[2];
-
-        return EUCLIDEAN_DISTANCE.compute(vs1, vs2);
+        return position.distance(s.getPosition());
     }
 
     @Override
     public boolean isSink() {
         return false;
+    }
+
+    @Override
+    public void setOffsetPosition(float x, float y, float z) {
+        position = position.add(x, y, z);
     }
 }

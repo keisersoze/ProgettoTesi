@@ -16,7 +16,7 @@ public class BaseEvent implements Event, Comparable<Event> {
     public BaseEvent(double time, SimContext context) {
         this.context = context;
         this.time = context.getSimTime() + time;
-        actionList = new ArrayList();
+        actionList = new ArrayList<>();
     }
 
     /**

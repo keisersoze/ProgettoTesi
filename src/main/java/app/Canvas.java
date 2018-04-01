@@ -21,7 +21,7 @@ import javafx.util.Pair;
 import java.util.HashMap;
 import java.util.List;
 
-public class Demo extends SimpleApplication implements SimContext {
+public class Canvas extends SimpleApplication implements SimContext {
 
     private final Scheduler scheduler;
     private final Collector collector;
@@ -31,7 +31,7 @@ public class Demo extends SimpleApplication implements SimContext {
     private HashMap<Pair, Geometry> lines = new HashMap<>();
     private double sim_time;
 
-    public Demo(Collector collector, Scheduler scheduler) {
+    public Canvas(Collector collector, Scheduler scheduler) {
         this.collector = collector;
         this.scheduler = scheduler;
         sim_time = 0.0;

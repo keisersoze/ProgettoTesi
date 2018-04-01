@@ -9,7 +9,7 @@ public class DefaultScheduler implements Scheduler {
     private PriorityQueue<Event> eventQueue;
 
     public DefaultScheduler() {
-        this.eventQueue = new PriorityQueue<Event>();
+        this.eventQueue = new PriorityQueue<>();
     }
 
     /**
