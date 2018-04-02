@@ -29,10 +29,12 @@ public interface Sensor {
 
     boolean isSink();
 
+    void setSink(boolean x);
+
     void setOffsetPosition(float x, float y, float z);
 
     Geometry getGeometry();
 
-    void setSink(boolean x);
+    void updatePosition();
 
 }

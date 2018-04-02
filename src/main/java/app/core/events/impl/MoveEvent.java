@@ -1,6 +1,6 @@
 package app.core.events.impl;
 
-import app.SimContext;
+import app.sim.SimContext;
 import app.core.actions.impl.logic.MoveSensors;
 import app.core.actions.impl.logic.UpdateSNR;
 

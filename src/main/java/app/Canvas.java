@@ -1,8 +1,6 @@
 package app;
 
-import app.core.scheduler.Scheduler;
-import app.model.Sensor;
-import app.stats.Collector;
+import app.model.Trasmission;
 import com.jme3.app.SimpleApplication;
 import com.jme3.light.DirectionalLight;
 import com.jme3.material.Material;
@@ -19,14 +17,13 @@ import com.jme3.texture.Texture;
 import javafx.util.Pair;
 
 import java.util.HashMap;
-import java.util.List;
 
-public class Canvas extends SimpleApplication  {
+public class Canvas extends SimpleApplication {
 
 
     private Vector3f campo;
     private boolean charged = false;
-    private HashMap<Pair, Geometry> lines = new HashMap<>();
+    private HashMap<Trasmission, Geometry> lines = new HashMap<>();
 
     public void simpleInitApp() {
         campo = new Vector3f(100, 30, 100);
@@ -38,7 +35,7 @@ public class Canvas extends SimpleApplication  {
         Node pivot = new Node("pivot");
         rootNode.attachChild(pivot); // put this node in the scene
 
-        Vector3f cam_position = new Vector3f(0, 50, 0);
+        Vector3f cam_position = new Vector3f(0, 30, 15);
         cam.setLocation(cam_position);
         flyCam.setMoveSpeed(10);
 
@@ -73,19 +70,23 @@ public class Canvas extends SimpleApplication  {
         return sphere_geometry;
     }
 
-    public Geometry linkBetweenGeometries(Geometry g1, Geometry g2, ColorRGBA color) {
-        Vector3f position_1 = g1.getLocalTranslation();
-        Vector3f position_2 = g2.getLocalTranslation();
-        Pair<Geometry, Geometry> pair = new Pair<>(g1, g2);
+    public Geometry deleteLinkTransmission(Trasmission trasmission) {
+        lines.get(trasmission).removeFromParent();
+        return null;
+    }
 
+    public Geometry linkTransmission(Trasmission trasmission, ColorRGBA color) {
+        Vector3f position_1 = trasmission.getSender().getGeometry().getLocalTranslation();
+        Vector3f position_2 = trasmission.getReceiver().getGeometry().getLocalTranslation();
 
-        if (!lines.containsKey(pair)) {
+        if (!lines.containsKey(trasmission)) {
+
             Mesh lineMesh = new Mesh();
             lineMesh.setMode(Mesh.Mode.Lines);
             lineMesh.setBuffer(VertexBuffer.Type.Position, 3, new float[]{position_1.x, position_1.y, position_1.z, position_2.x, position_2.y, position_2.z});
             lineMesh.setBuffer(VertexBuffer.Type.Index, 2, new short[]{0, 1});
 
-            Geometry lineGeometry = lineGeometry = new Geometry("line", lineMesh);
+            Geometry lineGeometry = lineGeometry = new Geometry("link", lineMesh);
             Material lineMaterial = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
 
             lineMaterial.setColor("Color", color);
@@ -95,13 +96,14 @@ public class Canvas extends SimpleApplication  {
             lineGeometry.updateModelBound();
             lineGeometry.setQueueBucket(RenderQueue.Bucket.Translucent);
             rootNode.attachChild(lineGeometry);
-            lines.put(pair, lineGeometry);
+            lines.put(trasmission, lineGeometry);
+
         } else {
-            lines.get(pair).getMaterial().setColor("Color", color);
-            lines.get(pair).getMesh().setBuffer(VertexBuffer.Type.Position, 3, new float[]{position_1.x, position_1.y, position_1.z, position_2.x, position_2.y, position_2.z});
+            lines.get(trasmission).getMaterial().setColor("Color", color);
+            lines.get(trasmission).getMesh().setBuffer(VertexBuffer.Type.Position, 3, new float[]{position_1.x, position_1.y, position_1.z, position_2.x, position_2.y, position_2.z});
         }
 
-        return lines.get(pair);
+        return lines.get(trasmission);
     }
 
     private void grid(boolean simple) {

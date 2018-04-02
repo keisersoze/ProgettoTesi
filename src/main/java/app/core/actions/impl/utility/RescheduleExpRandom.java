@@ -1,7 +1,7 @@
 package app.core.actions.impl.utility;
 
 import app.H2OSim;
-import app.SimContext;
+import app.sim.SimContext;
 import app.core.actions.Action;
 import app.core.events.Event;
 

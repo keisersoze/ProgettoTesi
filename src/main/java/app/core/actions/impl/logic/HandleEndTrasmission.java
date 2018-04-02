@@ -1,6 +1,6 @@
 package app.core.actions.impl.logic;
 
-import app.SimContext;
+import app.sim.SimContext;
 import app.core.actions.Action;
 import app.core.events.impl.TrasmissionEvent;
 import app.model.Frame;
@@ -26,7 +26,7 @@ public class HandleEndTrasmission implements Action {
                 context.getScheduler().addEvent(new TrasmissionEvent(0, context, frame));
 
             } else {
-                context.frameArrived();// aggiorna il context segnalando che un frame è arrivato
+                context.frameArrived(frame);// aggiorna il context segnalando che un frame è arrivato
             }
         }
 

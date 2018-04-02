@@ -15,4 +15,5 @@ public interface Frame {
 
     public void setCurrentOwner(Sensor currentOwner);
 
+    public Trasmission getLastEndedTrasmission();
 }

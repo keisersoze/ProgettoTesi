@@ -1,21 +1,14 @@
 package app;
 
-import app.core.events.Event;
-import app.core.events.impl.ArrivalEvent;
-import app.core.events.impl.MoveEvent;
-import app.core.events.impl.StatisticsEvent;
 import app.core.scheduler.Scheduler;
 import app.model.Frame;
 import app.model.Sensor;
-import app.model.Trasmission;
-import app.model.impl.V3FSensor;
 import app.stats.Collector;
-import com.jme3.math.ColorRGBA;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractSimIstance implements SimContext{
+public abstract class AbstractSimIstance implements SimContext {
     private final Scheduler scheduler;
     private final Collector collector;
     private final List<Sensor> sensors;
@@ -36,15 +29,17 @@ public abstract class AbstractSimIstance implements SimContext{
         nframes = 0;
     }
 
-
-
-
     public Scheduler getScheduler() {
         return scheduler;
     }
 
     public double getSimTime() {
         return simTime;
+    }
+
+    @Override
+    public void setSimTime(double simTime) {
+        this.simTime = simTime;
     }
 
     @Override
@@ -57,21 +52,15 @@ public abstract class AbstractSimIstance implements SimContext{
         return frames;
     }
 
+
+    // metodi per l'update dei dati statistici
+
     public Collector getCollector() {
         return collector;
     }
 
-
-    // metodi per l'update dei dati statistici
-
     @Override
     public void frameArrived() {
         nframes++;
-    }
-
-
-    @Override
-    public void setSimTime(double simTime) {
-        this.simTime = simTime;
     }
 }

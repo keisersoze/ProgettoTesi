@@ -1,6 +1,6 @@
 package app.core.actions;
 
-import app.SimContext;
+import app.sim.SimContext;
 
 public interface Action {
     void execute(SimContext context);

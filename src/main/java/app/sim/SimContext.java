@@ -1,4 +1,4 @@
-package app;
+package app.sim;
 
 import app.core.scheduler.Scheduler;
 import app.model.Frame;
@@ -14,13 +14,13 @@ public interface SimContext {
 
     double getSimTime();
 
+    void setSimTime(double x);
+
     List<Sensor> getSensors();
 
     List<Frame> getFrames();
 
-    void frameArrived();
+    void frameArrived(Frame frame);
 
     void run();
-
-    void setSimTime(double x);
 }

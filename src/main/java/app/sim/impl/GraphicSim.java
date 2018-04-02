@@ -6,15 +6,14 @@ import app.core.events.impl.MoveEvent;
 import app.core.events.impl.StatisticsEvent;
 import app.core.scheduler.Scheduler;
 import app.model.Frame;
-import app.model.Sensor;
 import app.model.Trasmission;
 import app.model.impl.V3FSensor;
 import app.stats.Collector;
 import com.jme3.math.ColorRGBA;
+import com.jme3.scene.Spatial;
 
-import java.time.temporal.ValueRange;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 
 public class GraphicSim extends AbstractSimIstance {
 
@@ -26,7 +25,7 @@ public class GraphicSim extends AbstractSimIstance {
     public void run() {
 
         Canvas canvas = new Canvas();
-        V3FSensor s1, s2, s3 ,s4;
+        V3FSensor s1, s2, s3, s4;
 
         canvas.start();
 
@@ -44,7 +43,6 @@ public class GraphicSim extends AbstractSimIstance {
         s4 = new V3FSensor(4, 0, 4, canvas);
 
 
-
         //inizializzazione
         getSensors().add(s1);
         getSensors().add(s2);
@@ -56,7 +54,7 @@ public class GraphicSim extends AbstractSimIstance {
         // creo l'evento che richiama la funzionalità di campionamento per le statistiche
         Event stats_evt = new StatisticsEvent(0, this);
         Event move_evt = new MoveEvent(0, this);
-        Event arrival_evt = new ArrivalEvent(0,this);
+        Event arrival_evt = new ArrivalEvent(0, this);
 
         //imposto gli eventi periodici
         stats_evt.setInterval(50);
@@ -68,13 +66,17 @@ public class GraphicSim extends AbstractSimIstance {
 
         //avvio la simulazione
         for (int i = 0; i < H2OSim.NEVENTS; i++) {
-            Event evt_scheduled= getScheduler().scheduleEvent();
+            Event evt_scheduled = getScheduler().scheduleEvent();
             setSimTime(evt_scheduled.getTime());
             evt_scheduled.tick();
-            for (Frame frame: getFrames()) {
+            for (Frame frame : getFrames()) {
                 Trasmission t = frame.getCurrentTransmission();
-                if(t != null){
-                    canvas.linkBetweenGeometries(t.getReceiver().getGeometry(),t.getSender().getGeometry(), ColorRGBA.Green);
+                if (t != null) {
+                    try {
+                        canvas.enqueue((Callable<Spatial>) () -> canvas.linkBetweenGeometries(s1.getGeometry(), s2.getGeometry(), ColorRGBA.Green)).get();
+                    } catch (InterruptedException | ExecutionException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
             try {
@@ -86,8 +88,6 @@ public class GraphicSim extends AbstractSimIstance {
         }
         System.out.println(getSimTime() + " " + getSensors().get(0).getPosition());
     }
-
-
 
 
 }

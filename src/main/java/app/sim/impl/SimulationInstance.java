@@ -4,14 +4,7 @@ import app.core.events.Event;
 import app.core.events.impl.MoveEvent;
 import app.core.events.impl.StatisticsEvent;
 import app.core.scheduler.Scheduler;
-import app.model.Frame;
-import app.model.Sensor;
-import app.model.impl.BaseSensor;
-import app.model.impl.V3FSensor;
 import app.stats.Collector;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class SimulationInstance extends AbstractSimIstance implements Runnable {
 
@@ -21,7 +14,6 @@ public class SimulationInstance extends AbstractSimIstance implements Runnable {
     }
 
     public void run() {
-
 
 
         // creo l'evento che richiama la funzionalità di campionamento per le statistiche
@@ -38,7 +30,7 @@ public class SimulationInstance extends AbstractSimIstance implements Runnable {
 
         //avvio la simulazione
         for (int i = 0; i < H2OSim.NEVENTS; i++) {
-            Event evt_scheduled= getScheduler().scheduleEvent();
+            Event evt_scheduled = getScheduler().scheduleEvent();
             setSimTime(evt_scheduled.getTime());
             evt_scheduled.tick();
 
@@ -46,7 +38,6 @@ public class SimulationInstance extends AbstractSimIstance implements Runnable {
 
         System.out.println(getSimTime());
     }
-
 
 
 }

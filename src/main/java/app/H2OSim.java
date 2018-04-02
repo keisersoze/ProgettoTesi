@@ -2,16 +2,13 @@ package app;
 
 
 import app.core.scheduler.impl.DefaultScheduler;
-import app.model.impl.BaseSensor;
-import app.model.impl.V3FSensor;
+import app.sim.impl.GraphicSim;
+import app.sim.impl.SimulationInstance;
 import app.stats.impl.BaseCollector;
-import com.jme3.math.ColorRGBA;
-import com.jme3.scene.Spatial;
 import org.apache.commons.math3.random.MersenneTwister;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 
 public class H2OSim {
@@ -22,10 +19,10 @@ public class H2OSim {
     public static final int NTHREADS = 1;
     public static final int NEVENTS = 100;
     public static final boolean CANVAS_MODE = true;
+
     //risorse condivise
     public static final MersenneTwister MERSENNE_TWISTER = new MersenneTwister();
-    public static ArrayList<V3FSensor> arraySensor;
-    public static Canvas canvas;
+
     //pattern singleton per avere accesso alle risorse condivise
     private static H2OSim ourInstance = new H2OSim();
 
@@ -38,7 +35,7 @@ public class H2OSim {
 
         BaseCollector collector = new BaseCollector();
         if (CANVAS_MODE) {
-            new GraphicSim(collector,new DefaultScheduler()).run();
+            new GraphicSim(collector, new DefaultScheduler()).run();
 
         } else {
             //inizializzazione

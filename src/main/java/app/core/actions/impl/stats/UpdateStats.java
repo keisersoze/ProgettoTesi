@@ -1,6 +1,6 @@
 package app.core.actions.impl.stats;
 
-import app.SimContext;
+import app.sim.SimContext;
 import app.core.actions.Action;
 import app.stats.impl.StatsSample;
 

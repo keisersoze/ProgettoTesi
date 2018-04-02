@@ -5,6 +5,8 @@ public interface Trasmission {
 
     boolean isSuccessfull();
 
+    public void setSuccessfull(boolean x);
+
     public Sensor getSender();
 
     public Sensor getReceiver();

@@ -8,11 +8,13 @@ public class BaseTrasmission implements Trasmission {
     private Sensor receiver;
     private double snr;
     private boolean isSuccessfull;
+    private boolean terminated;
 
     public BaseTrasmission(Sensor sender, Sensor receiver) {
         this.sender = sender;
         this.receiver = receiver;
         isSuccessfull = true;
+        terminated = false;
     }
 
 
@@ -26,6 +28,9 @@ public class BaseTrasmission implements Trasmission {
         return isSuccessfull;
     }
 
+    public void setSuccessfull(boolean stato) {
+        isSuccessfull = stato;
+    }
 
     public Sensor getSender() {
         return sender;
