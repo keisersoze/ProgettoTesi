@@ -21,22 +21,12 @@ import javafx.util.Pair;
 import java.util.HashMap;
 import java.util.List;
 
-public class Canvas extends SimpleApplication implements SimContext {
+public class Canvas extends SimpleApplication  {
 
-    private final Scheduler scheduler;
-    private final Collector collector;
-    private final List<Sensor> sensors;
+
     private Vector3f campo;
     private boolean charged = false;
     private HashMap<Pair, Geometry> lines = new HashMap<>();
-    private double sim_time;
-
-    public Canvas(Collector collector, Scheduler scheduler) {
-        this.collector = collector;
-        this.scheduler = scheduler;
-        sim_time = 0.0;
-        sensors = null;
-    }
 
     public void simpleInitApp() {
         campo = new Vector3f(100, 30, 100);
@@ -186,28 +176,4 @@ public class Canvas extends SimpleApplication implements SimContext {
         return charged;
     }
 
-    @Override
-    public Scheduler getScheduler() {
-        return scheduler;
-    }
-
-    @Override
-    public Collector getCollector() {
-        return collector;
-    }
-
-    @Override
-    public double getSimTime() {
-        return sim_time;
-    }
-
-    @Override
-    public List<Sensor> getSensors() {
-        return sensors;
-    }
-
-    @Override
-    public void frameArrived() {
-
-    }
 }

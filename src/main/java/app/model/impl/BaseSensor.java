@@ -2,6 +2,7 @@ package app.model.impl;
 
 import app.model.Sensor;
 import com.jme3.math.Vector3f;
+import com.jme3.scene.Geometry;
 import org.apache.commons.math3.ml.distance.EuclideanDistance;
 
 import java.util.List;
@@ -10,6 +11,8 @@ public class BaseSensor implements Sensor {
 
     private static final EuclideanDistance EUCLIDEAN_DISTANCE = new EuclideanDistance();
     private static final int N_DIMENSIONS = 3;
+
+    private boolean sink;
 
     private Vector3f position;
 
@@ -75,6 +78,16 @@ public class BaseSensor implements Sensor {
 
     @Override
     public void setOffsetPosition(float x, float y, float z) {
-        position = position.add(x, y, z);
+        position.addLocal(x, y, z);
+    }
+
+    @Override
+    public Geometry getGeometry() {
+        return null;
+    }
+
+    @Override
+    public void setSink(boolean x) {
+        sink=x;
     }
 }

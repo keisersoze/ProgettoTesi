@@ -5,11 +5,11 @@ import app.SimContext;
 import app.core.actions.Action;
 import app.core.events.Event;
 
-public class RescheduleEvent implements Action {
+public class Reschedule implements Action {
     Event e;
     double interval;
 
-    public RescheduleEvent(Event e, double interval) {
+    public Reschedule(Event e, double interval) {
         this.e = e;
         this.interval = interval;
     }
@@ -17,7 +17,7 @@ public class RescheduleEvent implements Action {
     @Override
     public void execute(SimContext context) {
         //aggiunge il prossimo evento per la raccolta delle stats
-        e.updateTime(H2OSim.SAMPLING_INTERVAL);
+        e.updateTime(interval);
         context.getScheduler().addEvent(e);
     }
 }

@@ -8,6 +8,6 @@ public class ArrivalEvent extends BaseEvent {
     public ArrivalEvent(double time, SimContext context) {
         super(time, context);
         addAction(new HandleArrival());
-        addAction(new RescheduleExpRandom(this));
+        //addAction(new RescheduleExpRandom(this));
     }
 }

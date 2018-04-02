@@ -2,7 +2,7 @@ package app.core.events.impl;
 
 import app.SimContext;
 import app.core.actions.Action;
-import app.core.actions.impl.utility.RescheduleEvent;
+import app.core.actions.impl.utility.Reschedule;
 import app.core.events.Event;
 
 import java.util.ArrayList;
@@ -46,7 +46,7 @@ public class BaseEvent implements Event, Comparable<Event> {
 
     @Override
     public void setInterval(double interval) {
-        addAction(new RescheduleEvent(this, interval));
+        addAction(new Reschedule(this, interval));
     }
 
     /**
