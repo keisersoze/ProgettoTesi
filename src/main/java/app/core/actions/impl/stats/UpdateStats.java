@@ -1,5 +1,6 @@
 package app.core.actions.impl.stats;
 
+import app.core.events.Event;
 import app.sim.SimContext;
 import app.core.actions.Action;
 import app.stats.impl.StatsSample;
@@ -12,7 +13,10 @@ public class UpdateStats implements Action {
     }
 
     @Override
-    public void execute(SimContext context) {
+    public void execute(Event event) {
+
+        SimContext context = event.getContext();
+
         context.getCollector().update(Thread.currentThread().getName(), new StatsSample(i));
         i++;
     }

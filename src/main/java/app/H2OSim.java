@@ -16,9 +16,9 @@ public class H2OSim {
     //parametri simulazione
     public static final int MU = 3;
     public static final int LAMDA = 3;
-    public static final int NTHREADS = 1;
-    public static final int NEVENTS = 500000;
-    public static final boolean CANVAS_MODE = true;
+    public static final int NTHREADS = 10;
+    public static final int NEVENTS = 100;
+    public static final boolean CANVAS_MODE = false;
 
     //risorse condivise
     public static final MersenneTwister MERSENNE_TWISTER = new MersenneTwister();

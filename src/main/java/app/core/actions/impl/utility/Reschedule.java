@@ -5,18 +5,20 @@ import app.core.actions.Action;
 import app.core.events.Event;
 
 public class Reschedule implements Action {
-    Event e;
+
     double interval;
 
-    public Reschedule(Event e, double interval) {
-        this.e = e;
+    public Reschedule(double interval) {
         this.interval = interval;
     }
 
     @Override
-    public void execute(SimContext context) {
+    public void execute(Event event) {
+
+        SimContext context = event.getContext();
+
         //aggiunge il prossimo evento per la raccolta delle stats
-        e.updateTime(interval);
-        context.getScheduler().addEvent(e);
+        event.updateTime(interval);
+        context.getScheduler().addEvent(event);
     }
 }

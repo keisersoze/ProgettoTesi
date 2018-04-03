@@ -1,5 +1,6 @@
 package app.core.actions.impl.logic;
 
+import app.core.events.Event;
 import app.sim.SimContext;
 import app.core.actions.Action;
 import app.core.events.impl.TrasmissionEvent;
@@ -7,16 +8,16 @@ import app.model.Frame;
 
 
 public class HandleEndTrasmission implements Action {
-    SimContext context;
-    Frame frame;
 
-    public HandleEndTrasmission(SimContext context, Frame frame) {
-        this.context = context;
-        this.frame = frame;
+    public HandleEndTrasmission() {
     }
 
     @Override
-    public void execute(SimContext context) {
+    public void execute(Event event) {
+
+        SimContext context = event.getContext();
+        Frame frame = event.getFrame();
+
         if (frame.getCurrentTransmission().isSuccessfull()) {//se la trasmissione è andata a buon fine
             if (!frame.getCurrentTransmission().getReceiver().isSink()) { // se non è ancora arrivato
 

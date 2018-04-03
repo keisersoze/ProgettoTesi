@@ -1,5 +1,6 @@
 package app.core.events.impl;
 
+import app.model.Frame;
 import app.sim.SimContext;
 import app.core.actions.Action;
 import app.core.actions.impl.utility.Reschedule;
@@ -31,6 +32,8 @@ public class BaseEvent implements Event, Comparable<Event> {
     }
 
 
+    //getters
+
     public double getTime() {
         return time;
     }
@@ -40,32 +43,48 @@ public class BaseEvent implements Event, Comparable<Event> {
         return context;
     }
 
+    /**
+     *
+     * @return NULL
+     */
+    @Override
+    public Frame getFrame() {
+        return null;
+    }
+
+
+    /**
+     *
+     * @param time
+     */
     public void updateTime(double time) {
         this.time = context.getSimTime() + time;
     }
 
+    /**
+     *
+     * @param interval
+     */
     @Override
     public void setInterval(double interval) {
-        addAction(new Reschedule(this, interval));
+        addAction(new Reschedule(interval));
     }
 
     /**
      *
      */
-
     public Event tick() {
         for (Action l : actionList) {
-            l.execute(context);
+            l.execute(this);
         }
         return this;
     }
 
     /**
-     * @param l
+     * @param action
      */
-
-    public void addAction(Action l) {
-        actionList.add(l);
+    public void addAction(Action action) {
+        actionList.add(action);
     }
 
 
