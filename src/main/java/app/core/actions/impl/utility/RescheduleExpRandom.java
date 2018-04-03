@@ -9,18 +9,20 @@ import static org.apache.commons.math3.util.FastMath.log;
 
 public class RescheduleExpRandom implements Action {
 
-    Event e;
 
 
-    public RescheduleExpRandom(Event e) {
-        this.e = e;
+
+    public RescheduleExpRandom() {
+
     }
 
     @Override
-    public void execute(SimContext context) {
+    public void execute(Event event) {
 
-        e.updateTime(-log(H2OSim.MERSENNE_TWISTER.nextDouble()) / H2OSim.LAMDA);
-        context.getScheduler().addEvent(e);
+        SimContext context = event.getContext();
+
+        event.updateTime(-log(H2OSim.MERSENNE_TWISTER.nextDouble()) / H2OSim.LAMDA);
+        context.getScheduler().addEvent(event);
 
     }
 }

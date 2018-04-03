@@ -7,9 +7,17 @@ import app.model.Frame;
 
 
 public class TrasmissionEvent extends BaseEvent {
+    Frame frame;
+
     public TrasmissionEvent(double time, SimContext context, Frame frame) {
         super(time, context);
-        addAction(new HandleTrasmission(frame));
+        this.frame = frame;
+        addAction(new HandleTrasmission());
         addAction(new UpdateSNR());
+    }
+
+    @Override
+    public Frame getFrame() {
+        return frame;
     }
 }

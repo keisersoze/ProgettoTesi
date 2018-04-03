@@ -23,8 +23,8 @@ public class SimulationInstance extends AbstractSimIstance implements Runnable {
         Event move_evt = new MoveEvent(0, this);
 
         //imposto gli eventi periodici
-        stats_evt.setInterval(0);
-        move_evt.setInterval(100);
+        stats_evt.setInterval(10);
+        move_evt.setInterval(10);
 
         //aggiungo gli eventi periodici allo scheduler
         getScheduler().addEvent(stats_evt);
