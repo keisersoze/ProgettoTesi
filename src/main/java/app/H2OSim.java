@@ -17,7 +17,7 @@ public class H2OSim {
     public static final int MU = 3;
     public static final int LAMDA = 3;
     public static final int NTHREADS = 1;
-    public static final int NEVENTS = 100;
+    public static final int NEVENTS = 500000;
     public static final boolean CANVAS_MODE = true;
 
     //risorse condivise
@@ -31,8 +31,6 @@ public class H2OSim {
     }
 
     public static void main(String[] args) throws InterruptedException {
-
-
         BaseCollector collector = new BaseCollector();
         if (CANVAS_MODE) {
             new GraphicSim(collector, new DefaultScheduler()).run();

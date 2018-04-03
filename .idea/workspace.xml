@@ -4,12 +4,10 @@
     <list default="true" id="cd9ecefe-1da3-424b-adea-a95efece1f91" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/Canvas.java" afterPath="$PROJECT_DIR$/src/main/java/app/Canvas.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/core/actions/impl/logic/HandleEndTrasmission.java" afterPath="$PROJECT_DIR$/src/main/java/app/core/actions/impl/logic/HandleEndTrasmission.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/model/Frame.java" afterPath="$PROJECT_DIR$/src/main/java/app/model/Frame.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/model/impl/BaseFrame.java" afterPath="$PROJECT_DIR$/src/main/java/app/model/impl/BaseFrame.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/H2OSim.java" afterPath="$PROJECT_DIR$/src/main/java/app/H2OSim.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/model/impl/V3FSensor.java" afterPath="$PROJECT_DIR$/src/main/java/app/model/impl/V3FSensor.java" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/sim/impl/AbstractSimIstance.java" afterPath="$PROJECT_DIR$/src/main/java/app/sim/impl/AbstractSimIstance.java" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/sim/impl/GraphicSim.java" afterPath="$PROJECT_DIR$/src/main/java/app/sim/impl/GraphicSim.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/sim/impl/SimulationInstance.java" afterPath="$PROJECT_DIR$/src/main/java/app/sim/impl/SimulationInstance.java" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -21,11 +19,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="GraphicSim.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="GraphicSim.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/app/sim/impl/GraphicSim.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="337">
-              <caret line="86" column="41" lean-forward="false" selection-start-line="86" selection-start-column="41" selection-end-line="86" selection-end-column="41" />
+            <state relative-caret-position="161">
+              <caret line="59" column="32" lean-forward="false" selection-start-line="59" selection-start-column="32" selection-end-line="59" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -34,11 +32,16 @@
       <file leaf-file-name="Canvas.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/app/Canvas.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="167">
-              <caret line="73" column="66" lean-forward="true" selection-start-line="73" selection-start-column="66" selection-end-line="73" selection-end-column="66" />
+            <state relative-caret-position="182">
+              <caret line="40" column="51" lean-forward="false" selection-start-line="40" selection-start-column="51" selection-end-line="40" selection-end-column="51" />
               <folding>
-                <element signature="e#7015#7016#0" expanded="true" />
-                <element signature="e#7045#7046#0" expanded="true" />
+                <element signature="method#sphereWithTexture#0;class#Canvas#0" expanded="false" />
+                <element signature="method#deleteLinkTransmission#0;class#Canvas#0" expanded="false" />
+                <element signature="method#linkTransmission#0;class#Canvas#0" expanded="false" />
+                <element signature="method#grid#0;class#Canvas#0" expanded="false" />
+                <element signature="method#line#0;class#Canvas#0" expanded="false" />
+                <element signature="e#7392#7393#0" expanded="true" />
+                <element signature="e#7422#7423#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -57,10 +60,20 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="H2OSim.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/app/H2OSim.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="226">
+              <caret line="32" column="72" lean-forward="false" selection-start-line="32" selection-start-column="72" selection-end-line="32" selection-end-column="72" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="BaseFrame.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/app/model/impl/BaseFrame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="407">
+            <state relative-caret-position="645">
               <caret line="57" column="20" lean-forward="false" selection-start-line="57" selection-start-column="20" selection-end-line="57" selection-end-column="20" />
               <folding>
                 <element signature="e#1323#1324#0" expanded="true" />
@@ -74,16 +87,28 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="V3FSensor.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/app/model/impl/V3FSensor.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="257">
+              <caret line="32" column="0" lean-forward="true" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="AbstractSimIstance.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/app/sim/impl/AbstractSimIstance.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="587">
-              <caret line="64" column="18" lean-forward="false" selection-start-line="64" selection-start-column="18" selection-end-line="64" selection-end-column="18" />
+            <state relative-caret-position="392">
+              <caret line="56" column="25" lean-forward="false" selection-start-line="56" selection-start-column="25" selection-end-line="56" selection-end-column="25" />
               <folding>
                 <element signature="e#1226#1227#0" expanded="true" />
                 <element signature="e#1255#1256#0" expanded="true" />
-                <element signature="e#1434#1435#0" expanded="true" />
-                <element signature="e#1459#1460#0" expanded="true" />
+                <element signature="e#1294#1295#0" expanded="true" />
+                <element signature="e#1326#1327#0" expanded="true" />
+                <element signature="e#1504#1505#0" expanded="true" />
+                <element signature="e#1529#1530#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -162,19 +187,19 @@
         <option value="$PROJECT_DIR$/src/main/java/app/model/impl/AbstractSensor.java" />
         <option value="$PROJECT_DIR$/src/main/java/app/model/impl/BaseSensor.java" />
         <option value="$PROJECT_DIR$/src/main/java/app/AbstractSimIstance.java" />
-        <option value="$PROJECT_DIR$/src/main/java/app/H2OSim.java" />
         <option value="$PROJECT_DIR$/src/main/java/app/GraphicSim.java" />
         <option value="$PROJECT_DIR$/src/main/java/app/core/events/impl/ArrivalEvent.java" />
-        <option value="$PROJECT_DIR$/src/main/java/app/model/impl/V3FSensor.java" />
         <option value="$PROJECT_DIR$/src/main/java/app/core/scheduler/impl/DefaultScheduler.java" />
         <option value="$PROJECT_DIR$/src/main/java/app/sim/SimContext.java" />
         <option value="$PROJECT_DIR$/src/main/java/app/model/impl/BaseTrasmission.java" />
         <option value="$PROJECT_DIR$/src/main/java/app/model/Trasmission.java" />
-        <option value="$PROJECT_DIR$/src/main/java/app/sim/impl/AbstractSimIstance.java" />
-        <option value="$PROJECT_DIR$/src/main/java/app/Canvas.java" />
         <option value="$PROJECT_DIR$/src/main/java/app/model/impl/BaseFrame.java" />
         <option value="$PROJECT_DIR$/src/main/java/app/model/Frame.java" />
         <option value="$PROJECT_DIR$/src/main/java/app/core/actions/impl/logic/HandleEndTrasmission.java" />
+        <option value="$PROJECT_DIR$/src/main/java/app/H2OSim.java" />
+        <option value="$PROJECT_DIR$/src/main/java/app/sim/impl/AbstractSimIstance.java" />
+        <option value="$PROJECT_DIR$/src/main/java/app/model/impl/V3FSensor.java" />
+        <option value="$PROJECT_DIR$/src/main/java/app/Canvas.java" />
         <option value="$PROJECT_DIR$/src/main/java/app/sim/impl/GraphicSim.java" />
       </list>
     </option>
@@ -680,7 +705,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="15" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="17" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.326572" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.326572" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="18" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -894,16 +919,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/app/model/impl/V3FSensor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="27" column="5" lean-forward="true" selection-start-line="27" selection-start-column="5" selection-end-line="27" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/app/model/impl/AbstractSensor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="555">
@@ -937,17 +952,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/app/H2OSim.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="36" column="0" lean-forward="false" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
-          <folding>
-            <element signature="e#813#814#0" expanded="false" />
-            <element signature="e#847#848#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1011,14 +1015,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/app/model/Frame.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk-9.0.4.jdk/Contents/Home/lib/src.zip!/java.base/java/util/concurrent/Callable.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="465">
@@ -1027,33 +1023,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/app/Canvas.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/app/core/actions/impl/logic/HandleEndTrasmission.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="167">
-          <caret line="73" column="66" lean-forward="true" selection-start-line="73" selection-start-column="66" selection-end-line="73" selection-end-column="66" />
-          <folding>
-            <element signature="e#7015#7016#0" expanded="true" />
-            <element signature="e#7045#7046#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/app/sim/impl/AbstractSimIstance.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="587">
-          <caret line="64" column="18" lean-forward="false" selection-start-line="64" selection-start-column="18" selection-end-line="64" selection-end-column="18" />
-          <folding>
-            <element signature="e#1226#1227#0" expanded="true" />
-            <element signature="e#1255#1256#0" expanded="true" />
-            <element signature="e#1434#1435#0" expanded="true" />
-            <element signature="e#1459#1460#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="375">
+          <caret line="28" column="37" lean-forward="false" selection-start-line="28" selection-start-column="37" selection-end-line="28" selection-end-column="37" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/app/model/impl/BaseFrame.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="407">
+        <state relative-caret-position="645">
           <caret line="57" column="20" lean-forward="false" selection-start-line="57" selection-start-column="20" selection-end-line="57" selection-end-column="20" />
           <folding>
             <element signature="e#1323#1324#0" expanded="true" />
@@ -1063,6 +1043,14 @@
             <element signature="e#1497#1498#0" expanded="true" />
             <element signature="e#1535#1536#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/app/H2OSim.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="226">
+          <caret line="32" column="72" lean-forward="false" selection-start-line="32" selection-start-column="72" selection-end-line="32" selection-end-column="72" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1077,18 +1065,57 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/app/core/actions/impl/logic/HandleEndTrasmission.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/app/model/Frame.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="28" column="37" lean-forward="false" selection-start-line="28" selection-start-column="37" selection-end-line="28" selection-end-column="37" />
+        <state relative-caret-position="210">
+          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/app/Canvas.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="40" column="51" lean-forward="false" selection-start-line="40" selection-start-column="51" selection-end-line="40" selection-end-column="51" />
+          <folding>
+            <element signature="method#sphereWithTexture#0;class#Canvas#0" expanded="false" />
+            <element signature="method#deleteLinkTransmission#0;class#Canvas#0" expanded="false" />
+            <element signature="method#linkTransmission#0;class#Canvas#0" expanded="false" />
+            <element signature="method#grid#0;class#Canvas#0" expanded="false" />
+            <element signature="method#line#0;class#Canvas#0" expanded="false" />
+            <element signature="e#7392#7393#0" expanded="true" />
+            <element signature="e#7422#7423#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/app/sim/impl/GraphicSim.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="337">
-          <caret line="86" column="41" lean-forward="false" selection-start-line="86" selection-start-column="41" selection-end-line="86" selection-end-column="41" />
+        <state relative-caret-position="161">
+          <caret line="59" column="32" lean-forward="false" selection-start-line="59" selection-start-column="32" selection-end-line="59" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/app/sim/impl/AbstractSimIstance.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="392">
+          <caret line="56" column="25" lean-forward="false" selection-start-line="56" selection-start-column="25" selection-end-line="56" selection-end-column="25" />
+          <folding>
+            <element signature="e#1226#1227#0" expanded="true" />
+            <element signature="e#1255#1256#0" expanded="true" />
+            <element signature="e#1294#1295#0" expanded="true" />
+            <element signature="e#1326#1327#0" expanded="true" />
+            <element signature="e#1504#1505#0" expanded="true" />
+            <element signature="e#1529#1530#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/app/model/impl/V3FSensor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="257">
+          <caret line="32" column="0" lean-forward="true" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
           <folding />
         </state>
       </provider>

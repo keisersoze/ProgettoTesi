@@ -17,14 +17,18 @@ public class V3FSensor extends AbstractSensor {
         super(x, y, z);
         Vector3f position = new Vector3f(x, y, z);
         this.canvas = canvas;
-        geometry = canvas.sphereWithTexture(
-                30,
-                30,
-                0.5f,
-                position,
-                null,
-                new ColorRGBA(0f / 255f, 96f / 255f, 255f / 255f, 1f)
-        );
+        try {
+            geometry = canvas.enqueue(() -> canvas.sphereWithTexture(
+                    30,
+                    30,
+                    0.5f,
+                    position,
+                    null,
+                    new ColorRGBA(0f / 255f, 96f / 255f, 255f / 255f, 1f))
+            ).get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

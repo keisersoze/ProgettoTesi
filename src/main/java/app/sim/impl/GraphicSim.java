@@ -8,12 +8,16 @@ import app.core.events.impl.MoveEvent;
 import app.core.events.impl.StatisticsEvent;
 import app.core.scheduler.Scheduler;
 import app.model.Frame;
+import app.model.Sensor;
 import app.model.Trasmission;
 import app.model.impl.V3FSensor;
 import app.stats.Collector;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector3f;
 import com.jme3.scene.Spatial;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
@@ -27,10 +31,7 @@ public class GraphicSim extends AbstractSimIstance {
     }
 
     public void run() {
-
-
-        V3FSensor s1, s2, s3, s4;
-
+        List<Frame> listCompleted = new ArrayList<>();
         canvas.start();
 
         while (!canvas.isCharged()) {
@@ -41,19 +42,13 @@ public class GraphicSim extends AbstractSimIstance {
             }
         }
 
-        s1 = new V3FSensor(0, 0, 0, canvas);
-        s2 = new V3FSensor(4, 0, 0, canvas);
-        s3 = new V3FSensor(0, 0, 4, canvas);
-        s4 = new V3FSensor(4, 0, 4, canvas);
-
-
         //inizializzazione
-        getSensors().add(s1);
-        getSensors().add(s2);
-        getSensors().add(s3);
-        getSensors().add(s4);
+        for (int i = 0; i < 100; i++){
+            V3FSensor temp = new V3FSensor(canvas.random(-50, 50), canvas.random(-15, 15), canvas.random(-50, 50), canvas);
+            getSensors().add(temp);
+        }
 
-        s1.setSink(true);
+        getSensors().get(0).setSink(true);
 
         // creo l'evento che richiama la funzionalità di campionamento per le statistiche
         Event stats_evt = new StatisticsEvent(0, this);
@@ -62,11 +57,11 @@ public class GraphicSim extends AbstractSimIstance {
 
         //imposto gli eventi periodici
         stats_evt.setInterval(50);
-        move_evt.setInterval(200);
+        move_evt.setInterval(0.1);
 
         //aggiungo gli eventi periodici allo scheduler
         getScheduler().addEvent(arrival_evt);
-        //getScheduler().addEvent(move_evt);
+        getScheduler().addEvent(move_evt);
 
 
         //avvio la simulazione
@@ -82,15 +77,14 @@ public class GraphicSim extends AbstractSimIstance {
                         if (current != null) {
                             canvas.enqueue((Callable<Spatial>) () -> canvas.linkTransmission(current, ColorRGBA.Green)).get();
                         }
-                    } else {
-                        for (Trasmission t : frame.getTransmissionHistory()) {
-                            if (t != null) {
-                                canvas.enqueue((Callable<Spatial>) () -> canvas.deleteLinkTransmission(t)).get();
-                            }
-                        }
+                    } else if (frame.getTransmissionHistory().size() > 0){
+                        canvas.enqueue((Callable<Spatial>) () -> canvas.deleteLinkTransmission(frame)).get();
+                        listCompleted.add(frame);
                     }
                 }
-                Thread.sleep(60);
+                canvas.enqueue((Callable<Spatial>) () -> canvas.updatePositions(getSensors())).get();
+                getFrames().removeAll(listCompleted);
+                Thread.sleep(0);
             }
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();

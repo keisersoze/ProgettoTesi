@@ -53,6 +53,9 @@ public abstract class AbstractSimIstance implements SimContext {
         return frames;
     }
 
+    public void removeFrame(Frame f){
+        frames.remove(f);
+    }
 
     // metodi per l'update dei dati statistici
 

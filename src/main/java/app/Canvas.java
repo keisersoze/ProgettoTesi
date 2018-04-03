@@ -1,5 +1,7 @@
 package app;
 
+import app.model.Frame;
+import app.model.Sensor;
 import app.model.Trasmission;
 import com.jme3.app.SimpleApplication;
 import com.jme3.light.DirectionalLight;
@@ -17,6 +19,7 @@ import com.jme3.texture.Texture;
 import javafx.util.Pair;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class Canvas extends SimpleApplication {
 
@@ -43,8 +46,15 @@ public class Canvas extends SimpleApplication {
         charged = true;
     }
 
-    private float random(float min, float max) {
+    public float random(float min, float max) {
         return min + (int) (Math.random() * ((max - min) + 1));
+    }
+
+    public Geometry updatePositions(List<Sensor> sensorList) {
+        for(Sensor sensor : sensorList) {
+            sensor.getGeometry().setLocalTranslation(sensor.getPosition());
+        }
+        return null;
     }
 
     public Geometry sphereWithTexture(int zSamples, int radialSamples, float radius, Vector3f posizione, String texturePath, ColorRGBA color) {
@@ -70,10 +80,12 @@ public class Canvas extends SimpleApplication {
         return sphere_geometry;
     }
 
-    public Geometry deleteLinkTransmission(Trasmission trasmission) {
-        if(trasmission != null && lines.containsKey(trasmission)){
-            lines.get(trasmission).removeFromParent();
-            lines.remove(trasmission);
+    public Geometry deleteLinkTransmission(Frame frame) {
+        for (Trasmission trasmission : frame.getTransmissionHistory()) {
+            if (trasmission != null&& lines.containsKey(trasmission)){
+                lines.get(trasmission).removeFromParent();
+                lines.remove(trasmission);
+            }
         }
         return null;
     }
