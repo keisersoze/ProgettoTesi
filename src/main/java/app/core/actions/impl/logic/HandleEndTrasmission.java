@@ -26,6 +26,8 @@ public class HandleEndTrasmission implements Action {
                 context.getScheduler().addEvent(new TrasmissionEvent(0, context, frame));
 
             } else {
+                frame.setArrived(true);
+                frame.setCurrentTransmission(null);
                 context.frameArrived(frame);// aggiorna il context segnalando che un frame è arrivato
             }
         }

@@ -1,5 +1,7 @@
-package app;
+package app.sim.impl;
 
+import app.Canvas;
+import app.H2OSim;
 import app.core.events.Event;
 import app.core.events.impl.ArrivalEvent;
 import app.core.events.impl.MoveEvent;
@@ -17,14 +19,16 @@ import java.util.concurrent.ExecutionException;
 
 public class GraphicSim extends AbstractSimIstance {
 
+    private Canvas canvas;
 
     public GraphicSim(Collector collector, Scheduler scheduler) {
         super(collector, scheduler);
+        canvas = new Canvas();
     }
 
     public void run() {
 
-        Canvas canvas = new Canvas();
+
         V3FSensor s1, s2, s3, s4;
 
         canvas.start();
@@ -58,34 +62,40 @@ public class GraphicSim extends AbstractSimIstance {
 
         //imposto gli eventi periodici
         stats_evt.setInterval(50);
-        move_evt.setInterval(100);
+        move_evt.setInterval(200);
 
         //aggiungo gli eventi periodici allo scheduler
         getScheduler().addEvent(arrival_evt);
+        //getScheduler().addEvent(move_evt);
 
 
         //avvio la simulazione
-        for (int i = 0; i < H2OSim.NEVENTS; i++) {
-            Event evt_scheduled = getScheduler().scheduleEvent();
-            setSimTime(evt_scheduled.getTime());
-            evt_scheduled.tick();
-            for (Frame frame : getFrames()) {
-                Trasmission t = frame.getCurrentTransmission();
-                if (t != null) {
-                    try {
-                        canvas.enqueue((Callable<Spatial>) () -> canvas.linkBetweenGeometries(s1.getGeometry(), s2.getGeometry(), ColorRGBA.Green)).get();
-                    } catch (InterruptedException | ExecutionException e) {
-                        e.printStackTrace();
+        try {
+            for (int i = 0; i < H2OSim.NEVENTS; i++) {
+                Event evt_scheduled = getScheduler().scheduleEvent();
+                setSimTime(evt_scheduled.getTime());
+                evt_scheduled.tick();
+
+                for (Frame frame : getFrames()) {
+                    if(!frame.isArrived()) {
+                        Trasmission current = frame.getCurrentTransmission();
+                        if (current != null) {
+                            canvas.enqueue((Callable<Spatial>) () -> canvas.linkTransmission(current, ColorRGBA.Green)).get();
+                        }
+                    } else {
+                        for (Trasmission t : frame.getTransmissionHistory()) {
+                            if (t != null) {
+                                canvas.enqueue((Callable<Spatial>) () -> canvas.deleteLinkTransmission(t)).get();
+                            }
+                        }
                     }
                 }
+                Thread.sleep(60);
             }
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
         }
+
         System.out.println(getSimTime() + " " + getSensors().get(0).getPosition());
     }
 

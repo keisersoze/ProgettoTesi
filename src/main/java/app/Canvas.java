@@ -71,7 +71,10 @@ public class Canvas extends SimpleApplication {
     }
 
     public Geometry deleteLinkTransmission(Trasmission trasmission) {
-        lines.get(trasmission).removeFromParent();
+        if(trasmission != null && lines.containsKey(trasmission)){
+            lines.get(trasmission).removeFromParent();
+            lines.remove(trasmission);
+        }
         return null;
     }
 

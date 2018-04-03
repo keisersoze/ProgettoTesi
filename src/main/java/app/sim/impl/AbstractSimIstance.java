@@ -1,5 +1,6 @@
-package app;
+package app.sim.impl;
 
+import app.sim.SimContext;
 import app.core.scheduler.Scheduler;
 import app.model.Frame;
 import app.model.Sensor;
@@ -60,7 +61,7 @@ public abstract class AbstractSimIstance implements SimContext {
     }
 
     @Override
-    public void frameArrived() {
+    public void frameArrived(Frame frame) {
         nframes++;
     }
 }

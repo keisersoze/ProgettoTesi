@@ -1,5 +1,7 @@
 package app.model;
 
+import java.util.LinkedList;
+
 public interface Frame {
 
 
@@ -15,5 +17,9 @@ public interface Frame {
 
     public void setCurrentOwner(Sensor currentOwner);
 
-    public Trasmission getLastEndedTrasmission();
+    public LinkedList<Trasmission> getTransmissionHistory();
+
+    public boolean isArrived();
+
+    public void setArrived(boolean arrived);
 }

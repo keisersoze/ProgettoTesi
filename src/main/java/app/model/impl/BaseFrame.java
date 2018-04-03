@@ -12,12 +12,14 @@ public class BaseFrame implements Frame {
     private Trasmission currentTransmission;
     private Sensor currentOwner;
     private LinkedList<Trasmission> trasmissions;           // Backtrace dei possessori del frame
+    private boolean arrived;
 
     public BaseFrame(double size, Sensor sender, Sensor s) {
         this.size = size;
         this.sender = sender;
         this.currentOwner = s;
         trasmissions = new LinkedList<>();
+        arrived = false;
     }
 
     @Override
@@ -47,10 +49,17 @@ public class BaseFrame implements Frame {
         this.currentOwner = currentOwner;
     }
 
-    public Trasmission getLastEndedTrasmission() {
-        if (trasmissions.size() > 1) {
-            return trasmissions.get(1);                 // Mentre il frame è in circolo nella rete
-        }
-        return null;
+    public LinkedList<Trasmission> getTransmissionHistory() {
+        return trasmissions;
+    }
+
+    @Override
+    public boolean isArrived() {
+        return arrived;
+    }
+
+    @Override
+    public void setArrived(boolean arrived) {
+        this.arrived = arrived;
     }
 }
