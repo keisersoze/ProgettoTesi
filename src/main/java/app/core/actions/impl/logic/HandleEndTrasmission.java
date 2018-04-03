@@ -9,6 +9,8 @@ import app.model.Frame;
 
 public class HandleEndTrasmission implements Action {
 
+    public static final String id="HANDLEENDTRASMISSION";
+
     public HandleEndTrasmission() {
     }
 

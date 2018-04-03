@@ -9,8 +9,7 @@ import static org.apache.commons.math3.util.FastMath.log;
 
 public class RescheduleExpRandom implements Action {
 
-
-
+    public static final String id="RESCHEDULEEXPRANDOM";
 
     public RescheduleExpRandom() {
 

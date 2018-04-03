@@ -17,6 +17,8 @@ import static org.apache.commons.math3.util.FastMath.log;
 
 public class HandleTrasmission implements Action {
 
+    public static final String id="HANDLETRASMISSION";
+
     public HandleTrasmission() {
     }
 

@@ -6,6 +6,8 @@ import app.core.actions.Action;
 
 public class UpdateSNR implements Action {
 
+    public static final String id="UPDATESNR";
+
     public UpdateSNR() {
     }
 

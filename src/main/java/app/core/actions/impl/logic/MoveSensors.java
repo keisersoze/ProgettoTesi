@@ -7,6 +7,8 @@ import app.model.Sensor;
 
 public class MoveSensors implements Action {
 
+    public static final String id="MOVESENSORS";
+
     public MoveSensors() {
     }
 

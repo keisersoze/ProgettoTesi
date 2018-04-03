@@ -6,6 +6,9 @@ import app.core.actions.Action;
 import app.stats.impl.StatsSample;
 
 public class UpdateStats implements Action {
+
+    public static final String id="UPDATESTATS";
+
     int i;
 
     public UpdateStats() {

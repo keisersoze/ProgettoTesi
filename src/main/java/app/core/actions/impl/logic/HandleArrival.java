@@ -13,6 +13,8 @@ import java.util.List;
 
 public class HandleArrival implements Action {
 
+    public static final String id="HANDLEARRIVAL";
+
     public HandleArrival() {
     }
 
