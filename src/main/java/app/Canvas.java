@@ -29,6 +29,7 @@ public class Canvas extends SimpleApplication {
 
     public void simpleInitApp() {
         campo = new Vector3f(100, 30, 100);
+        viewPort.setBackgroundColor(new ColorRGBA(1f/255f * 60f, 1f/255f * 102f, 1f/255f * 140f, 1f));
         DirectionalLight dl = new DirectionalLight();
         dl.setColor(ColorRGBA.White);
         dl.setDirection(new Vector3f(-.5f, -.5f, -.5f).normalizeLocal());

@@ -15,6 +15,7 @@ import app.stats.Collector;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Spatial;
+import com.jme3.system.AppSettings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,7 @@ import java.util.concurrent.ExecutionException;
 
 public class GraphicSim extends AbstractSimIstance {
 
-    private Canvas canvas;
+    private static Canvas canvas;
 
     public GraphicSim(Collector collector, Scheduler scheduler) {
         super(collector, scheduler);
@@ -32,6 +33,9 @@ public class GraphicSim extends AbstractSimIstance {
 
     public void run() {
         List<Frame> listCompleted = new ArrayList<>();
+
+        setSettings();
+
         canvas.start();
 
         while (!canvas.isCharged()) {
@@ -94,5 +98,21 @@ public class GraphicSim extends AbstractSimIstance {
         System.out.println(getSimTime() + " " + getSensors().get(0).getPosition());
     }
 
+    private static void setSettings(){
+        AppSettings settings = new AppSettings(true);
+
+        settings.setTitle("Underwater wireless sensors networks");
+        settings.setFrameRate(60);
+        settings.setFrequency(60);
+        settings.setWidth(1480);
+        settings.setHeight(840);
+        settings.setSamples(16);
+        settings.setVSync(true);
+        settings.setGammaCorrection(true);
+
+        canvas.setShowSettings(false);
+        canvas.setDisplayStatView(false);
+        canvas.setSettings(settings);
+    }
 
 }

@@ -24,7 +24,7 @@ public class V3FSensor extends AbstractSensor {
                     0.5f,
                     position,
                     null,
-                    new ColorRGBA(0f / 255f, 96f / 255f, 255f / 255f, 1f))
+                    new ColorRGBA(0f / 255f, 0f / 255f, 255f / 255f, 1f))
             ).get();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
