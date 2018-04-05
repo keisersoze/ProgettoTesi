@@ -2,6 +2,7 @@ package app.core.actions.impl.logic;
 
 import app.H2OSim;
 import app.core.events.Event;
+import app.factory.EventTypes;
 import app.sim.SimContext;
 import app.core.actions.Action;
 import app.core.events.impl.EndTrasmissionEvent;
@@ -38,12 +39,14 @@ public class HandleTrasmission implements Action {
 
             frame.setCurrentTransmission(trasmission);
 
-            context.getScheduler().addEvent(new EndTrasmissionEvent(frame.getSize(), context, frame));
+            Event e = context.getCoreComponentsFactory().getEvent(EventTypes.EndTrasmissionEvent,frame.getSize(),context,frame);
+            context.getScheduler().addEvent(e);
 
         } else {
 
             //per adesso il tempo da aspettare è una variabile casuale exp
-            context.getScheduler().addEvent(new TrasmissionEvent(-log(context.getMarsenneTwister().nextDouble()) / H2OSim.LAMDA, context, frame));
+            Event e = context.getCoreComponentsFactory().getEvent(EventTypes.TrasmissionEvent,-log(context.getMarsenneTwister().nextDouble()) / H2OSim.LAMDA, context, frame);
+            context.getScheduler().addEvent(e);
 
         }
 
