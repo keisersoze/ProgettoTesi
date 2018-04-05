@@ -3,21 +3,17 @@ package app.sim.impl;
 import app.Canvas;
 import app.H2OSim;
 import app.core.events.Event;
-import app.core.events.impl.ArrivalEvent;
-import app.core.events.impl.MoveEvent;
-import app.core.events.impl.StatisticsEvent;
 import app.core.scheduler.Scheduler;
 import app.factory.EventTypes;
 import app.model.Frame;
-import app.model.Sensor;
 import app.model.Trasmission;
 import app.model.impl.V3FSensor;
 import app.stats.Collector;
 import com.jme3.math.ColorRGBA;
-import com.jme3.math.Vector3f;
 import com.jme3.scene.Spatial;
 import com.jme3.system.AppSettings;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -30,6 +26,29 @@ public class GraphicSim extends AbstractSimIstance {
     public GraphicSim(Collector collector, Scheduler scheduler) {
         super(collector, scheduler);
         canvas = new Canvas();
+    }
+
+    private static void setSettings() {
+        AppSettings settings = new AppSettings(true);
+
+        settings.setTitle("Underwater wireless sensors networks");
+        settings.setFrameRate(60);
+
+        GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+        DisplayMode[] modes = device.getDisplayModes();
+        int i = 0; // note: there are usually several, let's pick the first
+        settings.setResolution(modes[i].getWidth(), modes[i].getHeight());
+        settings.setFrequency(modes[i].getRefreshRate());
+        settings.setBitsPerPixel(modes[i].getBitDepth());
+        settings.setFullscreen(device.isFullScreenSupported());
+
+        settings.setSamples(16);
+        settings.setGammaCorrection(true);
+
+        canvas.setShowSettings(true);
+        settings.setSettingsDialogImage("Interface/unive.jpg");
+        canvas.setDisplayStatView(false);
+        canvas.setSettings(settings);
     }
 
     public void run() {
@@ -48,7 +67,7 @@ public class GraphicSim extends AbstractSimIstance {
         }
 
         //inizializzazione
-        for (int i = 0; i < 400; i++){
+        for (int i = 0; i < 400; i++) {
             V3FSensor temp = new V3FSensor(canvas.random(-100, 100), canvas.random(-30, 30), canvas.random(-100, 100), canvas);
             getSensors().add(temp);
         }
@@ -56,9 +75,9 @@ public class GraphicSim extends AbstractSimIstance {
         getSensors().get(0).setSink(true);
 
         // creo l'evento che richiama la funzionalità di campionamento per le statistiche
-        Event stats_evt = getCoreComponentsFactory().getEvent(EventTypes.StatisticEvent,0, this);
-        Event move_evt = getCoreComponentsFactory().getEvent(EventTypes.MoveEvent,0, this);
-        Event arrival_evt = getCoreComponentsFactory().getEvent(EventTypes.ArrivalEvent,0,this);
+        Event stats_evt = getCoreComponentsFactory().getEvent(EventTypes.StatisticEvent, 0, this);
+        Event move_evt = getCoreComponentsFactory().getEvent(EventTypes.MoveEvent, 0, this);
+        Event arrival_evt = getCoreComponentsFactory().getEvent(EventTypes.ArrivalEvent, 0, this);
 
         //imposto gli eventi periodici
         stats_evt.setInterval(50);
@@ -77,13 +96,13 @@ public class GraphicSim extends AbstractSimIstance {
                 evt_scheduled.tick();
 
                 for (Frame frame : getFrames()) {
-                    if(!frame.isArrived()) {
+                    if (!frame.isArrived()) {
                         Trasmission current = frame.getCurrentTransmission();
                         if (current != null) {
                             canvas.enqueue((Callable<Spatial>) () -> canvas.linkTransmission(current, ColorRGBA.Green)).get();
-                            canvas.enqueue((Callable<Spatial>) () -> canvas.fadeTransmission(frame)).get();
+                            //canvas.enqueue((Callable<Spatial>) () -> canvas.fadeTransmission(frame)).get();
                         }
-                    } else if (frame.getTransmissionHistory().size() > 0){
+                    } else if (frame.getTransmissionHistory().size() > 0) {
                         canvas.enqueue((Callable<Spatial>) () -> canvas.deleteLinkTransmission(frame)).get();
                         listCompleted.add(frame);
                     }
@@ -97,23 +116,6 @@ public class GraphicSim extends AbstractSimIstance {
         }
 
         System.out.println(getSimTime() + " " + getSensors().get(0).getPosition());
-    }
-
-    private static void setSettings(){
-        AppSettings settings = new AppSettings(true);
-
-        settings.setTitle("Underwater wireless sensors networks");
-        settings.setFrameRate(60);
-        settings.setFrequency(60);
-        settings.setWidth(1480);
-        settings.setHeight(840);
-        settings.setSamples(16);
-        settings.setVSync(true);
-        settings.setGammaCorrection(true);
-
-        canvas.setShowSettings(false);
-        canvas.setDisplayStatView(false);
-        canvas.setSettings(settings);
     }
 
 }
