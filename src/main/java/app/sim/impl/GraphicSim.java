@@ -43,8 +43,8 @@ public class GraphicSim extends AbstractSimIstance {
         }
 
         //inizializzazione
-        for (int i = 0; i < 100; i++){
-            V3FSensor temp = new V3FSensor(canvas.random(-50, 50), canvas.random(-15, 15), canvas.random(-50, 50), canvas);
+        for (int i = 0; i < 400; i++){
+            V3FSensor temp = new V3FSensor(canvas.random(-100, 100), canvas.random(-30, 30), canvas.random(-100, 100), canvas);
             getSensors().add(temp);
         }
 
@@ -76,6 +76,7 @@ public class GraphicSim extends AbstractSimIstance {
                         Trasmission current = frame.getCurrentTransmission();
                         if (current != null) {
                             canvas.enqueue((Callable<Spatial>) () -> canvas.linkTransmission(current, ColorRGBA.Green)).get();
+                            canvas.enqueue((Callable<Spatial>) () -> canvas.fadeTransmission(frame)).get();
                         }
                     } else if (frame.getTransmissionHistory().size() > 0){
                         canvas.enqueue((Callable<Spatial>) () -> canvas.deleteLinkTransmission(frame)).get();
