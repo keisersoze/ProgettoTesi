@@ -1,9 +1,11 @@
 package app.sim;
 
 import app.core.scheduler.Scheduler;
+import app.factory.CoreComponentsFactory;
 import app.model.Frame;
 import app.model.Sensor;
 import app.stats.Collector;
+import org.apache.commons.math3.random.MersenneTwister;
 
 import java.util.List;
 
@@ -23,4 +25,8 @@ public interface SimContext {
     void frameArrived(Frame frame);
 
     void run();
+
+    MersenneTwister getMarsenneTwister();
+
+    CoreComponentsFactory getCoreComponentsFactory();
 }

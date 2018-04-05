@@ -85,7 +85,7 @@ public class GraphicSim extends AbstractSimIstance {
                 }
                 canvas.enqueue((Callable<Spatial>) () -> canvas.updatePositions(getSensors())).get();
                 getFrames().removeAll(listCompleted);
-                Thread.sleep(0);
+                Thread.sleep(1000);
             }
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();

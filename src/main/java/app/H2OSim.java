@@ -1,6 +1,8 @@
 package app;
 
 
+import app.core.actions.impl.logic.HandleTrasmission;
+import app.core.events.impl.ArrivalEvent;
 import app.core.scheduler.impl.DefaultScheduler;
 import app.sim.impl.GraphicSim;
 import app.sim.impl.SimulationInstance;
@@ -20,9 +22,6 @@ public class H2OSim {
     public static final int NEVENTS = 10000;
     public static final boolean CANVAS_MODE = true;
 
-    //risorse condivise
-    public static final MersenneTwister MERSENNE_TWISTER = new MersenneTwister();
-
     //pattern singleton per avere accesso alle risorse condivise
     private static H2OSim ourInstance = new H2OSim();
 
@@ -31,6 +30,7 @@ public class H2OSim {
     }
 
     public static void main(String[] args) throws InterruptedException {
+
         BaseCollector collector = new BaseCollector();
         if (CANVAS_MODE) {
             new GraphicSim(collector, new DefaultScheduler()).run();

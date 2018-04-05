@@ -5,6 +5,7 @@ import app.core.events.Event;
 import app.core.events.impl.MoveEvent;
 import app.core.events.impl.StatisticsEvent;
 import app.core.scheduler.Scheduler;
+import app.factory.EventTypes;
 import app.sim.impl.AbstractSimIstance;
 import app.stats.Collector;
 
@@ -19,8 +20,8 @@ public class SimulationInstance extends AbstractSimIstance implements Runnable {
 
 
         // creo l'evento che richiama la funzionalità di campionamento per le statistiche
-        Event stats_evt = new StatisticsEvent(0, this);
-        Event move_evt = new MoveEvent(0, this);
+        Event stats_evt = getCoreComponentsFactory().getEvent(EventTypes.StatisticEvent,0, this);
+        Event move_evt = getCoreComponentsFactory().getEvent(EventTypes.MoveEvent,0, this);
 
         //imposto gli eventi periodici
         stats_evt.setInterval(10);

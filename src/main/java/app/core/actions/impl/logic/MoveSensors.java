@@ -7,8 +7,6 @@ import app.model.Sensor;
 
 public class MoveSensors implements Action {
 
-    public static final String id="MOVESENSORS";
-
     public MoveSensors() {
     }
 
@@ -21,4 +19,5 @@ public class MoveSensors implements Action {
             sensor.setOffsetPosition(0.2f, 0.2f, 0.5f);
         }
     }
+
 }
