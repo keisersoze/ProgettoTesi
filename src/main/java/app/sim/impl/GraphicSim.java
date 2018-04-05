@@ -7,6 +7,7 @@ import app.core.events.impl.ArrivalEvent;
 import app.core.events.impl.MoveEvent;
 import app.core.events.impl.StatisticsEvent;
 import app.core.scheduler.Scheduler;
+import app.factory.EventTypes;
 import app.model.Frame;
 import app.model.Sensor;
 import app.model.Trasmission;
@@ -55,17 +56,17 @@ public class GraphicSim extends AbstractSimIstance {
         getSensors().get(0).setSink(true);
 
         // creo l'evento che richiama la funzionalità di campionamento per le statistiche
-        Event stats_evt = new StatisticsEvent(0, this);
-        Event move_evt = new MoveEvent(0, this);
-        Event arrival_evt = new ArrivalEvent(0, this);
+        Event stats_evt = getCoreComponentsFactory().getEvent(EventTypes.StatisticEvent,0, this);
+        Event move_evt = getCoreComponentsFactory().getEvent(EventTypes.MoveEvent,0, this);
+        Event arrival_evt = getCoreComponentsFactory().getEvent(EventTypes.ArrivalEvent,0,this);
 
         //imposto gli eventi periodici
         stats_evt.setInterval(50);
-        move_evt.setInterval(0.1);
+        move_evt.setInterval(10);
 
         //aggiungo gli eventi periodici allo scheduler
         getScheduler().addEvent(arrival_evt);
-        getScheduler().addEvent(move_evt);
+        //getScheduler().addEvent(move_evt);
 
 
         //avvio la simulazione
@@ -89,7 +90,7 @@ public class GraphicSim extends AbstractSimIstance {
                 }
                 canvas.enqueue((Callable<Spatial>) () -> canvas.updatePositions(getSensors())).get();
                 getFrames().removeAll(listCompleted);
-                Thread.sleep(1000);
+                Thread.sleep(100);
             }
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
