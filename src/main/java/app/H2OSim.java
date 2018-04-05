@@ -20,10 +20,7 @@ public class H2OSim {
     public static final int LAMDA = 3;
     public static final int NTHREADS = 10;
     public static final int NEVENTS = 100;
-    public static final boolean CANVAS_MODE = true;
-
-    //risorse condivise
-    public static final MersenneTwister MERSENNE_TWISTER = new MersenneTwister();
+    public static final boolean CANVAS_MODE = false;
 
     //pattern singleton per avere accesso alle risorse condivise
     private static H2OSim ourInstance = new H2OSim();

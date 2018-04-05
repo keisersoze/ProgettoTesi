@@ -32,7 +32,7 @@ public class HandleTrasmission implements Action {
             Sensor sender = frame.getCurrentOwner();
 
             List<Sensor> sensors = event.getContext().getSensors();
-            Sensor receiver = sensors.get(H2OSim.MERSENNE_TWISTER.nextInt(sensors.size())); // per adesso ne prendo uno a caso TODO risorsa condivisa?
+            Sensor receiver = sensors.get(context.getMarsenneTwister().nextInt(sensors.size())); // per adesso ne prendo uno a caso TODO risorsa condivisa?
 
             Trasmission trasmission = new BaseTrasmission(sender, receiver); // bisogna decidere se il receiver è sempre lo stesso in caso di bloccaggio
 
@@ -43,7 +43,7 @@ public class HandleTrasmission implements Action {
         } else {
 
             //per adesso il tempo da aspettare è una variabile casuale exp
-            context.getScheduler().addEvent(new TrasmissionEvent(-log(H2OSim.MERSENNE_TWISTER.nextDouble()) / H2OSim.LAMDA, context, frame));
+            context.getScheduler().addEvent(new TrasmissionEvent(-log(context.getMarsenneTwister().nextDouble()) / H2OSim.LAMDA, context, frame));
 
         }
 
