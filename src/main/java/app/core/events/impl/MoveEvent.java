@@ -8,7 +8,5 @@ public class MoveEvent extends BaseEvent {
 
     public MoveEvent(double time, SimContext context) {
         super(time, context);
-        addAction(new MoveSensors());
-        addAction(new UpdateSNR());
     }
 }

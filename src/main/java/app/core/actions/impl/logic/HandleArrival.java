@@ -13,8 +13,6 @@ import java.util.List;
 
 public class HandleArrival implements Action {
 
-    public static final String id="HANDLEARRIVAL";
-
     public HandleArrival() {
     }
 
@@ -31,4 +29,5 @@ public class HandleArrival implements Action {
         context.getFrames().add(newFrame);
 
     }
+
 }

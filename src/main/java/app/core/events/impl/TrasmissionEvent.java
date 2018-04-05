@@ -12,8 +12,6 @@ public class TrasmissionEvent extends BaseEvent {
     public TrasmissionEvent(double time, SimContext context, Frame frame) {
         super(time, context);
         this.frame = frame;
-        addAction(new HandleTrasmission());
-        addAction(new UpdateSNR());
     }
 
     @Override

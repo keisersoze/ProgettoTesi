@@ -17,7 +17,7 @@ import static org.apache.commons.math3.util.FastMath.log;
 
 public class HandleTrasmission implements Action {
 
-    public static final String id="HANDLETRASMISSION";
+
 
     public HandleTrasmission() {
     }
@@ -32,7 +32,7 @@ public class HandleTrasmission implements Action {
             Sensor sender = frame.getCurrentOwner();
 
             List<Sensor> sensors = event.getContext().getSensors();
-            Sensor receiver = sensors.get(H2OSim.MERSENNE_TWISTER.nextInt(sensors.size())); // per adesso ne prendo uno a caso
+            Sensor receiver = sensors.get(H2OSim.MERSENNE_TWISTER.nextInt(sensors.size())); // per adesso ne prendo uno a caso TODO risorsa condivisa?
 
             Trasmission trasmission = new BaseTrasmission(sender, receiver); // bisogna decidere se il receiver è sempre lo stesso in caso di bloccaggio
 
@@ -47,5 +47,9 @@ public class HandleTrasmission implements Action {
 
         }
 
+    }
+
+    public Sensor pickReceiver(){
+        return null;
     }
 }

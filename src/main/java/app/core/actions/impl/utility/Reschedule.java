@@ -6,8 +6,6 @@ import app.core.events.Event;
 
 public class Reschedule implements Action {
 
-    public static final String id="RESCHEDULE";
-
     double interval;
 
     public Reschedule(double interval) {
@@ -23,4 +21,5 @@ public class Reschedule implements Action {
         event.updateTime(interval);
         context.getScheduler().addEvent(event);
     }
+
 }
