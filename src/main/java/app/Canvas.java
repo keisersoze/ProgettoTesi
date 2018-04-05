@@ -10,10 +10,7 @@ import com.jme3.material.RenderState;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.queue.RenderQueue;
-import com.jme3.scene.Geometry;
-import com.jme3.scene.Mesh;
-import com.jme3.scene.Node;
-import com.jme3.scene.VertexBuffer;
+import com.jme3.scene.*;
 import com.jme3.scene.shape.Sphere;
 import com.jme3.texture.Texture;
 
@@ -38,6 +35,10 @@ public class Canvas extends SimpleApplication {
         setDisplayStatView(true);
         Node pivot = new Node("pivot");
         rootNode.attachChild(pivot); // put this node in the scene
+
+        Spatial teapot = assetManager.loadModel("Models/HarborBuoy.obj");
+        teapot.scale(5f);
+        rootNode.attachChild(teapot);
 
         Vector3f cam_position = new Vector3f(0, 30, 20);
         cam.setLocation(cam_position);
