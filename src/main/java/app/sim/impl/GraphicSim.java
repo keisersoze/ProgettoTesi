@@ -56,9 +56,9 @@ public class GraphicSim extends AbstractSimIstance {
 
         settings.setSamples(16);
         settings.setGammaCorrection(true);
+        settings.setSettingsDialogImage("Interface/unive.jpg");
 
         canvas.setShowSettings(true);
-        settings.setSettingsDialogImage("Interface/unive.jpg");
         canvas.setDisplayStatView(false);
         canvas.setSettings(settings);
     }
