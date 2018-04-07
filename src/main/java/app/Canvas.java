@@ -239,6 +239,14 @@ public class Canvas extends SimpleApplication {
         return null;
     }
 
+    private Vector3f pointBetween(Vector3f inizio, Vector3f fine, float percentuale) {
+        Vector3f point = new Vector3f();
+        point.setX(inizio.x + percentuale * (fine.x - inizio.x));
+        point.setY(inizio.y + percentuale * (fine.y - inizio.y));
+        point.setZ(inizio.z + percentuale * (fine.z - inizio.z));
+        return point;
+    }
+
     public boolean isCharged() {
         return charged;
     }
