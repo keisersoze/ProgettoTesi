@@ -5,15 +5,29 @@ import app.core.events.Event;
 import app.core.events.impl.MoveEvent;
 import app.core.events.impl.StatisticsEvent;
 import app.core.scheduler.Scheduler;
+import app.factory.CoreComponentsFactory;
 import app.factory.EventTypes;
+import app.factory.ModelComponentsFactory;
+import app.factory.impl.MyModelComponentsFactory;
+import app.model.Frame;
+import app.model.Sensor;
 import app.sim.impl.AbstractSimIstance;
 import app.stats.Collector;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SimulationInstance extends AbstractSimIstance implements Runnable {
+    private final List<Sensor> sensors;
+    private final List<Frame> frames;
+    private final ModelComponentsFactory modelComponentsFactory;
 
 
     public SimulationInstance(Collector collector, Scheduler scheduler) {
         super(collector, scheduler);
+        sensors = new ArrayList<>();
+        frames = new ArrayList<>();
+        modelComponentsFactory = new MyModelComponentsFactory();
     }
 
     public void run() {
@@ -42,5 +56,22 @@ public class SimulationInstance extends AbstractSimIstance implements Runnable {
         System.out.println(getSimTime());
     }
 
+    @Override
+    public List<Sensor> getSensors() {
+        return sensors;
+    }
 
+    @Override
+    public List<Frame> getFrames() {
+        return frames;
+    }
+
+    public void removeFrame(Frame f){
+        frames.remove(f);
+    }
+
+    @Override
+    public ModelComponentsFactory getModelComponentsFactory() {
+        return modelComponentsFactory;
+    }
 }

@@ -81,12 +81,4 @@ public abstract class AbstractSensor implements Sensor {
         position.addLocal(x, y, z);
     }
 
-    @Override
-    public Geometry getGeometry() {
-        return null;
-    }
-
-    @Override
-    public void updatePosition() {
-    }
 }

@@ -27,7 +27,7 @@ public class HandleArrival implements Action {
         List<Sensor> sensors = context.getSensors();
         Sensor s = sensors.get(context.getMarsenneTwister().nextInt(sensors.size())); //prendo un sensore a caso
 
-        Frame newFrame = new BaseFrame(H2OSim.MU, s, s);
+        Frame newFrame = context.getModelComponentsFactory().getFrame(H2OSim.MU, s, s);
         Event e = context.getCoreComponentsFactory().getEvent(EventTypes.TrasmissionEvent,0, context, newFrame);
         context.getScheduler().addEvent(e);
         context.getFrames().add(newFrame);

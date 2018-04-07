@@ -15,8 +15,6 @@ import java.util.List;
 public abstract class AbstractSimIstance implements SimContext {
     private final Scheduler scheduler;
     private final Collector collector;
-    private final List<Sensor> sensors;
-    private final List<Frame> frames;
     private final CoreComponentsFactory coreComponentsFactory;
     private double simTime;
     private  final MersenneTwister marsenneTwister = new MersenneTwister();
@@ -30,8 +28,6 @@ public abstract class AbstractSimIstance implements SimContext {
         this.collector = collector;
         this.scheduler = scheduler;
         simTime = 0.0;
-        sensors = new ArrayList<>();
-        frames = new ArrayList<>();
         coreComponentsFactory = new MyCoreComponentsFactory();
         nframes = 0;
     }
@@ -47,20 +43,6 @@ public abstract class AbstractSimIstance implements SimContext {
     @Override
     public void setSimTime(double simTime) {
         this.simTime = simTime;
-    }
-
-    @Override
-    public List<Sensor> getSensors() {
-        return sensors;
-    }
-
-    @Override
-    public List<Frame> getFrames() {
-        return frames;
-    }
-
-    public void removeFrame(Frame f){
-        frames.remove(f);
     }
 
     @Override

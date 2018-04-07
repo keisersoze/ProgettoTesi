@@ -5,12 +5,10 @@ import app.core.events.Event;
 import app.factory.EventTypes;
 import app.sim.SimContext;
 import app.core.actions.Action;
-import app.core.events.impl.EndTrasmissionEvent;
-import app.core.events.impl.TrasmissionEvent;
 import app.model.Frame;
 import app.model.Sensor;
-import app.model.Trasmission;
-import app.model.impl.BaseTrasmission;
+import app.model.Transmission;
+import app.model.impl.BaseTransmission;
 
 import java.util.List;
 
@@ -35,9 +33,9 @@ public class HandleTrasmission implements Action {
             List<Sensor> sensors = event.getContext().getSensors();
             Sensor receiver = sensors.get(context.getMarsenneTwister().nextInt(sensors.size())); // per adesso ne prendo uno a caso TODO risorsa condivisa?
 
-            Trasmission trasmission = new BaseTrasmission(sender, receiver); // bisogna decidere se il receiver è sempre lo stesso in caso di bloccaggio
+            Transmission transmission = context.getModelComponentsFactory().getTransmission(sender, receiver); // bisogna decidere se il receiver è sempre lo stesso in caso di bloccaggio
 
-            frame.setCurrentTransmission(trasmission);
+            frame.setCurrentTransmission(transmission);
 
             Event e = context.getCoreComponentsFactory().getEvent(EventTypes.EndTrasmissionEvent,frame.getSize(),context,frame);
             context.getScheduler().addEvent(e);

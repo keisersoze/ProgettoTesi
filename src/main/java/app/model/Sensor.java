@@ -33,8 +33,5 @@ public interface Sensor {
 
     void setOffsetPosition(float x, float y, float z);
 
-    Geometry getGeometry();
-
-    void updatePosition();
 
 }

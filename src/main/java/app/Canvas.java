@@ -2,7 +2,9 @@ package app;
 
 import app.model.Frame;
 import app.model.Sensor;
-import app.model.Trasmission;
+import app.model.Transmission;
+import app.model.jme3.GraphicSensor;
+import app.model.jme3.GraphicTransmission;
 import com.jme3.app.SimpleApplication;
 import com.jme3.light.DirectionalLight;
 import com.jme3.material.Material;
@@ -25,7 +27,7 @@ public class Canvas extends SimpleApplication {
 
     private Vector3f campo;
     private boolean charged = false;
-    private HashMap<Trasmission, Geometry> lines = new HashMap<>();
+    private HashMap<Transmission, Geometry> lines = new HashMap<>();
 
     public void simpleInitApp() {
         campo = new Vector3f(100, 30, 100);
@@ -51,8 +53,8 @@ public class Canvas extends SimpleApplication {
         return min + (int) (Math.random() * ((max - min) + 1));
     }
 
-    public Geometry updatePositions(List<Sensor> sensorList) {
-        for (Sensor sensor : sensorList) {
+    public Geometry updatePositions(List<GraphicSensor> sensorList) {
+        for (GraphicSensor sensor : sensorList) {
             sensor.getGeometry().setLocalTranslation(sensor.getPosition());
         }
         return null;
@@ -82,20 +84,20 @@ public class Canvas extends SimpleApplication {
     }
 
     public Geometry deleteLinkTransmission(Frame frame) {
-        for (Trasmission trasmission : frame.getTransmissionHistory()) {
-            if (trasmission != null && lines.containsKey(trasmission)) {
-                lines.get(trasmission).removeFromParent();
-                lines.remove(trasmission);
+        for (Transmission transmission : frame.getTransmissionHistory()) {
+            if (transmission != null && lines.containsKey(transmission)) {
+                lines.get(transmission).removeFromParent();
+                lines.remove(transmission);
             }
         }
         return null;
     }
 
-    public Geometry linkTransmission(Trasmission trasmission, ColorRGBA color) {
-        Vector3f position_1 = trasmission.getSender().getGeometry().getLocalTranslation();
-        Vector3f position_2 = trasmission.getReceiver().getGeometry().getLocalTranslation();
+    public Geometry linkTransmission(GraphicTransmission transmission, ColorRGBA color) {
+        Vector3f position_1 = transmission.getGraphicSender().getGeometry().getLocalTranslation();
+        Vector3f position_2 = transmission.getGraphicReceiver().getGeometry().getLocalTranslation();
 
-        if (!lines.containsKey(trasmission)) {
+        if (!lines.containsKey(transmission)) {
 
             Mesh lineMesh = new Mesh();
             lineMesh.setMode(Mesh.Mode.Lines);
@@ -133,14 +135,14 @@ public class Canvas extends SimpleApplication {
             geo.updateModelBound();
             geo.setQueueBucket(RenderQueue.Bucket.Translucent);
             rootNode.attachChild(geo);
-            lines.put(trasmission, geo);
+            lines.put(transmission, geo);
 
         } else {
-            lines.get(trasmission).getMaterial().setColor("Color", color);
-            lines.get(trasmission).getMesh().setBuffer(VertexBuffer.Type.Position, 3, new float[]{position_1.x, position_1.y, position_1.z, position_2.x, position_2.y, position_2.z});
+            lines.get(transmission).getMaterial().setColor("Color", color);
+            lines.get(transmission).getMesh().setBuffer(VertexBuffer.Type.Position, 3, new float[]{position_1.x, position_1.y, position_1.z, position_2.x, position_2.y, position_2.z});
         }
 
-        return lines.get(trasmission);
+        return lines.get(transmission);
     }
 
     private void grid(boolean simple) {
@@ -215,7 +217,7 @@ public class Canvas extends SimpleApplication {
         float step = 1.0f / frame.getTransmissionHistory().size();
         float alpha = 1.0f;
         System.out.println(step);
-        for (Trasmission t : frame.getTransmissionHistory()) {
+        for (Transmission t : frame.getTransmissionHistory()) {
             if(t != null) {
                 int colorIndex = 0;
                 alpha -= step;

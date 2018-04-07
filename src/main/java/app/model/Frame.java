@@ -1,15 +1,15 @@
 package app.model;
 
-import java.util.LinkedList;
+import java.util.List;
 
 public interface Frame {
 
 
     public double getSize();
 
-    public Trasmission getCurrentTransmission();
+    public Transmission getCurrentTransmission();
 
-    public void setCurrentTransmission(Trasmission currentTransmission);
+    public void setCurrentTransmission(Transmission currentTransmission);
 
     public Sensor getSender();
 
@@ -17,7 +17,7 @@ public interface Frame {
 
     public void setCurrentOwner(Sensor currentOwner);
 
-    public LinkedList<Trasmission> getTransmissionHistory();
+    public List<Transmission> getTransmissionHistory();
 
     public boolean isArrived();
 

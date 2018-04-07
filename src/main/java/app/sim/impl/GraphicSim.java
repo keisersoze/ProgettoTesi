@@ -5,9 +5,15 @@ import app.H2OSim;
 import app.core.events.Event;
 import app.core.scheduler.Scheduler;
 import app.factory.EventTypes;
+import app.factory.ModelComponentsFactory;
+import app.factory.jme3.GraphicModelCompFactory;
+import app.factory.jme3.impl.Jme3ModelCompFactory;
 import app.model.Frame;
-import app.model.Trasmission;
-import app.model.impl.V3FSensor;
+import app.model.Sensor;
+import app.model.Transmission;
+import app.model.jme3.GraphicFrame;
+import app.model.jme3.GraphicSensor;
+import app.model.jme3.GraphicTransmission;
 import app.stats.Collector;
 import com.jme3.math.ColorRGBA;
 import com.jme3.scene.Spatial;
@@ -20,12 +26,18 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
 public class GraphicSim extends AbstractSimIstance {
+    private final List<GraphicSensor> sensors;
+    private final List<GraphicFrame> frames;
+    private final GraphicModelCompFactory modelComponentsFactory;
 
     private static Canvas canvas;
 
     public GraphicSim(Collector collector, Scheduler scheduler) {
         super(collector, scheduler);
         canvas = new Canvas();
+        sensors = new ArrayList<>();
+        frames = new ArrayList<>();
+        modelComponentsFactory = new Jme3ModelCompFactory();
     }
 
     private static void setSettings() {
@@ -52,7 +64,7 @@ public class GraphicSim extends AbstractSimIstance {
     }
 
     public void run() {
-        List<Frame> listCompleted = new ArrayList<>();
+        List<GraphicFrame> listCompleted = new ArrayList<>();
 
         setSettings();
 
@@ -68,7 +80,8 @@ public class GraphicSim extends AbstractSimIstance {
 
         //inizializzazione
         for (int i = 0; i < 400; i++) {
-            V3FSensor temp = new V3FSensor(canvas.random(-100, 100), canvas.random(-30, 30), canvas.random(-100, 100), canvas);
+            GraphicSensor temp = modelComponentsFactory.getSensor(canvas.random(-100, 100), canvas.random(-30, 30), canvas.random(-100, 100));
+            temp.setCanvas(canvas);
             getSensors().add(temp);
         }
 
@@ -95,9 +108,9 @@ public class GraphicSim extends AbstractSimIstance {
                 setSimTime(evt_scheduled.getTime());
                 evt_scheduled.tick();
 
-                for (Frame frame : getFrames()) {
+                for (GraphicFrame frame : frames) {
                     if (!frame.isArrived()) {
-                        Trasmission current = frame.getCurrentTransmission();
+                        GraphicTransmission current = frame.getCurrentGraphicTransmission();
                         if (current != null) {
                             canvas.enqueue((Callable<Spatial>) () -> canvas.linkTransmission(current, ColorRGBA.Green)).get();
                             //canvas.enqueue((Callable<Spatial>) () -> canvas.fadeTransmission(frame)).get();
@@ -107,7 +120,7 @@ public class GraphicSim extends AbstractSimIstance {
                         listCompleted.add(frame);
                     }
                 }
-                canvas.enqueue((Callable<Spatial>) () -> canvas.updatePositions(getSensors())).get();
+                canvas.enqueue((Callable<Spatial>) () -> canvas.updatePositions(sensors)).get();
                 getFrames().removeAll(listCompleted);
                 Thread.sleep(100);
             }
@@ -118,4 +131,23 @@ public class GraphicSim extends AbstractSimIstance {
         System.out.println(getSimTime() + " " + getSensors().get(0).getPosition());
     }
 
+    @Override
+    public List<Sensor> getSensors() {
+        return (List<Sensor>) (List<?>) sensors;
+    }
+
+    @Override
+    public List<Frame> getFrames() {
+        return (List<Frame>) (List<?>) frames;
+    }
+
+
+    public void removeFrame(Frame f){
+        frames.remove(f);
+    }
+
+    @Override
+    public ModelComponentsFactory getModelComponentsFactory() {
+        return modelComponentsFactory;
+    }
 }

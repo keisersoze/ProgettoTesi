@@ -1,22 +1,20 @@
 package app.model.impl;
 
 import app.model.Sensor;
-import app.model.Trasmission;
+import app.model.Transmission;
 
-public class BaseTrasmission implements Trasmission {
+public abstract class AbstractTransmission implements Transmission {
     private Sensor sender;
     private Sensor receiver;
     private double snr;
     private boolean isSuccessfull;
-    private boolean terminated;
 
-    public BaseTrasmission(Sensor sender, Sensor receiver) {
+
+    public AbstractTransmission(Sensor sender, Sensor receiver) {
         this.sender = sender;
         this.receiver = receiver;
         isSuccessfull = true;
-        terminated = false;
     }
-
 
     @Override
     public void updateSnr(double x) {
@@ -43,4 +41,5 @@ public class BaseTrasmission implements Trasmission {
     public double getSnr() {
         return snr;
     }
+
 }

@@ -2,6 +2,7 @@ package app.sim;
 
 import app.core.scheduler.Scheduler;
 import app.factory.CoreComponentsFactory;
+import app.factory.ModelComponentsFactory;
 import app.model.Frame;
 import app.model.Sensor;
 import app.stats.Collector;
@@ -29,4 +30,6 @@ public interface SimContext {
     MersenneTwister getMarsenneTwister();
 
     CoreComponentsFactory getCoreComponentsFactory();
+
+    ModelComponentsFactory getModelComponentsFactory();
 }
