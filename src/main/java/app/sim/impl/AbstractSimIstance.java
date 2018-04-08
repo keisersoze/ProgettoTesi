@@ -1,16 +1,12 @@
 package app.sim.impl;
 
-import app.factory.CoreComponentsFactory;
-import app.factory.impl.MyCoreComponentsFactory;
+import app.core.CoreComponentsFactory;
+import app.core.h20.h20CoreComponentsFactory;
 import app.sim.SimContext;
-import app.core.scheduler.Scheduler;
+import app.core.Scheduler;
 import app.model.Frame;
-import app.model.Sensor;
 import app.stats.Collector;
 import org.apache.commons.math3.random.MersenneTwister;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public abstract class AbstractSimIstance implements SimContext {
     private final Scheduler scheduler;
@@ -28,7 +24,7 @@ public abstract class AbstractSimIstance implements SimContext {
         this.collector = collector;
         this.scheduler = scheduler;
         simTime = 0.0;
-        coreComponentsFactory = new MyCoreComponentsFactory();
+        coreComponentsFactory = new h20CoreComponentsFactory();
         nframes = 0;
     }
 

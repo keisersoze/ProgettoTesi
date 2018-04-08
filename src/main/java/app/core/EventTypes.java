@@ -1,4 +1,4 @@
-package app.factory;
+package app.core;
 
 public class EventTypes {
     public static final String BaseEvent = "BASEEVENT";

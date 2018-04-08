@@ -1,8 +1,8 @@
 package app.sim;
 
-import app.core.scheduler.Scheduler;
-import app.factory.CoreComponentsFactory;
-import app.factory.ModelComponentsFactory;
+import app.core.Scheduler;
+import app.core.CoreComponentsFactory;
+import app.model.ModelComponentsFactory;
 import app.model.Frame;
 import app.model.Sensor;
 import app.stats.Collector;

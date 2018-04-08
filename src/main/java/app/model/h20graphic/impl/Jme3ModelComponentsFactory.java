@@ -1,9 +1,6 @@
 package app.factory.jme3.impl;
 
-import app.factory.ModelComponentsFactory;
-import app.model.Frame;
 import app.model.Sensor;
-import app.model.Transmission;
 import app.model.jme3.GraphicFrame;
 import app.model.jme3.GraphicSensor;
 import app.model.jme3.GraphicTransmission;

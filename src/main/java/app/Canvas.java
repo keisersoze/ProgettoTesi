@@ -1,10 +1,9 @@
 package app;
 
 import app.model.Frame;
-import app.model.Sensor;
 import app.model.Transmission;
-import app.model.jme3.GraphicSensor;
-import app.model.jme3.GraphicTransmission;
+import app.model.h20graphic.GraphicSensor;
+import app.model.h20graphic.GraphicTransmission;
 import com.jme3.app.SimpleApplication;
 import com.jme3.light.DirectionalLight;
 import com.jme3.material.Material;

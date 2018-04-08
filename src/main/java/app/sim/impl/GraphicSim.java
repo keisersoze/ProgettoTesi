@@ -2,18 +2,17 @@ package app.sim.impl;
 
 import app.Canvas;
 import app.H2OSim;
-import app.core.events.Event;
-import app.core.scheduler.Scheduler;
-import app.factory.EventTypes;
-import app.factory.ModelComponentsFactory;
-import app.factory.jme3.GraphicModelCompFactory;
-import app.factory.jme3.impl.Jme3ModelCompFactory;
+import app.core.Event;
+import app.core.Scheduler;
+import app.core.EventTypes;
+import app.model.ModelComponentsFactory;
+import app.model.h20graphic.GModelComponentsFactory;
+import app.model.h20graphic.impl.Jme3ModelComponentsFactory;
 import app.model.Frame;
 import app.model.Sensor;
-import app.model.Transmission;
-import app.model.jme3.GraphicFrame;
-import app.model.jme3.GraphicSensor;
-import app.model.jme3.GraphicTransmission;
+import app.model.h20graphic.GraphicFrame;
+import app.model.h20graphic.GraphicSensor;
+import app.model.h20graphic.GraphicTransmission;
 import app.stats.Collector;
 import com.jme3.math.ColorRGBA;
 import com.jme3.scene.Spatial;
@@ -28,7 +27,7 @@ import java.util.concurrent.ExecutionException;
 public class GraphicSim extends AbstractSimIstance {
     private final List<GraphicSensor> sensors;
     private final List<GraphicFrame> frames;
-    private final GraphicModelCompFactory modelComponentsFactory;
+    private final GModelComponentsFactory modelComponentsFactory;
 
     private static Canvas canvas;
 
@@ -37,7 +36,7 @@ public class GraphicSim extends AbstractSimIstance {
         canvas = new Canvas();
         sensors = new ArrayList<>();
         frames = new ArrayList<>();
-        modelComponentsFactory = new Jme3ModelCompFactory();
+        modelComponentsFactory = new Jme3ModelComponentsFactory();
     }
 
     private static void setSettings() {
@@ -122,7 +121,7 @@ public class GraphicSim extends AbstractSimIstance {
                 }
                 canvas.enqueue((Callable<Spatial>) () -> canvas.updatePositions(sensors)).get();
                 getFrames().removeAll(listCompleted);
-                Thread.sleep(100);
+                Thread.sleep(10);
             }
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();

@@ -1,6 +1,6 @@
 package app.factory.impl;
 
-import app.factory.ModelComponentsFactory;
+import app.model.ModelComponentsFactory;
 import app.model.Frame;
 import app.model.Sensor;
 import app.model.Transmission;

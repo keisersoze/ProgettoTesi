@@ -1,4 +1,4 @@
-package app.factory;
+package app.core;
 
 public class ActionTypes {
 

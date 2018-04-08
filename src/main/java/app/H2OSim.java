@@ -1,13 +1,10 @@
 package app;
 
 
-import app.core.actions.impl.logic.HandleTrasmission;
-import app.core.events.impl.ArrivalEvent;
-import app.core.scheduler.impl.DefaultScheduler;
+import app.core.h20.scheduler.DefaultScheduler;
 import app.sim.impl.GraphicSim;
 import app.sim.impl.SimulationInstance;
 import app.stats.impl.BaseCollector;
-import org.apache.commons.math3.random.MersenneTwister;
 
 import java.util.ArrayList;
 import java.util.List;
