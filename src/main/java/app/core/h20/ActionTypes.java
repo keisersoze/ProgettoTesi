@@ -1,4 +1,4 @@
-package app.core;
+package app.core.h20;
 
 public class ActionTypes {
 

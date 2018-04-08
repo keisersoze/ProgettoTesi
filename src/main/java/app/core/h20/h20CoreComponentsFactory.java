@@ -3,13 +3,11 @@ package app.core.h20;
 import app.core.Action;
 import app.core.h20.actions.logic.*;
 import app.core.h20.events.*;
-import app.core.ActionTypes;
 import app.core.h20.actions.stats.UpdateStats;
 import app.core.h20.actions.utility.Reschedule;
 import app.core.h20.actions.utility.RescheduleExpRandom;
 import app.core.Event;
 import app.core.CoreComponentsFactory;
-import app.core.EventTypes;
 import app.model.Frame;
 import app.sim.SimContext;
 

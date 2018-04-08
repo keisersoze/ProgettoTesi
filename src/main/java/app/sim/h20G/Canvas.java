@@ -1,4 +1,4 @@
-package app;
+package app.sim.h20G;
 
 import app.model.Frame;
 import app.model.Transmission;

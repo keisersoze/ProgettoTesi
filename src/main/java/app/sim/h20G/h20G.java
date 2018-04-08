@@ -1,10 +1,9 @@
-package app.sim.h20;
+package app.sim.h20G;
 
-import app.Canvas;
 import app.H2OSim;
 import app.core.Event;
 import app.core.Scheduler;
-import app.core.EventTypes;
+import app.core.h20.EventTypes;
 import app.model.ModelComponentsFactory;
 import app.model.h20G.GModelComponentsFactory;
 import app.model.h20G.impl.Jme3ModelComponentsFactory;
@@ -13,6 +12,7 @@ import app.model.Sensor;
 import app.model.h20G.GraphicFrame;
 import app.model.h20G.GraphicSensor;
 import app.model.h20G.GraphicTransmission;
+import app.sim.h20.h20Abstract;
 import app.stats.Collector;
 import com.jme3.math.ColorRGBA;
 import com.jme3.scene.Spatial;
@@ -24,14 +24,14 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
-public class GraphicSim extends AbstractSimIstance {
+public class h20G extends h20Abstract {
     private final List<GraphicSensor> sensors;
     private final List<GraphicFrame> frames;
     private final GModelComponentsFactory modelComponentsFactory;
 
     private static Canvas canvas;
 
-    public GraphicSim(Collector collector, Scheduler scheduler) {
+    public h20G(Collector collector, Scheduler scheduler) {
         super(collector, scheduler);
         canvas = new Canvas();
         sensors = new ArrayList<>();

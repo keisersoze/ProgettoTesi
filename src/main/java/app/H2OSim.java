@@ -2,8 +2,8 @@ package app;
 
 
 import app.core.h20.scheduler.DefaultScheduler;
-import app.sim.h20.GraphicSim;
-import app.sim.h20.SimulationInstance;
+import app.sim.h20G.h20G;
+import app.sim.h20.h20;
 import app.stats.impl.BaseCollector;
 
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ public class H2OSim {
 
         BaseCollector collector = new BaseCollector();
         if (CANVAS_MODE) {
-            new GraphicSim(collector, new DefaultScheduler()).run();
+            new h20G(collector, new DefaultScheduler()).run();
 
         } else {
             //inizializzazione
@@ -41,7 +41,7 @@ public class H2OSim {
             for (int i = 0; i < NTHREADS; i++) {
                 String instance_name = String.valueOf(i);
                 collector.addStatSource(instance_name);
-                instances.add(new Thread(new SimulationInstance(collector, new DefaultScheduler()), String.valueOf(i)));
+                instances.add(new Thread(new h20(collector, new DefaultScheduler()), String.valueOf(i)));
                 instances.get(i).start();
             }
 

@@ -1,6 +1,6 @@
 package app.model.h20G;
 
-import app.Canvas;
+import app.sim.h20G.Canvas;
 import app.model.Sensor;
 import com.jme3.scene.Geometry;
 

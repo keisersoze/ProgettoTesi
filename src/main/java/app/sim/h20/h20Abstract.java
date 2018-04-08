@@ -8,7 +8,7 @@ import app.model.Frame;
 import app.stats.Collector;
 import org.apache.commons.math3.random.MersenneTwister;
 
-public abstract class AbstractSimIstance implements SimContext {
+public abstract class h20Abstract implements SimContext {
     private final Scheduler scheduler;
     private final Collector collector;
     private final CoreComponentsFactory coreComponentsFactory;
@@ -19,7 +19,7 @@ public abstract class AbstractSimIstance implements SimContext {
     //Dati statistici che vengono utilizzati dal collector
     private int nframes; // numero di frame arrivati ai sink
 
-    public AbstractSimIstance(Collector collector, Scheduler scheduler) {
+    public h20Abstract(Collector collector, Scheduler scheduler) {
 
         this.collector = collector;
         this.scheduler = scheduler;

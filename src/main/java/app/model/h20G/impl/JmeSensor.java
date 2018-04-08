@@ -1,6 +1,6 @@
 package app.model.h20G.impl;
 
-import app.Canvas;
+import app.sim.h20G.Canvas;
 import app.model.h20.AbstractSensor;
 import app.model.h20G.GraphicSensor;
 import com.jme3.math.ColorRGBA;

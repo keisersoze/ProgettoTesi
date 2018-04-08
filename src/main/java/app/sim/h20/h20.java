@@ -3,7 +3,7 @@ package app.sim.h20;
 import app.H2OSim;
 import app.core.Event;
 import app.core.Scheduler;
-import app.core.EventTypes;
+import app.core.h20.EventTypes;
 import app.model.ModelComponentsFactory;
 import app.model.h20.h20ModelComponentsFactory;
 import app.model.Frame;
@@ -13,13 +13,13 @@ import app.stats.Collector;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SimulationInstance extends AbstractSimIstance implements Runnable {
+public class h20 extends h20Abstract implements Runnable {
     private final List<Sensor> sensors;
     private final List<Frame> frames;
     private final ModelComponentsFactory modelComponentsFactory;
 
 
-    public SimulationInstance(Collector collector, Scheduler scheduler) {
+    public h20(Collector collector, Scheduler scheduler) {
         super(collector, scheduler);
         sensors = new ArrayList<>();
         frames = new ArrayList<>();
