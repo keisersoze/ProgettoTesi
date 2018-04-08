@@ -2,6 +2,7 @@ package app.core.h20.events;
 
 import app.core.h20.actions.utility.Reschedule;
 import app.model.Frame;
+import app.model.Sensor;
 import app.sim.SimContext;
 import app.core.Action;
 import app.core.Event;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BaseEvent implements Event, Comparable<Event> {
-    SimContext context;
+    SimContext <Sensor,Frame> context; // con questa definizione di context funziona con tutti sia con h20 che con h20G
     private double time;
     private List<Action> actionList;
 

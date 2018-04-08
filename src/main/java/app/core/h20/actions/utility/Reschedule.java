@@ -1,5 +1,7 @@
 package app.core.h20.actions.utility;
 
+import app.model.Frame;
+import app.model.Sensor;
 import app.sim.SimContext;
 import app.core.Action;
 import app.core.Event;
@@ -15,7 +17,7 @@ public class Reschedule implements Action {
     @Override
     public void execute(Event event) {
 
-        SimContext context = event.getContext();
+        SimContext <Sensor,Frame> context = event.getContext();
 
         //aggiunge il prossimo evento per la raccolta delle stats
         event.updateTime(interval);

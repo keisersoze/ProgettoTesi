@@ -2,6 +2,7 @@ package app.core.h20.actions.logic;
 
 import app.core.Event;
 import app.core.h20.EventTypes;
+import app.model.Sensor;
 import app.sim.SimContext;
 import app.core.Action;
 import app.model.Frame;
@@ -15,7 +16,7 @@ public class HandleEndTrasmission implements Action {
     @Override
     public void execute(Event event) {
 
-        SimContext context = event.getContext();
+        SimContext<Sensor,Frame> context = event.getContext();
         Frame frame = event.getFrame();
 
         if (frame.getCurrentTransmission().isSuccessfull()) {//se la trasmissione è andata a buon fine

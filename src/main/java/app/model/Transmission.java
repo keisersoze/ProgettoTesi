@@ -1,6 +1,7 @@
 package app.model;
 
 public interface Transmission {
+
     public void updateSnr(double x);
 
     boolean isSuccessfull();

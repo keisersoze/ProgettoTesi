@@ -10,7 +10,8 @@ import org.apache.commons.math3.random.MersenneTwister;
 
 import java.util.List;
 
-public interface SimContext {
+public interface SimContext <S extends Sensor, F extends Frame> {
+
     Scheduler getScheduler();
 
     Collector getCollector();
@@ -19,11 +20,11 @@ public interface SimContext {
 
     void setSimTime(double x);
 
-    List<Sensor> getSensors();
+    List<S> getSensors();
 
-    List<Frame> getFrames();
+    List<F> getFrames();
 
-    void frameArrived(Frame frame);
+    void frameArrived(F frame);
 
     void run();
 

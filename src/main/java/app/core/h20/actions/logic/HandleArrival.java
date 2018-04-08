@@ -20,7 +20,7 @@ public class HandleArrival implements Action {
     @Override
     public void execute(Event event) {
 
-        SimContext context = event.getContext();
+        SimContext<Sensor,Frame> context = event.getContext();
 
         List<Sensor> sensors = context.getSensors();
         Sensor s = sensors.get(context.getMarsenneTwister().nextInt(sensors.size())); //prendo un sensore a caso

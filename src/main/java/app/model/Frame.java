@@ -4,7 +4,6 @@ import java.util.List;
 
 public interface Frame {
 
-
     public double getSize();
 
     public Transmission getCurrentTransmission();

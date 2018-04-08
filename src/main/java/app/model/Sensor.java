@@ -1,8 +1,5 @@
 package app.model;
 
-import com.jme3.math.Vector3f;
-import com.jme3.scene.Geometry;
-
 import java.util.List;
 
 public interface Sensor {

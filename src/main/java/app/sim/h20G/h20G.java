@@ -127,17 +127,17 @@ public class h20G extends h20Abstract {
             e.printStackTrace();
         }
 
-        System.out.println(getSimTime() + " " + getSensors().get(0).getPosition());
+        System.out.println(getSimTime() + " " + sensors.get(0).getPosition());
     }
 
     @Override
-    public List<Sensor> getSensors() {
-        return (List<Sensor>) (List<?>) sensors;
+    public List<GraphicSensor> getSensors() {
+        return sensors;
     }
 
     @Override
-    public List<Frame> getFrames() {
-        return (List<Frame>) (List<?>) frames;
+    public List<GraphicFrame> getFrames() {
+        return frames;
     }
 
 

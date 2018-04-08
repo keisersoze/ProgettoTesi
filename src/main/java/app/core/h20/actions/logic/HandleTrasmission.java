@@ -23,7 +23,7 @@ public class HandleTrasmission implements Action {
     @Override
     public void execute(Event event) {
 
-        SimContext context = event.getContext();
+        SimContext <Sensor,Frame> context = event.getContext();
         Frame frame = event.getFrame();
 
         if (true) {//qua andrà modellato il CSMA
