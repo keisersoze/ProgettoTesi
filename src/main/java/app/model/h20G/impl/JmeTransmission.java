@@ -1,9 +1,9 @@
-package app.model.h20graphic.impl;
+package app.model.h20G.impl;
 
 import app.model.Sensor;
 import app.model.h20.AbstractTransmission;
-import app.model.h20graphic.GraphicSensor;
-import app.model.h20graphic.GraphicTransmission;
+import app.model.h20G.GraphicSensor;
+import app.model.h20G.GraphicTransmission;
 
 public class JmeTransmission extends AbstractTransmission implements GraphicTransmission {
 

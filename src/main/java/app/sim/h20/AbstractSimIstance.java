@@ -1,4 +1,4 @@
-package app.sim.impl;
+package app.sim.h20;
 
 import app.core.CoreComponentsFactory;
 import app.core.h20.h20CoreComponentsFactory;

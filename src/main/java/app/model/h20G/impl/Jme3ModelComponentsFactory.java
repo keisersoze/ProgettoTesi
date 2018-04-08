@@ -1,13 +1,10 @@
-package app.model.h20graphic.impl;
+package app.model.h20G.impl;
 
-import app.model.h20graphic.GModelComponentsFactory;
+import app.model.h20G.GModelComponentsFactory;
 import app.model.Sensor;
-import app.model.h20graphic.GraphicFrame;
-import app.model.h20graphic.GraphicSensor;
-import app.model.h20graphic.GraphicTransmission;
-import app.model.h20graphic.impl.JmeFrame;
-import app.model.h20graphic.impl.JmeSensor;
-import app.model.h20graphic.impl.JmeTransmission;
+import app.model.h20G.GraphicFrame;
+import app.model.h20G.GraphicSensor;
+import app.model.h20G.GraphicTransmission;
 
 public class Jme3ModelComponentsFactory implements GModelComponentsFactory {
 

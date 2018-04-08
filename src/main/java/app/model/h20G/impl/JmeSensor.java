@@ -1,8 +1,8 @@
-package app.model.h20graphic.impl;
+package app.model.h20G.impl;
 
 import app.Canvas;
 import app.model.h20.AbstractSensor;
-import app.model.h20graphic.GraphicSensor;
+import app.model.h20G.GraphicSensor;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;

@@ -1,4 +1,4 @@
-package app.model.h20graphic;
+package app.model.h20G;
 
 import app.Canvas;
 import app.model.Sensor;

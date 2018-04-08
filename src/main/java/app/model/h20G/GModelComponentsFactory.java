@@ -1,10 +1,7 @@
-package app.model.h20graphic;
+package app.model.h20G;
 
 import app.model.ModelComponentsFactory;
 import app.model.Sensor;
-import app.model.h20graphic.GraphicFrame;
-import app.model.h20graphic.GraphicSensor;
-import app.model.h20graphic.GraphicTransmission;
 
 public interface GModelComponentsFactory extends ModelComponentsFactory{
     GraphicSensor getSensor(float x, float y, float z);

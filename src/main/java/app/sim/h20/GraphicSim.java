@@ -1,4 +1,4 @@
-package app.sim.impl;
+package app.sim.h20;
 
 import app.Canvas;
 import app.H2OSim;
@@ -6,13 +6,13 @@ import app.core.Event;
 import app.core.Scheduler;
 import app.core.EventTypes;
 import app.model.ModelComponentsFactory;
-import app.model.h20graphic.GModelComponentsFactory;
-import app.model.h20graphic.impl.Jme3ModelComponentsFactory;
+import app.model.h20G.GModelComponentsFactory;
+import app.model.h20G.impl.Jme3ModelComponentsFactory;
 import app.model.Frame;
 import app.model.Sensor;
-import app.model.h20graphic.GraphicFrame;
-import app.model.h20graphic.GraphicSensor;
-import app.model.h20graphic.GraphicTransmission;
+import app.model.h20G.GraphicFrame;
+import app.model.h20G.GraphicSensor;
+import app.model.h20G.GraphicTransmission;
 import app.stats.Collector;
 import com.jme3.math.ColorRGBA;
 import com.jme3.scene.Spatial;

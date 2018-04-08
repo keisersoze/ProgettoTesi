@@ -1,10 +1,10 @@
-package app.model.h20graphic.impl;
+package app.model.h20G.impl;
 
 import app.model.Sensor;
 import app.model.h20.AbstractFrame;
-import app.model.h20graphic.GraphicFrame;
-import app.model.h20graphic.GraphicSensor;
-import app.model.h20graphic.GraphicTransmission;
+import app.model.h20G.GraphicFrame;
+import app.model.h20G.GraphicSensor;
+import app.model.h20G.GraphicTransmission;
 
 import java.util.List;
 

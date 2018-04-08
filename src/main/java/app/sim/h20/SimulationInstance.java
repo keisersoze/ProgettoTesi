@@ -1,11 +1,11 @@
-package app.sim.impl;
+package app.sim.h20;
 
 import app.H2OSim;
 import app.core.Event;
 import app.core.Scheduler;
 import app.core.EventTypes;
 import app.model.ModelComponentsFactory;
-import app.model.h20.MyModelComponentsFactory;
+import app.model.h20.h20ModelComponentsFactory;
 import app.model.Frame;
 import app.model.Sensor;
 import app.stats.Collector;
@@ -23,7 +23,7 @@ public class SimulationInstance extends AbstractSimIstance implements Runnable {
         super(collector, scheduler);
         sensors = new ArrayList<>();
         frames = new ArrayList<>();
-        modelComponentsFactory = new MyModelComponentsFactory();
+        modelComponentsFactory = new h20ModelComponentsFactory();
     }
 
     public void run() {
