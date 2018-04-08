@@ -51,18 +51,13 @@ public abstract class AbstractSensor implements Sensor {
     }
 
     @Override
-    public Vector3f getPosition() {
-        return position;
-    }
-
-    @Override
     public List<Sensor> getNeighbors() {
         return null;
     }
 
     @Override
     public double getEuclideanDistance(Sensor s) {
-        return position.distance(s.getPosition());
+        return position.distance(new Vector3f(s.getX(),s.getY(),s.getZ()));
     }
 
     @Override
@@ -78,6 +73,10 @@ public abstract class AbstractSensor implements Sensor {
     @Override
     public void setOffsetPosition(float x, float y, float z) {
         position.addLocal(x, y, z);
+    }
+
+    public Vector3f getPosition() {
+        return position;
     }
 
 }

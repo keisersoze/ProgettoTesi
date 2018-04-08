@@ -21,8 +21,6 @@ public interface Sensor {
 
     void setPosition(float x, float y, float z);
 
-    Vector3f getPosition();
-
     List<Sensor> getNeighbors();
 
     double getEuclideanDistance(Sensor s);
