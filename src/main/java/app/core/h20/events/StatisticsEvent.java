@@ -1,8 +1,7 @@
-package app.core.events.impl;
+package app.core.h20.events;
 
 import app.sim.SimContext;
-import app.core.actions.impl.stats.UpdateStats;
-import app.core.events.Event;
+import app.core.Event;
 
 public class StatisticsEvent extends BaseEvent implements Event {
 

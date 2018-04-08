@@ -1,4 +1,4 @@
-package app.model.impl;
+package app.model.h20;
 
 import app.model.Frame;
 import app.model.Sensor;

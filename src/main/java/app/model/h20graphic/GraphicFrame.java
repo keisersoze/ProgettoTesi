@@ -1,8 +1,6 @@
-package app.model.jme3;
+package app.model.h20graphic;
 
 import app.model.Frame;
-import app.model.Sensor;
-import app.model.Transmission;
 
 import java.util.List;
 

@@ -1,14 +1,15 @@
-package app.factory.jme3.impl;
+package app.model.h20graphic.impl;
 
+import app.model.h20graphic.GModelComponentsFactory;
 import app.model.Sensor;
-import app.model.jme3.GraphicFrame;
-import app.model.jme3.GraphicSensor;
-import app.model.jme3.GraphicTransmission;
-import app.model.jme3.impl.JmeFrame;
-import app.model.jme3.impl.JmeSensor;
-import app.model.jme3.impl.JmeTransmission;
+import app.model.h20graphic.GraphicFrame;
+import app.model.h20graphic.GraphicSensor;
+import app.model.h20graphic.GraphicTransmission;
+import app.model.h20graphic.impl.JmeFrame;
+import app.model.h20graphic.impl.JmeSensor;
+import app.model.h20graphic.impl.JmeTransmission;
 
-public class Jme3ModelCompFactory implements app.factory.jme3.GraphicModelCompFactory{
+public class Jme3ModelComponentsFactory implements GModelComponentsFactory {
 
     @Override
     public GraphicSensor getSensor(float x, float y, float z) {

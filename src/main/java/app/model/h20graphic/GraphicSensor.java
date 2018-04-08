@@ -1,4 +1,4 @@
-package app.model.jme3;
+package app.model.h20graphic;
 
 import app.Canvas;
 import app.model.Sensor;

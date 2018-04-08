@@ -1,7 +1,6 @@
-package app.model.impl;
+package app.model.h20;
 
 import app.model.Sensor;
-import app.model.Transmission;
 
 public class BaseTransmission extends  AbstractTransmission {
 

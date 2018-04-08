@@ -1,7 +1,7 @@
-package app.core.scheduler.impl;
+package app.core.h20.scheduler;
 
-import app.core.events.Event;
-import app.core.scheduler.Scheduler;
+import app.core.Event;
+import app.core.Scheduler;
 
 import java.util.PriorityQueue;
 

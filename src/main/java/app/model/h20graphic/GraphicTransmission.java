@@ -1,6 +1,5 @@
-package app.model.jme3;
+package app.model.h20graphic;
 
-import app.model.Sensor;
 import app.model.Transmission;
 
 public interface GraphicTransmission extends Transmission {

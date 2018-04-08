@@ -1,13 +1,11 @@
-package app.model.jme3.impl;
+package app.model.h20graphic.impl;
 
 import app.model.Sensor;
-import app.model.Transmission;
-import app.model.impl.AbstractFrame;
-import app.model.jme3.GraphicFrame;
-import app.model.jme3.GraphicSensor;
-import app.model.jme3.GraphicTransmission;
+import app.model.h20.AbstractFrame;
+import app.model.h20graphic.GraphicFrame;
+import app.model.h20graphic.GraphicSensor;
+import app.model.h20graphic.GraphicTransmission;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class JmeFrame extends AbstractFrame implements GraphicFrame {

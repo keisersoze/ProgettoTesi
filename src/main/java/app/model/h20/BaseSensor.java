@@ -1,4 +1,4 @@
-package app.model.impl;
+package app.model.h20;
 
 public class BaseSensor extends AbstractSensor {
 
