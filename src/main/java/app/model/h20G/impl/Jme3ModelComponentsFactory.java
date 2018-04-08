@@ -1,7 +1,6 @@
 package app.model.h20G.impl;
 
 import app.model.h20G.GModelComponentsFactory;
-import app.model.Sensor;
 import app.model.h20G.GraphicFrame;
 import app.model.h20G.GraphicSensor;
 import app.model.h20G.GraphicTransmission;
@@ -14,12 +13,12 @@ public class Jme3ModelComponentsFactory implements GModelComponentsFactory {
     }
 
     @Override
-    public GraphicTransmission getTransmission(Sensor sender, Sensor receiver) {
+    public GraphicTransmission getTransmission(GraphicSensor sender, GraphicSensor receiver) {
         return new JmeTransmission(sender, receiver);
     }
 
     @Override
-    public GraphicFrame getFrame(double size, Sensor sender, Sensor currentOwner) {
+    public GraphicFrame getFrame(double size, GraphicSensor sender, GraphicSensor currentOwner) {
         return new JmeFrame(size, sender, currentOwner);
     }
 }

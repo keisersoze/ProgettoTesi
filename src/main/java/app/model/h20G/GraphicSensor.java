@@ -7,15 +7,13 @@ import com.jme3.scene.Geometry;
 
 import java.util.List;
 
-public interface GraphicSensor extends Sensor {
+public interface GraphicSensor extends Sensor<GraphicSensor> {
 
     void setCanvas(Canvas canvas);
 
     Geometry getGeometry();
 
     void updatePosition();
-
-    List<GraphicSensor> getGraphicNeighbors();
 
     Vector3f getPosition();
 }

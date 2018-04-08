@@ -60,8 +60,18 @@ public class JmeSensor extends AbstractSensor implements GraphicSensor{
     }
 
     @Override
-    public List<GraphicSensor> getGraphicNeighbors() throws ClassCastException{
-        return (List<GraphicSensor>) (List<?>)  getNeighbors();
+    public Vector3f getPosition() {
+        return position;
+    }
+
+    @Override
+    public List<GraphicSensor> getNeighbors() throws ClassCastException{
+        return null;
+    }
+
+    @Override
+    public double getEuclideanDistance(GraphicSensor graphicSensor) {
+        return position.distance(new Vector3f(graphicSensor.getPosition()));
     }
 
     @Override
@@ -69,7 +79,5 @@ public class JmeSensor extends AbstractSensor implements GraphicSensor{
         super.setSink(x);
         geometry.getMaterial().setColor("Color", ColorRGBA.Red);
     }
-
-
 
 }

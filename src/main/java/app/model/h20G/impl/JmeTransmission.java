@@ -6,12 +6,15 @@ import app.model.h20G.GraphicSensor;
 import app.model.h20G.GraphicTransmission;
 
 public class JmeTransmission extends AbstractTransmission implements GraphicTransmission {
-
+    private GraphicSensor sender;
+    private GraphicSensor receiver;
     private boolean terminated;
 
-    public JmeTransmission(Sensor sender, Sensor receiver) {
-        super(sender, receiver);
+    public JmeTransmission(GraphicSensor sender, GraphicSensor receiver) {
+        super();
         this.terminated = false;
+        this.sender = sender;
+        this.receiver = receiver;
     }
 
     @Override
@@ -20,13 +23,13 @@ public class JmeTransmission extends AbstractTransmission implements GraphicTran
     }
 
     @Override
-    public GraphicSensor getGraphicSender() throws ClassCastException {
-        return (GraphicSensor) getSender();
+    public GraphicSensor getSender() throws ClassCastException {
+        return sender;
     }
 
     @Override
-    public GraphicSensor getGraphicReceiver() throws ClassCastException {
-        return (GraphicSensor) getReceiver();
+    public GraphicSensor getReceiver() throws ClassCastException {
+        return receiver;
     }
 
 

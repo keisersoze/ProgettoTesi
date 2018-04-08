@@ -2,21 +2,21 @@ package app.model;
 
 import java.util.List;
 
-public interface Frame {
+public interface Frame <S extends Sensor,T extends Transmission>{
 
     public double getSize();
 
-    public Transmission getCurrentTransmission();
+    public T getCurrentTransmission();
 
-    public void setCurrentTransmission(Transmission currentTransmission);
+    public void setCurrentTransmission(T currentTransmission);
 
     public Sensor getSender();
 
     public Sensor getCurrentOwner();
 
-    public void setCurrentOwner(Sensor currentOwner);
+    public void setCurrentOwner(S currentOwner);
 
-    public List<Transmission> getTransmissionHistory();
+    public List<T> getTransmissionHistory();
 
     public boolean isArrived();
 

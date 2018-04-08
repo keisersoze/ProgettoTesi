@@ -109,7 +109,7 @@ public class h20G extends h20Abstract {
 
                 for (GraphicFrame frame : frames) {
                     if (!frame.isArrived()) {
-                        GraphicTransmission current = frame.getCurrentGraphicTransmission();
+                        GraphicTransmission current = frame.getCurrentTransmission();
                         if (current != null) {
                             canvas.enqueue((Callable<Spatial>) () -> canvas.linkTransmission(current, ColorRGBA.Green)).get();
                             //canvas.enqueue((Callable<Spatial>) () -> canvas.fadeTransmission(frame)).get();

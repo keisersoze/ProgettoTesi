@@ -1,10 +1,10 @@
 package app.model;
 
-public interface ModelComponentsFactory {
+public interface ModelComponentsFactory <S extends Sensor,T extends Transmission, F extends Frame> {
 
-    Sensor getSensor(float x, float y, float z);
+    S getSensor(float x, float y, float z);
 
-    Transmission getTransmission(Sensor sender,Sensor receiver);
+    T getTransmission(S sender,S receiver);
 
-    Frame getFrame(double size, Sensor sender, Sensor currentOwner);
+    F getFrame(double size, S sender, S currentOwner);
 }

@@ -32,7 +32,7 @@ public class HandleTrasmission implements Action {
             List<Sensor> sensors = event.getContext().getSensors();
             Sensor receiver = sensors.get(context.getMarsenneTwister().nextInt(sensors.size())); // per adesso ne prendo uno a caso TODO risorsa condivisa?
 
-            Transmission transmission = context.getModelComponentsFactory().getTransmission(sender, receiver); // bisogna decidere se il receiver è sempre lo stesso in caso di bloccaggio
+            Transmission<Sensor> transmission = context.getModelComponentsFactory().getTransmission(sender, receiver); // bisogna decidere se il receiver è sempre lo stesso in caso di bloccaggio
 
             frame.setCurrentTransmission(transmission);
 

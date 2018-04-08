@@ -1,6 +1,6 @@
 package app.model;
 
-public interface Transmission {
+public interface Transmission <S extends Sensor>{
 
     public void updateSnr(double x);
 
@@ -8,9 +8,10 @@ public interface Transmission {
 
     public void setSuccessfull(boolean x);
 
-    public Sensor getSender();
-
-    public Sensor getReceiver();
-
     public double getSnr();
+
+    public S getSender();
+
+    public S getReceiver();
+
 }

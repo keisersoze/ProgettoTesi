@@ -1,41 +1,60 @@
 package app.model.h20G.impl;
 
 import app.model.Sensor;
+import app.model.Transmission;
 import app.model.h20.AbstractFrame;
 import app.model.h20G.GraphicFrame;
 import app.model.h20G.GraphicSensor;
 import app.model.h20G.GraphicTransmission;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class JmeFrame extends AbstractFrame implements GraphicFrame {
 
-    public JmeFrame(double size, Sensor sender, Sensor currentOwner) {
-        super(size, sender, currentOwner);
-    }
+    private GraphicSensor sender;
+    private GraphicTransmission currentTransmission;
+    private GraphicSensor currentOwner;
+    private List<GraphicTransmission> transmissions;
 
     public JmeFrame(double size, GraphicSensor sender, GraphicSensor currentOwner) {
-        super(size, sender, currentOwner);
+        super(size);
+        this.sender = sender;
+        this.currentOwner = currentOwner;
+        transmissions = new LinkedList<>();
+    }
+
+
+
+    @Override
+    public GraphicTransmission getCurrentTransmission() {
+        return currentTransmission;
+    }
+
+    @Override
+    public void setCurrentTransmission(GraphicTransmission currentTransmission) {
+        this.currentTransmission = currentTransmission;
+        transmissions.add(currentTransmission);
+    }
+
+    @Override
+    public GraphicSensor getSender() {
+        return sender;
     }
 
 
     @Override
-    public GraphicTransmission getCurrentGraphicTransmission() throws ClassCastException {
-        return (GraphicTransmission)getCurrentTransmission();
+    public GraphicSensor getCurrentOwner() {
+        return currentOwner;
     }
 
     @Override
-    public GraphicSensor getGraphicSender() throws ClassCastException {
-        return (GraphicSensor) getSender();
+    public void setCurrentOwner(GraphicSensor currentOwner) {
+        this.currentOwner = currentOwner;
     }
 
     @Override
-    public GraphicSensor getCurrentGraphicOwner() throws ClassCastException {
-        return (GraphicSensor) getCurrentOwner();
-    }
-
-    @Override
-    public List<GraphicTransmission> getGraphicTransmissionHistory() throws ClassCastException {
-        return (List<GraphicTransmission>) (List<?>) getGraphicTransmissionHistory();
+    public List<GraphicTransmission> getTransmissionHistory() {
+        return transmissions;
     }
 }

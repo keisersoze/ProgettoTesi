@@ -5,7 +5,7 @@ import app.model.Frame;
 import app.model.Sensor;
 import app.model.Transmission;
 
-public class h20ModelComponentsFactory implements ModelComponentsFactory {
+public class h20ModelComponentsFactory implements ModelComponentsFactory<Sensor,Transmission,Frame> {
     @Override
     public Sensor getSensor(float x, float y, float z) {
         return new BaseSensor(x,y,z);

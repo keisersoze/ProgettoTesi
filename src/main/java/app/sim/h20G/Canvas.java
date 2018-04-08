@@ -2,6 +2,7 @@ package app.sim.h20G;
 
 import app.model.Frame;
 import app.model.Transmission;
+import app.model.h20G.GraphicFrame;
 import app.model.h20G.GraphicSensor;
 import app.model.h20G.GraphicTransmission;
 import com.jme3.app.SimpleApplication;
@@ -83,8 +84,8 @@ public class Canvas extends SimpleApplication {
         return sphere_geometry;
     }
 
-    public Geometry deleteLinkTransmission(Frame frame) {
-        for (Transmission transmission : frame.getTransmissionHistory()) {
+    public Geometry deleteLinkTransmission(GraphicFrame frame) {
+        for (GraphicTransmission transmission : frame.getTransmissionHistory()) {
             if (transmission != null && lines.containsKey(transmission)) {
                 lines.get(transmission).removeFromParent();
                 lines.remove(transmission);
@@ -94,8 +95,8 @@ public class Canvas extends SimpleApplication {
     }
 
     public Geometry linkTransmission(GraphicTransmission transmission, ColorRGBA color) {
-        Vector3f position_1 = transmission.getGraphicSender().getGeometry().getLocalTranslation();
-        Vector3f position_2 = transmission.getGraphicReceiver().getGeometry().getLocalTranslation();
+        Vector3f position_1 = transmission.getSender().getGeometry().getLocalTranslation();
+        Vector3f position_2 = transmission.getReceiver().getGeometry().getLocalTranslation();
 
         if (!lines.containsKey(transmission)) {
 
@@ -213,11 +214,11 @@ public class Canvas extends SimpleApplication {
         return lineGeometry;
     }
 
-    public Geometry fadeTransmission(Frame frame) {
+    public Geometry fadeTransmission(GraphicFrame frame) {
         float step = 1.0f / frame.getTransmissionHistory().size();
         float alpha = 1.0f;
         System.out.println(step);
-        for (Transmission t : frame.getTransmissionHistory()) {
+        for (GraphicTransmission t : frame.getTransmissionHistory()) {
             if(t != null) {
                 int colorIndex = 0;
                 alpha -= step;

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BaseEvent implements Event, Comparable<Event> {
-    SimContext <Sensor,Frame> context; // con questa definizione di context funziona con tutti sia con h20 che con h20G
+    SimContext context;
     private double time;
     private List<Action> actionList;
 
