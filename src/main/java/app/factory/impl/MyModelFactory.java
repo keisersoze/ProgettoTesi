@@ -1,6 +1,6 @@
 package app.factory.impl;
 
-import app.factory.ModelComponentsFactory;
+import app.factory.ModelFactory;
 import app.model.Frame;
 import app.model.Sensor;
 import app.model.Transmission;
@@ -8,7 +8,7 @@ import app.model.impl.BaseFrame;
 import app.model.impl.BaseSensor;
 import app.model.impl.BaseTransmission;
 
-public class MyModelComponentsFactory implements ModelComponentsFactory {
+public class MyModelFactory implements ModelFactory {
     @Override
     public Sensor getSensor(float x, float y, float z) {
         return new BaseSensor(x, y, z);

@@ -1,5 +1,6 @@
 package app.factory.jme3.impl;
 
+import app.factory.jme3.GraphicModelFactory;
 import app.model.Sensor;
 import app.model.jme3.GraphicFrame;
 import app.model.jme3.GraphicSensor;
@@ -8,7 +9,7 @@ import app.model.jme3.impl.JmeFrame;
 import app.model.jme3.impl.JmeSensor;
 import app.model.jme3.impl.JmeTransmission;
 
-public class Jme3ModelCompFactory implements app.factory.jme3.GraphicModelCompFactory {
+public class JmeModelFactory implements GraphicModelFactory {
 
     @Override
     public GraphicSensor getSensor(float x, float y, float z) {

@@ -8,20 +8,20 @@ import app.core.actions.impl.utility.RescheduleExpRandom;
 import app.core.events.Event;
 import app.core.events.impl.*;
 import app.factory.ActionTypes;
-import app.factory.CoreComponentsFactory;
+import app.factory.CoreFactory;
 import app.factory.EventTypes;
 import app.model.Frame;
 import app.sim.SimContext;
 
-public class MyCoreComponentsFactory implements CoreComponentsFactory {
-    HandleEndTrasmission handleEndTrasmission;
-    HandleTrasmission handleTrasmission;
-    MoveSensors moveSensors;
-    HandleArrival handleArrival;
-    UpdateSNR updateSNR;
-    UpdateStats updateStats;
-    Reschedule reschedule;
-    RescheduleExpRandom rescheduleExpRandom;
+public class MyCoreFactory implements CoreFactory {
+    private HandleEndTrasmission handleEndTrasmission;
+    private HandleTrasmission handleTrasmission;
+    private MoveSensors moveSensors;
+    private HandleArrival handleArrival;
+    private UpdateSNR updateSNR;
+    private UpdateStats updateStats;
+    private Reschedule reschedule;
+    private RescheduleExpRandom rescheduleExpRandom;
 
 
     @Override
@@ -32,38 +32,45 @@ public class MyCoreComponentsFactory implements CoreComponentsFactory {
         }
 
         if (type.equalsIgnoreCase(ActionTypes.HandleArrival)) {
-            if (handleArrival == null)
+            if (handleArrival == null) {
                 handleArrival = new HandleArrival();
+            }
             return handleArrival;
 
         } else if (type.equalsIgnoreCase(ActionTypes.HandleTrasmission)) {
-            if (handleTrasmission == null)
+            if (handleTrasmission == null) {
                 handleTrasmission = new HandleTrasmission();
+            }
             return handleTrasmission;
 
         } else if (type.equalsIgnoreCase(ActionTypes.HandleEndTrasmission)) {
-            if (handleEndTrasmission == null)
+            if (handleEndTrasmission == null) {
                 handleEndTrasmission = new HandleEndTrasmission();
+            }
             return handleEndTrasmission;
 
         } else if (type.equalsIgnoreCase(ActionTypes.MoveSensors)) {
-            if (moveSensors == null)
+            if (moveSensors == null) {
                 moveSensors = new MoveSensors();
+            }
             return moveSensors;
 
         } else if (type.equalsIgnoreCase(ActionTypes.UpdateSNR)) {
-            if (updateSNR == null)
+            if (updateSNR == null) {
                 updateSNR = new UpdateSNR();
+            }
             return updateSNR;
 
         } else if (type.equalsIgnoreCase(ActionTypes.UpdateStats)) {
-            if (updateStats == null)
+            if (updateStats == null) {
                 updateStats = new UpdateStats();
+            }
             return updateStats;
 
         } else if (type.equalsIgnoreCase(ActionTypes.RescheduleExpRandom)) {
-            if (rescheduleExpRandom == null)
+            if (rescheduleExpRandom == null) {
                 rescheduleExpRandom = new RescheduleExpRandom();
+            }
             return rescheduleExpRandom;
         }
 
@@ -95,7 +102,7 @@ public class MyCoreComponentsFactory implements CoreComponentsFactory {
         if (type.equalsIgnoreCase(EventTypes.ArrivalEvent)) {
             e = new ArrivalEvent(time, context);
             e.addAction(new HandleArrival());
-            e.addAction(new RescheduleExpRandom());
+            //e.addAction(new RescheduleExpRandom());
 
         } else if (type.equalsIgnoreCase(EventTypes.BaseEvent)) {
             e = new BaseEvent(time, context);
