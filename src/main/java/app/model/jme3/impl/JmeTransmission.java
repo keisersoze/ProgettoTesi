@@ -1,6 +1,7 @@
 package app.model.jme3.impl;
 
 import app.model.Sensor;
+import app.model.Transmission;
 import app.model.impl.AbstractTransmission;
 import app.model.jme3.GraphicSensor;
 import app.model.jme3.GraphicTransmission;
@@ -14,19 +15,24 @@ public class JmeTransmission extends AbstractTransmission implements GraphicTran
         this.terminated = false;
     }
 
+    public JmeTransmission(Transmission currentTransmission) {
+        super(currentTransmission.getSender(), currentTransmission.getReceiver());
+        this.terminated = false;
+    }
+
     @Override
     public boolean isTerminated() {
         return terminated;
     }
 
     @Override
-    public GraphicSensor getGraphicSender() throws ClassCastException {
-        return (GraphicSensor) getSender();
+    public GraphicSensor getSender() {
+        return (GraphicSensor) super.getSender();
     }
 
     @Override
-    public GraphicSensor getGraphicReceiver() throws ClassCastException {
-        return (GraphicSensor) getReceiver();
+    public GraphicSensor getReceiver() {
+        return (GraphicSensor) super.getReceiver();
     }
 
 

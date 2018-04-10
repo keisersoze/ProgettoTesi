@@ -11,33 +11,47 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class JmeFrame extends AbstractFrame implements GraphicFrame {
+    private List<GraphicTransmission> transmissions; // Backtrace dei possessori del frame
+    private GraphicTransmission currentTransmission;
+
 
     public JmeFrame(double size, Sensor sender, Sensor currentOwner) {
         super(size, sender, currentOwner);
+        transmissions = new LinkedList<>();
     }
 
     public JmeFrame(double size, GraphicSensor sender, GraphicSensor currentOwner) {
         super(size, sender, currentOwner);
-    }
-
-
-    @Override
-    public GraphicTransmission getCurrentGraphicTransmission() throws ClassCastException {
-        return (GraphicTransmission)getCurrentTransmission();
+        transmissions = new LinkedList<>();
     }
 
     @Override
-    public GraphicSensor getGraphicSender() throws ClassCastException {
-        return (GraphicSensor) getSender();
+    public GraphicTransmission getCurrentTransmission() {
+        return currentTransmission;
     }
 
     @Override
-    public GraphicSensor getCurrentGraphicOwner() throws ClassCastException {
-        return (GraphicSensor) getCurrentOwner();
+    public void setCurrentTransmission(Transmission currentTransmission) {
+        this.currentTransmission = (GraphicTransmission) currentTransmission;
+        if (currentTransmission != null) {
+            transmissions.add(this.currentTransmission);
+        } else {
+            transmissions.add(null);
+        }
     }
 
     @Override
-    public List<GraphicTransmission> getGraphicTransmissionHistory() throws ClassCastException {
-        return (List<GraphicTransmission>) (List<?>) getGraphicTransmissionHistory();
+    public GraphicSensor getSender() {
+        return (GraphicSensor) super.getSender();
+    }
+
+    @Override
+    public GraphicSensor getCurrentOwner() {
+        return (GraphicSensor) super.getCurrentOwner();
+    }
+
+    @Override
+    public List<GraphicTransmission> getTransmissionHistory() {
+        return transmissions;
     }
 }

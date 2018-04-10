@@ -1,8 +1,8 @@
 package app.sim;
 
 import app.core.scheduler.Scheduler;
-import app.factory.CoreComponentsFactory;
-import app.factory.ModelComponentsFactory;
+import app.factory.CoreFactory;
+import app.factory.ModelFactory;
 import app.model.Frame;
 import app.model.Sensor;
 import app.stats.Collector;
@@ -19,9 +19,11 @@ public interface SimContext {
 
     void setSimTime(double x);
 
-    List<Sensor> getSensors();
+    List<? extends Sensor> getSensors();
 
-    List<Frame> getFrames();
+    List<? extends Frame> getFrames();
+
+    void addFrame(Frame frame);
 
     void frameArrived(Frame frame);
 
@@ -29,7 +31,7 @@ public interface SimContext {
 
     MersenneTwister getMarsenneTwister();
 
-    CoreComponentsFactory getCoreComponentsFactory();
+    CoreFactory getCoreFactory();
 
-    ModelComponentsFactory getModelComponentsFactory();
+    ModelFactory getModelFactory();
 }

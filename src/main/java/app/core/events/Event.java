@@ -1,8 +1,8 @@
 package app.core.events;
 
+import app.core.actions.Action;
 import app.model.Frame;
 import app.sim.SimContext;
-import app.core.actions.Action;
 
 public interface Event {
 

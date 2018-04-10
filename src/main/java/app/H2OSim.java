@@ -1,13 +1,10 @@
 package app;
 
 
-import app.core.actions.impl.logic.HandleTrasmission;
-import app.core.events.impl.ArrivalEvent;
 import app.core.scheduler.impl.DefaultScheduler;
 import app.sim.impl.GraphicSim;
 import app.sim.impl.SimulationInstance;
 import app.stats.impl.BaseCollector;
-import org.apache.commons.math3.random.MersenneTwister;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +26,7 @@ public class H2OSim {
         return ourInstance;
     }
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
 
         BaseCollector collector = new BaseCollector();
         if (CANVAS_MODE) {

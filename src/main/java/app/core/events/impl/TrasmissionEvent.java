@@ -1,9 +1,7 @@
 package app.core.events.impl;
 
-import app.sim.SimContext;
-import app.core.actions.impl.logic.HandleTrasmission;
-import app.core.actions.impl.logic.UpdateSNR;
 import app.model.Frame;
+import app.sim.SimContext;
 
 
 public class TrasmissionEvent extends BaseEvent {

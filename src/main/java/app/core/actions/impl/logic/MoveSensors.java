@@ -1,9 +1,9 @@
 package app.core.actions.impl.logic;
 
-import app.core.events.Event;
-import app.sim.SimContext;
 import app.core.actions.Action;
+import app.core.events.Event;
 import app.model.Sensor;
+import app.sim.SimContext;
 
 public class MoveSensors implements Action {
 

@@ -1,13 +1,13 @@
 package app.model.jme3;
 
-import app.model.Sensor;
 import app.model.Transmission;
+import com.jme3.scene.Geometry;
 
 public interface GraphicTransmission extends Transmission {
 
     boolean isTerminated();
 
-    public GraphicSensor getGraphicSender();
+    GraphicSensor getSender();
 
-    public GraphicSensor getGraphicReceiver();
+    GraphicSensor getReceiver();
 }

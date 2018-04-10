@@ -2,16 +2,12 @@ package app.sim.impl;
 
 import app.H2OSim;
 import app.core.events.Event;
-import app.core.events.impl.MoveEvent;
-import app.core.events.impl.StatisticsEvent;
 import app.core.scheduler.Scheduler;
-import app.factory.CoreComponentsFactory;
 import app.factory.EventTypes;
-import app.factory.ModelComponentsFactory;
-import app.factory.impl.MyModelComponentsFactory;
+import app.factory.ModelFactory;
+import app.factory.impl.MyModelFactory;
 import app.model.Frame;
 import app.model.Sensor;
-import app.sim.impl.AbstractSimIstance;
 import app.stats.Collector;
 
 import java.util.ArrayList;
@@ -20,22 +16,22 @@ import java.util.List;
 public class SimulationInstance extends AbstractSimIstance implements Runnable {
     private final List<Sensor> sensors;
     private final List<Frame> frames;
-    private final ModelComponentsFactory modelComponentsFactory;
+    private final ModelFactory modelFactory;
 
 
     public SimulationInstance(Collector collector, Scheduler scheduler) {
         super(collector, scheduler);
         sensors = new ArrayList<>();
         frames = new ArrayList<>();
-        modelComponentsFactory = new MyModelComponentsFactory();
+        modelFactory = new MyModelFactory();
     }
 
     public void run() {
 
 
         // creo l'evento che richiama la funzionalità di campionamento per le statistiche
-        Event stats_evt = getCoreComponentsFactory().getEvent(EventTypes.StatisticEvent,0, this);
-        Event move_evt = getCoreComponentsFactory().getEvent(EventTypes.MoveEvent,0, this);
+        Event stats_evt = getCoreFactory().getEvent(EventTypes.StatisticEvent, 0, this);
+        Event move_evt = getCoreFactory().getEvent(EventTypes.MoveEvent, 0, this);
 
         //imposto gli eventi periodici
         stats_evt.setInterval(0);
@@ -66,12 +62,17 @@ public class SimulationInstance extends AbstractSimIstance implements Runnable {
         return frames;
     }
 
-    public void removeFrame(Frame f){
+    @Override
+    public void addFrame(Frame frame) {
+        frames.add(frame);
+    }
+
+    public void removeFrame(Frame f) {
         frames.remove(f);
     }
 
     @Override
-    public ModelComponentsFactory getModelComponentsFactory() {
-        return modelComponentsFactory;
+    public ModelFactory getModelFactory() {
+        return modelFactory;
     }
 }

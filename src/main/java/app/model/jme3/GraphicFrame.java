@@ -1,20 +1,15 @@
 package app.model.jme3;
 
 import app.model.Frame;
-import app.model.Sensor;
-import app.model.Transmission;
-
 import java.util.List;
 
 public interface GraphicFrame extends Frame {
 
-    public GraphicTransmission getCurrentGraphicTransmission();
+    GraphicTransmission getCurrentTransmission();
 
-    public GraphicSensor getGraphicSender();
+    GraphicSensor getSender();
 
-    public GraphicSensor getCurrentGraphicOwner();
+    GraphicSensor getCurrentOwner();
 
-    public List<GraphicTransmission> getGraphicTransmissionHistory();
-
-
+    List<GraphicTransmission> getTransmissionHistory();
 }

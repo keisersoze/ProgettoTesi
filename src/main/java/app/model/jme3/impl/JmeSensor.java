@@ -3,17 +3,15 @@ package app.model.jme3.impl;
 import app.Canvas;
 import app.model.impl.AbstractSensor;
 import app.model.jme3.GraphicSensor;
-import app.model.jme3.GraphicTransmission;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Spatial;
 
-import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
-public class JmeSensor extends AbstractSensor implements GraphicSensor{
+public class JmeSensor extends AbstractSensor implements GraphicSensor {
 
 
     private Geometry geometry;
@@ -25,7 +23,7 @@ public class JmeSensor extends AbstractSensor implements GraphicSensor{
     }
 
     @Override
-    public void setCanvas(Canvas canvas) {
+    public void draw(Canvas canvas) {
         Vector3f position = new Vector3f(getX(), getY(), getZ());
         this.canvas = canvas;
         try {
@@ -61,16 +59,10 @@ public class JmeSensor extends AbstractSensor implements GraphicSensor{
     }
 
     @Override
-    public List<GraphicSensor> getGraphicNeighbors() throws ClassCastException{
-        return (List<GraphicSensor>) (List<?>)  getNeighbors();
-    }
-
-    @Override
     public void setSink(boolean x) {
         super.setSink(x);
         geometry.getMaterial().setColor("Color", ColorRGBA.Red);
     }
-
 
 
 }

@@ -5,16 +5,15 @@ import app.core.events.Event;
 import app.model.Frame;
 import app.sim.SimContext;
 
-public interface CoreComponentsFactory {
+public interface CoreFactory {
 
     Action getAction(String type);
 
-    Action getAction(String type,double value);
+    Action getAction(String type, double value);
 
     Event getEvent(String type, double time, SimContext context);
 
     Event getEvent(String type, double time, SimContext context, Frame frame);
-
 
 
 }

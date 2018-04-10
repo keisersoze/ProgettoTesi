@@ -1,8 +1,7 @@
 package app;
 
-import app.model.Frame;
-import app.model.Sensor;
 import app.model.Transmission;
+import app.model.jme3.GraphicFrame;
 import app.model.jme3.GraphicSensor;
 import app.model.jme3.GraphicTransmission;
 import com.jme3.app.SimpleApplication;
@@ -14,6 +13,9 @@ import com.jme3.math.Vector3f;
 import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.*;
 import com.jme3.scene.shape.Sphere;
+import com.jme3.terrain.geomipmap.TerrainLodControl;
+import com.jme3.terrain.geomipmap.TerrainQuad;
+import com.jme3.terrain.heightmap.HillHeightMap;
 import com.jme3.texture.Texture;
 
 import java.util.HashMap;
@@ -27,12 +29,15 @@ public class Canvas extends SimpleApplication {
     private HashMap<Transmission, Geometry> lines = new HashMap<>();
 
     public void simpleInitApp() {
-        campo = new Vector3f(100, 30, 100);
-        viewPort.setBackgroundColor(new ColorRGBA(1f/255f * 60f, 1f/255f * 102f, 1f/255f * 140f, 1f));
+        campo = new Vector3f(200, 100, 200);
+
+        viewPort.setBackgroundColor(new ColorRGBA(1f / 255f * 60f, 1f / 255f * 102f, 1f / 255f * 140f, 1f));
+
         DirectionalLight dl = new DirectionalLight();
         dl.setColor(ColorRGBA.White);
         dl.setDirection(new Vector3f(-.5f, -.5f, -.5f).normalizeLocal());
         rootNode.addLight(dl);
+
         setDisplayFps(true);
         setDisplayStatView(true);
         Node pivot = new Node("pivot");
@@ -47,6 +52,7 @@ public class Canvas extends SimpleApplication {
         flyCam.setMoveSpeed(30);
 
         grid(true);
+        //generateTerrain();
         charged = true;
     }
 
@@ -84,8 +90,8 @@ public class Canvas extends SimpleApplication {
         return sphere_geometry;
     }
 
-    public Geometry deleteLinkTransmission(Frame frame) {
-        for (Transmission transmission : frame.getTransmissionHistory()) {
+    public Geometry deleteLinkTransmission(GraphicFrame frame) {
+        for (GraphicTransmission transmission : frame.getTransmissionHistory()) {
             if (transmission != null && lines.containsKey(transmission)) {
                 lines.get(transmission).removeFromParent();
                 lines.remove(transmission);
@@ -95,9 +101,8 @@ public class Canvas extends SimpleApplication {
     }
 
     public Geometry linkTransmission(GraphicTransmission transmission, ColorRGBA color) {
-        Vector3f position_1 = transmission.getGraphicSender().getGeometry().getLocalTranslation();
-        Vector3f position_2 = transmission.getGraphicReceiver().getGeometry().getLocalTranslation();
-
+        Vector3f position_1 = transmission.getSender().getGeometry().getLocalTranslation();
+        Vector3f position_2 = transmission.getReceiver().getGeometry().getLocalTranslation();
         if (!lines.containsKey(transmission)) {
 
             Mesh lineMesh = new Mesh();
@@ -105,7 +110,7 @@ public class Canvas extends SimpleApplication {
             lineMesh.setBuffer(VertexBuffer.Type.Position, 3, new float[]{position_1.x, position_1.y, position_1.z, position_2.x, position_2.y, position_2.z});
             lineMesh.setBuffer(VertexBuffer.Type.Index, 2, new short[]{0, 1});
 
-            Geometry geo = new Geometry("link", lineMesh); // using the custom mesh
+            /*Geometry geo = new Geometry("link", lineMesh); // using the custom mesh
             Material lineMaterial = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
             lineMaterial.setBoolean("VertexColor", true);
             int colorIndex = 0;
@@ -124,19 +129,19 @@ public class Canvas extends SimpleApplication {
             }
             lineMesh.setBuffer(VertexBuffer.Type.Color, 4, colorArray);
             lineMaterial.getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
-            geo.setMaterial(lineMaterial);
+            geo.setMaterial(lineMaterial);*/
 
-            /*Geometry lineGeometry = new Geometry("link", lineMesh);
+            Geometry lineGeometry = new Geometry("link", lineMesh);
             Material lineMaterial = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
 
             lineMaterial.setColor("Color", color);
             lineMaterial.getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
 
-            lineGeometry.setMaterial(lineMaterial);*/
-            geo.updateModelBound();
-            geo.setQueueBucket(RenderQueue.Bucket.Translucent);
-            rootNode.attachChild(geo);
-            lines.put(transmission, geo);
+            lineGeometry.setMaterial(lineMaterial);
+            lineGeometry.updateModelBound();
+            lineGeometry.setQueueBucket(RenderQueue.Bucket.Translucent);
+            rootNode.attachChild(lineGeometry);
+            lines.put(transmission, lineGeometry);
 
         } else {
             lines.get(transmission).getMaterial().setColor("Color", color);
@@ -214,12 +219,12 @@ public class Canvas extends SimpleApplication {
         return lineGeometry;
     }
 
-    public Geometry fadeTransmission(Frame frame) {
+    public Geometry fadeTransmission(GraphicFrame frame) {
         float step = 1.0f / frame.getTransmissionHistory().size();
         float alpha = 1.0f;
         System.out.println(step);
-        for (Transmission t : frame.getTransmissionHistory()) {
-            if(t != null) {
+        for (GraphicTransmission t : frame.getTransmissionHistory()) {
+            if (t != null) {
                 int colorIndex = 0;
                 alpha -= step;
 
@@ -247,6 +252,45 @@ public class Canvas extends SimpleApplication {
         point.setY(inizio.y + percentuale * (fine.y - inizio.y));
         point.setZ(inizio.z + percentuale * (fine.z - inizio.z));
         return point;
+    }
+
+    private void generateTerrain() {
+
+        /* 1. Create terrain material and load four textures into it. */
+        Material mat_terrain = new Material(assetManager,
+                "Common/MatDefs/Light/Lighting.j3md");
+
+        Texture floortexture = assetManager.loadTexture("Textures/sand.jpg");
+        floortexture.setWrap(Texture.WrapMode.Repeat);
+
+        /* 1.1) Add ALPHA map (for red-blue-green coded splat textures) */
+        mat_terrain.setTexture("DiffuseMap", floortexture);
+        /* 2. Create the height map */
+        HillHeightMap heightmap = null;
+        HillHeightMap.NORMALIZE_RANGE = 100; // optional
+        try {
+            heightmap = new HillHeightMap(513, 5000, 200, 300, (byte) 5); // byte 3 is a random seed
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        heightmap.smooth(500.f);
+        heightmap.load();
+
+        TerrainQuad terrain = new TerrainQuad("my terrain", 65, 513, heightmap.getHeightMap());
+
+        /* 4. We give the terrain its material, position & scale it, and attach it. */
+        terrain.setMaterial(mat_terrain);
+        terrain.setLocalTranslation(0, -100, 0);
+        terrain.setLocalScale(0.779f, 1f, 0.779f);
+        rootNode.attachChild(terrain);
+
+        /* 5. The LOD (level of detail) depends on were the camera is: */
+        TerrainLodControl control = new TerrainLodControl(terrain, getCamera());
+        terrain.addControl(control);
+    }
+
+    private double map(double value, double low1, double high1, double low2, double high2) {
+        return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
     }
 
     public boolean isCharged() {

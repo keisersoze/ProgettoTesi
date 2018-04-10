@@ -1,34 +1,28 @@
 package app.sim.impl;
 
-import app.factory.CoreComponentsFactory;
-import app.factory.impl.MyCoreComponentsFactory;
-import app.sim.SimContext;
 import app.core.scheduler.Scheduler;
+import app.factory.CoreFactory;
+import app.factory.impl.MyCoreFactory;
 import app.model.Frame;
-import app.model.Sensor;
+import app.sim.SimContext;
 import app.stats.Collector;
 import org.apache.commons.math3.random.MersenneTwister;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public abstract class AbstractSimIstance implements SimContext {
     private final Scheduler scheduler;
     private final Collector collector;
-    private final CoreComponentsFactory coreComponentsFactory;
+    private final CoreFactory coreFactory;
+    private final MersenneTwister marsenneTwister = new MersenneTwister();
     private double simTime;
-    private  final MersenneTwister marsenneTwister = new MersenneTwister();
-
-
     //Dati statistici che vengono utilizzati dal collector
     private int nframes; // numero di frame arrivati ai sink
 
-    public AbstractSimIstance(Collector collector, Scheduler scheduler) {
+    AbstractSimIstance(Collector collector, Scheduler scheduler) {
 
         this.collector = collector;
         this.scheduler = scheduler;
         simTime = 0.0;
-        coreComponentsFactory = new MyCoreComponentsFactory();
+        coreFactory = new MyCoreFactory();
         nframes = 0;
     }
 
@@ -46,8 +40,8 @@ public abstract class AbstractSimIstance implements SimContext {
     }
 
     @Override
-    public CoreComponentsFactory getCoreComponentsFactory() {
-        return coreComponentsFactory;
+    public CoreFactory getCoreFactory() {
+        return coreFactory;
     }
 
     @Override

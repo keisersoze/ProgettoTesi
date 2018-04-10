@@ -1,10 +1,10 @@
 package app.core.events.impl;
 
-import app.model.Frame;
-import app.sim.SimContext;
 import app.core.actions.Action;
 import app.core.actions.impl.utility.Reschedule;
 import app.core.events.Event;
+import app.model.Frame;
+import app.sim.SimContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +44,6 @@ public class BaseEvent implements Event, Comparable<Event> {
     }
 
     /**
-     *
      * @return NULL
      */
     @Override
@@ -54,7 +53,6 @@ public class BaseEvent implements Event, Comparable<Event> {
 
 
     /**
-     *
      * @param time
      */
     public void updateTime(double time) {
@@ -62,7 +60,6 @@ public class BaseEvent implements Event, Comparable<Event> {
     }
 
     /**
-     *
      * @param interval
      */
     @Override

@@ -11,7 +11,7 @@ import app.model.impl.BaseTransmission;
 public class MyModelComponentsFactory implements ModelComponentsFactory {
     @Override
     public Sensor getSensor(float x, float y, float z) {
-        return new BaseSensor(x,y,z);
+        return new BaseSensor(x, y, z);
     }
 
     @Override

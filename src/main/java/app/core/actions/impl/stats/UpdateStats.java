@@ -1,8 +1,8 @@
 package app.core.actions.impl.stats;
 
+import app.core.actions.Action;
 import app.core.events.Event;
 import app.sim.SimContext;
-import app.core.actions.Action;
 import app.stats.impl.StatsSample;
 
 public class UpdateStats implements Action {

@@ -1,11 +1,10 @@
 package app.core.actions.impl.logic;
 
+import app.core.actions.Action;
 import app.core.events.Event;
 import app.factory.EventTypes;
-import app.sim.SimContext;
-import app.core.actions.Action;
-import app.core.events.impl.TrasmissionEvent;
 import app.model.Frame;
+import app.sim.SimContext;
 
 
 public class HandleEndTrasmission implements Action {
@@ -25,7 +24,7 @@ public class HandleEndTrasmission implements Action {
                 frame.setCurrentOwner(frame.getCurrentTransmission().getReceiver()); // il frame arriva a destinazione
                 frame.setCurrentTransmission(null);// nessuna trasmissione è più associata al frame
 
-                Event e = context.getCoreComponentsFactory().getEvent(EventTypes.TrasmissionEvent,0, context, frame);
+                Event e = context.getCoreFactory().getEvent(EventTypes.TrasmissionEvent, 0, context, frame);
                 context.getScheduler().addEvent(e);
 
             } else {

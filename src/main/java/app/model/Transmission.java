@@ -1,15 +1,15 @@
 package app.model;
 
 public interface Transmission {
-    public void updateSnr(double x);
+    void updateSnr(double x);
 
     boolean isSuccessfull();
 
-    public void setSuccessfull(boolean x);
+    void setSuccessfull(boolean x);
 
-    public Sensor getSender();
+    Sensor getSender();
 
-    public Sensor getReceiver();
+    Sensor getReceiver();
 
-    public double getSnr();
+    double getSnr();
 }

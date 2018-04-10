@@ -5,10 +5,8 @@ import app.core.events.Event;
 import app.factory.EventTypes;
 import app.sim.SimContext;
 import app.core.actions.Action;
-import app.core.events.impl.TrasmissionEvent;
 import app.model.Frame;
 import app.model.Sensor;
-import app.model.impl.BaseFrame;
 
 import java.util.List;
 
@@ -24,13 +22,13 @@ public class HandleArrival implements Action {
 
         SimContext context = event.getContext();
 
-        List<Sensor> sensors = context.getSensors();
+        List<? extends Sensor> sensors = context.getSensors();
         Sensor s = sensors.get(context.getMarsenneTwister().nextInt(sensors.size())); //prendo un sensore a caso
 
-        Frame newFrame = context.getModelComponentsFactory().getFrame(H2OSim.MU, s, s);
-        Event e = context.getCoreComponentsFactory().getEvent(EventTypes.TrasmissionEvent,0, context, newFrame);
+        Frame newFrame = context.getModelFactory().getFrame(H2OSim.MU, s, s);
+        Event e = context.getCoreFactory().getEvent(EventTypes.TrasmissionEvent,0, context, newFrame);
         context.getScheduler().addEvent(e);
-        context.getFrames().add(newFrame);
+        context.addFrame(newFrame);
 
     }
 
