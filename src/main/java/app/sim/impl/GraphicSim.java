@@ -108,9 +108,6 @@ public class GraphicSim extends AbstractSimIstance {
                 for (GraphicFrame frame : frames) {
                     if (!frame.isArrived()) {
                         GraphicTransmission current = frame.getCurrentTransmission();
-                        if(current != null){
-                            System.out.println("DAIOSD");
-                        }
                         if (current != null) {
                             canvas.enqueue((Callable<Spatial>) () -> canvas.linkTransmission(current, ColorRGBA.Green)).get();
                             //canvas.enqueue((Callable<Spatial>) () -> canvas.fadeTransmission(frame)).get();
@@ -143,9 +140,8 @@ public class GraphicSim extends AbstractSimIstance {
 
     @Override
     public void addFrame(Frame frame) {
-        frames.add(modelFactory.getFrame(frame.getSize(), frame.getSender(), frame.getCurrentOwner()));
+        frames.add((GraphicFrame) frame);
     }
-
 
     @Override
     public ModelFactory getModelFactory() {

@@ -33,11 +33,7 @@ public class JmeFrame extends AbstractFrame implements GraphicFrame {
     @Override
     public void setCurrentTransmission(Transmission currentTransmission) {
         this.currentTransmission = (GraphicTransmission) currentTransmission;
-        if (currentTransmission != null) {
-            transmissions.add(this.currentTransmission);
-        } else {
-            transmissions.add(null);
-        }
+        transmissions.add(this.currentTransmission);
     }
 
     @Override
