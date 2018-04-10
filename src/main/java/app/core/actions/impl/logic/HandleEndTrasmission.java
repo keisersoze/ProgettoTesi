@@ -31,6 +31,10 @@ public class HandleEndTrasmission implements Action {
                 frame.setArrived(true);
                 frame.setCurrentTransmission(null);
                 context.frameArrived(frame);// aggiorna il context segnalando che un frame è arrivato
+
+                // TODO: testing. In questo modo abbiamo una trasmissione alla volta, vedere MyCoreFactory.getEvent(...)
+                Event e = context.getCoreFactory().getEvent(EventTypes.ArrivalEvent, 0, context);
+                context.getScheduler().addEvent(e);
             }
         }
 

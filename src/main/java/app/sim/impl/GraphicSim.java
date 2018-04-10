@@ -77,7 +77,7 @@ public class GraphicSim extends AbstractSimIstance {
         }
 
         //inizializzazione
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 100; i++) {
             GraphicSensor temp = modelFactory.getSensor(canvas.random(-100, 100), canvas.random(-30, 30), canvas.random(-100, 100));
             temp.draw(canvas);
             sensors.add(temp);
@@ -109,7 +109,7 @@ public class GraphicSim extends AbstractSimIstance {
                     if (!frame.isArrived()) {
                         GraphicTransmission current = frame.getCurrentTransmission();
                         if (current != null) {
-                            canvas.enqueue((Callable<Spatial>) () -> canvas.linkTransmission(current, ColorRGBA.Green)).get();
+                            canvas.enqueue((Callable<Spatial>) () -> canvas.linkTransmission(frame, ColorRGBA.Green)).get();
                             //canvas.enqueue((Callable<Spatial>) () -> canvas.fadeTransmission(frame)).get();
                         }
                     } else if (frame.getTransmissionHistory().size() > 0) {
@@ -119,7 +119,7 @@ public class GraphicSim extends AbstractSimIstance {
                 }
                 canvas.enqueue((Callable<Spatial>) () -> canvas.updatePositions(sensors)).get();
                 getFrames().removeAll(listCompleted);
-                Thread.sleep(10);
+                Thread.sleep(0);
             }
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();

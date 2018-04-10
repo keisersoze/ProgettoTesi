@@ -102,7 +102,7 @@ public class MyCoreFactory implements CoreFactory {
         if (type.equalsIgnoreCase(EventTypes.ArrivalEvent)) {
             e = new ArrivalEvent(time, context);
             e.addAction(new HandleArrival());
-            //e.addAction(new RescheduleExpRandom());
+            //e.addAction(new RescheduleExpRandom());           //TODO: da decommentare finito il testing
 
         } else if (type.equalsIgnoreCase(EventTypes.BaseEvent)) {
             e = new BaseEvent(time, context);

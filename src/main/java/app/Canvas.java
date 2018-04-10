@@ -1,16 +1,14 @@
 package app;
 
-import app.model.Transmission;
+import app.model.Frame;
 import app.model.jme3.GraphicFrame;
 import app.model.jme3.GraphicSensor;
-import app.model.jme3.GraphicTransmission;
 import com.jme3.app.SimpleApplication;
 import com.jme3.light.DirectionalLight;
 import com.jme3.material.Material;
 import com.jme3.material.RenderState;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
-import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.*;
 import com.jme3.scene.shape.Sphere;
 import com.jme3.terrain.geomipmap.TerrainLodControl;
@@ -18,6 +16,7 @@ import com.jme3.terrain.geomipmap.TerrainQuad;
 import com.jme3.terrain.heightmap.HillHeightMap;
 import com.jme3.texture.Texture;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,7 +25,7 @@ public class Canvas extends SimpleApplication {
 
     private Vector3f campo;
     private boolean charged = false;
-    private HashMap<Transmission, Geometry> lines = new HashMap<>();
+    private HashMap<Frame, List<Geometry>> linesOfFrame = new HashMap<>();
 
     public void simpleInitApp() {
         campo = new Vector3f(200, 100, 200);
@@ -91,64 +90,58 @@ public class Canvas extends SimpleApplication {
     }
 
     public Geometry deleteLinkTransmission(GraphicFrame frame) {
-        for (GraphicTransmission transmission : frame.getTransmissionHistory()) {
-            if (transmission != null && lines.containsKey(transmission)) {
-                lines.get(transmission).removeFromParent();
-                lines.remove(transmission);
-            }
+        List<Geometry> lines = linesOfFrame.get(frame);
+        for (int i = 0; i < lines.size(); i++) {
+            lines.remove(i).removeFromParent();      // Vado sia a rimuovere dalla coda che dal canvas
         }
         return null;
     }
 
-    public Geometry linkTransmission(GraphicTransmission transmission, ColorRGBA color) {
-        Vector3f position_1 = transmission.getSender().getGeometry().getLocalTranslation();
-        Vector3f position_2 = transmission.getReceiver().getGeometry().getLocalTranslation();
-        if (!lines.containsKey(transmission)) {
+    public Geometry linkTransmission(GraphicFrame frame, ColorRGBA color) {
+        Vector3f position_1 = frame.getCurrentTransmission().getSender().getGeometry().getLocalTranslation();
+        Vector3f position_2 = frame.getCurrentTransmission().getReceiver().getGeometry().getLocalTranslation();
 
-            Mesh lineMesh = new Mesh();
-            lineMesh.setMode(Mesh.Mode.Lines);
-            lineMesh.setBuffer(VertexBuffer.Type.Position, 3, new float[]{position_1.x, position_1.y, position_1.z, position_2.x, position_2.y, position_2.z});
-            lineMesh.setBuffer(VertexBuffer.Type.Index, 2, new short[]{0, 1});
+        Mesh lineMesh = new Mesh();
+        lineMesh.setMode(Mesh.Mode.Lines);
+        lineMesh.setBuffer(VertexBuffer.Type.Position, 3, new float[]{position_1.x, position_1.y, position_1.z, position_2.x, position_2.y, position_2.z});
+        lineMesh.setBuffer(VertexBuffer.Type.Index, 2, new short[]{0, 1});
 
-            /*Geometry geo = new Geometry("link", lineMesh); // using the custom mesh
-            Material lineMaterial = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-            lineMaterial.setBoolean("VertexColor", true);
-            int colorIndex = 0;
+        Geometry lineGeometry = new Geometry("link", lineMesh);
+        Material lineMaterial = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
 
-            float[] colorArray = new float[2 * 4];
+        lineMaterial.setColor("Color", color);
+        lineMaterial.getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
 
-            for (int i = 0; i < 2; i++) {
-                // Red value (is increased by .2 on each next vertex here)
-                colorArray[colorIndex++] = 0.0f;
-                // Green value (is reduced by .2 on each next vertex)
-                colorArray[colorIndex++] = 0.0f + (1.0f * i);
-                // Blue value (remains the same in our case)
-                colorArray[colorIndex++] = 1.0f + (0.0f - i);
-                // Alpha value (no transparency set here)
-                colorArray[colorIndex++] = 1.0f;
-            }
-            lineMesh.setBuffer(VertexBuffer.Type.Color, 4, colorArray);
-            lineMaterial.getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
-            geo.setMaterial(lineMaterial);*/
+        lineGeometry.setMaterial(lineMaterial);
+        lineGeometry.updateModelBound();
+        //lineGeometry.setQueueBucket(RenderQueue.Bucket.Translucent);
+        rootNode.attachChild(lineGeometry);
 
-            Geometry lineGeometry = new Geometry("link", lineMesh);
-            Material lineMaterial = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-
-            lineMaterial.setColor("Color", color);
-            lineMaterial.getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
-
-            lineGeometry.setMaterial(lineMaterial);
-            lineGeometry.updateModelBound();
-            lineGeometry.setQueueBucket(RenderQueue.Bucket.Translucent);
-            rootNode.attachChild(lineGeometry);
-            lines.put(transmission, lineGeometry);
-
+        if (!linesOfFrame.containsKey(frame)) {
+            List<Geometry> queue = new ArrayList<>();
+            queue.add(0, lineGeometry);
+            linesOfFrame.put(frame, queue);
         } else {
-            lines.get(transmission).getMaterial().setColor("Color", color);
-            lines.get(transmission).getMesh().setBuffer(VertexBuffer.Type.Position, 3, new float[]{position_1.x, position_1.y, position_1.z, position_2.x, position_2.y, position_2.z});
+            linesOfFrame.get(frame).add(0, lineGeometry);
+            List<Geometry> lines = linesOfFrame.get(frame);
+
+            lines.get(0).getMaterial().setColor("Color", new ColorRGBA(0 / 255f, 35 / 255f, 0 / 255f, 1f));
+            if(lines.size() > 1)lines.get(1).getMaterial().setColor("Color", new ColorRGBA(0 / 255f, 68 / 255f, 0 / 255f, 1f));
+            if(lines.size() > 2)lines.get(2).getMaterial().setColor("Color", new ColorRGBA(0 / 255f, 94 / 255f, 0 / 255f, 1f));
+            if(lines.size() > 3)lines.get(3).getMaterial().setColor("Color", new ColorRGBA(0 / 255f, 142 / 255f, 0 / 255f, 1f));
+
+            /*for (int i = 0; i < 4 && i < lines.size(); i++) {
+
+                //lines.get(i).getMesh().setBuffer(VertexBuffer.Type.Position, 3, new float[]{position_1.x, position_1.y, position_1.z, position_2.x, position_2.y, position_2.z}); TODO: da vedere come cambiare
+            }*/
+
+            for (int i = 4; i < lines.size(); i++) {
+                lines.remove(i).removeFromParent();
+            }
+
         }
 
-        return lines.get(transmission);
+        return null;
     }
 
     private void grid(boolean simple) {
@@ -219,6 +212,7 @@ public class Canvas extends SimpleApplication {
         return lineGeometry;
     }
 
+    /*
     public Geometry fadeTransmission(GraphicFrame frame) {
         float step = 1.0f / frame.getTransmissionHistory().size();
         float alpha = 1.0f;
@@ -240,11 +234,12 @@ public class Canvas extends SimpleApplication {
                     // Alpha value (no transparency set here)
                     colorArray[colorIndex++] = alpha;
                 }
-                lines.get(t).getMesh().setBuffer(VertexBuffer.Type.Color, 4, colorArray);
+                linesOfFrame.get(t).getMesh().setBuffer(VertexBuffer.Type.Color, 4, colorArray);
             }
         }
         return null;
     }
+    */
 
     private Vector3f pointBetween(Vector3f inizio, Vector3f fine, float percentuale) {
         Vector3f point = new Vector3f();
