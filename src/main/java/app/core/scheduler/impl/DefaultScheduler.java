@@ -8,14 +8,14 @@ import java.util.PriorityQueue;
 public class DefaultScheduler implements Scheduler {
     private PriorityQueue<Event> eventQueue;
 
-    public DefaultScheduler() {
+    public DefaultScheduler () {
         this.eventQueue = new PriorityQueue<>();
     }
 
     /**
      * @return restituisce un evento con remaining time minore
      */
-    public Event scheduleEvent() {
+    public Event scheduleEvent () {
         return eventQueue.poll();
     }
 
@@ -24,7 +24,7 @@ public class DefaultScheduler implements Scheduler {
      *
      * @param e elemento da aggiungere
      */
-    public void addEvent(Event e) {
+    public void addEvent (Event e) {
         eventQueue.add(e);
     }
 

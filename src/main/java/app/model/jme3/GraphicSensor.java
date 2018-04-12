@@ -6,10 +6,10 @@ import com.jme3.scene.Geometry;
 
 public interface GraphicSensor extends Sensor {
 
-    void draw(Canvas canvas);
+    void draw (Canvas canvas);
 
-    Geometry getGeometry();
+    Geometry getGeometry ();
 
-    void updatePosition();
+    void updatePosition ();
 
 }

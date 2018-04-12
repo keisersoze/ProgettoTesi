@@ -6,11 +6,11 @@ import app.sim.SimContext;
 
 public class UpdateSNR implements Action {
 
-    public UpdateSNR() {
+    public UpdateSNR () {
     }
 
     @Override
-    public void execute(Event event) {
+    public void execute (Event event) {
 
         SimContext context = event.getContext();
 

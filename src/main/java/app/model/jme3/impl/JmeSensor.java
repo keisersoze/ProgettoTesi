@@ -13,41 +13,33 @@ import java.util.concurrent.ExecutionException;
 
 public class JmeSensor extends AbstractSensor implements GraphicSensor {
 
-
     private Geometry geometry;
     private Canvas canvas;
 
-    public JmeSensor(float x, float y, float z) {
+    public JmeSensor (float x, float y, float z) {
         super(x, y, z);
 
     }
 
     @Override
-    public void draw(Canvas canvas) {
+    public void draw (Canvas canvas) {
         Vector3f position = new Vector3f(getX(), getY(), getZ());
         this.canvas = canvas;
-        try {
-            geometry = canvas.enqueue(() -> canvas.sphereWithTexture(
-                    30,
-                    30,
-                    0.5f,
-                    position,
-                    null,
-                    new ColorRGBA(0f / 255f, 0f / 255f, 255f / 255f, 1f))
-            ).get();
+        /*try {
+            geometry = canvas.enqueue(() -> canvas.sphereWithTexture(this)).get();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
-        }
+        }*/
 
     }
 
     @Override
-    public Geometry getGeometry() {
+    public Geometry getGeometry () {
         return geometry;
     }
 
     @Override
-    public void updatePosition() {
+    public void updatePosition () {
         try {
             canvas.enqueue((Callable<Spatial>) () -> {
                 geometry.setLocalTranslation(new Vector3f(getPosition()));
@@ -59,7 +51,7 @@ public class JmeSensor extends AbstractSensor implements GraphicSensor {
     }
 
     @Override
-    public void setSink(boolean x) {
+    public void setSink (boolean x) {
         super.setSink(x);
         geometry.getMaterial().setColor("Color", ColorRGBA.Red);
     }

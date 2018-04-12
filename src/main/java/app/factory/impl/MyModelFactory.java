@@ -10,17 +10,17 @@ import app.model.impl.BaseTransmission;
 
 public class MyModelFactory implements ModelFactory {
     @Override
-    public Sensor getSensor(float x, float y, float z) {
+    public Sensor getSensor (float x, float y, float z) {
         return new BaseSensor(x, y, z);
     }
 
     @Override
-    public Transmission getTransmission(Sensor sender, Sensor receiver) {
+    public Transmission getTransmission (Sensor sender, Sensor receiver) {
         return new BaseTransmission(sender, receiver);
     }
 
     @Override
-    public Frame getFrame(double size, Sensor sender, Sensor currentOwner) {
+    public Frame getFrame (double size, Sensor sender, Sensor currentOwner) {
         return new BaseFrame(size, sender, currentOwner);
     }
 }
