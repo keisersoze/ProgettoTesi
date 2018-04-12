@@ -1,9 +1,9 @@
-package app.core.actions.impl.stats;
+package app.core.h20.actions.stats;
 
-import app.core.actions.Action;
-import app.core.events.Event;
+import app.core.Action;
+import app.core.Event;
 import app.sim.SimContext;
-import app.stats.impl.StatsSample;
+import app.stats.h20.StatsSample;
 
 public class UpdateStats implements Action {
 

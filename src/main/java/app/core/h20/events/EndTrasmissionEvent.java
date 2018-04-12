@@ -1,4 +1,4 @@
-package app.core.events.impl;
+package app.core.h20.events;
 
 import app.model.Frame;
 import app.sim.SimContext;

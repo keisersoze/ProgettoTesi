@@ -1,8 +1,8 @@
-package app.core.events.impl;
+package app.core.h20.events;
 
-import app.core.actions.Action;
-import app.core.actions.impl.utility.Reschedule;
-import app.core.events.Event;
+import app.core.Action;
+import app.core.h20.actions.utility.Reschedule;
+import app.core.Event;
 import app.model.Frame;
 import app.sim.SimContext;
 

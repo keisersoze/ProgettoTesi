@@ -1,8 +1,8 @@
-package app.core.actions.impl.utility;
+package app.core.h20.actions.utility;
 
 import app.H2OSim;
-import app.core.actions.Action;
-import app.core.events.Event;
+import app.core.Action;
+import app.core.Event;
 import app.sim.SimContext;
 
 import static org.apache.commons.math3.util.FastMath.log;

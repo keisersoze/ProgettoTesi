@@ -1,7 +1,7 @@
-package app.core.actions.impl.utility;
+package app.core.h20.actions.utility;
 
-import app.core.actions.Action;
-import app.core.events.Event;
+import app.core.Action;
+import app.core.Event;
 import app.sim.SimContext;
 
 public class Reschedule implements Action {
