@@ -1,7 +1,7 @@
 package app.factory;
 
-import app.core.actions.Action;
-import app.core.events.Event;
+import app.core.Action;
+import app.core.Event;
 import app.model.Frame;
 import app.sim.SimContext;
 

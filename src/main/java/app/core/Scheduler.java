@@ -1,6 +1,4 @@
-package app.core.scheduler;
-
-import app.core.events.Event;
+package app.core;
 
 /**
  * Pattern strategy per lo scheduling

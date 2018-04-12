@@ -1,12 +1,12 @@
-package app.factory.impl;
+package app.factory.h20;
 
 import app.factory.ModelFactory;
 import app.model.Frame;
 import app.model.Sensor;
 import app.model.Transmission;
-import app.model.impl.BaseFrame;
-import app.model.impl.BaseSensor;
-import app.model.impl.BaseTransmission;
+import app.model.h20.BaseFrame;
+import app.model.h20.BaseSensor;
+import app.model.h20.BaseTransmission;
 
 public class MyModelFactory implements ModelFactory {
     @Override

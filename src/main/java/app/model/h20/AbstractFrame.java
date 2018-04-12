@@ -1,11 +1,7 @@
-package app.model.impl;
+package app.model.h20;
 
 import app.model.Frame;
 import app.model.Sensor;
-import app.model.Transmission;
-
-import java.util.LinkedList;
-import java.util.List;
 
 public abstract class AbstractFrame implements Frame {
     private double size;

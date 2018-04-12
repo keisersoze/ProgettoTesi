@@ -2,7 +2,7 @@ package app.model.jme3.impl;
 
 import app.model.Sensor;
 import app.model.Transmission;
-import app.model.impl.AbstractFrame;
+import app.model.h20.AbstractFrame;
 import app.model.jme3.GraphicFrame;
 import app.model.jme3.GraphicSensor;
 import app.model.jme3.GraphicTransmission;

@@ -1,10 +1,10 @@
-package app.sim.impl;
+package app.sim.h20;
 
 import app.Canvas;
 import app.H2OSim;
-import app.core.events.Event;
-import app.core.scheduler.Scheduler;
-import app.factory.EventTypes;
+import app.core.Event;
+import app.core.Scheduler;
+import app.factory.h20.EventTypes;
 import app.factory.ModelFactory;
 import app.factory.jme3.GraphicModelFactory;
 import app.factory.jme3.impl.JmeModelFactory;

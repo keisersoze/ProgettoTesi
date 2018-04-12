@@ -1,15 +1,13 @@
-package app.factory.impl;
+package app.factory.h20;
 
-import app.core.actions.Action;
-import app.core.actions.impl.logic.*;
-import app.core.actions.impl.stats.UpdateStats;
-import app.core.actions.impl.utility.Reschedule;
-import app.core.actions.impl.utility.RescheduleExpRandom;
-import app.core.events.Event;
-import app.core.events.impl.*;
-import app.factory.ActionTypes;
+import app.core.Action;
+import app.core.h20.actions.logic.*;
+import app.core.h20.actions.stats.UpdateStats;
+import app.core.h20.actions.utility.Reschedule;
+import app.core.h20.actions.utility.RescheduleExpRandom;
+import app.core.Event;
+import app.core.h20.events.*;
 import app.factory.CoreFactory;
-import app.factory.EventTypes;
 import app.model.Frame;
 import app.sim.SimContext;
 

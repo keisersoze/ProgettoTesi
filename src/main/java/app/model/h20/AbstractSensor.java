@@ -1,4 +1,4 @@
-package app.model.impl;
+package app.model.h20;
 
 import app.model.Sensor;
 import com.jme3.math.Vector3f;

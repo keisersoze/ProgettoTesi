@@ -1,6 +1,6 @@
 package app.sim;
 
-import app.core.scheduler.Scheduler;
+import app.core.Scheduler;
 import app.factory.CoreFactory;
 import app.factory.ModelFactory;
 import app.model.Frame;

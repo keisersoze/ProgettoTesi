@@ -1,4 +1,4 @@
-package app.stats.impl;
+package app.stats.h20;
 
 import app.stats.Collector;
 import app.stats.Sample;

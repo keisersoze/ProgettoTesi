@@ -1,8 +1,8 @@
-package app.sim.impl;
+package app.sim.h20;
 
-import app.core.scheduler.Scheduler;
+import app.core.Scheduler;
 import app.factory.CoreFactory;
-import app.factory.impl.MyCoreFactory;
+import app.factory.h20.MyCoreFactory;
 import app.model.Frame;
 import app.sim.SimContext;
 import app.stats.Collector;
