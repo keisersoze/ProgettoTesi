@@ -26,7 +26,7 @@ public class BaseFrame extends AbstractFrame implements Frame {
     public void setCurrentTransmission(Transmission currentTransmission) {
         this.currentTransmission = (BaseTransmission) currentTransmission;
         if (this.currentTransmission != null) {
-            transmissions.add(this.currentTransmission);
+            transmissions.add(0, this.currentTransmission);
         }
     }
 

@@ -51,3 +51,7 @@ fabric.properties
 \.idea/
 
 \.DS_Store
+
+OpenAL64\.dll
+
+lwjgl64\.dll

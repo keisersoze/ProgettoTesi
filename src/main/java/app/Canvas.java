@@ -2,12 +2,17 @@ package app;
 
 import app.model.Frame;
 import app.model.Sensor;
+import app.model.Transmission;
 import com.jme3.app.SimpleApplication;
 import com.jme3.light.DirectionalLight;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.FastMath;
+import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.*;
+import com.jme3.scene.debug.Arrow;
+import com.jme3.scene.debug.Grid;
 import com.jme3.scene.shape.Sphere;
 import com.jme3.terrain.geomipmap.TerrainLodControl;
 import com.jme3.terrain.geomipmap.TerrainQuad;
@@ -17,13 +22,13 @@ import com.jme3.texture.Texture;
 import java.util.*;
 
 public class Canvas extends SimpleApplication {
-    private Vector3f campo;
+    public static Vector3f field;
     private boolean charged = false;
     private HashMap<Frame, List<Geometry>> frameListGeometryHashMap = new HashMap<>();
     private HashMap<Sensor, Spatial> sensorSpatialHashMap = new HashMap<>();
 
-    public void simpleInitApp() {
-        campo = new Vector3f(200, 100, 200);
+    public void simpleInitApp () {
+        field = new Vector3f(200, 100, 200);
 
         viewPort.setBackgroundColor(new ColorRGBA(1f / 255f * 60f, 1f / 255f * 102f, 1f / 255f * 140f, 1f));
 
@@ -35,27 +40,29 @@ public class Canvas extends SimpleApplication {
         Node pivot = new Node("pivot");
         rootNode.attachChild(pivot); // put this node in the scene
 
-        Vector3f cam_position = new Vector3f(0, 30, 20);
+        Vector3f cam_position = new Vector3f(field.x, field.y/2, field.z);
         cam.setLocation(cam_position);
+        cam.lookAt(Vector3f.ZERO, Vector3f.ZERO);
         flyCam.setMoveSpeed(100);
 
-        grid(true);
+        attachCoordinateAxes(Vector3f.ZERO);
+        attachGrid(field.x, field.y, field.z, 10f, ColorRGBA.White);
         //generateTerrain();
         charged = true;
     }
 
-    public float random(float min, float max) {
+    public float random (float min, float max) {
         return min + (int) (Math.random() * ((max - min) + 1));
     }
 
-    public boolean updateSensorsPositions() {
+    public boolean updateSensorsPositions () {
         for (Map.Entry<Sensor, Spatial> entry : sensorSpatialHashMap.entrySet()) {
             entry.getValue().setLocalTranslation(entry.getKey().getPosition());     //TODO: Da testare se tine la referenza al sensor
         }
         return true;
     }
 
-    public Spatial drawSensor(Sensor sensor) {
+    public Spatial drawSensor (Sensor sensor) {
         if (!sensorSpatialHashMap.containsKey(sensor)) {
             if (!sensor.isSink()) {
                 Sphere sphere = new Sphere(30, 30, 0.5f);
@@ -82,14 +89,14 @@ public class Canvas extends SimpleApplication {
         return null;
     }
 
-    public Spatial drawSensors(Collection<? extends Sensor> sensors) {
+    public Spatial drawSensors (Collection<? extends Sensor> sensors) {
         for (Sensor sensor : sensors) {
             drawSensor(sensor);
         }
         return null;
     }
 
-    public boolean deleteLinkTransmission(Frame frame) {
+    public boolean deleteLinkTransmission (Frame frame) {
         List<Geometry> lines = frameListGeometryHashMap.get(frame);
         for (Geometry geometry : lines) {
             geometry.removeFromParent();
@@ -98,7 +105,7 @@ public class Canvas extends SimpleApplication {
         return true;
     }
 
-    public boolean linkTransmission(Frame frame, ColorRGBA color) {
+    public boolean linkTransmission (Frame frame, ColorRGBA color) {
         Vector3f position_1 = sensorSpatialHashMap.get(frame.getCurrentTransmission().getSender()).getLocalTranslation();
         Vector3f position_2 = sensorSpatialHashMap.get(frame.getCurrentTransmission().getReceiver()).getLocalTranslation();
 
@@ -142,45 +149,70 @@ public class Canvas extends SimpleApplication {
             }
             speed = 1.f;
 
-            /*for (int i = 0; i < 4 && i < lines.size(); i++) {
-                //lines.get(i).getMesh().setBuffer(VertexBuffer.Type.Position, 3, new float[]{position_1.x, position_1.y, position_1.z, position_2.x, position_2.y, position_2.z}); TODO: da vedere come cambiare
-            }*/
-
+            for (int i = 0; i < 4 && i < lines.size() && i < frame.getTransmissionHistory().size(); i++) {
+                Transmission transmission = frame.getTransmissionHistory().get(i);
+                Sensor sender = transmission.getSender();
+                Sensor receiver = transmission.getReceiver();
+                lines.get(i).getMesh().setBuffer(VertexBuffer.Type.Position, 3, new float[]{sender.getX(), sender.getY(), sender.getZ(), receiver.getX(), receiver.getY(), receiver.getZ()});
+            }
         }
 
         return true;
     }
 
-    private void grid(boolean simple) {
-        for (float i = -campo.x; i <= campo.x; i += campo.x / 10) {
-            for (float j = -campo.y; j <= campo.y; j += campo.y / 10) {
-                rootNode.attachChild(line(new Vector3f(i, j, -campo.z), new Vector3f(i, -j, -campo.z), new ColorRGBA(229, 239, 255, 0.001f)));
-                if (!simple) {
-                    rootNode.attachChild(line(new Vector3f(-i, j, -campo.z), new Vector3f(i, j, -campo.z), new ColorRGBA(229, 239, 255, 0.001f)));
-                }
+    private Geometry attachGrid (float x, float y, float z, float lineDist, ColorRGBA color) {
+        Geometry x_grid = gridGeometry(x, z, lineDist, color);
+        Geometry y_grid = gridGeometry(y, z, lineDist, color);
+        Geometry z_grid = gridGeometry(x, y, lineDist, color);
 
-            }
-        }
-        for (float i = -campo.y; i <= campo.y; i += campo.y / 10) {
-            for (float j = -campo.z; j <= campo.z; j += campo.z / 10) {
-                rootNode.attachChild(line(new Vector3f(campo.x, i, j), new Vector3f(campo.x, i, -j), new ColorRGBA(229, 239, 255, 0.001f)));
-                if (!simple) {
-                    rootNode.attachChild(line(new Vector3f(campo.x, -i, j), new Vector3f(campo.x, i, j), new ColorRGBA(229, 239, 255, 0.001f)));
-                }
-            }
-        }
-        for (float i = -campo.x; i <= campo.x; i += campo.x / 10) {
-            for (float j = -campo.z; j <= campo.z; j += campo.z / 10) {
-                rootNode.attachChild(line(new Vector3f(i, -campo.y, j), new Vector3f(-i, -campo.y, j), new ColorRGBA(229, 239, 255, 0.001f)));
-                if (!simple) {
-                    rootNode.attachChild(line(new Vector3f(i, -campo.y, -j), new Vector3f(i, -campo.y, j), new ColorRGBA(229, 239, 255, 0.001f)));
-                }
-            }
-        }
+        Quaternion roll90 = new Quaternion();
+        roll90.fromAngleAxis(FastMath.PI / 2, new Vector3f(0, 0, 1));
+        z_grid.setLocalRotation(roll90);
 
+        roll90.fromAngleAxis(-FastMath.PI / 2, new Vector3f(1, 0, 0));
+        y_grid.setLocalRotation(roll90);
+
+        rootNode.attachChild(z_grid);
+        rootNode.attachChild(y_grid);
+        rootNode.attachChild(x_grid);
+        return null;
     }
 
-    private Geometry line(Vector3f inizio, Vector3f fine, ColorRGBA colore) {
+    private Geometry gridGeometry (float x, float y, float lineDist, ColorRGBA color) {
+        int lineX = (int) (x / lineDist) + 1;
+        int lineY = (int) (y / lineDist) + 1;
+        Geometry g = new Geometry("wireframe grid", new Grid(lineX, lineY, lineDist));
+        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+        mat.getAdditionalRenderState().setWireframe(true);
+        mat.setColor("Color", color);
+        g.setMaterial(mat);
+        return g;
+    }
+
+    private void attachCoordinateAxes (Vector3f pos) {
+        Arrow arrow = new Arrow(Vector3f.UNIT_X);
+        putShape(arrow, ColorRGBA.Red).setLocalTranslation(pos);
+
+        arrow = new Arrow(Vector3f.UNIT_Y);
+        putShape(arrow, ColorRGBA.Green).setLocalTranslation(pos);
+
+        arrow = new Arrow(Vector3f.UNIT_Z);
+        putShape(arrow, ColorRGBA.Blue).setLocalTranslation(pos);
+    }
+
+    private Geometry putShape (Mesh shape, ColorRGBA color) {
+        Geometry g = new Geometry("coordinate axis", shape);
+        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+        mat.getAdditionalRenderState().setWireframe(true);
+        mat.getAdditionalRenderState().setLineWidth(4);
+        mat.setColor("Color", color);
+        g.setMaterial(mat);
+        g.setLocalScale(10f);
+        rootNode.attachChild(g);
+        return g;
+    }
+
+    private Geometry line (Vector3f inizio, Vector3f fine, ColorRGBA colore) {
         Mesh lineMesh = new Mesh();
         lineMesh.setMode(Mesh.Mode.Lines);
         lineMesh.setBuffer(VertexBuffer.Type.Position, 3, new float[]{inizio.x, inizio.y, inizio.z, fine.x, fine.y, fine.z});
@@ -195,7 +227,7 @@ public class Canvas extends SimpleApplication {
         return lineGeometry;
     }
 
-    private Vector3f pointBetween(Vector3f inizio, Vector3f fine, float percentuale) {
+    private Vector3f pointBetween (Vector3f inizio, Vector3f fine, float percentuale) {
         Vector3f point = new Vector3f();
         point.setX(inizio.x + percentuale * (fine.x - inizio.x));
         point.setY(inizio.y + percentuale * (fine.y - inizio.y));
@@ -203,7 +235,7 @@ public class Canvas extends SimpleApplication {
         return point;
     }
 
-    private void generateTerrain() {
+    private void generateTerrain () {
 
         /* 1. Create terrain material and load four textures into it. */
         Material mat_terrain = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
@@ -237,11 +269,11 @@ public class Canvas extends SimpleApplication {
         terrain.addControl(control);
     }
 
-    private double map(double value, double low1, double high1, double low2, double high2) {
+    public static double map (double value, double low1, double high1, double low2, double high2) {
         return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
     }
 
-    public boolean isCharged() {
+    public boolean isCharged () {
         return charged;
     }
 

@@ -25,7 +25,7 @@ public class GraphicSim extends AbstractSimIstance {
     private final List<Frame> frames;
     private final ModelFactory modelFactory;
 
-    public GraphicSim(Collector collector, Scheduler scheduler) {
+    public GraphicSim (Collector collector, Scheduler scheduler) {
         super(collector, scheduler);
         canvas = new Canvas();
         sensors = new ArrayList<>();
@@ -33,7 +33,7 @@ public class GraphicSim extends AbstractSimIstance {
         modelFactory = new MyModelFactory();
     }
 
-    private static void setSettings() {
+    private static void setSettings () {
         AppSettings settings = new AppSettings(true);
 
         settings.setTitle("Underwater wireless sensors networks");
@@ -56,7 +56,7 @@ public class GraphicSim extends AbstractSimIstance {
         canvas.setSettings(settings);
     }
 
-    public void run() {
+    public void run () {
         List<Frame> listCompleted = new ArrayList<>();
 
         setSettings();
@@ -73,7 +73,7 @@ public class GraphicSim extends AbstractSimIstance {
 
         //inizializzazione
         for (int i = 0; i < 100; i++) {
-            Sensor temp = modelFactory.getSensor(canvas.random(-100, 100), canvas.random(-30, 30), canvas.random(-100, 100));
+            Sensor temp = modelFactory.getSensor(canvas.random(0, Canvas.field.x), canvas.random(0, Canvas.field.y), canvas.random(0, Canvas.field.z));
             sensors.add(temp);
         }
 
@@ -91,12 +91,12 @@ public class GraphicSim extends AbstractSimIstance {
         Event arrival_evt = getCoreFactory().getEvent(EventTypes.ArrivalEvent, 0, this);
 
         //imposto gli eventi periodici
-        stats_evt.setInterval(50);
-        move_evt.setInterval(10);
+        //stats_evt.setInterval(50);
+        move_evt.setInterval(50);
 
         //aggiungo gli eventi periodici allo scheduler
         getScheduler().addEvent(arrival_evt);
-        //getScheduler().addEvent(move_evt);
+        getScheduler().addEvent(move_evt);
 
 
         //avvio la simulazione
@@ -117,6 +117,7 @@ public class GraphicSim extends AbstractSimIstance {
                         listCompleted.add(frame);
                     }
                 }
+
                 canvas.enqueue(() -> canvas.updateSensorsPositions()).get();
                 getFrames().removeAll(listCompleted);
                 Thread.sleep(0);
@@ -129,22 +130,22 @@ public class GraphicSim extends AbstractSimIstance {
     }
 
     @Override
-    public List<Sensor> getSensors() {
+    public List<Sensor> getSensors () {
         return sensors;
     }
 
     @Override
-    public List<Frame> getFrames() {
+    public List<Frame> getFrames () {
         return frames;
     }
 
     @Override
-    public void addFrame(Frame frame) {
+    public void addFrame (Frame frame) {
         frames.add(frame);
     }
 
     @Override
-    public ModelFactory getModelFactory() {
+    public ModelFactory getModelFactory () {
         return modelFactory;
     }
 }
