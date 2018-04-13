@@ -8,12 +8,12 @@ public class Reschedule implements Action {
 
     double interval;
 
-    public Reschedule(double interval) {
+    public Reschedule (double interval) {
         this.interval = interval;
     }
 
     @Override
-    public void execute(Event event) {
+    public void execute (Event event) {
 
         SimContext context = event.getContext();
 

@@ -10,28 +10,28 @@ public class JmeTransmission extends AbstractTransmission implements GraphicTran
 
     private boolean terminated;
 
-    public JmeTransmission(Sensor sender, Sensor receiver) {
+    public JmeTransmission (Sensor sender, Sensor receiver) {
         super(sender, receiver);
         this.terminated = false;
     }
 
-    public JmeTransmission(Transmission currentTransmission) {
+    public JmeTransmission (Transmission currentTransmission) {
         super(currentTransmission.getSender(), currentTransmission.getReceiver());
         this.terminated = false;
     }
 
     @Override
-    public boolean isTerminated() {
+    public boolean isTerminated () {
         return terminated;
     }
 
     @Override
-    public GraphicSensor getSender() {
+    public GraphicSensor getSender () {
         return (GraphicSensor) super.getSender();
     }
 
     @Override
-    public GraphicSensor getReceiver() {
+    public GraphicSensor getReceiver () {
         return (GraphicSensor) super.getReceiver();
     }
 

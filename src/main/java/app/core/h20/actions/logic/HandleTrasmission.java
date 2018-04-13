@@ -16,11 +16,11 @@ import static org.apache.commons.math3.util.FastMath.log;
 public class HandleTrasmission implements Action {
 
 
-    public HandleTrasmission() {
+    public HandleTrasmission () {
     }
 
     @Override
-    public void execute(Event event) {
+    public void execute (Event event) {
 
         SimContext context = event.getContext();
         Frame frame = event.getFrame();
@@ -48,7 +48,7 @@ public class HandleTrasmission implements Action {
 
     }
 
-    public Sensor pickReceiver() {
+    public Sensor pickReceiver () {
         return null;
     }
 }

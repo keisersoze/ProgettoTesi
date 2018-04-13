@@ -11,72 +11,72 @@ public abstract class AbstractSensor implements Sensor {
 
     private Vector3f position;
 
-    public AbstractSensor(float x, float y, float z) {
+    public AbstractSensor (float x, float y, float z) {
         position = new Vector3f(x, y, z);
     }
 
     @Override
-    public float getX() {
+    public float getX () {
         return position.x;
     }
 
     @Override
-    public void setX(float x) {
+    public void setX (float x) {
         position.setX(x);
     }
 
     @Override
-    public float getY() {
+    public float getY () {
         return position.y;
     }
 
     @Override
-    public void setY(float y) {
+    public void setY (float y) {
         position.setY(y);
     }
 
     @Override
-    public float getZ() {
+    public float getZ () {
         return position.z;
     }
 
     @Override
-    public void setZ(float z) {
+    public void setZ (float z) {
         position.setZ(z);
     }
 
     @Override
-    public void setPosition(float x, float y, float z) {
+    public void setPosition (float x, float y, float z) {
         position.set(x, y, z);
     }
 
     @Override
-    public Vector3f getPosition() {
+    public Vector3f getPosition () {
         return position;
     }
 
     @Override
-    public List<Sensor> getNeighbors() {
+    public List<Sensor> getNeighbors () {
         return null;
     }
 
     @Override
-    public double getEuclideanDistance(Sensor s) {
+    public double getEuclideanDistance (Sensor s) {
         return position.distance(s.getPosition());
     }
 
     @Override
-    public boolean isSink() {
+    public boolean isSink () {
         return sink;
     }
 
     @Override
-    public void setSink(boolean x) {
+    public void setSink (boolean x) {
         sink = x;
     }
 
     @Override
-    public void setOffsetPosition(float x, float y, float z) {
+    public void setOffsetPosition (float x, float y, float z) {
         position.addLocal(x, y, z);
     }
 

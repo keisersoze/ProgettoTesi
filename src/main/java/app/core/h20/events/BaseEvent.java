@@ -14,7 +14,7 @@ public class BaseEvent implements Event, Comparable<Event> {
     private double time;
     private List<Action> actionList;
 
-    public BaseEvent(double time, SimContext context) {
+    public BaseEvent (double time, SimContext context) {
         this.context = context;
         this.time = context.getSimTime() + time;
         actionList = new ArrayList<>();
@@ -27,19 +27,19 @@ public class BaseEvent implements Event, Comparable<Event> {
      * @return un valore che indica l'esito del confronto
      */
 
-    public int compareTo(Event o) {
+    public int compareTo (Event o) {
         return Double.compare(this.getTime(), o.getTime());
     }
 
 
     //getters
 
-    public double getTime() {
+    public double getTime () {
         return time;
     }
 
     @Override
-    public SimContext getContext() {
+    public SimContext getContext () {
         return context;
     }
 
@@ -47,7 +47,7 @@ public class BaseEvent implements Event, Comparable<Event> {
      * @return NULL
      */
     @Override
-    public Frame getFrame() {
+    public Frame getFrame () {
         return null;
     }
 
@@ -55,7 +55,7 @@ public class BaseEvent implements Event, Comparable<Event> {
     /**
      * @param time
      */
-    public void updateTime(double time) {
+    public void updateTime (double time) {
         this.time = context.getSimTime() + time;
     }
 
@@ -63,14 +63,14 @@ public class BaseEvent implements Event, Comparable<Event> {
      * @param interval
      */
     @Override
-    public void setInterval(double interval) {
+    public void setInterval (double interval) {
         addAction(new Reschedule(interval));
     }
 
     /**
      *
      */
-    public Event tick() {
+    public Event tick () {
         for (Action l : actionList) {
             l.execute(this);
         }
@@ -80,7 +80,7 @@ public class BaseEvent implements Event, Comparable<Event> {
     /**
      * @param action
      */
-    public void addAction(Action action) {
+    public void addAction (Action action) {
         actionList.add(action);
     }
 

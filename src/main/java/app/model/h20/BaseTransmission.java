@@ -5,11 +5,11 @@ import app.model.Transmission;
 
 public class BaseTransmission extends AbstractTransmission {
 
-    public BaseTransmission(Sensor sender, Sensor receiver) {
+    public BaseTransmission (Sensor sender, Sensor receiver) {
         super(sender, receiver);
     }
 
-    public BaseTransmission(Transmission transmission) {
+    public BaseTransmission (Transmission transmission) {
         super(transmission.getSender(), transmission.getReceiver());
     }
 }

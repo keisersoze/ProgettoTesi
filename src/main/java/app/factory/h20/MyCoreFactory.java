@@ -23,7 +23,7 @@ public class MyCoreFactory implements CoreFactory {
 
 
     @Override
-    public Action getAction(String type) {
+    public Action getAction (String type) {
 
         if (type == null) {
             return null;
@@ -75,15 +75,14 @@ public class MyCoreFactory implements CoreFactory {
         return null;
     }
 
-    public Action getAction(String type, double value) {
+    public Action getAction (String type, double value) {
 
         if (type == null) {
             return null;
         }
 
         if (type.equalsIgnoreCase(ActionTypes.Reschedule)) {
-            if (reschedule == null)
-                reschedule = new Reschedule(value);
+            if (reschedule == null) { reschedule = new Reschedule(value); }
             return reschedule;
         }
 
@@ -92,7 +91,7 @@ public class MyCoreFactory implements CoreFactory {
 
 
     @Override
-    public Event getEvent(String type, double time, SimContext context) {
+    public Event getEvent (String type, double time, SimContext context) {
         if (type == null) {
             return null;
         }
@@ -120,7 +119,7 @@ public class MyCoreFactory implements CoreFactory {
     }
 
     @Override
-    public Event getEvent(String type, double time, SimContext context, Frame frame) {
+    public Event getEvent (String type, double time, SimContext context, Frame frame) {
         if (type == null) {
             return null;
         }

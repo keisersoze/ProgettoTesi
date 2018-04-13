@@ -49,3 +49,5 @@ fabric.properties
 
 *.class
 \.idea/
+
+\.DS_Store

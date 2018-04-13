@@ -15,39 +15,39 @@ public class JmeFrame extends AbstractFrame implements GraphicFrame {
     private GraphicTransmission currentTransmission;
 
 
-    public JmeFrame(double size, Sensor sender, Sensor currentOwner) {
+    public JmeFrame (double size, Sensor sender, Sensor currentOwner) {
         super(size, sender, currentOwner);
         transmissions = new LinkedList<>();
     }
 
-    public JmeFrame(double size, GraphicSensor sender, GraphicSensor currentOwner) {
+    public JmeFrame (double size, GraphicSensor sender, GraphicSensor currentOwner) {
         super(size, sender, currentOwner);
         transmissions = new LinkedList<>();
     }
 
     @Override
-    public GraphicTransmission getCurrentTransmission() {
+    public GraphicTransmission getCurrentTransmission () {
         return currentTransmission;
     }
 
     @Override
-    public void setCurrentTransmission(Transmission currentTransmission) {
+    public void setCurrentTransmission (Transmission currentTransmission) {
         this.currentTransmission = (GraphicTransmission) currentTransmission;
         transmissions.add(this.currentTransmission);
     }
 
     @Override
-    public GraphicSensor getSender() {
+    public GraphicSensor getSender () {
         return (GraphicSensor) super.getSender();
     }
 
     @Override
-    public GraphicSensor getCurrentOwner() {
+    public GraphicSensor getCurrentOwner () {
         return (GraphicSensor) super.getCurrentOwner();
     }
 
     @Override
-    public List<GraphicTransmission> getTransmissionHistory() {
+    public List<GraphicTransmission> getTransmissionHistory () {
         return transmissions;
     }
 }
