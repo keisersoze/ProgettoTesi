@@ -3,8 +3,8 @@ package app.sim.h20;
 import app.H2OSim;
 import app.core.Event;
 import app.core.Scheduler;
-import app.factory.h20.EventTypes;
 import app.factory.ModelFactory;
+import app.factory.h20.EventTypes;
 import app.factory.h20.MyModelFactory;
 import app.model.Frame;
 import app.model.Sensor;
@@ -19,14 +19,14 @@ public class SimulationInstance extends AbstractSimIstance implements Runnable {
     private final ModelFactory modelFactory;
 
 
-    public SimulationInstance (Collector collector, Scheduler scheduler) {
+    public SimulationInstance(Collector collector, Scheduler scheduler) {
         super(collector, scheduler);
         sensors = new ArrayList<>();
         frames = new ArrayList<>();
         modelFactory = new MyModelFactory();
     }
 
-    public void run () {
+    public void run() {
 
 
         // creo l'evento che richiama la funzionalità di campionamento per le statistiche
@@ -53,26 +53,26 @@ public class SimulationInstance extends AbstractSimIstance implements Runnable {
     }
 
     @Override
-    public List<Sensor> getSensors () {
+    public List<Sensor> getSensors() {
         return sensors;
     }
 
     @Override
-    public List<Frame> getFrames () {
+    public List<Frame> getFrames() {
         return frames;
     }
 
     @Override
-    public void addFrame (Frame frame) {
+    public void addFrame(Frame frame) {
         frames.add(frame);
     }
 
-    public void removeFrame (Frame f) {
+    public void removeFrame(Frame f) {
         frames.remove(f);
     }
 
     @Override
-    public ModelFactory getModelFactory () {
+    public ModelFactory getModelFactory() {
         return modelFactory;
     }
 }

@@ -4,21 +4,21 @@ import java.util.List;
 
 public interface Frame {
 
-    double getSize ();
+    double getSize();
 
-    Transmission getCurrentTransmission ();
+    Transmission getCurrentTransmission();
 
-    void setCurrentTransmission (Transmission currentTransmission);
+    void setCurrentTransmission(Transmission currentTransmission);
 
-    Sensor getSender ();
+    Sensor getSender();
 
-    Sensor getCurrentOwner ();
+    Sensor getCurrentOwner();
 
-    void setCurrentOwner (Sensor currentOwner);
+    void setCurrentOwner(Sensor currentOwner);
 
-    List<? extends Transmission> getTransmissionHistory ();
+    List<? extends Transmission> getTransmissionHistory();
 
-    boolean isArrived ();
+    boolean isArrived();
 
-    void setArrived (boolean arrived);
+    void setArrived(boolean arrived);
 }

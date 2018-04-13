@@ -6,9 +6,9 @@ import app.model.Transmission;
 
 public interface ModelFactory {
 
-    Sensor getSensor (float x, float y, float z);
+    Sensor getSensor(float x, float y, float z);
 
-    Transmission getTransmission (Sensor sender, Sensor receiver);
+    Transmission getTransmission(Sensor sender, Sensor receiver);
 
-    Frame getFrame (double size, Sensor sender, Sensor currentOwner);
+    Frame getFrame(double size, Sensor sender, Sensor currentOwner);
 }

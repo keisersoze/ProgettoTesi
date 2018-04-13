@@ -10,35 +10,35 @@ public abstract class AbstractTransmission implements Transmission {
     private boolean isSuccessfull;
 
 
-    public AbstractTransmission (Sensor sender, Sensor receiver) {
+    public AbstractTransmission(Sensor sender, Sensor receiver) {
         this.sender = sender;
         this.receiver = receiver;
         isSuccessfull = true;
     }
 
     @Override
-    public void updateSnr (double x) {
+    public void updateSnr(double x) {
 
     }
 
     @Override
-    public boolean isSuccessfull () {
+    public boolean isSuccessfull() {
         return isSuccessfull;
     }
 
-    public void setSuccessfull (boolean stato) {
+    public void setSuccessfull(boolean stato) {
         isSuccessfull = stato;
     }
 
-    public Sensor getSender () {
+    public Sensor getSender() {
         return sender;
     }
 
-    public Sensor getReceiver () {
+    public Sensor getReceiver() {
         return receiver;
     }
 
-    public double getSnr () {
+    public double getSnr() {
         return snr;
     }
 

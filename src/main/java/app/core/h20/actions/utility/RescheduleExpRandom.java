@@ -9,12 +9,12 @@ import static org.apache.commons.math3.util.FastMath.log;
 
 public class RescheduleExpRandom implements Action {
 
-    public RescheduleExpRandom () {
+    public RescheduleExpRandom() {
 
     }
 
     @Override
-    public void execute (Event event) {
+    public void execute(Event event) {
 
         SimContext context = event.getContext();
 

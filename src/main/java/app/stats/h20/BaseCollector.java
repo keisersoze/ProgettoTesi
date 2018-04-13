@@ -11,21 +11,21 @@ import java.util.Map;
 public class BaseCollector implements Collector {
     private Map<String, List<Sample>> sources;
 
-    public BaseCollector () {
+    public BaseCollector() {
         sources = new HashMap<>();
 
     }
 
 
-    public void addStatSource (String source) {
+    public void addStatSource(String source) {
         sources.put(source, new ArrayList<Sample>());
     }
 
-    public List<Sample> getSourceSamples (String source) {
+    public List<Sample> getSourceSamples(String source) {
         return sources.get(source);
     }
 
-    public void update (String source, Sample sample) {
+    public void update(String source, Sample sample) {
         sources.get(source).add(sample);
     }
 }

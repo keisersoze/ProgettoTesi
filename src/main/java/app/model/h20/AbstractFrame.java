@@ -10,7 +10,7 @@ public abstract class AbstractFrame implements Frame {
     private Sensor currentOwner;
 
 
-    public AbstractFrame (double size, Sensor sender, Sensor currentOwner) {
+    public AbstractFrame(double size, Sensor sender, Sensor currentOwner) {
         this.size = size;
         arrived = false;
         this.sender = sender;
@@ -18,29 +18,29 @@ public abstract class AbstractFrame implements Frame {
     }
 
     @Override
-    public boolean isArrived () {
+    public boolean isArrived() {
         return arrived;
     }
 
     @Override
-    public void setArrived (boolean arrived) {
+    public void setArrived(boolean arrived) {
         this.arrived = arrived;
     }
 
     @Override
-    public double getSize () {
+    public double getSize() {
         return size;
     }
 
-    public Sensor getSender () {
+    public Sensor getSender() {
         return sender;
     }
 
-    public Sensor getCurrentOwner () {
+    public Sensor getCurrentOwner() {
         return currentOwner;
     }
 
-    public void setCurrentOwner (Sensor currentOwner) {
+    public void setCurrentOwner(Sensor currentOwner) {
         this.currentOwner = currentOwner;
     }
 }

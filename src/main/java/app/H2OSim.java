@@ -22,11 +22,11 @@ public class H2OSim {
     //pattern singleton per avere accesso alle risorse condivise
     private static H2OSim ourInstance = new H2OSim();
 
-    public static H2OSim getInstance () {
+    public static H2OSim getInstance() {
         return ourInstance;
     }
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
 
         BaseCollector collector = new BaseCollector();
         if (CANVAS_MODE) {

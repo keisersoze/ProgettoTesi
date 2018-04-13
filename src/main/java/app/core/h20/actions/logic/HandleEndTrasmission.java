@@ -9,11 +9,11 @@ import app.sim.SimContext;
 
 public class HandleEndTrasmission implements Action {
 
-    public HandleEndTrasmission () {
+    public HandleEndTrasmission() {
     }
 
     @Override
-    public void execute (Event event) {
+    public void execute(Event event) {
 
         SimContext context = event.getContext();
         Frame frame = event.getFrame();

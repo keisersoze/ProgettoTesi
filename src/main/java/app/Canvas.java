@@ -5,7 +5,6 @@ import app.model.Sensor;
 import com.jme3.app.SimpleApplication;
 import com.jme3.light.DirectionalLight;
 import com.jme3.material.Material;
-import com.jme3.material.RenderState;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.*;
@@ -23,7 +22,7 @@ public class Canvas extends SimpleApplication {
     private HashMap<Frame, List<Geometry>> frameListGeometryHashMap = new HashMap<>();
     private HashMap<Sensor, Spatial> sensorSpatialHashMap = new HashMap<>();
 
-    public void simpleInitApp () {
+    public void simpleInitApp() {
         campo = new Vector3f(200, 100, 200);
 
         viewPort.setBackgroundColor(new ColorRGBA(1f / 255f * 60f, 1f / 255f * 102f, 1f / 255f * 140f, 1f));
@@ -45,18 +44,18 @@ public class Canvas extends SimpleApplication {
         charged = true;
     }
 
-    public float random (float min, float max) {
+    public float random(float min, float max) {
         return min + (int) (Math.random() * ((max - min) + 1));
     }
 
-    public boolean updateSensorsPositions () {
+    public boolean updateSensorsPositions() {
         for (Map.Entry<Sensor, Spatial> entry : sensorSpatialHashMap.entrySet()) {
             entry.getValue().setLocalTranslation(entry.getKey().getPosition());     //TODO: Da testare se tine la referenza al sensor
         }
         return true;
     }
 
-    public Spatial drawSensor (Sensor sensor) {
+    public Spatial drawSensor(Sensor sensor) {
         if (!sensorSpatialHashMap.containsKey(sensor)) {
             if (!sensor.isSink()) {
                 Sphere sphere = new Sphere(30, 30, 0.5f);
@@ -83,23 +82,23 @@ public class Canvas extends SimpleApplication {
         return null;
     }
 
-    public Spatial drawSensors (Collection<? extends Sensor> sensors) {
+    public Spatial drawSensors(Collection<? extends Sensor> sensors) {
         for (Sensor sensor : sensors) {
             drawSensor(sensor);
         }
         return null;
     }
 
-    public boolean deleteLinkTransmission (Frame frame) {
+    public boolean deleteLinkTransmission(Frame frame) {
         List<Geometry> lines = frameListGeometryHashMap.get(frame);
-        for (Geometry geometry : lines){
+        for (Geometry geometry : lines) {
             geometry.removeFromParent();
         }
         frameListGeometryHashMap.remove(frame);
         return true;
     }
 
-    public boolean linkTransmission (Frame frame, ColorRGBA color) {
+    public boolean linkTransmission(Frame frame, ColorRGBA color) {
         Vector3f position_1 = sensorSpatialHashMap.get(frame.getCurrentTransmission().getSender()).getLocalTranslation();
         Vector3f position_2 = sensorSpatialHashMap.get(frame.getCurrentTransmission().getReceiver()).getLocalTranslation();
 
@@ -138,7 +137,7 @@ public class Canvas extends SimpleApplication {
             if (lines.size() > 3) {
                 lines.get(3).getMaterial().setColor("Color", new ColorRGBA(244 / 255f, 255 / 255f, 104 / 255f, 1f));
             }
-            if (lines.size() == 5){
+            if (lines.size() == 5) {
                 lines.remove(4).removeFromParent();
             }
             speed = 1.f;
@@ -152,7 +151,7 @@ public class Canvas extends SimpleApplication {
         return true;
     }
 
-    private void grid (boolean simple) {
+    private void grid(boolean simple) {
         for (float i = -campo.x; i <= campo.x; i += campo.x / 10) {
             for (float j = -campo.y; j <= campo.y; j += campo.y / 10) {
                 rootNode.attachChild(line(new Vector3f(i, j, -campo.z), new Vector3f(i, -j, -campo.z), new ColorRGBA(229, 239, 255, 0.001f)));
@@ -181,7 +180,7 @@ public class Canvas extends SimpleApplication {
 
     }
 
-    private Geometry line (Vector3f inizio, Vector3f fine, ColorRGBA colore) {
+    private Geometry line(Vector3f inizio, Vector3f fine, ColorRGBA colore) {
         Mesh lineMesh = new Mesh();
         lineMesh.setMode(Mesh.Mode.Lines);
         lineMesh.setBuffer(VertexBuffer.Type.Position, 3, new float[]{inizio.x, inizio.y, inizio.z, fine.x, fine.y, fine.z});
@@ -196,7 +195,7 @@ public class Canvas extends SimpleApplication {
         return lineGeometry;
     }
 
-    private Vector3f pointBetween (Vector3f inizio, Vector3f fine, float percentuale) {
+    private Vector3f pointBetween(Vector3f inizio, Vector3f fine, float percentuale) {
         Vector3f point = new Vector3f();
         point.setX(inizio.x + percentuale * (fine.x - inizio.x));
         point.setY(inizio.y + percentuale * (fine.y - inizio.y));
@@ -204,7 +203,7 @@ public class Canvas extends SimpleApplication {
         return point;
     }
 
-    private void generateTerrain () {
+    private void generateTerrain() {
 
         /* 1. Create terrain material and load four textures into it. */
         Material mat_terrain = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
@@ -238,11 +237,11 @@ public class Canvas extends SimpleApplication {
         terrain.addControl(control);
     }
 
-    private double map (double value, double low1, double high1, double low2, double high2) {
+    private double map(double value, double low1, double high1, double low2, double high2) {
         return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
     }
 
-    public boolean isCharged () {
+    public boolean isCharged() {
         return charged;
     }
 

@@ -10,12 +10,12 @@ public class UpdateStats implements Action {
 
     int i;
 
-    public UpdateStats () {
+    public UpdateStats() {
         i = 0;
     }
 
     @Override
-    public void execute (Event event) {
+    public void execute(Event event) {
 
         SimContext context = event.getContext();
 

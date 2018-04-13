@@ -1,11 +1,11 @@
 package app.factory.h20;
 
 import app.core.Action;
+import app.core.Event;
 import app.core.h20.actions.logic.*;
 import app.core.h20.actions.stats.UpdateStats;
 import app.core.h20.actions.utility.Reschedule;
 import app.core.h20.actions.utility.RescheduleExpRandom;
-import app.core.Event;
 import app.core.h20.events.*;
 import app.factory.CoreFactory;
 import app.model.Frame;
@@ -23,7 +23,7 @@ public class MyCoreFactory implements CoreFactory {
 
 
     @Override
-    public Action getAction (String type) {
+    public Action getAction(String type) {
 
         if (type == null) {
             return null;
@@ -75,14 +75,16 @@ public class MyCoreFactory implements CoreFactory {
         return null;
     }
 
-    public Action getAction (String type, double value) {
+    public Action getAction(String type, double value) {
 
         if (type == null) {
             return null;
         }
 
         if (type.equalsIgnoreCase(ActionTypes.Reschedule)) {
-            if (reschedule == null) { reschedule = new Reschedule(value); }
+            if (reschedule == null) {
+                reschedule = new Reschedule(value);
+            }
             return reschedule;
         }
 
@@ -91,7 +93,7 @@ public class MyCoreFactory implements CoreFactory {
 
 
     @Override
-    public Event getEvent (String type, double time, SimContext context) {
+    public Event getEvent(String type, double time, SimContext context) {
         if (type == null) {
             return null;
         }
@@ -119,7 +121,7 @@ public class MyCoreFactory implements CoreFactory {
     }
 
     @Override
-    public Event getEvent (String type, double time, SimContext context, Frame frame) {
+    public Event getEvent(String type, double time, SimContext context, Frame frame) {
         if (type == null) {
             return null;
         }

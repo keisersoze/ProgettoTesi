@@ -7,11 +7,11 @@ import app.sim.SimContext;
 
 public class MoveSensors implements Action {
 
-    public MoveSensors () {
+    public MoveSensors() {
     }
 
     @Override
-    public void execute (Event event) {
+    public void execute(Event event) {
 
         SimContext context = event.getContext();
 

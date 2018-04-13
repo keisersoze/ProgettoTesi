@@ -1,3 +1,4 @@
 package app.stats;
 
-public interface Sample {}
+public interface Sample {
+}

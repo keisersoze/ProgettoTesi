@@ -5,40 +5,40 @@ import app.sim.SimContext;
 
 public interface Event {
 
-    void addAction (Action action);
+    void addAction(Action action);
 
     /**
      * chiama tutte le callback associate all'evento
      */
-    Event tick ();
+    Event tick();
 
     /**
      * restituisce un valore che indica la priorità dell'evento
      *
      * @return il valore che indica la priorità
      */
-    double getTime ();
+    double getTime();
 
     /**
      *
      */
-    void setInterval (double interval);
+    void setInterval(double interval);
 
 
     /**
      *
      */
-    void updateTime (double time);
+    void updateTime(double time);
 
     /**
      * @return
      */
-    SimContext getContext ();
+    SimContext getContext();
 
     /**
      *
      */
-    Frame getFrame ();
+    Frame getFrame();
 
 
 }
