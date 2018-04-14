@@ -3,7 +3,9 @@ package app;
 import app.model.Frame;
 import app.model.Sensor;
 import app.model.Transmission;
+import app.sim.h20.GraphicSim;
 import com.jme3.app.SimpleApplication;
+import com.jme3.font.BitmapText;
 import com.jme3.light.DirectionalLight;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
@@ -26,6 +28,7 @@ public class Canvas extends SimpleApplication {
     private boolean charged = false;
     private HashMap<Frame, List<Geometry>> frameListGeometryHashMap = new HashMap<>();
     private HashMap<Sensor, Spatial> sensorSpatialHashMap = new HashMap<>();
+    BitmapText hudText;
 
     public void simpleInitApp () {
         field = new Vector3f(200, 100, 200);
@@ -40,10 +43,17 @@ public class Canvas extends SimpleApplication {
         Node pivot = new Node("pivot");
         rootNode.attachChild(pivot); // put this node in the scene
 
-        Vector3f cam_position = new Vector3f(field.x, field.y/2, field.z);
+        Vector3f cam_position = new Vector3f(field.x, field.y / 2, field.z);
         cam.setLocation(cam_position);
         cam.lookAt(Vector3f.ZERO, Vector3f.ZERO);
         flyCam.setMoveSpeed(100);
+
+        hudText = new BitmapText(guiFont, false);
+        hudText.setSize(guiFont.getCharSet().getRenderedSize());      // font size
+        hudText.setColor(ColorRGBA.Blue);                             // font color
+        hudText.setText("You can write any string here");             // the text
+        hudText.setLocalTranslation(300, hudText.getLineHeight(), 0); // position
+        guiNode.attachChild(hudText);
 
         attachCoordinateAxes(Vector3f.ZERO);
         attachGrid(field.x, field.y, field.z, 10f, ColorRGBA.White);
@@ -51,18 +61,13 @@ public class Canvas extends SimpleApplication {
         charged = true;
     }
 
-    public float random (float min, float max) {
-        return min + (int) (Math.random() * ((max - min) + 1));
-    }
-
-    public boolean updateSensorsPositions () {
+    private void updateSensorsPositions () {
         for (Map.Entry<Sensor, Spatial> entry : sensorSpatialHashMap.entrySet()) {
             entry.getValue().setLocalTranslation(entry.getKey().getPosition());     //TODO: Da testare se tine la referenza al sensor
         }
-        return true;
     }
 
-    public Spatial drawSensor (Sensor sensor) {
+    public boolean drawSensor (Sensor sensor) {
         if (!sensorSpatialHashMap.containsKey(sensor)) {
             if (!sensor.isSink()) {
                 Sphere sphere = new Sphere(30, 30, 0.5f);
@@ -86,7 +91,7 @@ public class Canvas extends SimpleApplication {
                 rootNode.attachChild(sink);
             }
         }
-        return null;
+        return true;
     }
 
     public Spatial drawSensors (Collection<? extends Sensor> sensors) {
@@ -142,25 +147,17 @@ public class Canvas extends SimpleApplication {
                 lines.get(2).getMaterial().setColor("Color", new ColorRGBA(0 / 255f, 0 / 255f, 0 / 255f, 1f));
             }
             if (lines.size() > 3) {
-                lines.get(3).getMaterial().setColor("Color", new ColorRGBA(244 / 255f, 255 / 255f, 104 / 255f, 1f));
+                lines.get(3).getMaterial().setColor("Color", new ColorRGBA(178 / 255f, 0 / 255f, 255 / 255f, 1f));
             }
             if (lines.size() == 5) {
                 lines.remove(4).removeFromParent();
             }
             speed = 1.f;
-
-            for (int i = 0; i < 4 && i < lines.size() && i < frame.getTransmissionHistory().size(); i++) {
-                Transmission transmission = frame.getTransmissionHistory().get(i);
-                Sensor sender = transmission.getSender();
-                Sensor receiver = transmission.getReceiver();
-                lines.get(i).getMesh().setBuffer(VertexBuffer.Type.Position, 3, new float[]{sender.getX(), sender.getY(), sender.getZ(), receiver.getX(), receiver.getY(), receiver.getZ()});
-            }
         }
-
         return true;
     }
 
-    private Geometry attachGrid (float x, float y, float z, float lineDist, ColorRGBA color) {
+    private boolean attachGrid (float x, float y, float z, float lineDist, ColorRGBA color) {
         Geometry x_grid = gridGeometry(x, z, lineDist, color);
         Geometry y_grid = gridGeometry(y, z, lineDist, color);
         Geometry z_grid = gridGeometry(x, y, lineDist, color);
@@ -175,7 +172,7 @@ public class Canvas extends SimpleApplication {
         rootNode.attachChild(z_grid);
         rootNode.attachChild(y_grid);
         rootNode.attachChild(x_grid);
-        return null;
+        return true;
     }
 
     private Geometry gridGeometry (float x, float y, float lineDist, ColorRGBA color) {
@@ -269,12 +266,27 @@ public class Canvas extends SimpleApplication {
         terrain.addControl(control);
     }
 
-    public static double map (double value, double low1, double high1, double low2, double high2) {
-        return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
-    }
-
     public boolean isCharged () {
         return charged;
     }
 
+    private void updateLinksPosition () {
+        for (Frame frame : GraphicSim.frames) {
+            List<Geometry> lines = frameListGeometryHashMap.get(frame);
+            if (lines != null) {
+                for (int i = 0; i < 4 && i < lines.size() && i < frame.getTransmissionHistory().size(); i++) {
+                    Transmission transmission = frame.getTransmissionHistory().get(i);
+                    Sensor sender = transmission.getSender();
+                    Sensor receiver = transmission.getReceiver();
+                    lines.get(i).getMesh().setBuffer(VertexBuffer.Type.Position, 3, new float[]{sender.getX(), sender.getY(), sender.getZ(), receiver.getX(), receiver.getY(), receiver.getZ()});
+                }
+            }
+        }
+    }
+
+    public void simpleUpdate(float tpf) {
+        hudText.setText("Sim Time: " );
+        updateSensorsPositions();
+        updateLinksPosition();
+    }
 }

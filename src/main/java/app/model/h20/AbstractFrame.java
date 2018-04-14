@@ -9,7 +9,6 @@ public abstract class AbstractFrame implements Frame {
     private Sensor sender;
     private Sensor currentOwner;
 
-
     public AbstractFrame(double size, Sensor sender, Sensor currentOwner) {
         this.size = size;
         arrived = false;
@@ -43,4 +42,6 @@ public abstract class AbstractFrame implements Frame {
     public void setCurrentOwner(Sensor currentOwner) {
         this.currentOwner = currentOwner;
     }
+
+
 }

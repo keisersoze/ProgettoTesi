@@ -2,8 +2,13 @@ package app.sim.h20;
 
 import app.Canvas;
 import app.H2OSim;
+import app.MyLib;
 import app.core.Event;
 import app.core.Scheduler;
+import app.core.h20.events.ArrivalEvent;
+import app.core.h20.events.EndTrasmissionEvent;
+import app.core.h20.events.MoveEvent;
+import app.core.h20.events.TrasmissionEvent;
 import app.factory.ModelFactory;
 import app.factory.h20.EventTypes;
 import app.factory.h20.MyModelFactory;
@@ -22,14 +27,14 @@ import java.util.concurrent.ExecutionException;
 public class GraphicSim extends AbstractSimIstance {
     private static Canvas canvas;
     private final List<Sensor> sensors;
-    private final List<Frame> frames;
+    public static final List<Frame> frames = new ArrayList<>();
     private final ModelFactory modelFactory;
 
     public GraphicSim (Collector collector, Scheduler scheduler) {
         super(collector, scheduler);
         canvas = new Canvas();
         sensors = new ArrayList<>();
-        frames = new ArrayList<>();
+        //frames = new ArrayList<>();
         modelFactory = new MyModelFactory();
     }
 
@@ -73,7 +78,7 @@ public class GraphicSim extends AbstractSimIstance {
 
         //inizializzazione
         for (int i = 0; i < 100; i++) {
-            Sensor temp = modelFactory.getSensor(canvas.random(0, Canvas.field.x), canvas.random(0, Canvas.field.y), canvas.random(0, Canvas.field.z));
+            Sensor temp = modelFactory.getSensor(MyLib.random(0, Canvas.field.x), MyLib.random(0, Canvas.field.y), MyLib.random(0, Canvas.field.z));
             sensors.add(temp);
         }
 
@@ -92,7 +97,7 @@ public class GraphicSim extends AbstractSimIstance {
 
         //imposto gli eventi periodici
         //stats_evt.setInterval(50);
-        move_evt.setInterval(50);
+        move_evt.setInterval(5);
 
         //aggiungo gli eventi periodici allo scheduler
         getScheduler().addEvent(arrival_evt);
@@ -106,19 +111,23 @@ public class GraphicSim extends AbstractSimIstance {
                 setSimTime(evt_scheduled.getTime());
                 evt_scheduled.tick();
 
-                for (Frame frame : frames) {
-                    if (!frame.isArrived()) {
-                        Transmission current = frame.getCurrentTransmission();
-                        if (current != null) {
-                            canvas.enqueue(() -> canvas.linkTransmission(frame, ColorRGBA.Green)).get();
+                if (evt_scheduled.getClass() == ArrivalEvent.class || evt_scheduled.getClass() == TrasmissionEvent.class || evt_scheduled.getClass() == EndTrasmissionEvent.class) {
+                    for (Frame frame : frames) {
+                        if (!frame.isArrived()) {
+                            Transmission current = frame.getCurrentTransmission();
+                            if (current != null) {
+                                canvas.enqueue(() -> canvas.linkTransmission(frame, ColorRGBA.Green)).get();
+                            }
+                        } else if (frame.getTransmissionHistory().size() > 0) {
+                            canvas.enqueue(() -> canvas.deleteLinkTransmission(frame)).get();
+                            listCompleted.add(frame);
                         }
-                    } else if (frame.getTransmissionHistory().size() > 0) {
-                        canvas.enqueue(() -> canvas.deleteLinkTransmission(frame)).get();
-                        listCompleted.add(frame);
                     }
                 }
-
-                canvas.enqueue(() -> canvas.updateSensorsPositions()).get();
+                if (evt_scheduled.getClass() == MoveEvent.class) {
+                    //canvas.enqueue(() -> canvas.updateSensorsPositions()).get();
+                    //canvas.enqueue(() -> canvas.updateLinksPosition(frames)).get();
+                }
                 getFrames().removeAll(listCompleted);
                 Thread.sleep(0);
             }

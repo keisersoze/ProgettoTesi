@@ -79,5 +79,4 @@ public abstract class AbstractSensor implements Sensor {
     public void setOffsetPosition(float x, float y, float z) {
         position.addLocal(x, y, z);
     }
-
 }

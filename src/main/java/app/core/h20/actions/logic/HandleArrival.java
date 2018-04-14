@@ -27,6 +27,8 @@ public class HandleArrival implements Action {
 
         double packetSize = x < H2OSim.MAX_FRAME_RATE ? H2OSim.MAX_FRAME_SIZE : H2OSim.MAX_FRAME_SIZE * x; //riutilizzo x
 
+        System.out.println(packetSize);
+
         Frame newFrame = context.getModelFactory().getFrame(packetSize, s, s);
         Event e = context.getCoreFactory().getEvent(EventTypes.TrasmissionEvent, 0, context, newFrame);
         context.getScheduler().addEvent(e);

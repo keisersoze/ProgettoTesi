@@ -21,4 +21,5 @@ public interface Frame {
     boolean isArrived();
 
     void setArrived(boolean arrived);
+
 }

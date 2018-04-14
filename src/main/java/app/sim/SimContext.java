@@ -15,7 +15,7 @@ public interface SimContext {
 
     Collector getCollector();
 
-    double getSimTime();
+    double getSimTime ();
 
     void setSimTime(double x);
 
