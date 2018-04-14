@@ -17,7 +17,15 @@ public class H2OSim {
     public static final int LAMDA = 3;
     public static final int NTHREADS = 10;
     public static final int NEVENTS = 10000;
+
     public static final boolean CANVAS_MODE = true;
+
+    public static final int SENSOR_BANDWIDTH = 10000; // B/s
+    public static final int MAX_FRAME_SIZE = 1500; //Bytes
+    public static final double MAX_FRAME_RATE = 0.9;
+
+    //variabili endogene
+    public static final int SOUND_SPEED = 331; // m/s
 
     //pattern singleton per avere accesso alle risorse condivise
     private static H2OSim ourInstance = new H2OSim();

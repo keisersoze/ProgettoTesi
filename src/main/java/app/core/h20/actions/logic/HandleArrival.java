@@ -23,7 +23,11 @@ public class HandleArrival implements Action {
         List<Sensor> sensors = context.getSensors();
         Sensor s = sensors.get(context.getMarsenneTwister().nextInt(sensors.size())); //prendo un sensore a caso
 
-        Frame newFrame = context.getModelFactory().getFrame(H2OSim.MU, s, s);
+        double x = context.getMarsenneTwister().nextDouble();
+
+        double packetSize = x < H2OSim.MAX_FRAME_RATE ? H2OSim.MAX_FRAME_SIZE : H2OSim.MAX_FRAME_SIZE * x; //riutilizzo x
+
+        Frame newFrame = context.getModelFactory().getFrame(packetSize, s, s);
         Event e = context.getCoreFactory().getEvent(EventTypes.TrasmissionEvent, 0, context, newFrame);
         context.getScheduler().addEvent(e);
         context.addFrame(newFrame);
