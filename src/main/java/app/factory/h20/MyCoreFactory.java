@@ -99,7 +99,7 @@ public class MyCoreFactory implements CoreFactory {
         }
         Event e = null;
         if (type.equalsIgnoreCase(EventTypes.ArrivalEvent)) {
-            e = new ArrivalEvent(time, context);
+            e = new BaseEvent(time, context);
             e.addAction(new HandleArrival());
             //e.addAction(new RescheduleExpRandom());           //TODO: da decommentare finito il testing
 
@@ -107,12 +107,12 @@ public class MyCoreFactory implements CoreFactory {
             e = new BaseEvent(time, context);
 
         } else if (type.equalsIgnoreCase(EventTypes.MoveEvent)) {
-            e = new MoveEvent(time, context);
+            e = new BaseEvent(time, context);
             e.addAction(new MoveSensors());
             e.addAction(new UpdateSNR());
 
         } else if (type.equalsIgnoreCase(EventTypes.StatisticEvent)) {
-            e = new StatisticsEvent(time, context);
+            e = new BaseEvent(time, context);
             e.addAction(new UpdateStats());
         }
 
@@ -128,13 +128,16 @@ public class MyCoreFactory implements CoreFactory {
 
         Event e = null;
         if (type.equalsIgnoreCase(EventTypes.EndTrasmissionEvent)) {
-            e = new EndTrasmissionEvent(time, context, frame);
+            e = new FrameEvent(time, context, frame);
             e.addAction(new HandleEndTrasmission());
             e.addAction(new UpdateSNR());
         } else if (type.equalsIgnoreCase(EventTypes.TrasmissionEvent)) {
-            e = new TrasmissionEvent(time, context, frame);
+            e = new FrameEvent(time, context, frame);
             e.addAction(new HandleTrasmission());
             e.addAction(new UpdateSNR());
+        } else if (type.equalsIgnoreCase((EventTypes.ReceivingTransmissionEvent))){
+            e = new FrameEvent(time,context,frame);
+            e.addAction(new HandleReception());
         }
 
         return e;

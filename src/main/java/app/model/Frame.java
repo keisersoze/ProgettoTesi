@@ -16,7 +16,7 @@ public interface Frame {
 
     void setCurrentOwner(Sensor currentOwner);
 
-    List<? extends Transmission> getTransmissionHistory();
+    List<Transmission> getTransmissionHistory();
 
     boolean isArrived();
 

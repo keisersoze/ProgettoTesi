@@ -9,8 +9,8 @@ import java.util.List;
 
 public class BaseFrame extends AbstractFrame implements Frame {
 
-    private List<BaseTransmission> transmissions; // Backtrace dei possessori del frame
-    private BaseTransmission currentTransmission;
+    private List<Transmission> transmissions; // Backtrace dei possessori del frame
+    private Transmission currentTransmission;
 
     public BaseFrame(double size, Sensor sender, Sensor currentOwner) {
         super(size, sender, currentOwner);
@@ -31,7 +31,7 @@ public class BaseFrame extends AbstractFrame implements Frame {
     }
 
     @Override
-    public List<BaseTransmission> getTransmissionHistory() {
+    public List<Transmission> getTransmissionHistory() {
         return transmissions;
     }
 }

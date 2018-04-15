@@ -7,4 +7,5 @@ public class EventTypes {
     public static final String MoveEvent = "MOVE_EVENT";
     public static final String StatisticEvent = "STATISTIC_EVENT";
     public static final String TrasmissionEvent = "TRASMISSION_EVENT";
+    public static final String ReceivingTransmissionEvent = "RECEIVING_TRANSMISSION_EVENT";
 }

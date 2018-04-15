@@ -20,9 +20,10 @@ public class H2OSim {
 
     public static final boolean CANVAS_MODE = true;
 
-    public static final int SENSOR_BANDWIDTH = 10000; // B/s
-    public static final int MAX_FRAME_SIZE = 1500; //Bytes
+    public static final int SENSOR_BANDWIDTH = 1000; // b/s
+    public static final int MAX_FRAME_SIZE = 1000; //bit (200-1600)
     public static final double MAX_FRAME_RATE = 0.9;
+    public static final double BATTERY_LIFE = 1000; // mA
 
     //variabili endogene
     public static final int SOUND_SPEED = 343; // m/s

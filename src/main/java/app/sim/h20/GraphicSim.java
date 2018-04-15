@@ -5,10 +5,6 @@ import app.H2OSim;
 import app.MyLib;
 import app.core.Event;
 import app.core.Scheduler;
-import app.core.h20.events.ArrivalEvent;
-import app.core.h20.events.EndTrasmissionEvent;
-import app.core.h20.events.MoveEvent;
-import app.core.h20.events.TrasmissionEvent;
 import app.factory.ModelFactory;
 import app.factory.h20.EventTypes;
 import app.factory.h20.MyModelFactory;
@@ -30,7 +26,7 @@ public class GraphicSim extends AbstractSimIstance {
     public static final List<Frame> frames = new ArrayList<>();
     private final ModelFactory modelFactory;
 
-    public GraphicSim (Collector collector, Scheduler scheduler) {
+    public GraphicSim(Collector collector, Scheduler scheduler) {
         super(collector, scheduler);
         canvas = new Canvas();
         sensors = new ArrayList<>();
@@ -38,7 +34,7 @@ public class GraphicSim extends AbstractSimIstance {
         modelFactory = new MyModelFactory();
     }
 
-    private static void setSettings () {
+    private static void setSettings() {
         AppSettings settings = new AppSettings(true);
 
         settings.setTitle("Underwater wireless sensors networks");
@@ -61,7 +57,7 @@ public class GraphicSim extends AbstractSimIstance {
         canvas.setSettings(settings);
     }
 
-    public void run () {
+    public void run() {
         List<Frame> listCompleted = new ArrayList<>();
 
         setSettings();
@@ -111,23 +107,20 @@ public class GraphicSim extends AbstractSimIstance {
                 setSimTime(evt_scheduled.getTime());
                 evt_scheduled.tick();
 
-                if (evt_scheduled.getClass() == ArrivalEvent.class || evt_scheduled.getClass() == TrasmissionEvent.class || evt_scheduled.getClass() == EndTrasmissionEvent.class) {
-                    for (Frame frame : frames) {
-                        if (!frame.isArrived()) {
-                            Transmission current = frame.getCurrentTransmission();
-                            if (current != null) {
-                                canvas.enqueue(() -> canvas.linkTransmission(frame, ColorRGBA.Green)).get();
-                            }
-                        } else if (frame.getTransmissionHistory().size() > 0) {
-                            canvas.enqueue(() -> canvas.deleteLinkTransmission(frame)).get();
-                            listCompleted.add(frame);
+
+                for (Frame frame : frames) {
+                    if (!frame.isArrived()) {
+                        Transmission current = frame.getCurrentTransmission();
+                        if (current != null) {
+                            canvas.enqueue(() -> canvas.linkTransmission(frame, ColorRGBA.Green)).get();
                         }
+                    } else if (frame.getTransmissionHistory().size() > 0) {
+                        canvas.enqueue(() -> canvas.deleteLinkTransmission(frame)).get();
+                        listCompleted.add(frame);
                     }
                 }
-                if (evt_scheduled.getClass() == MoveEvent.class) {
-                    //canvas.enqueue(() -> canvas.updateSensorsPositions()).get();
-                    //canvas.enqueue(() -> canvas.updateLinksPosition(frames)).get();
-                }
+
+
                 getFrames().removeAll(listCompleted);
                 Thread.sleep(0);
             }
@@ -139,22 +132,22 @@ public class GraphicSim extends AbstractSimIstance {
     }
 
     @Override
-    public List<Sensor> getSensors () {
+    public List<Sensor> getSensors() {
         return sensors;
     }
 
     @Override
-    public List<Frame> getFrames () {
+    public List<Frame> getFrames() {
         return frames;
     }
 
     @Override
-    public void addFrame (Frame frame) {
+    public void addFrame(Frame frame) {
         frames.add(frame);
     }
 
     @Override
-    public ModelFactory getModelFactory () {
+    public ModelFactory getModelFactory() {
         return modelFactory;
     }
 }

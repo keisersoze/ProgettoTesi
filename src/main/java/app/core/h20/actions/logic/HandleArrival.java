@@ -25,7 +25,7 @@ public class HandleArrival implements Action {
 
         double x = context.getMarsenneTwister().nextDouble();
 
-        double packetSize = x < H2OSim.MAX_FRAME_RATE ? H2OSim.MAX_FRAME_SIZE : H2OSim.MAX_FRAME_SIZE * x; //riutilizzo x
+        double packetSize = x < H2OSim.MAX_FRAME_RATE ? H2OSim.MAX_FRAME_SIZE : H2OSim.MAX_FRAME_SIZE * (1-x); //riutilizzo x
 
         System.out.println(packetSize);
 

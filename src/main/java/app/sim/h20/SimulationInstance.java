@@ -8,6 +8,7 @@ import app.factory.h20.EventTypes;
 import app.factory.h20.MyModelFactory;
 import app.model.Frame;
 import app.model.Sensor;
+import app.model.h20.BaseFrame;
 import app.stats.Collector;
 
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ public class SimulationInstance extends AbstractSimIstance implements Runnable {
         //imposto gli eventi periodici
         stats_evt.setInterval(0);
         move_evt.setInterval(10);
+
 
         //aggiungo gli eventi periodici allo scheduler
         getScheduler().addEvent(stats_evt);
