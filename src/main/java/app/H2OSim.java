@@ -17,6 +17,8 @@ public class H2OSim {
     public static final int LAMDA = 3;
     public static final int NTHREADS = 10;
     public static final int NEVENTS = 100000;
+    public static final double MAX_DISTANCE = 500;
+    public static final double SCALE = 10;
 
     public static final boolean CANVAS_MODE = true;
 
