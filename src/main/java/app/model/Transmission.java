@@ -15,4 +15,6 @@ public interface Transmission {
     Sensor getReceiver();
 
     double getSnr();
+
+    int getHop();
 }

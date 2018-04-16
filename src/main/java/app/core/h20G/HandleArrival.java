@@ -1,5 +1,6 @@
-package app.core.h20.actions.logic;
+package app.core.h20G;
 
+import app.Canvas;
 import app.H2OSim;
 import app.core.Action;
 import app.core.Event;
@@ -9,10 +10,13 @@ import app.model.Sensor;
 import app.sim.SimContext;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class HandleArrival implements Action {
 
-    public HandleArrival() {
+    private Canvas canvas;
+    public HandleArrival(Canvas canvas) {
+        this.canvas = canvas;
     }
 
     /**
@@ -30,6 +34,11 @@ public class HandleArrival implements Action {
         double packetSize = x < H2OSim.MAX_FRAME_RATE ? H2OSim.MAX_FRAME_SIZE : H2OSim.MAX_FRAME_SIZE * (1 - x);
 
         Frame frame = context.getModelFactory().getFrame(packetSize, owner);
+        try {
+            canvas.enqueue(() -> canvas.newFrame(frame)).get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
         context.getFrames().add(frame);
 
         Event e = context.getCoreFactory().getEvent(EventTypes.TrasmissionEvent, 0, context, frame, owner,0);

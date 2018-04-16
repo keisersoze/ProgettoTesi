@@ -1,5 +1,7 @@
 package app.model;
 
+import java.util.List;
+
 public interface Frame {
 
     int getSerial();
@@ -8,4 +10,5 @@ public interface Frame {
 
     Sensor getOwner();
 
+    List<Transmission> getTransmissionHistory ();
 }

@@ -9,10 +9,10 @@ import app.model.Sensor;
 import app.model.Transmission;
 import app.sim.SimContext;
 
-public class HandleTrasmission implements Action {
+public class HandleTransmission implements Action {
 
 
-    public HandleTrasmission() {
+    public HandleTransmission () {
     }
 
     @Override
@@ -21,9 +21,14 @@ public class HandleTrasmission implements Action {
         SimContext context = event.getContext();
         Frame frame = event.getFrame();
         Sensor sender = event.getSensor();
+        int numHop = event.getInt();
+
         for (Sensor receiver : sender.getNeighbors()) {
 
-            Transmission transmission = context.getModelFactory().getTransmission(sender, receiver, frame);
+            Transmission transmission = context.getModelFactory().getTransmission(sender, receiver, frame, numHop);
+
+            frame.getTransmissionHistory().add(transmission);
+
             double time = sender.getEuclideanDistance(receiver) / H2OSim.SOUND_SPEED;
             Event e = context.getCoreFactory().getEvent(EventTypes.ReceivingTransmissionEvent, time, context, transmission);
             context.getScheduler().addEvent(e);

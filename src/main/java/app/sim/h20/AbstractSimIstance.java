@@ -1,8 +1,6 @@
 package app.sim.h20;
 
 import app.core.Scheduler;
-import app.factory.CoreFactory;
-import app.factory.h20.MyCoreFactory;
 import app.model.Frame;
 import app.sim.SimContext;
 import app.stats.Collector;
@@ -11,18 +9,16 @@ import org.apache.commons.math3.random.MersenneTwister;
 public abstract class AbstractSimIstance implements SimContext {
     private final Scheduler scheduler;
     private final Collector collector;
-    private final CoreFactory coreFactory;
+
     private final MersenneTwister marsenneTwister = new MersenneTwister();
     private double simTime;
     //Dati statistici che vengono utilizzati dal collector
     private int nframes; // numero di frame arrivati ai sink
 
     AbstractSimIstance(Collector collector, Scheduler scheduler) {
-
         this.collector = collector;
         this.scheduler = scheduler;
         simTime = 0.0;
-        coreFactory = new MyCoreFactory();
         nframes = 0;
     }
 
@@ -39,10 +35,7 @@ public abstract class AbstractSimIstance implements SimContext {
         this.simTime = simTime;
     }
 
-    @Override
-    public CoreFactory getCoreFactory() {
-        return coreFactory;
-    }
+
 
     @Override
     public MersenneTwister getMarsenneTwister() {

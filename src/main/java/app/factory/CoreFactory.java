@@ -17,6 +17,6 @@ public interface CoreFactory {
 
     Event getEvent(String type, double time, SimContext context, Transmission transmission);
 
-    Event getEvent(String type, double time, SimContext context, Frame frame, Sensor sensor);
+    Event getEvent(String type, double time, SimContext context, Frame frame, Sensor sensor, int hop);
 
 }

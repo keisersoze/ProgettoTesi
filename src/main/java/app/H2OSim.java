@@ -15,9 +15,9 @@ public class H2OSim {
     //parametri simulazione
     public static final int MU = 3;
     public static final int LAMDA = 3;
-    public static final int NTHREADS = 10;
+    public static final int NTHREADS = 1;
     public static final int NEVENTS = 100000;
-    public static final double MAX_DISTANCE = 500;
+    public static final double MAX_DISTANCE = 52;
     public static final double SCALE = 10;
 
 
@@ -27,7 +27,7 @@ public class H2OSim {
     public static final int MAX_FRAME_SIZE = 1000; //bit (200-1600)
     public static final double MAX_FRAME_RATE = 0.9;
     public static final double BATTERY_LIFE = 1000; // mA
-    public static final int THRESHOLD = 100;
+    public static final int THRESHOLD = 1;
 
     //variabili endogene
     public static final int SOUND_SPEED = 343; // m/s

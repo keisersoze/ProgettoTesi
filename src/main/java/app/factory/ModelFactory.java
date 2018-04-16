@@ -8,7 +8,7 @@ public interface ModelFactory {
 
     Sensor getSensor(float x, float y, float z);
 
-    Transmission getTransmission(Sensor sender, Sensor receiver, Frame frame);
+    Transmission getTransmission(Sensor sender, Sensor receiver, Frame frame, int hop);
 
     Frame getFrame(double size,Sensor owner);
 }

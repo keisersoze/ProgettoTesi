@@ -10,13 +10,15 @@ public abstract class AbstractTransmission implements Transmission {
     private double snr;
     private boolean isSuccessfull;
     private Frame frame;
+    private int hop;
 
 
-    public AbstractTransmission(Sensor sender, Sensor receiver, Frame frame) {
+    public AbstractTransmission(Sensor sender, Sensor receiver, Frame frame, int hop) {
         this.sender = sender;
         this.receiver = receiver;
         isSuccessfull = true;
         this.frame = frame;
+        this.hop = hop;
     }
 
     @Override
@@ -49,4 +51,8 @@ public abstract class AbstractTransmission implements Transmission {
         return frame;
     }
 
+    @Override
+    public int getHop () {
+        return hop;
+    }
 }

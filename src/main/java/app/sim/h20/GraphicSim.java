@@ -5,33 +5,36 @@ import app.H2OSim;
 import app.MyLib;
 import app.core.Event;
 import app.core.Scheduler;
+import app.factory.CoreFactory;
 import app.factory.ModelFactory;
 import app.factory.h20.EventTypes;
+import app.factory.h20.GraphicCoreFactory;
 import app.factory.h20.MyModelFactory;
 import app.model.Frame;
 import app.model.Sensor;
-import app.model.Transmission;
 import app.stats.Collector;
-import com.jme3.math.ColorRGBA;
 import com.jme3.system.AppSettings;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class GraphicSim extends AbstractSimIstance {
     private static Canvas canvas;
     private final List<Sensor> sensors;
-    public static final List<Frame> frames = new ArrayList<>();
+    public final List<Frame> frames;
     private final ModelFactory modelFactory;
+    private final CoreFactory coreFactory;
 
     public GraphicSim(Collector collector, Scheduler scheduler) {
         super(collector, scheduler);
-        canvas = new Canvas();
+        canvas = new Canvas(this);
         sensors = new ArrayList<>();
-        //frames = new ArrayList<>();
+        frames = new CopyOnWriteArrayList<>();
         modelFactory = new MyModelFactory();
+        coreFactory = new GraphicCoreFactory(canvas);
     }
 
     private static void setSettings() {
@@ -58,7 +61,6 @@ public class GraphicSim extends AbstractSimIstance {
     }
 
     public void run() {
-        List<Frame> listCompleted = new ArrayList<>();
 
         setSettings();
 
@@ -72,60 +74,63 @@ public class GraphicSim extends AbstractSimIstance {
             }
         }
 
-        //inizializzazione
-        for (int i = 0; i < 100; i++) {
-            Sensor temp = modelFactory.getSensor(MyLib.random(0, Canvas.field.x), MyLib.random(0, Canvas.field.y), MyLib.random(0, Canvas.field.z));
-            sensors.add(temp);
+        for(int i = 0; i < 10; i++) {
+            Sensor s1 = modelFactory.getSensor(MyLib.random(0, 200), 0, MyLib.random(0, 200));
+            sensors.add(s1);
         }
 
-        sensors.get(0).setSink(true);
+        for(int i = 0; i < 20; i++) {
+            Sensor s1 = modelFactory.getSensor(MyLib.random(0, 200), 50, MyLib.random(0, 200));
+            sensors.add(s1);
+        }
+
+        for(int i = 0; i < 30; i++) {
+            Sensor s1 = modelFactory.getSensor(MyLib.random(0, 200), 80, MyLib.random(0, 200));
+            sensors.add(s1);
+        }
+
+        Sensor s1 = modelFactory.getSensor(MyLib.random(0, 200), 100, MyLib.random(0, 200));
+        sensors.add(s1);
+
+        Sensor s2 = modelFactory.getSensor(MyLib.random(0, 200), 100, MyLib.random(0, 200));
+        sensors.add(s2);
+
+        s1.setSink(true);
+        s2.setSink(true);
+
+        for (Sensor sensor : getSensors()){
+            sensor.setNeighbors(MyLib.calculateNeighbors(sensor, this));
+        }
 
         try {
-            canvas.enqueue(() -> canvas.drawSensors(sensors)).get();
+            canvas.enqueue(()->canvas.drawSensors(getSensors())).get();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
 
         // creo l'evento che richiama la funzionalità di campionamento per le statistiche
-        Event stats_evt = getCoreFactory().getEvent(EventTypes.StatisticEvent, 0, this);
-        Event move_evt = getCoreFactory().getEvent(EventTypes.MoveEvent, 0, this);
+
         Event arrival_evt = getCoreFactory().getEvent(EventTypes.ArrivalEvent, 0, this);
 
         //imposto gli eventi periodici
-        //stats_evt.setInterval(50);
-        move_evt.setInterval(5);
+
+
 
         //aggiungo gli eventi periodici allo scheduler
         getScheduler().addEvent(arrival_evt);
-        getScheduler().addEvent(move_evt);
-
 
         //avvio la simulazione
-        try {
-            for (int i = 0; i < H2OSim.NEVENTS; i++) {
-                Event evt_scheduled = getScheduler().scheduleEvent();
-                setSimTime(evt_scheduled.getTime());
-                evt_scheduled.tick();
 
-
-                for (Frame frame : frames) {
-                    if (!frame.isArrived()) {
-                        Transmission current = frame.getCurrentTransmission();
-                        if (current != null) {
-                            canvas.enqueue(() -> canvas.linkTransmission(frame, ColorRGBA.Green)).get();
-                        }
-                    } else if (frame.getTransmissionHistory().size() > 0) {
-                        canvas.enqueue(() -> canvas.deleteLinkTransmission(frame)).get();
-                        listCompleted.add(frame);
-                    }
-                }
-
-
-                getFrames().removeAll(listCompleted);
+        for (int i = 0; i < H2OSim.NEVENTS; i++) {
+            Event evt_scheduled = getScheduler().scheduleEvent();
+            setSimTime(evt_scheduled.getTime());
+            evt_scheduled.tick();
+            try {
                 Thread.sleep(0);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
+
         }
 
         System.out.println(getSimTime() + " " + getSensors().get(0).getPosition());
@@ -149,5 +154,10 @@ public class GraphicSim extends AbstractSimIstance {
     @Override
     public ModelFactory getModelFactory() {
         return modelFactory;
+    }
+
+    @Override
+    public CoreFactory getCoreFactory() {
+        return coreFactory;
     }
 }

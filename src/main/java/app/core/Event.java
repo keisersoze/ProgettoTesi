@@ -49,5 +49,6 @@ public interface Event {
 
     Sensor getSensor();
 
+    int getInt();
 }
 

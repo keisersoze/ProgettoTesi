@@ -4,7 +4,6 @@ import app.model.Frame;
 import app.model.Sensor;
 import app.model.Transmission;
 import app.sim.SimContext;
-import app.sim.h20.GraphicSim;
 import com.jme3.app.SimpleApplication;
 import com.jme3.font.BitmapText;
 import com.jme3.light.DirectionalLight;
@@ -28,8 +27,9 @@ public class Canvas extends SimpleApplication {
     private SimContext context;
     public static Vector3f field;
     private boolean charged;
-    private HashMap<Frame, List<Geometry>> frameListGeometryHashMap;
+    private HashMap<Frame, HashMap<Transmission, Geometry>> frameListGeometryHashMap;
     private HashMap<Sensor, Spatial> sensorSpatialHashMap;
+
     private BitmapText hudText;
 
     public Canvas (SimContext context) {
@@ -48,7 +48,6 @@ public class Canvas extends SimpleApplication {
         dl.setColor(ColorRGBA.White);
         dl.setDirection(new Vector3f(-.5f, -.5f, -.5f).normalizeLocal());
         rootNode.addLight(dl);
-
         Node pivot = new Node("pivot");
         rootNode.attachChild(pivot); // put this node in the scene
 
@@ -64,7 +63,7 @@ public class Canvas extends SimpleApplication {
         hudText.setLocalTranslation(300, hudText.getLineHeight(), 0); // position
         guiNode.attachChild(hudText);
 
-        attachCoordinateAxes(Vector3f.ZERO);
+        //attachCoordinateAxes(Vector3f.ZERO);
         attachGrid(field.x, field.y, field.z, 10f, ColorRGBA.White);
         //generateTerrain();
         charged = true;
@@ -110,61 +109,14 @@ public class Canvas extends SimpleApplication {
         return null;
     }
 
-    public boolean deleteLinkTransmission (Frame frame) {
+    /*public boolean deleteLinkTransmission (Frame frame) {
         List<Geometry> lines = frameListGeometryHashMap.get(frame);
         for (Geometry geometry : lines) {
             geometry.removeFromParent();
         }
         frameListGeometryHashMap.remove(frame);
         return true;
-    }
-
-    public boolean linkTransmission (Frame frame, ColorRGBA color) {
-        Vector3f position_1 = sensorSpatialHashMap.get(frame.getCurrentTransmission().getSender()).getLocalTranslation();
-        Vector3f position_2 = sensorSpatialHashMap.get(frame.getCurrentTransmission().getReceiver()).getLocalTranslation();
-
-        Mesh lineMesh = new Mesh();
-        lineMesh.setMode(Mesh.Mode.Lines);
-        lineMesh.setBuffer(VertexBuffer.Type.Position, 3, new float[]{position_1.x, position_1.y, position_1.z, position_2.x, position_2.y, position_2.z});
-        lineMesh.setBuffer(VertexBuffer.Type.Index, 2, new short[]{0, 1});
-
-        Geometry lineGeometry = new Geometry("link", lineMesh);
-        Material lineMaterial = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-
-        lineMaterial.setColor("Color", color);
-        //lineMaterial.getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
-
-        lineGeometry.setMaterial(lineMaterial);
-        lineGeometry.updateModelBound();
-        //lineGeometry.setQueueBucket(RenderQueue.Bucket.Translucent);
-        rootNode.attachChild(lineGeometry);
-
-        if (!frameListGeometryHashMap.containsKey(frame)) {
-            List<Geometry> queue = new ArrayList<>();
-            queue.add(0, lineGeometry);
-            frameListGeometryHashMap.put(frame, queue);
-        } else {
-            frameListGeometryHashMap.get(frame).add(0, lineGeometry);
-            List<Geometry> lines = frameListGeometryHashMap.get(frame);
-            //Con questo le linee si dovrebbero vedere aggiornate tutte in un frame
-            speed = 0.f;
-            lines.get(0).getMaterial().setColor("Color", new ColorRGBA(255 / 255f, 0 / 255f, 0 / 255f, 1f));
-            if (lines.size() > 1) {
-                lines.get(1).getMaterial().setColor("Color", new ColorRGBA(0 / 255f, 255 / 255f, 0 / 255f, 1f));
-            }
-            if (lines.size() > 2) {
-                lines.get(2).getMaterial().setColor("Color", new ColorRGBA(0 / 255f, 0 / 255f, 0 / 255f, 1f));
-            }
-            if (lines.size() > 3) {
-                lines.get(3).getMaterial().setColor("Color", new ColorRGBA(178 / 255f, 0 / 255f, 255 / 255f, 1f));
-            }
-            if (lines.size() == 5) {
-                lines.remove(4).removeFromParent();
-            }
-            speed = 1.f;
-        }
-        return true;
-    }
+    }*/
 
     private boolean attachGrid (float x, float y, float z, float lineDist, ColorRGBA color) {
         Geometry x_grid = gridGeometry(x, z, lineDist, color);
@@ -243,15 +195,15 @@ public class Canvas extends SimpleApplication {
 
     private void generateTerrain () {
 
-        /* 1. Create terrain material and load four textures into it. */
+        //* 1. Create terrain material and load four textures into it. *//*
         Material mat_terrain = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
 
         Texture floortexture = assetManager.loadTexture("Textures/sand.jpg");
         floortexture.setWrap(Texture.WrapMode.Repeat);
 
-        /* 1.1) Add ALPHA map (for red-blue-green coded splat textures) */
+        //* 1.1) Add ALPHA map (for red-blue-green coded splat textures) *//*
         mat_terrain.setTexture("DiffuseMap", floortexture);
-        /* 2. Create the height map */
+        //* 2. Create the height map *//*
         HillHeightMap heightmap = null;
         HillHeightMap.NORMALIZE_RANGE = 100; // optional
         try {
@@ -264,13 +216,13 @@ public class Canvas extends SimpleApplication {
 
         TerrainQuad terrain = new TerrainQuad("my terrain", 65, 513, heightmap.getHeightMap());
 
-        /* 4. We give the terrain its material, position & scale it, and attach it. */
+        //* 4. We give the terrain its material, position & scale it, and attach it. *//*
         terrain.setMaterial(mat_terrain);
         terrain.setLocalTranslation(0, -100, 0);
         terrain.setLocalScale(0.779f, 1f, 0.779f);
         rootNode.attachChild(terrain);
 
-        /* 5. The LOD (level of detail) depends on were the camera is: */
+        //* 5. The LOD (level of detail) depends on were the camera is: *//*
         TerrainLodControl control = new TerrainLodControl(terrain, getCamera());
         terrain.addControl(control);
     }
@@ -279,7 +231,7 @@ public class Canvas extends SimpleApplication {
         return charged;
     }
 
-    private void updateLinksPosition () {
+    /*private void updateLinksPosition () {
         for (Frame frame : GraphicSim.frames) {
             List<Geometry> lines = frameListGeometryHashMap.get(frame);
             if (lines != null) {
@@ -291,11 +243,68 @@ public class Canvas extends SimpleApplication {
                 }
             }
         }
+    }*/
+
+    public boolean newFrame(Frame frame){
+        if (!frameListGeometryHashMap.containsKey(frame)) {
+            frameListGeometryHashMap.put(frame, new HashMap<>());
+        }
+        return true;
     }
 
-    public void simpleUpdate(float tpf) {
-        hudText.setText("Sim Time: ", GraphicSim.getSimTime());
-        updateSensorsPositions();
-        updateLinksPosition();
+    public void newTransmission(Frame frame, Transmission transmission){
+        if (!frameListGeometryHashMap.get(frame).containsKey(transmission)) {
+
+            Vector3f position_1 = sensorSpatialHashMap.get(transmission.getSender()).getLocalTranslation();
+            Vector3f position_2 = sensorSpatialHashMap.get(transmission.getReceiver()).getLocalTranslation();
+
+            Mesh lineMesh = new Mesh();
+            lineMesh.setMode(Mesh.Mode.Lines);
+            lineMesh.setBuffer(VertexBuffer.Type.Position, 3, new float[]{position_1.x, position_1.y, position_1.z, position_2.x, position_2.y, position_2.z});
+            lineMesh.setBuffer(VertexBuffer.Type.Index, 2, new short[]{0, 1});
+
+            Geometry lineGeometry = new Geometry("link", lineMesh);
+            Material lineMaterial = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+
+            lineMaterial.setColor("Color", ColorRGBA.Green);
+            //lineMaterial.getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
+
+            lineGeometry.setMaterial(lineMaterial);
+            lineGeometry.updateModelBound();
+            //lineGeometry.setQueueBucket(RenderQueue.Bucket.Translucent);
+            rootNode.attachChild(lineGeometry);
+
+            frameListGeometryHashMap.get(frame).put(transmission, lineGeometry);
+                /*if (!frameListGeometryHashMap.containsKey(frame)) {
+                    List<Geometry> queue = new ArrayList<>();
+                    queue.add(0, lineGeometry);
+                    frameListGeometryHashMap.put(frame, queue);
+                } else {
+                    frameListGeometryHashMap.get(frame).add(0, lineGeometry);
+                    List<Geometry> lines = frameListGeometryHashMap.get(frame);
+                    //Con questo le linee si dovrebbero vedere aggiornate tutte in un frame
+                    speed = 0.f;
+                    lines.get(0).getMaterial().setColor("Color", new ColorRGBA(255 / 255f, 0 / 255f, 0 / 255f, 1f));
+                    if (lines.size() > 1) {
+                        lines.get(1).getMaterial().setColor("Color", new ColorRGBA(0 / 255f, 255 / 255f, 0 / 255f, 1f));
+                    }
+                    if (lines.size() > 2) {
+                        lines.get(2).getMaterial().setColor("Color", new ColorRGBA(0 / 255f, 0 / 255f, 0 / 255f, 1f));
+                    }
+                    if (lines.size() > 3) {
+                        lines.get(3).getMaterial().setColor("Color", new ColorRGBA(178 / 255f, 0 / 255f, 255 / 255f, 1f));
+                    }
+                    if (lines.size() == 5) {
+                        lines.remove(4).removeFromParent();
+                    }
+                    speed = 1.f;
+                }*/
+        }
+    }
+
+    public void simpleUpdate (float tpf) {
+        hudText.setText("Sim Time: " + context.getSimTime());
+        //updateSensorsPositions();
+        //updateLinksPosition();
     }
 }

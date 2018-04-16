@@ -4,6 +4,7 @@ import app.core.Action;
 import app.core.Event;
 import app.core.h20.actions.utility.Reschedule;
 import app.model.Frame;
+import app.model.Sensor;
 import app.model.Transmission;
 import app.sim.SimContext;
 
@@ -91,5 +92,15 @@ public class BaseEvent implements Event, Comparable<Event> {
     @Override
     public Frame getFrame () {
         return null;
+    }
+
+    @Override
+    public Sensor getSensor () {
+        return null;
+    }
+
+    @Override
+    public int getInt () {
+        return 0;
     }
 }

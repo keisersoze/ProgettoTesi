@@ -1,5 +1,6 @@
-package app.core.h20.actions.logic;
+package app.core.h20G;
 
+import app.Canvas;
 import app.H2OSim;
 import app.core.Action;
 import app.core.Event;
@@ -12,7 +13,10 @@ import app.sim.SimContext;
 
 public class HandleEndTransmission implements Action {
 
-    public HandleEndTransmission () {
+    private Canvas canvas;
+
+    public HandleEndTransmission (Canvas canvas) {
+        this.canvas = canvas;
     }
 
     @Override

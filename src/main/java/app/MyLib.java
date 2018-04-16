@@ -19,8 +19,10 @@ public class MyLib {
     public static List<Sensor> calculateNeighbors (Sensor sensor, SimContext context) {
         List<Sensor> myNeighbors = new ArrayList<>();
         for (Sensor sensor1 : context.getSensors()) {
-            if (sensor.getEuclideanDistance(sensor1) < H2OSim.MAX_DISTANCE / H2OSim.SCALE){    //TODO: deve calcolarla
-                myNeighbors.add(sensor1);
+            if (sensor.getEuclideanDistance(sensor1) < H2OSim.MAX_DISTANCE) {    //TODO: deve calcolarla
+                if (sensor != sensor1) {
+                    myNeighbors.add(sensor1);
+                }
             }
         }
         return myNeighbors;

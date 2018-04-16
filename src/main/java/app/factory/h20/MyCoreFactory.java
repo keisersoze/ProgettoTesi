@@ -17,7 +17,7 @@ import app.sim.SimContext;
 
 public class MyCoreFactory implements CoreFactory {
     private HandleEndTransmission handleEndTrasmission;
-    private HandleTrasmission handleTrasmission;
+    private HandleTransmission handleTransmission;
     private MoveSensors moveSensors;
     private HandleArrival handleArrival;
     private UpdateSNR updateSNR;
@@ -34,25 +34,7 @@ public class MyCoreFactory implements CoreFactory {
             return null;
         }
 
-        if (type.equalsIgnoreCase(ActionTypes.HandleArrival)) {
-            if (handleArrival == null) {
-                handleArrival = new HandleArrival();
-            }
-            return handleArrival;
-
-        } else if (type.equalsIgnoreCase(ActionTypes.HandleTrasmission)) {
-            if (handleTrasmission == null) {
-                handleTrasmission = new HandleTrasmission();
-            }
-            return handleTrasmission;
-
-        } else if (type.equalsIgnoreCase(ActionTypes.HandleEndTrasmission)) {
-            if (handleEndTrasmission == null) {
-                handleEndTrasmission = new HandleEndTransmission();
-            }
-            return handleEndTrasmission;
-
-        } else if (type.equalsIgnoreCase(ActionTypes.MoveSensors)) {
+        if (type.equalsIgnoreCase(ActionTypes.MoveSensors)) {
             if (moveSensors == null) {
                 moveSensors = new MoveSensors();
             }
@@ -153,13 +135,13 @@ public class MyCoreFactory implements CoreFactory {
     }
 
     @Override
-    public Event getEvent (String type, double time, SimContext context, Frame frame, Sensor sensor) {
+    public Event getEvent (String type, double time, SimContext context, Frame frame, Sensor sensor, int hop) {
         if (type == null) {
             return null;
         }
         Event e = null;
         if (type.equalsIgnoreCase(EventTypes.TrasmissionEvent)) {
-            e = new SensorFrameEvent(time, context, frame, sensor);
+            e = new SensorFrameEvent(time, context, frame, sensor, hop);
             e.addAction(getAction(ActionTypes.HandleTrasmission));
             e.addAction(getAction(ActionTypes.UpdateSNR));
         }
