@@ -24,9 +24,8 @@ public class HandleTrasmission implements Action {
     public void execute(Event event) {
 
         SimContext context = event.getContext();
-        Frame frame = event.getFrame();
 
-        if (true) {//qua andrà modellato il CSMA
+        /*if (true) {//qua andrà modellato il CSMA
             Sensor sender = frame.getCurrentOwner();
 
             List<Sensor> sensors = event.getContext().getSensors();
@@ -46,6 +45,8 @@ public class HandleTrasmission implements Action {
             context.getScheduler().addEvent(e);
 
         }
+        */
+
 
     }
 

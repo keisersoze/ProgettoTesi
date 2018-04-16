@@ -1,9 +1,11 @@
 package app.core.h20.actions.logic;
 
+import app.H2OSim;
 import app.core.Action;
 import app.core.Event;
 import app.factory.h20.EventTypes;
 import app.model.Frame;
+import app.model.Transmission;
 import app.sim.SimContext;
 
 
@@ -16,9 +18,9 @@ public class HandleEndTrasmission implements Action {
     public void execute(Event event) {
 
         SimContext context = event.getContext();
-        Frame frame = event.getFrame();
+        Transmission transmission = event.getTransmission();
 
-        if (frame.getCurrentTransmission().isSuccessfull()) {//se la trasmissione è andata a buon fine
+        /*if (frame.getCurrentTransmission().isSuccessfull()) {//se la trasmissione è andata a buon fine
             if (!frame.getCurrentTransmission().getReceiver().isSink()) { // se non è ancora arrivato
 
                 frame.setCurrentOwner(frame.getCurrentTransmission().getReceiver()); // il frame arriva a destinazione
@@ -36,7 +38,19 @@ public class HandleEndTrasmission implements Action {
                 Event e = context.getCoreFactory().getEvent(EventTypes.ArrivalEvent, 0, context);
                 context.getScheduler().addEvent(e);
             }
+
         }
+        */
+        if (transmission.isSuccessfull()) {
+            if (!transmission.getReceiver().isSink()) {
+                if (transmission.getSender().getY() + H2OSim.THRESHOLD < transmission.getReceiver().getY()) {
+                    Event e = context.getCoreFactory().getEvent(EventTypes.RetransmitEvent)
+                }
+            } else {
+                context.frameArrived(transmission.getFrame());
+            }
+        }
+
 
     }
 

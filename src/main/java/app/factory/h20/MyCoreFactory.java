@@ -8,7 +8,7 @@ import app.core.h20.actions.utility.RescheduleExpRandom;
 import app.core.Event;
 import app.core.h20.events.*;
 import app.factory.CoreFactory;
-import app.model.Frame;
+import app.model.Transmission;
 import app.sim.SimContext;
 
 public class MyCoreFactory implements CoreFactory {
@@ -114,6 +114,14 @@ public class MyCoreFactory implements CoreFactory {
         } else if (type.equalsIgnoreCase(EventTypes.StatisticEvent)) {
             e = new BaseEvent(time, context);
             e.addAction(new UpdateStats());
+
+        } else if (type.equalsIgnoreCase(EventTypes.TrasmissionEvent)) {
+            e = new BaseEvent(time, context);
+            e.addAction(new HandleTrasmission());
+            e.addAction(new UpdateSNR());
+        } else if (type.equalsIgnoreCase(EventTypes.RetransmitEvent)) {
+            e = new BaseEvent(time, context);
+            e.addAction(new HandleArrival());
         }
 
         return e;
@@ -121,22 +129,18 @@ public class MyCoreFactory implements CoreFactory {
     }
 
     @Override
-    public Event getEvent(String type, double time, SimContext context, Frame frame) {
+    public Event getEvent(String type, double time, SimContext context, Transmission transmission) {
         if (type == null) {
             return null;
         }
 
         Event e = null;
         if (type.equalsIgnoreCase(EventTypes.EndTrasmissionEvent)) {
-            e = new FrameEvent(time, context, frame);
+            e = new TransmissionEvent(time, context, transmission);
             e.addAction(new HandleEndTrasmission());
             e.addAction(new UpdateSNR());
-        } else if (type.equalsIgnoreCase(EventTypes.TrasmissionEvent)) {
-            e = new FrameEvent(time, context, frame);
-            e.addAction(new HandleTrasmission());
-            e.addAction(new UpdateSNR());
-        } else if (type.equalsIgnoreCase((EventTypes.ReceivingTransmissionEvent))){
-            e = new FrameEvent(time,context,frame);
+        }else if (type.equalsIgnoreCase((EventTypes.ReceivingTransmissionEvent))){
+            e = new TransmissionEvent(time,context,transmission);
             e.addAction(new HandleReception());
         }
 

@@ -1,6 +1,9 @@
 package app.model;
 
 public interface Transmission {
+
+    Frame getFrame();
+
     void updateSnr(double x);
 
     boolean isSuccessfull();

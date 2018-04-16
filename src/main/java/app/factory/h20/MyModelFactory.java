@@ -15,12 +15,12 @@ public class MyModelFactory implements ModelFactory {
     }
 
     @Override
-    public Transmission getTransmission(Sensor sender, Sensor receiver) {
-        return new BaseTransmission(sender, receiver);
+    public Transmission getTransmission(Sensor sender, Sensor receiver, Frame frame) {
+        return new BaseTransmission(sender, receiver,frame);
     }
 
     @Override
-    public Frame getFrame(double size, Sensor sender, Sensor currentOwner) {
-        return new BaseFrame(size, sender, currentOwner);
+    public Frame getFrame(double size,Sensor owner) {
+        return new BaseFrame(size, owner);
     }
 }

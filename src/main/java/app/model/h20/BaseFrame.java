@@ -9,29 +9,17 @@ import java.util.List;
 
 public class BaseFrame extends AbstractFrame implements Frame {
 
-    private List<Transmission> transmissions; // Backtrace dei possessori del frame
-    private Transmission currentTransmission;
+    private static int maxId=0;
+    private int serialId;
 
-    public BaseFrame(double size, Sensor sender, Sensor currentOwner) {
-        super(size, sender, currentOwner);
-        transmissions = new LinkedList<>();
+    public BaseFrame(double size, Sensor s) {
+        super(size,s);
+        serialId= maxId;
+        maxId++;
+
     }
 
-    @Override
-    public Transmission getCurrentTransmission() {
-        return currentTransmission;
-    }
-
-    @Override
-    public void setCurrentTransmission(Transmission currentTransmission) {
-        this.currentTransmission = (BaseTransmission) currentTransmission;
-        if (this.currentTransmission != null) {
-            transmissions.add(0, this.currentTransmission);
-        }
-    }
-
-    @Override
-    public List<Transmission> getTransmissionHistory() {
-        return transmissions;
+    public int getSerial() {
+        return serialId;
     }
 }

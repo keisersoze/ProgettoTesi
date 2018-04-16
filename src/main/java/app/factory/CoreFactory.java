@@ -3,6 +3,7 @@ package app.factory;
 import app.core.Action;
 import app.core.Event;
 import app.model.Frame;
+import app.model.Transmission;
 import app.sim.SimContext;
 
 public interface CoreFactory {
@@ -13,7 +14,7 @@ public interface CoreFactory {
 
     Event getEvent(String type, double time, SimContext context);
 
-    Event getEvent(String type, double time, SimContext context, Frame frame);
+    Event getEvent(String type, double time, SimContext context, Transmission transmission);
 
 
 }

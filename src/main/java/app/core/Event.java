@@ -1,6 +1,7 @@
 package app.core;
 
 import app.model.Frame;
+import app.model.Transmission;
 import app.sim.SimContext;
 
 public interface Event {
@@ -38,7 +39,7 @@ public interface Event {
     /**
      *
      */
-    Frame getFrame();
+    Transmission getTransmission();
 
 
 }

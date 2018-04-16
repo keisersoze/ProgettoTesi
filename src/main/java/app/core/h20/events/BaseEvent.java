@@ -4,6 +4,7 @@ import app.core.Action;
 import app.core.Event;
 import app.core.h20.actions.utility.Reschedule;
 import app.model.Frame;
+import app.model.Transmission;
 import app.sim.SimContext;
 
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class BaseEvent implements Event, Comparable<Event> {
      * @return NULL
      */
     @Override
-    public Frame getFrame() {
+    public Transmission getTransmission() {
         return null;
     }
 
