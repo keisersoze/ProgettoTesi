@@ -1,18 +1,22 @@
 package app.factory.h20;
 
 import app.core.Action;
+import app.core.Event;
 import app.core.h20.actions.logic.*;
 import app.core.h20.actions.stats.UpdateStats;
 import app.core.h20.actions.utility.Reschedule;
 import app.core.h20.actions.utility.RescheduleExpRandom;
-import app.core.Event;
-import app.core.h20.events.*;
+import app.core.h20.events.BaseEvent;
+import app.core.h20.events.SensorFrameEvent;
+import app.core.h20.events.TransmissionEvent;
 import app.factory.CoreFactory;
+import app.model.Frame;
+import app.model.Sensor;
 import app.model.Transmission;
 import app.sim.SimContext;
 
 public class MyCoreFactory implements CoreFactory {
-    private HandleEndTrasmission handleEndTrasmission;
+    private HandleEndTransmission handleEndTrasmission;
     private HandleTrasmission handleTrasmission;
     private MoveSensors moveSensors;
     private HandleArrival handleArrival;
@@ -20,10 +24,11 @@ public class MyCoreFactory implements CoreFactory {
     private UpdateStats updateStats;
     private Reschedule reschedule;
     private RescheduleExpRandom rescheduleExpRandom;
+    private HandleReception handleReception;
 
 
     @Override
-    public Action getAction(String type) {
+    public Action getAction (String type) {
 
         if (type == null) {
             return null;
@@ -43,7 +48,7 @@ public class MyCoreFactory implements CoreFactory {
 
         } else if (type.equalsIgnoreCase(ActionTypes.HandleEndTrasmission)) {
             if (handleEndTrasmission == null) {
-                handleEndTrasmission = new HandleEndTrasmission();
+                handleEndTrasmission = new HandleEndTransmission();
             }
             return handleEndTrasmission;
 
@@ -70,12 +75,17 @@ public class MyCoreFactory implements CoreFactory {
                 rescheduleExpRandom = new RescheduleExpRandom();
             }
             return rescheduleExpRandom;
+        } else if (type.equalsIgnoreCase(ActionTypes.HandleReception)) {
+            if (handleReception == null) {
+                handleReception = new HandleReception();
+            }
+            return handleReception;
         }
 
         return null;
     }
 
-    public Action getAction(String type, double value) {
+    public Action getAction (String type, double value) {
 
         if (type == null) {
             return null;
@@ -93,7 +103,7 @@ public class MyCoreFactory implements CoreFactory {
 
 
     @Override
-    public Event getEvent(String type, double time, SimContext context) {
+    public Event getEvent (String type, double time, SimContext context) {
         if (type == null) {
             return null;
         }
@@ -115,13 +125,6 @@ public class MyCoreFactory implements CoreFactory {
             e = new BaseEvent(time, context);
             e.addAction(new UpdateStats());
 
-        } else if (type.equalsIgnoreCase(EventTypes.TrasmissionEvent)) {
-            e = new BaseEvent(time, context);
-            e.addAction(new HandleTrasmission());
-            e.addAction(new UpdateSNR());
-        } else if (type.equalsIgnoreCase(EventTypes.RetransmitEvent)) {
-            e = new BaseEvent(time, context);
-            e.addAction(new HandleArrival());
         }
 
         return e;
@@ -129,7 +132,7 @@ public class MyCoreFactory implements CoreFactory {
     }
 
     @Override
-    public Event getEvent(String type, double time, SimContext context, Transmission transmission) {
+    public Event getEvent (String type, double time, SimContext context, Transmission transmission) {
         if (type == null) {
             return null;
         }
@@ -137,14 +140,29 @@ public class MyCoreFactory implements CoreFactory {
         Event e = null;
         if (type.equalsIgnoreCase(EventTypes.EndTrasmissionEvent)) {
             e = new TransmissionEvent(time, context, transmission);
-            e.addAction(new HandleEndTrasmission());
-            e.addAction(new UpdateSNR());
-        }else if (type.equalsIgnoreCase((EventTypes.ReceivingTransmissionEvent))){
-            e = new TransmissionEvent(time,context,transmission);
-            e.addAction(new HandleReception());
+            e.addAction(getAction(ActionTypes.HandleEndTrasmission));
+            e.addAction(getAction(ActionTypes.UpdateSNR));
+
+        } else if (type.equalsIgnoreCase((EventTypes.ReceivingTransmissionEvent))) {
+            e = new TransmissionEvent(time, context, transmission);
+            e.addAction(getAction(ActionTypes.HandleReception));
         }
 
         return e;
 
+    }
+
+    @Override
+    public Event getEvent (String type, double time, SimContext context, Frame frame, Sensor sensor) {
+        if (type == null) {
+            return null;
+        }
+        Event e = null;
+        if (type.equalsIgnoreCase(EventTypes.TrasmissionEvent)) {
+            e = new SensorFrameEvent(time, context, frame, sensor);
+            e.addAction(getAction(ActionTypes.HandleTrasmission));
+            e.addAction(getAction(ActionTypes.UpdateSNR));
+        }
+        return e;
     }
 }

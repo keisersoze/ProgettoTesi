@@ -3,6 +3,7 @@ package app;
 import app.model.Frame;
 import app.model.Sensor;
 import app.model.Transmission;
+import app.sim.SimContext;
 import app.sim.h20.GraphicSim;
 import com.jme3.app.SimpleApplication;
 import com.jme3.font.BitmapText;
@@ -24,11 +25,19 @@ import com.jme3.texture.Texture;
 import java.util.*;
 
 public class Canvas extends SimpleApplication {
+    private SimContext context;
     public static Vector3f field;
-    private boolean charged = false;
-    private HashMap<Frame, List<Geometry>> frameListGeometryHashMap = new HashMap<>();
-    private HashMap<Sensor, Spatial> sensorSpatialHashMap = new HashMap<>();
-    BitmapText hudText;
+    private boolean charged;
+    private HashMap<Frame, List<Geometry>> frameListGeometryHashMap;
+    private HashMap<Sensor, Spatial> sensorSpatialHashMap;
+    private BitmapText hudText;
+
+    public Canvas (SimContext context) {
+        this.context = context;
+        frameListGeometryHashMap = new HashMap<>();
+        sensorSpatialHashMap = new HashMap<>();
+        charged = false;
+    }
 
     public void simpleInitApp () {
         field = new Vector3f(200, 100, 200);
@@ -285,7 +294,7 @@ public class Canvas extends SimpleApplication {
     }
 
     public void simpleUpdate(float tpf) {
-        hudText.setText("Sim Time: " );
+        hudText.setText("Sim Time: ", GraphicSim.getSimTime());
         updateSensorsPositions();
         updateLinksPosition();
     }

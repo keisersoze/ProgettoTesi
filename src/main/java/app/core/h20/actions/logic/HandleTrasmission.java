@@ -7,12 +7,7 @@ import app.factory.h20.EventTypes;
 import app.model.Frame;
 import app.model.Sensor;
 import app.model.Transmission;
-import app.model.h20.BaseSensor;
 import app.sim.SimContext;
-
-import java.util.List;
-
-import static org.apache.commons.math3.util.FastMath.log;
 
 public class HandleTrasmission implements Action {
 
@@ -24,33 +19,16 @@ public class HandleTrasmission implements Action {
     public void execute(Event event) {
 
         SimContext context = event.getContext();
+        Frame frame = event.getFrame();
+        Sensor sender = event.getSensor();
+        for (Sensor receiver : sender.getNeighbors()) {
 
-        /*if (true) {//qua andrà modellato il CSMA
-            Sensor sender = frame.getCurrentOwner();
-
-            List<Sensor> sensors = event.getContext().getSensors();
-            Sensor receiver = sensors.get(context.getMarsenneTwister().nextInt(sensors.size())); // per adesso ne prendo uno a caso TODO risorsa condivisa?
-
-            Transmission transmission = context.getModelFactory().getTransmission(sender, receiver); // bisogna decidere se il receiver è sempre lo stesso in caso di bloccaggio
-
-            frame.setCurrentTransmission(transmission);
-
-            Event e = context.getCoreFactory().getEvent(EventTypes.EndTrasmissionEvent, frame.getSize(), context, frame);
+            Transmission transmission = context.getModelFactory().getTransmission(sender, receiver, frame);
+            double time = sender.getEuclideanDistance(receiver) / H2OSim.SOUND_SPEED;
+            Event e = context.getCoreFactory().getEvent(EventTypes.ReceivingTransmissionEvent, time, context, transmission);
             context.getScheduler().addEvent(e);
-
-        } else {
-
-            //per adesso il tempo da aspettare è una variabile casuale exp
-            Event e = context.getCoreFactory().getEvent(EventTypes.TrasmissionEvent, -log(context.getMarsenneTwister().nextDouble()) / H2OSim.LAMDA, context, frame);
-            context.getScheduler().addEvent(e);
-
         }
-        */
-
 
     }
 
-    public Sensor pickReceiver() {
-        return null;
-    }
 }

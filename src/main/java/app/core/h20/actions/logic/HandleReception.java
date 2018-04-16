@@ -9,13 +9,15 @@ import app.sim.SimContext;
 
 public class HandleReception implements Action {
     @Override
-    public void execute(Event e) {
+    public void execute (Event event) {
 
-        SimContext context = e.getContext();
-        Transmission transmission = e.getTransmission(); //TODO implementare profondità
-        double time = transmission.getFrame().getSize()/H2OSim.SENSOR_BANDWIDTH;
-        Event new_e = context.getCoreFactory().getEvent(EventTypes.EndTrasmissionEvent,time,context,transmission);
-        context.getScheduler().addEvent(new_e);
+        SimContext context = event.getContext();
+        Transmission transmission = event.getTransmission();
+
+        double time = transmission.getFrame().getSize() / H2OSim.SENSOR_BANDWIDTH;
+
+        Event e = context.getCoreFactory().getEvent(EventTypes.EndTrasmissionEvent, time, context, transmission);
+        context.getScheduler().addEvent(e);
 
     }
 }

@@ -18,5 +18,8 @@ public abstract class AbstractFrame implements Frame {
         return size;
     }
 
-
+    @Override
+    public Sensor getOwner () {
+        return owner;
+    }
 }

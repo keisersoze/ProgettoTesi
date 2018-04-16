@@ -13,5 +13,7 @@ public class ActionTypes {
     public static final String Reschedule = "RESCHEDULE";
     public static final String RescheduleExpRandom = "RESCHEDULE_EXP_RANDOM";
 
+    public static final String HandleReception = "HANDLE_RECEPTION";
+
 
 }

@@ -31,4 +31,6 @@ public interface Sensor {
     void setSink(boolean x);
 
     void setOffsetPosition(float x, float y, float z);
+
+    void setNeighbors(List<Sensor> list);
 }

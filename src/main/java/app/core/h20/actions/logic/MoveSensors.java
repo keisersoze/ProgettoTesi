@@ -21,6 +21,9 @@ public class MoveSensors implements Action {
             double raggio = MyLib.map(sensor.getY(), 0, 200, 0, 2);
             sensor.setOffsetPosition((float) (Math.cos(rotation_time) * raggio), 0, (float) (Math.sin(rotation_time)* raggio));
         }
+        for (Sensor sensor : context.getSensors()) {
+            sensor.setNeighbors( MyLib.calculateNeighbors(sensor, context));
+        }
     }
 
 }

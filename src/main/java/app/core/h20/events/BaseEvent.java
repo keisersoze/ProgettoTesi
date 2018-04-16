@@ -85,5 +85,11 @@ public class BaseEvent implements Event, Comparable<Event> {
         actionList.add(action);
     }
 
-
+    /**
+     *
+     */
+    @Override
+    public Frame getFrame () {
+        return null;
+    }
 }
