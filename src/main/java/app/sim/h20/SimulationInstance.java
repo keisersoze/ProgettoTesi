@@ -23,7 +23,7 @@ public class SimulationInstance extends AbstractSimIstance implements Runnable {
     private final CoreFactory coreFactory;
 
 
-    public SimulationInstance(Collector collector, Scheduler scheduler) {
+    public SimulationInstance (Collector collector, Scheduler scheduler) {
         super(collector, scheduler);
         sensors = new ArrayList<>();
         frames = new ArrayList<>();
@@ -32,7 +32,7 @@ public class SimulationInstance extends AbstractSimIstance implements Runnable {
 
     }
 
-    public void run() {
+    public void run () {
 
         Sensor s1 = modelFactory.getSensor(0, 100, 0);
         sensors.add(s1);
@@ -45,7 +45,7 @@ public class SimulationInstance extends AbstractSimIstance implements Runnable {
 
         sensors.get(0).setSink(true);
 
-        for (Sensor sensor : getSensors()){
+        for (Sensor sensor : getSensors()) {
             sensor.setNeighbors(MyLib.calculateNeighbors(sensor, this));
         }
         // creo l'evento che richiama la funzionalità di campionamento per le statistiche
@@ -79,26 +79,26 @@ public class SimulationInstance extends AbstractSimIstance implements Runnable {
     }
 
     @Override
-    public List<Sensor> getSensors() {
+    public List<Sensor> getSensors () {
         return sensors;
     }
 
     @Override
-    public List<Frame> getFrames() {
+    public List<Frame> getFrames () {
         return frames;
     }
 
     @Override
-    public void addFrame(Frame frame) {
+    public void addFrame (Frame frame) {
         frames.add(frame);
     }
 
-    public void removeFrame(Frame f) {
+    public void removeFrame (Frame f) {
         frames.remove(f);
     }
 
     @Override
-    public ModelFactory getModelFactory() {
+    public ModelFactory getModelFactory () {
         return modelFactory;
     }
 }

@@ -63,6 +63,11 @@ public abstract class AbstractSensor implements Sensor {
     }
 
     @Override
+    public void setNeighbors (List<Sensor> neighbors) {
+        this.neighbors = neighbors;
+    }
+
+    @Override
     public double getEuclideanDistance (Sensor s) {
         return position.distance(s.getPosition());
     }
@@ -80,10 +85,5 @@ public abstract class AbstractSensor implements Sensor {
     @Override
     public void setOffsetPosition (float x, float y, float z) {
         position.addLocal(x, y, z);
-    }
-
-    @Override
-    public void setNeighbors (List<Sensor> neighbors) {
-        this.neighbors = neighbors;
     }
 }

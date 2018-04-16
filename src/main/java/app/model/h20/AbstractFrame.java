@@ -12,7 +12,7 @@ public abstract class AbstractFrame implements Frame {
     private Sensor owner;
     private List<Transmission> transmissions;
 
-    public AbstractFrame(double size, Sensor owner) {
+    public AbstractFrame (double size, Sensor owner) {
         this.size = size;
         this.owner = owner;
         transmissions = new CopyOnWriteArrayList<>();
@@ -20,7 +20,7 @@ public abstract class AbstractFrame implements Frame {
 
 
     @Override
-    public double getSize() {
+    public double getSize () {
         return size;
     }
 

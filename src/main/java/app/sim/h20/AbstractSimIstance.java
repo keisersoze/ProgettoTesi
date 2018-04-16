@@ -15,41 +15,40 @@ public abstract class AbstractSimIstance implements SimContext {
     //Dati statistici che vengono utilizzati dal collector
     private int nframes; // numero di frame arrivati ai sink
 
-    AbstractSimIstance(Collector collector, Scheduler scheduler) {
+    AbstractSimIstance (Collector collector, Scheduler scheduler) {
         this.collector = collector;
         this.scheduler = scheduler;
         simTime = 0.0;
         nframes = 0;
     }
 
-    public Scheduler getScheduler() {
+    public Scheduler getScheduler () {
         return scheduler;
     }
 
-    public double getSimTime() {
+    public double getSimTime () {
         return simTime;
     }
 
     @Override
-    public void setSimTime(double simTime) {
+    public void setSimTime (double simTime) {
         this.simTime = simTime;
     }
 
 
-
     @Override
-    public MersenneTwister getMarsenneTwister() {
+    public MersenneTwister getMarsenneTwister () {
         return marsenneTwister;
     }
 
     // metodi per l'update dei dati statistici
 
-    public Collector getCollector() {
+    public Collector getCollector () {
         return collector;
     }
 
     @Override
-    public void frameArrived(Frame frame) {
+    public void frameArrived (Frame frame) {
         nframes++;
     }
 

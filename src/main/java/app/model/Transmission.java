@@ -2,19 +2,19 @@ package app.model;
 
 public interface Transmission {
 
-    Frame getFrame();
+    Frame getFrame ();
 
-    void updateSnr(double x);
+    void updateSnr (double x);
 
-    boolean isSuccessfull();
+    boolean isSuccessfull ();
 
-    void setSuccessfull(boolean x);
+    void setSuccessfull (boolean x);
 
-    Sensor getSender();
+    Sensor getSender ();
 
-    Sensor getReceiver();
+    Sensor getReceiver ();
 
-    double getSnr();
+    double getSnr ();
 
-    int getHop();
+    int getHop ();
 }

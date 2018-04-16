@@ -5,7 +5,9 @@ import app.model.Sensor;
 import app.model.Transmission;
 import app.sim.SimContext;
 import com.jme3.app.SimpleApplication;
+import com.jme3.font.BitmapFont;
 import com.jme3.font.BitmapText;
+import com.jme3.font.Rectangle;
 import com.jme3.light.DirectionalLight;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
@@ -21,11 +23,13 @@ import com.jme3.terrain.geomipmap.TerrainQuad;
 import com.jme3.terrain.heightmap.HillHeightMap;
 import com.jme3.texture.Texture;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Canvas extends SimpleApplication {
-    private SimContext context;
     public static Vector3f field;
+    private SimContext context;
     private boolean charged;
     private HashMap<Frame, HashMap<Transmission, Geometry>> frameListGeometryHashMap;
     private HashMap<Sensor, Spatial> sensorSpatialHashMap;
@@ -56,11 +60,12 @@ public class Canvas extends SimpleApplication {
         cam.lookAt(Vector3f.ZERO, Vector3f.ZERO);
         flyCam.setMoveSpeed(100);
 
-        hudText = new BitmapText(guiFont, false);
-        hudText.setSize(guiFont.getCharSet().getRenderedSize());      // font size
-        hudText.setColor(ColorRGBA.Blue);                             // font color
-        hudText.setText("You can write any string here");             // the text
-        hudText.setLocalTranslation(300, hudText.getLineHeight(), 0); // position
+        BitmapFont font = assetManager.loadFont("Interface/Fonts/roboto.fnt");
+        hudText = new BitmapText(font, false);
+        hudText.setBox(new Rectangle(0, settings.getHeight() / 2, 300, 90));
+        hudText.setSize(18);      // font size
+        hudText.setColor(ColorRGBA.Black);                             // font color
+        hudText.setLocalTranslation(0, 0, 0); // position
         guiNode.attachChild(hudText);
 
         //attachCoordinateAxes(Vector3f.ZERO);
@@ -75,7 +80,7 @@ public class Canvas extends SimpleApplication {
         }
     }
 
-    public boolean drawSensor (Sensor sensor) {
+    private void drawSensor (Sensor sensor) {
         if (!sensorSpatialHashMap.containsKey(sensor)) {
             if (!sensor.isSink()) {
                 Sphere sphere = new Sphere(30, 30, 0.5f);
@@ -99,7 +104,6 @@ public class Canvas extends SimpleApplication {
                 rootNode.attachChild(sink);
             }
         }
-        return true;
     }
 
     public Spatial drawSensors (Collection<? extends Sensor> sensors) {
@@ -245,14 +249,14 @@ public class Canvas extends SimpleApplication {
         }
     }*/
 
-    public boolean newFrame(Frame frame){
+    public boolean newFrame (Frame frame) {
         if (!frameListGeometryHashMap.containsKey(frame)) {
             frameListGeometryHashMap.put(frame, new HashMap<>());
         }
         return true;
     }
 
-    public void newTransmission(Frame frame, Transmission transmission){
+    public void newTransmission (Frame frame, Transmission transmission) {
         if (!frameListGeometryHashMap.get(frame).containsKey(transmission)) {
 
             Vector3f position_1 = sensorSpatialHashMap.get(transmission.getSender()).getLocalTranslation();
@@ -302,9 +306,16 @@ public class Canvas extends SimpleApplication {
         }
     }
 
+    public void deleteTransmission (Frame frame, Transmission transmission) {
+        if (frameListGeometryHashMap.containsKey(frame) && frameListGeometryHashMap.get(frame).containsKey(transmission)) {
+            frameListGeometryHashMap.get(frame).get(transmission).removeFromParent();
+        }
+    }
+
     public void simpleUpdate (float tpf) {
-        hudText.setText("Sim Time: " + context.getSimTime());
-        //updateSensorsPositions();
+        hudText.setText("- Sim Time: " + context.getSimTime() + "\n- Frame in circolo: " + context.getFrames().size() + "\n- Numero di sensori:" +  context.getSensors().size());
+        updateSensorsPositions();
         //updateLinksPosition();
     }
+
 }

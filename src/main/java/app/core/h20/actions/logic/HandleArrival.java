@@ -12,15 +12,16 @@ import java.util.List;
 
 public class HandleArrival implements Action {
 
-    public HandleArrival() {
+    public HandleArrival () {
     }
 
     /**
      * Crea il frame e decide l'owner del frame creato
+     *
      * @param event evento su cui viene chiamata la action
      */
     @Override
-    public void execute(Event event) {
+    public void execute (Event event) {
         SimContext context = event.getContext();
 
         List<Sensor> sensors = context.getSensors();
@@ -32,7 +33,7 @@ public class HandleArrival implements Action {
         Frame frame = context.getModelFactory().getFrame(packetSize, owner);
         context.getFrames().add(frame);
 
-        Event e = context.getCoreFactory().getEvent(EventTypes.TrasmissionEvent, 0, context, frame, owner,0);
+        Event e = context.getCoreFactory().getEvent(EventTypes.TrasmissionEvent, 0, context, frame, owner, 0);
 
         context.getScheduler().addEvent(e);
     }

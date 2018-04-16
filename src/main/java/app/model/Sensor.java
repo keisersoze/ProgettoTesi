@@ -6,31 +6,31 @@ import java.util.List;
 
 public interface Sensor {
 
-    float getX();
+    float getX ();
 
-    void setX(float x);
+    void setX (float x);
 
-    float getY();
+    float getY ();
 
-    void setY(float y);
+    void setY (float y);
 
-    float getZ();
+    float getZ ();
 
-    void setZ(float z);
+    void setZ (float z);
 
-    void setPosition(float x, float y, float z);
+    void setPosition (float x, float y, float z);
 
-    Vector3f getPosition();
+    Vector3f getPosition ();
 
-    List<Sensor> getNeighbors();
+    List<Sensor> getNeighbors ();
 
-    double getEuclideanDistance(Sensor s);
+    void setNeighbors (List<Sensor> list);
 
-    boolean isSink();
+    double getEuclideanDistance (Sensor s);
 
-    void setSink(boolean x);
+    boolean isSink ();
 
-    void setOffsetPosition(float x, float y, float z);
+    void setSink (boolean x);
 
-    void setNeighbors(List<Sensor> list);
+    void setOffsetPosition (float x, float y, float z);
 }

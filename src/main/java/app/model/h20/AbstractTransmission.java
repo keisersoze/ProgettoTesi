@@ -13,7 +13,7 @@ public abstract class AbstractTransmission implements Transmission {
     private int hop;
 
 
-    public AbstractTransmission(Sensor sender, Sensor receiver, Frame frame, int hop) {
+    public AbstractTransmission (Sensor sender, Sensor receiver, Frame frame, int hop) {
         this.sender = sender;
         this.receiver = receiver;
         isSuccessfull = true;
@@ -22,32 +22,32 @@ public abstract class AbstractTransmission implements Transmission {
     }
 
     @Override
-    public void updateSnr(double x) {
+    public void updateSnr (double x) {
 
     }
 
     @Override
-    public boolean isSuccessfull() {
+    public boolean isSuccessfull () {
         return isSuccessfull;
     }
 
-    public void setSuccessfull(boolean stato) {
+    public void setSuccessfull (boolean stato) {
         isSuccessfull = stato;
     }
 
-    public Sensor getSender() {
+    public Sensor getSender () {
         return sender;
     }
 
-    public Sensor getReceiver() {
+    public Sensor getReceiver () {
         return receiver;
     }
 
-    public double getSnr() {
+    public double getSnr () {
         return snr;
     }
 
-    public Frame getFrame() {
+    public Frame getFrame () {
         return frame;
     }
 

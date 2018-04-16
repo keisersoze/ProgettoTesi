@@ -7,13 +7,13 @@ public class TransmissionEvent extends BaseEvent {
 
     Transmission transmission;
 
-    public TransmissionEvent(double time, SimContext context, Transmission transmission) {
+    public TransmissionEvent (double time, SimContext context, Transmission transmission) {
         super(time, context);
         this.transmission = transmission;
     }
 
     @Override
-    public Transmission getTransmission() {
+    public Transmission getTransmission () {
         return transmission;
     }
 }

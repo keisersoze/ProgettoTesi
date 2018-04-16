@@ -26,7 +26,7 @@ public class TreeNode<E> {
         return childen;
     }
 
-    public void addChild(TreeNode<E> child) {
+    public void addChild (TreeNode<E> child) {
         child.parent = this;
         childen.add(child);
     }

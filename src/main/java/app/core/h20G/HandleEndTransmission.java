@@ -31,8 +31,10 @@ public class HandleEndTransmission implements Action {
         if (transmission.isSuccessfull()) {
             if (!transmission.getReceiver().isSink()) {
                 if (transmission.getSender().getY() + H2OSim.THRESHOLD < transmission.getReceiver().getY()) {   // Decido se ritrasmettere in base alla profondità
-                    Event e = context.getCoreFactory().getEvent(EventTypes.TrasmissionEvent, 0,context, frame, receiver, numHop);
+                    Event e = context.getCoreFactory().getEvent(EventTypes.TrasmissionEvent, 0, context, frame, receiver, numHop);
                     context.getScheduler().addEvent(e);
+                } else {
+                    canvas.enqueue(() -> canvas.deleteTransmission(frame, transmission));
                 }
             } else {
 

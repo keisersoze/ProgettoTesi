@@ -23,12 +23,12 @@ import java.util.concurrent.ExecutionException;
 
 public class GraphicSim extends AbstractSimIstance {
     private static Canvas canvas;
-    private final List<Sensor> sensors;
     public final List<Frame> frames;
+    private final List<Sensor> sensors;
     private final ModelFactory modelFactory;
     private final CoreFactory coreFactory;
 
-    public GraphicSim(Collector collector, Scheduler scheduler) {
+    public GraphicSim (Collector collector, Scheduler scheduler) {
         super(collector, scheduler);
         canvas = new Canvas(this);
         sensors = new ArrayList<>();
@@ -37,7 +37,7 @@ public class GraphicSim extends AbstractSimIstance {
         coreFactory = new GraphicCoreFactory(canvas);
     }
 
-    private static void setSettings() {
+    private static void setSettings () {
         AppSettings settings = new AppSettings(true);
 
         settings.setTitle("Underwater wireless sensors networks");
@@ -60,7 +60,7 @@ public class GraphicSim extends AbstractSimIstance {
         canvas.setSettings(settings);
     }
 
-    public void run() {
+    public void run () {
 
         setSettings();
 
@@ -74,17 +74,17 @@ public class GraphicSim extends AbstractSimIstance {
             }
         }
 
-        for(int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
             Sensor s1 = modelFactory.getSensor(MyLib.random(0, 200), 0, MyLib.random(0, 200));
             sensors.add(s1);
         }
 
-        for(int i = 0; i < 20; i++) {
+        for (int i = 0; i < 20; i++) {
             Sensor s1 = modelFactory.getSensor(MyLib.random(0, 200), 50, MyLib.random(0, 200));
             sensors.add(s1);
         }
 
-        for(int i = 0; i < 30; i++) {
+        for (int i = 0; i < 30; i++) {
             Sensor s1 = modelFactory.getSensor(MyLib.random(0, 200), 80, MyLib.random(0, 200));
             sensors.add(s1);
         }
@@ -98,12 +98,12 @@ public class GraphicSim extends AbstractSimIstance {
         s1.setSink(true);
         s2.setSink(true);
 
-        for (Sensor sensor : getSensors()){
+        for (Sensor sensor : getSensors()) {
             sensor.setNeighbors(MyLib.calculateNeighbors(sensor, this));
         }
 
         try {
-            canvas.enqueue(()->canvas.drawSensors(getSensors())).get();
+            canvas.enqueue(() -> canvas.drawSensors(getSensors())).get();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
@@ -113,7 +113,6 @@ public class GraphicSim extends AbstractSimIstance {
         Event arrival_evt = getCoreFactory().getEvent(EventTypes.ArrivalEvent, 0, this);
 
         //imposto gli eventi periodici
-
 
 
         //aggiungo gli eventi periodici allo scheduler
@@ -130,34 +129,33 @@ public class GraphicSim extends AbstractSimIstance {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
         }
 
         System.out.println(getSimTime() + " " + getSensors().get(0).getPosition());
     }
 
     @Override
-    public List<Sensor> getSensors() {
+    public List<Sensor> getSensors () {
         return sensors;
     }
 
     @Override
-    public List<Frame> getFrames() {
+    public List<Frame> getFrames () {
         return frames;
     }
 
     @Override
-    public void addFrame(Frame frame) {
+    public void addFrame (Frame frame) {
         frames.add(frame);
     }
 
     @Override
-    public ModelFactory getModelFactory() {
+    public ModelFactory getModelFactory () {
         return modelFactory;
     }
 
     @Override
-    public CoreFactory getCoreFactory() {
+    public CoreFactory getCoreFactory () {
         return coreFactory;
     }
 }

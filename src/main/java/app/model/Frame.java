@@ -4,11 +4,11 @@ import java.util.List;
 
 public interface Frame {
 
-    int getSerial();
+    int getSerial ();
 
-    double getSize();
+    double getSize ();
 
-    Sensor getOwner();
+    Sensor getOwner ();
 
     List<Transmission> getTransmissionHistory ();
 }

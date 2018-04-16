@@ -16,7 +16,7 @@ public class HandleTransmission implements Action {
     }
 
     @Override
-    public void execute(Event event) {
+    public void execute (Event event) {
 
         SimContext context = event.getContext();
         Frame frame = event.getFrame();

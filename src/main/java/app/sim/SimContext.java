@@ -11,27 +11,27 @@ import org.apache.commons.math3.random.MersenneTwister;
 import java.util.List;
 
 public interface SimContext {
-    Scheduler getScheduler();
+    Scheduler getScheduler ();
 
-    Collector getCollector();
+    Collector getCollector ();
 
     double getSimTime ();
 
-    void setSimTime(double x);
+    void setSimTime (double x);
 
-    List<Sensor> getSensors();
+    List<Sensor> getSensors ();
 
-    List<Frame> getFrames();
+    List<Frame> getFrames ();
 
-    void addFrame(Frame frame);
+    void addFrame (Frame frame);
 
-    void frameArrived(Frame frame);
+    void frameArrived (Frame frame);
 
-    void run();
+    void run ();
 
-    MersenneTwister getMarsenneTwister();
+    MersenneTwister getMarsenneTwister ();
 
-    CoreFactory getCoreFactory();
+    CoreFactory getCoreFactory ();
 
-    ModelFactory getModelFactory();
+    ModelFactory getModelFactory ();
 }

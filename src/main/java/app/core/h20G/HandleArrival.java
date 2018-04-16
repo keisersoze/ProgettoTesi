@@ -15,16 +15,18 @@ import java.util.concurrent.ExecutionException;
 public class HandleArrival implements Action {
 
     private Canvas canvas;
-    public HandleArrival(Canvas canvas) {
+
+    public HandleArrival (Canvas canvas) {
         this.canvas = canvas;
     }
 
     /**
      * Crea il frame e decide l'owner del frame creato
+     *
      * @param event evento su cui viene chiamata la action
      */
     @Override
-    public void execute(Event event) {
+    public void execute (Event event) {
         SimContext context = event.getContext();
 
         List<Sensor> sensors = context.getSensors();
@@ -41,7 +43,7 @@ public class HandleArrival implements Action {
         }
         context.getFrames().add(frame);
 
-        Event e = context.getCoreFactory().getEvent(EventTypes.TrasmissionEvent, 0, context, frame, owner,0);
+        Event e = context.getCoreFactory().getEvent(EventTypes.TrasmissionEvent, 0, context, frame, owner, 0);
 
         context.getScheduler().addEvent(e);
     }
