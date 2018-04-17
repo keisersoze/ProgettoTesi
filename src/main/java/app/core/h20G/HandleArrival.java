@@ -34,7 +34,7 @@ public class HandleArrival implements Action {
         Sensor owner;
         do {
             owner = sensors.get(context.getMarsenneTwister().nextInt(sensors.size())); //prendo un sensore a caso
-        }while (owner.isTransmitting()||owner.isSink());
+        } while (owner.isTransmitting() || owner.isSink());
 
 
         double x = context.getMarsenneTwister().nextDouble();

@@ -12,7 +12,7 @@ import app.sim.SimContext;
 
 public class HandleEndReception implements Action {
 
-    public HandleEndReception() {
+    public HandleEndReception () {
     }
 
     @Override

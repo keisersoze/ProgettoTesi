@@ -18,7 +18,7 @@ public interface Transmission {
 
     int getHop ();
 
-    double getTime();
+    double getTime ();
 
-    void setTime(double time);
+    void setTime (double time);
 }

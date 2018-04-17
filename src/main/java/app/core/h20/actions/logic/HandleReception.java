@@ -16,7 +16,7 @@ public class HandleReception implements Action {
         Transmission transmission = event.getTransmission();
         Sensor receiver = transmission.getReceiver();
 
-        if(!receiver.isTransmitting() && !receiver.isReceiving()) {
+        if (!receiver.isTransmitting() && !receiver.isReceiving()) {
             receiver.setReceiving(true);
             double time = transmission.getFrame().getSize() / H2OSim.SENSOR_BANDWIDTH;
             Event e = context.getCoreFactory().getEvent(EventTypes.EndReceptionEvent, time, context, transmission);

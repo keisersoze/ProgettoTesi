@@ -34,11 +34,11 @@ public interface Sensor {
 
     void setOffsetPosition (float x, float y, float z);
 
-    boolean isTransmitting();
+    boolean isTransmitting ();
 
-    void setTransmitting(boolean x);
+    void setTransmitting (boolean x);
 
-    boolean isReceiving();
+    boolean isReceiving ();
 
-    void setReceiving(boolean x);
+    void setReceiving (boolean x);
 }

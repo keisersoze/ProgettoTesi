@@ -34,16 +34,16 @@ public class H2OSim {
 
     //variabili endogene
     public static final int SOUND_SPEED = 343; // m/s
-    public static final double T = 1 ; //TODO guardare come si chiama
+    public static final double T = 1; //TODO guardare come si chiama
 
     //pattern singleton per avere accesso alle risorse condivise
     private static H2OSim ourInstance = new H2OSim();
 
-    public static H2OSim getInstance() {
+    public static H2OSim getInstance () {
         return ourInstance;
     }
 
-    public static void main(String[] args) {
+    public static void main (String[] args) {
 
         BaseCollector collector = new BaseCollector();
         if (CANVAS_MODE) {

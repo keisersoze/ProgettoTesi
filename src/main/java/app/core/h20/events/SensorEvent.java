@@ -6,13 +6,13 @@ import app.sim.SimContext;
 public class SensorEvent extends BaseEvent {
     Sensor sensor;
 
-    public SensorEvent(double time, SimContext context, Sensor sensor) {
+    public SensorEvent (double time, SimContext context, Sensor sensor) {
         super(time, context);
         this.sensor = sensor;
     }
 
     @Override
-    public Sensor getSensor() {
+    public Sensor getSensor () {
         return sensor;
     }
 }

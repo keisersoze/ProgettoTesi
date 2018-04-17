@@ -2,7 +2,6 @@ package app.sim.h20;
 
 import app.Canvas;
 import app.H2OSim;
-import app.sim.MyLib;
 import app.core.Event;
 import app.core.Scheduler;
 import app.factory.CoreFactory;
@@ -12,6 +11,7 @@ import app.factory.h20.GraphicCoreFactory;
 import app.factory.h20.MyModelFactory;
 import app.model.Frame;
 import app.model.Sensor;
+import app.sim.MyLib;
 import app.stats.Collector;
 import com.jme3.system.AppSettings;
 
@@ -46,7 +46,7 @@ public class GraphicSim extends AbstractSimIstance {
         GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
         DisplayMode[] modes = device.getDisplayModes();
         int i = 0; // note: there are usually several, let's pick the first
-        settings.setResolution(1024,700);
+        settings.setResolution(1024, 700);
         settings.setFrequency(modes[i].getRefreshRate());
         settings.setBitsPerPixel(modes[i].getBitDepth());
         settings.setFullscreen(false);

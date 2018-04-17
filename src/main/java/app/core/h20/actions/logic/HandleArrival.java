@@ -29,7 +29,7 @@ public class HandleArrival implements Action {
         Sensor owner = null;
         do {
             owner = sensors.get(context.getMarsenneTwister().nextInt(sensors.size())); //prendo un sensore a caso
-        }while (owner.isTransmitting()||owner.isSink());
+        } while (owner.isTransmitting() || owner.isSink());
 
         double x = context.getMarsenneTwister().nextDouble();
         double packetSize = x < H2OSim.MAX_FRAME_RATE ? H2OSim.MAX_FRAME_SIZE : H2OSim.MAX_FRAME_SIZE * (1 - x);

@@ -1,7 +1,6 @@
 package app.sim.h20;
 
 import app.H2OSim;
-import app.sim.MyLib;
 import app.core.Event;
 import app.core.Scheduler;
 import app.factory.CoreFactory;
@@ -11,6 +10,7 @@ import app.factory.h20.MyCoreFactory;
 import app.factory.h20.MyModelFactory;
 import app.model.Frame;
 import app.model.Sensor;
+import app.sim.MyLib;
 import app.stats.Collector;
 
 import java.util.ArrayList;

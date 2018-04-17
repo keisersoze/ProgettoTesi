@@ -64,7 +64,7 @@ public class MyCoreFactory implements CoreFactory {
                 handleReception = new HandleReception();
             }
             return handleReception;
-        }else if (type.equalsIgnoreCase(ActionTypes.HandleEndTransmission)) {
+        } else if (type.equalsIgnoreCase(ActionTypes.HandleEndTransmission)) {
             if (handleEndTransmission == null) {
                 handleEndTransmission = new HandleEndTransmission();
             }
@@ -156,14 +156,14 @@ public class MyCoreFactory implements CoreFactory {
     }
 
     @Override
-    public Event getEvent(String type, double time, SimContext context, Sensor sensor) {
+    public Event getEvent (String type, double time, SimContext context, Sensor sensor) {
 
         if (type == null) {
             return null;
         }
         Event e = null;
         if (type.equalsIgnoreCase(EventTypes.EndTransmissionEvent)) {
-            e = new SensorEvent(time, context,sensor);
+            e = new SensorEvent(time, context, sensor);
             e.addAction(getAction(ActionTypes.HandleEndTransmission));
         }
 

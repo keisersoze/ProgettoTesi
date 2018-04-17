@@ -62,7 +62,7 @@ public abstract class AbstractTransmission implements Transmission {
         return time;
     }
 
-    public void setTime(double time){
+    public void setTime (double time) {
         this.time = time;
     }
 }

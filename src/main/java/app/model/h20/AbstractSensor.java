@@ -93,22 +93,22 @@ public abstract class AbstractSensor implements Sensor {
     }
 
     @Override
-    public boolean isTransmitting() {
+    public boolean isTransmitting () {
         return transmitting;
     }
 
     @Override
-    public boolean isReceiving() {
-        return receiving;
-    }
-
-    @Override
-    public void setTransmitting(boolean transmitting) {
+    public void setTransmitting (boolean transmitting) {
         this.transmitting = transmitting;
     }
 
     @Override
-    public void setReceiving(boolean receiving) {
+    public boolean isReceiving () {
+        return receiving;
+    }
+
+    @Override
+    public void setReceiving (boolean receiving) {
         this.receiving = receiving;
     }
 }

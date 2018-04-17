@@ -12,5 +12,4 @@ public class EventTypes {
     public static final String EndTransmissionEvent = "EndTransmissionEvent";
 
 
-
 }
