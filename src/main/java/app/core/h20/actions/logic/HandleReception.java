@@ -21,6 +21,8 @@ public class HandleReception implements Action {
             double time = transmission.getFrame().getSize() / H2OSim.SENSOR_BANDWIDTH;
             Event e = context.getCoreFactory().getEvent(EventTypes.EndReceptionEvent, time, context, transmission);
             context.getScheduler().addEvent(e);
+        } else {
+            transmission.setArrived(true);
         }
 
     }

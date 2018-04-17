@@ -12,7 +12,7 @@ public abstract class AbstractTransmission implements Transmission {
     private Frame frame;
     private int hop;
     private double time;
-
+    private boolean arrived;
 
     public AbstractTransmission (Sensor sender, Sensor receiver, Frame frame, int hop) {
         this.sender = sender;
@@ -64,5 +64,15 @@ public abstract class AbstractTransmission implements Transmission {
 
     public void setTime (double time) {
         this.time = time;
+    }
+
+    @Override
+    public boolean isArrived () {
+        return arrived;
+    }
+
+    @Override
+    public void setArrived (boolean arrived) {
+        this.arrived = arrived;
     }
 }

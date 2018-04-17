@@ -4,10 +4,14 @@ import app.model.Frame;
 import app.model.Sensor;
 import app.model.Transmission;
 import app.sim.SimContext;
+import app.sim.h20.GraphicSim;
 import com.jme3.app.SimpleApplication;
 import com.jme3.font.BitmapFont;
 import com.jme3.font.BitmapText;
 import com.jme3.font.Rectangle;
+import com.jme3.input.KeyInput;
+import com.jme3.input.controls.AnalogListener;
+import com.jme3.input.controls.KeyTrigger;
 import com.jme3.light.DirectionalLight;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
@@ -23,9 +27,7 @@ import com.jme3.terrain.geomipmap.TerrainQuad;
 import com.jme3.terrain.heightmap.HillHeightMap;
 import com.jme3.texture.Texture;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Canvas extends SimpleApplication {
     public static Vector3f field;
@@ -37,17 +39,19 @@ public class Canvas extends SimpleApplication {
     private HashMap<Sensor, Spatial> sensorSpatialHashMap;
     private HashMap<Sensor, Map.Entry<Sphere, Geometry>> sensorBubbleHashMap;
     private BitmapText hudText;
+    private long speed;
 
-    public Canvas (SimContext context) {
+    public Canvas (SimContext context, long speed) {
         this.context = context;
         frameListGeometryHashMap = new HashMap<>();
         sensorSpatialHashMap = new HashMap<>();
         charged = false;
         sensorBubbleHashMap = new HashMap<>();
         colorRGBAHashMap = new HashMap<>();
+        this.speed = speed;
     }
 
-    static Vector3f pointBetween (Vector3f inizio, Vector3f fine, float percentuale) {
+    private static Vector3f pointBetween (Vector3f inizio, Vector3f fine, float percentuale) {
         if (percentuale > 1.0f) percentuale = 1.0f;
         Vector3f point = new Vector3f();
         point.setX(inizio.x + percentuale * (fine.x - inizio.x));
@@ -83,10 +87,34 @@ public class Canvas extends SimpleApplication {
 
         attachCoordinateAxes(Vector3f.ZERO);
         attachGrid(field.x, field.y, field.z, 10f, ColorRGBA.White);
-
+        initKeys();
         //generateTerrain();
         charged = true;
     }
+
+    private void initKeys () {
+        // You can map one or several inputs to one named action
+        inputManager.addMapping("More", new KeyTrigger(KeyInput.KEY_J));
+        inputManager.addMapping("Less", new KeyTrigger(KeyInput.KEY_K));
+
+        // Add the names to the action listener.
+        inputManager.addListener(analogListener, "More", "Less");
+    }
+
+
+    private final AnalogListener analogListener = new AnalogListener() {
+        @Override
+        public void onAnalog (String name, float value, float tpf) {
+            if (name.equals("More")) {
+                GraphicSim.speed += 10;
+            }
+            if (name.equals("Less")) {
+                GraphicSim.speed -= 10;
+                if (GraphicSim.speed < 0)
+                    GraphicSim.speed = 0;
+            }
+        }
+    };
 
     public Spatial drawSensors (Collection<? extends Sensor> sensors) {
         for (Sensor sensor : sensors) {
@@ -331,34 +359,10 @@ public class Canvas extends SimpleApplication {
             rootNode.attachChild(lineGeometry);
 
             frameListGeometryHashMap.get(frame).put(transmission, lineGeometry);
-                /*if (!frameListGeometryHashMap.containsKey(frame)) {
-                    List<Geometry> queue = new ArrayList<>();
-                    queue.add(0, lineGeometry);
-                    frameListGeometryHashMap.put(frame, queue);
-                } else {
-                    frameListGeometryHashMap.get(frame).add(0, lineGeometry);
-                    List<Geometry> lines = frameListGeometryHashMap.get(frame);
-                    //Con questo le linee si dovrebbero vedere aggiornate tutte in un frame
-                    speed = 0.f;
-                    lines.get(0).getMaterial().setColor("Color", new ColorRGBA(255 / 255f, 0 / 255f, 0 / 255f, 1f));
-                    if (lines.size() > 1) {
-                        lines.get(1).getMaterial().setColor("Color", new ColorRGBA(0 / 255f, 255 / 255f, 0 / 255f, 1f));
-                    }
-                    if (lines.size() > 2) {
-                        lines.get(2).getMaterial().setColor("Color", new ColorRGBA(0 / 255f, 0 / 255f, 0 / 255f, 1f));
-                    }
-                    if (lines.size() > 3) {
-                        lines.get(3).getMaterial().setColor("Color", new ColorRGBA(178 / 255f, 0 / 255f, 255 / 255f, 1f));
-                    }
-                    if (lines.size() == 5) {
-                        lines.remove(4).removeFromParent();
-                    }
-                    speed = 1.f;
-                }*/
         }
     }
 
-    public void deleteTransmission (Frame frame, Transmission transmission) {
+    private void deleteTransmission (Frame frame, Transmission transmission) {
         if (frameListGeometryHashMap.containsKey(frame) && frameListGeometryHashMap.get(frame).containsKey(transmission)) {
             frameListGeometryHashMap.get(frame).get(transmission).removeFromParent();
             frameListGeometryHashMap.get(frame).remove(transmission);
@@ -366,28 +370,36 @@ public class Canvas extends SimpleApplication {
     }
 
     public void simpleUpdate (float tpf) {
-        hudText.setText("- Sim Time: " + context.getSimTime() + "\n- Frame in circolo: " + context.getFrames().size() + "\n- Numero di sensori:" + context.getSensors().size());
+        hudText.setText("- Sim Time: " + context.getSimTime() + "\n- Frame in circolo: " + context.getFrames().size() + "\n- Numero di sensori:" + context.getSensors().size() +
+                        "\n Speed: " + GraphicSim.speed);
         updateSensors();
         updateLinks();
-
-
         //updateLinksPosition();
-
     }
 
     private void updateLinks () {
-        for (HashMap<Transmission, Geometry> transmissions : frameListGeometryHashMap.values()) {
-            for (Map.Entry<Transmission, Geometry> transmission : transmissions.entrySet()) {
-                Sensor sender = transmission.getKey().getSender();
-                Sensor receiver = transmission.getKey().getReceiver();
+        List<Map.Entry<Frame, Transmission>> toDelete = new ArrayList<>();
 
-                double distance = H2OSim.SOUND_SPEED * (context.getSimTime() - transmission.getKey().getTime());
-                double total = sender.getEuclideanDistance(receiver);
-                Vector3f point = Canvas.pointBetween(sender.getPosition(), receiver.getPosition(), (float) (distance / total));
+        for (Map.Entry<Frame, HashMap<Transmission, Geometry>> frameTransmissions : frameListGeometryHashMap.entrySet()) {
+            for (Map.Entry<Transmission, Geometry> transmission : frameTransmissions.getValue().entrySet()) {
+                if (!transmission.getKey().isArrived()) {
+                    Sensor sender = transmission.getKey().getSender();
+                    Sensor receiver = transmission.getKey().getReceiver();
 
-                transmission.getValue().getMesh().setBuffer(VertexBuffer.Type.Position, 3, new float[]{sender.getX(), sender.getY(), sender.getZ(), point.x, point.y, point.z});
-                transmission.getValue().updateModelBound();
+                    double distance = H2OSim.SOUND_SPEED * (context.getSimTime() - transmission.getKey().getTime());
+                    double total = sender.getEuclideanDistance(receiver);
+                    Vector3f point = Canvas.pointBetween(sender.getPosition(), receiver.getPosition(), (float) (distance / total));
+
+                    transmission.getValue().getMesh().setBuffer(VertexBuffer.Type.Position, 3, new float[]{sender.getX(), sender.getY(), sender.getZ(), point.x, point.y, point.z});
+                    transmission.getValue().updateModelBound();
+                } else {
+                    toDelete.add(new AbstractMap.SimpleEntry<>(frameTransmissions.getKey(), transmission.getKey()));
+                }
             }
+        }
+
+        for (Map.Entry<Frame, Transmission> entry : toDelete) {
+            deleteTransmission(entry.getKey(), entry.getValue());
         }
     }
 

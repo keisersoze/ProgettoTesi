@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BaseEvent implements Event, Comparable<Event> {
-    SimContext context;
+    private SimContext context;
     private double time;
     private List<Action> actionList;
 

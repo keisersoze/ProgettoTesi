@@ -21,4 +21,8 @@ public interface Transmission {
     double getTime ();
 
     void setTime (double time);
+
+    void setArrived(boolean arrived);
+
+    boolean isArrived();
 }

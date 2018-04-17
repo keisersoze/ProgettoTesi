@@ -78,13 +78,13 @@ public class GraphicCoreFactory extends MyCoreFactory {
     }
 
     @Override
-    public Event getEvent (String type, double time, SimContext context, Sensor sensor) {
+    public Event getEvent(String type, double time, SimContext context, Sensor sensor) {
         if (type == null) {
             return null;
         }
         Event e = null;
         if (type.equalsIgnoreCase(EventTypes.EndTransmissionEvent)) {
-            e = new SensorEvent(time, context, sensor);
+            e = new SensorEvent(time, context,sensor);
             e.addAction(new HandleEndTransmission(canvas));
         }
         if (e == null) {

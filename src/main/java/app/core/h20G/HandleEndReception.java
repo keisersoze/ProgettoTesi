@@ -29,6 +29,7 @@ public class HandleEndReception implements Action {
         int numHop = transmission.getHop() + 1;
 
         receiver.setReceiving(false);
+        transmission.setArrived(true);
 
         if (transmission.isSuccessfull()) {
             if (!transmission.getReceiver().isSink()) {
@@ -37,8 +38,6 @@ public class HandleEndReception implements Action {
                     context.getScheduler().addEvent(e);
                 }
             }
-        } else {
-            canvas.enqueue(() -> canvas.deleteTransmission(frame, transmission));
         }
 
     }

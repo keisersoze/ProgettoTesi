@@ -10,8 +10,8 @@ public class MoveSensors implements Action {
 
     @Override
     public void execute (Event event) {
-
-       /* SimContext context = event.getContext();
+        /*
+        SimContext context = event.getContext();
         double rotation_time = context.getSimTime() / 200;
 
         for (Sensor sensor : context.getSensors()) {
@@ -20,7 +20,8 @@ public class MoveSensors implements Action {
         }
         for (Sensor sensor : context.getSensors()) {
             sensor.setNeighbors(MyLib.calculateNeighbors(sensor, context));
-        }*/
+        }
+        */
     }
 
 }

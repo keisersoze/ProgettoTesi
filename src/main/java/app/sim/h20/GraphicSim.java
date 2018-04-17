@@ -23,6 +23,7 @@ import java.util.concurrent.ExecutionException;
 
 public class GraphicSim extends AbstractSimIstance {
     private static Canvas canvas;
+    public static long speed;
     public final List<Frame> frames;
     private final List<Sensor> sensors;
     private final ModelFactory modelFactory;
@@ -30,7 +31,7 @@ public class GraphicSim extends AbstractSimIstance {
 
     public GraphicSim (Collector collector, Scheduler scheduler) {
         super(collector, scheduler);
-        canvas = new Canvas(this);
+        canvas = new Canvas(this, speed);
         sensors = new ArrayList<>();
         frames = new CopyOnWriteArrayList<>();
         modelFactory = new MyModelFactory();
@@ -74,7 +75,7 @@ public class GraphicSim extends AbstractSimIstance {
             }
         }
 
-        for (int i = 0; i < 300; i++) {
+        for (int i = 0; i < 100; i++) {
             Sensor s1 = modelFactory.getSensor(MyLib.random(0, 200), MyLib.random(0, 80), MyLib.random(0, 200));
             sensors.add(s1);
         }
@@ -109,7 +110,7 @@ public class GraphicSim extends AbstractSimIstance {
         //aggiungo gli eventi periodici allo scheduler
 
         getScheduler().addEvent(arrival_evt);
-        getScheduler().addEvent(dummy);
+        //getScheduler().addEvent(dummy);
 
 
         //avvio la simulazione
@@ -119,7 +120,7 @@ public class GraphicSim extends AbstractSimIstance {
             setSimTime(evt_scheduled.getTime());
             evt_scheduled.tick();
             try {
-                Thread.sleep(5);
+                Thread.sleep(speed);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
