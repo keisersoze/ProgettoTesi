@@ -181,15 +181,15 @@ public class Canvas extends SimpleApplication {
         return g;
     }
 
-    public boolean newBubble(Sensor sensor){
-        Sphere sphere = new Sphere(50, 50, 0.5f);
+    /*public boolean newBubble(Sensor sensor){
+        Sphere sphere = new Sphere(10, 10, 0.5f);
         Geometry sphere_geometry = new Geometry("Sphere", sphere);
 
         sphere_geometry.setLocalTranslation(sensor.getPosition());
 
         Material sphere_material = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
 
-        sphere_material.setColor("Color", new ColorRGBA(1f,1f,1f,0.2f));
+        sphere_material.setColor("Color", new ColorRGBA(1f,0f,0f,0.3f));
 
         sphere_material.getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
 
@@ -198,11 +198,12 @@ public class Canvas extends SimpleApplication {
         sphere_geometry.setMaterial(sphere_material);
         sphere_geometry.updateModelBound();
 
-        sensorSpatialHashMap.put(sensor, sphere_geometry);
         rootNode.attachChild(sphere_geometry);
+
         sensorBubbleHashMap.put(sensor,new AbstractMap.SimpleEntry<>(sphere,sphere_geometry));
+
         return true;
-    }
+    }*/
 
     private Geometry line (Vector3f inizio, Vector3f fine, ColorRGBA colore) {
         Mesh lineMesh = new Mesh();
@@ -359,15 +360,6 @@ public class Canvas extends SimpleApplication {
 
         }
 
-
-        for (Map.Entry<Sensor,Map.Entry<Sphere,Geometry>>  entry: sensorBubbleHashMap.entrySet() ) {
-            if (entry.getKey().isTransmitting()  && entry.getValue().getKey().getRadius()<H2OSim.MAX_DISTANCE)
-                entry.getValue().getKey().updateGeometry(50,50, (float) context.getSimTime()*H2OSim.SOUND_SPEED);
-            else {
-                entry.getValue().getKey().updateGeometry(50,50, 0);
-                //sensorBubbleHashMap.remove(entry.getKey());
-            }
-        }
     }
 
     public void updateSensorColor(Sensor sensor,ColorRGBA colorRGBA) {

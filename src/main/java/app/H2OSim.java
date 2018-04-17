@@ -27,7 +27,10 @@ public class H2OSim {
     public static final int MAX_FRAME_SIZE = 1000; //bit (200-1600)
     public static final double MAX_FRAME_RATE = 0.9;
     public static final double BATTERY_LIFE = 1000; // mA
-    public static final int THRESHOLD = 1;
+    public static final int THRESHOLD = 20;
+    public static final double SENSIBILITY = -110; //dBm
+    public static final double SENSOR_POWER = 5; //dB
+    public static final double SENSOR_FREQUENCY = 2400; //HZ
 
     //variabili endogene
     public static final int SOUND_SPEED = 343; // m/s
@@ -35,11 +38,11 @@ public class H2OSim {
     //pattern singleton per avere accesso alle risorse condivise
     private static H2OSim ourInstance = new H2OSim();
 
-    public static H2OSim getInstance () {
+    public static H2OSim getInstance() {
         return ourInstance;
     }
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
 
         BaseCollector collector = new BaseCollector();
         if (CANVAS_MODE) {

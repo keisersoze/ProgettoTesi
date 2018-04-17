@@ -26,9 +26,6 @@ public class HandleTransmission implements Action {
         Sensor sender = event.getSensor();
         int numHop = event.getInt();
 
-        canvas.enqueue(() -> canvas.newBubble(sender));
-        //canvas.enqueue(() -> canvas.startTransmission(sender));
-
         sender.setTransmitting(true);
 
         for (Sensor receiver : sender.getNeighbors()) {
