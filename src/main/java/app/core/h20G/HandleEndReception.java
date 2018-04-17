@@ -15,7 +15,7 @@ public class HandleEndReception implements Action {
 
     private Canvas canvas;
 
-    public HandleEndReception(Canvas canvas) {
+    public HandleEndReception (Canvas canvas) {
         this.canvas = canvas;
     }
 
@@ -35,15 +35,11 @@ public class HandleEndReception implements Action {
                 if (transmission.getSender().getY() + H2OSim.THRESHOLD < transmission.getReceiver().getY()) {   // Decido se ritrasmettere in base alla profondità
                     Event e = context.getCoreFactory().getEvent(EventTypes.TransmissionEvent, 0, context, frame, receiver, numHop);
                     context.getScheduler().addEvent(e);
-                    canvas.enqueue(() -> canvas.newTransmission(frame, transmission));
-
-                } else {
-
                 }
-            } else {
-                canvas.enqueue(() -> canvas.newTransmission(frame, transmission));
-
             }
+        } else {
+            canvas.enqueue(() -> canvas.deleteTransmission(frame, transmission));
         }
+
     }
 }

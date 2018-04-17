@@ -19,8 +19,7 @@ public class MyLib {
     public static List<Sensor> calculateNeighbors (Sensor sensor, SimContext context) {
         List<Sensor> myNeighbors = new ArrayList<>();
         for (Sensor sensor1 : context.getSensors()) {
-            if (powerReceived(sensor.getEuclideanDistance(sensor1))>H2OSim.SENSIBILITY){
-                System.out.println(1);
+            if (powerReceived(sensor.getEuclideanDistance(sensor1)) > H2OSim.SENSIBILITY) {
                 if (sensor != sensor1) {
                     myNeighbors.add(sensor1);
                 }
@@ -29,16 +28,16 @@ public class MyLib {
         return myNeighbors;
     }
 
-    public static double calculateNoise(Sensor sensor, SimContext context){
+    public static double calculateNoise (Sensor sensor, SimContext context) {
         double acc = 0;
-        for (Sensor s:context.getSensors()) {
+        for (Sensor s : context.getSensors()) {
             if (s.isTransmitting())
                 acc += powerReceived(s.getEuclideanDistance(sensor));
         }
         return acc;
     }
 
-    public static double powerReceived (double distance){
+    public static double powerReceived (double distance) {
         return H2OSim.SENSOR_POWER - 20 * Math.log10(distance) + 20 * Math.log10(H2OSim.SENSOR_FREQUENCY) - 147.55;
     }
 }

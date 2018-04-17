@@ -79,16 +79,6 @@ public class GraphicSim extends AbstractSimIstance {
             sensors.add(s1);
         }
 
-        /*for (int i = 0; i < 20; i++) {
-            Sensor s1 = modelFactory.getSensor(MyLib.random(0, 200), 50, MyLib.random(0, 200));
-            sensors.add(s1);
-        }
-
-        for (int i = 0; i < 30; i++) {
-            Sensor s1 = modelFactory.getSensor(MyLib.random(0, 200), 80, MyLib.random(0, 200));
-            sensors.add(s1);
-        }*/
-
         Sensor s1 = modelFactory.getSensor(MyLib.random(0, 200), 100, MyLib.random(0, 200));
         sensors.add(s1);
 
@@ -111,13 +101,16 @@ public class GraphicSim extends AbstractSimIstance {
         // creo l'evento che richiama la funzionalità di campionamento per le statistiche
 
         Event arrival_evt = getCoreFactory().getEvent(EventTypes.ArrivalEvent, 0, this);
+        Event dummy = getCoreFactory().getEvent(EventTypes.MoveEvent, 0, this);
 
         //imposto gli eventi periodici
-
+        dummy.setInterval(0.001);
 
         //aggiungo gli eventi periodici allo scheduler
 
         getScheduler().addEvent(arrival_evt);
+        getScheduler().addEvent(dummy);
+
 
         //avvio la simulazione
 

@@ -12,7 +12,7 @@ import app.sim.SimContext;
 
 public class HandleTransmission implements Action {
 
-    Canvas canvas;
+    private Canvas canvas;
 
     public HandleTransmission (Canvas canvas) {
         this.canvas = canvas;
@@ -30,20 +30,23 @@ public class HandleTransmission implements Action {
 
         for (Sensor receiver : sender.getNeighbors()) {
 
-            Transmission transmission = context.getModelFactory().getTransmission(sender, receiver, frame, numHop);
-
-
             double time = sender.getEuclideanDistance(receiver) / H2OSim.SOUND_SPEED;
+
+            Transmission transmission = context.getModelFactory().getTransmission(sender, receiver, frame, numHop);
+            transmission.setTime(context.getSimTime());    // Per il calcolo di quanto sta avanzando la trasmissione (la linea)
+
             Event e = context.getCoreFactory().getEvent(EventTypes.ReceivingTransmissionEvent, time, context, transmission);
+
+            if (transmission.getSender().getY() + H2OSim.THRESHOLD < transmission.getReceiver().getY()) {
+                canvas.enqueue(() -> canvas.newTransmission(frame, transmission));
+            }
+
             context.getScheduler().addEvent(e);
         }
         
         double time = frame.getSize() / H2OSim.SENSOR_BANDWIDTH;
         Event e = context.getCoreFactory().getEvent(EventTypes.EndTransmissionEvent,time,context,sender);
         context.getScheduler().addEvent(e);
-
-
-
 
     }
 

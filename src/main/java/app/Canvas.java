@@ -10,12 +10,10 @@ import com.jme3.font.BitmapText;
 import com.jme3.font.Rectangle;
 import com.jme3.light.DirectionalLight;
 import com.jme3.material.Material;
-import com.jme3.material.RenderState;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
-import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.*;
 import com.jme3.scene.debug.Arrow;
 import com.jme3.scene.debug.Grid;
@@ -25,19 +23,19 @@ import com.jme3.terrain.geomipmap.TerrainQuad;
 import com.jme3.terrain.heightmap.HillHeightMap;
 import com.jme3.texture.Texture;
 
-import java.util.AbstractMap;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Canvas extends SimpleApplication {
     public static Vector3f field;
-    private SimContext context;
+    protected SimContext context;
     private boolean charged;
     private HashMap<Frame, HashMap<Transmission, Geometry>> frameListGeometryHashMap;
     private HashMap<Sensor, Spatial> sensorSpatialHashMap;
-    private HashMap<Sensor, Map.Entry<Sphere,Geometry>> sensorBubbleHashMap;
+    private HashMap<Sensor, Map.Entry<Sphere, Geometry>> sensorBubbleHashMap;
     private BitmapText hudText;
+    int i = 0;
 
     public Canvas (SimContext context) {
         this.context = context;
@@ -72,17 +70,18 @@ public class Canvas extends SimpleApplication {
         hudText.setLocalTranslation(0, 0, 0); // position
         guiNode.attachChild(hudText);
 
-        //attachCoordinateAxes(Vector3f.ZERO);
+        attachCoordinateAxes(Vector3f.ZERO);
         attachGrid(field.x, field.y, field.z, 10f, ColorRGBA.White);
+
         //generateTerrain();
         charged = true;
     }
 
-    private void updateSensorsPositions () {
-        for (Map.Entry<Sensor, Spatial> entry : sensorSpatialHashMap.entrySet()) {
-            entry.getValue().setLocalTranslation(entry.getKey().getPosition());     //TODO: Da testare se tine la referenza al sensor
-
+    public Spatial drawSensors (Collection<? extends Sensor> sensors) {
+        for (Sensor sensor : sensors) {
+            drawSensor(sensor);
         }
+        return null;
     }
 
     private void drawSensor (Sensor sensor) {
@@ -98,11 +97,10 @@ public class Canvas extends SimpleApplication {
                 sphere_material.setColor("Color", ColorRGBA.Blue);
 
 
-
                 sphere_geometry.setMaterial(sphere_material);
                 sphere_geometry.updateModelBound();
 
-                sensorSpatialHashMap.put(sensor,sphere_geometry);
+                sensorSpatialHashMap.put(sensor, sphere_geometry);
                 rootNode.attachChild(sphere_geometry);
             } else {
                 Spatial sink = assetManager.loadModel("Models/HarborBuoy.obj");
@@ -113,11 +111,25 @@ public class Canvas extends SimpleApplication {
         }
     }
 
-    public Spatial drawSensors (Collection<? extends Sensor> sensors) {
-        for (Sensor sensor : sensors) {
-            drawSensor(sensor);
+    private void updateSensors () {
+        for (Map.Entry<Sensor, Spatial> entry : sensorSpatialHashMap.entrySet()) {
+            entry.getValue().setLocalTranslation(entry.getKey().getPosition());
+            if (!entry.getKey().isSink()) {
+                if (!entry.getKey().isTransmitting()) {
+                    updateSensorColor(entry.getKey(), ColorRGBA.Blue);
+                } else {
+                    updateSensorColor(entry.getKey(), ColorRGBA.Red);
+                }
+            }
+
         }
-        return null;
+    }
+
+    public void updateSensorColor (Sensor sensor, ColorRGBA colorRGBA) {
+        Geometry sender = (Geometry) sensorSpatialHashMap.get(sensor);
+
+        sender.getMaterial().setColor("Color", colorRGBA);
+        sender.updateModelBound();
     }
 
     /*public boolean deleteLinkTransmission (Frame frame) {
@@ -220,7 +232,8 @@ public class Canvas extends SimpleApplication {
         return lineGeometry;
     }
 
-    private Vector3f pointBetween (Vector3f inizio, Vector3f fine, float percentuale) {
+    static Vector3f pointBetween (Vector3f inizio, Vector3f fine, float percentuale) {
+        if (percentuale > 1.0f) percentuale = 1.0f;
         Vector3f point = new Vector3f();
         point.setX(inizio.x + percentuale * (fine.x - inizio.x));
         point.setY(inizio.y + percentuale * (fine.y - inizio.y));
@@ -291,22 +304,20 @@ public class Canvas extends SimpleApplication {
         if (!frameListGeometryHashMap.get(frame).containsKey(transmission)) {
 
             Vector3f position_1 = sensorSpatialHashMap.get(transmission.getSender()).getLocalTranslation();
-            Vector3f position_2 = sensorSpatialHashMap.get(transmission.getReceiver()).getLocalTranslation();
+            //Vector3f position_2 = sensorSpatialHashMap.get(transmission.getReceiver()).getLocalTranslation();
 
             Mesh lineMesh = new Mesh();
             lineMesh.setMode(Mesh.Mode.Lines);
-            lineMesh.setBuffer(VertexBuffer.Type.Position, 3, new float[]{position_1.x, position_1.y, position_1.z, position_2.x, position_2.y, position_2.z});
+            lineMesh.setBuffer(VertexBuffer.Type.Position, 3, new float[]{position_1.x, position_1.y, position_1.z, position_1.x, position_1.y, position_1.z});
             lineMesh.setBuffer(VertexBuffer.Type.Index, 2, new short[]{0, 1});
 
             Geometry lineGeometry = new Geometry("link", lineMesh);
             Material lineMaterial = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
 
             lineMaterial.setColor("Color", ColorRGBA.Green);
-            //lineMaterial.getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
 
             lineGeometry.setMaterial(lineMaterial);
             lineGeometry.updateModelBound();
-            //lineGeometry.setQueueBucket(RenderQueue.Bucket.Translucent);
             rootNode.attachChild(lineGeometry);
 
             frameListGeometryHashMap.get(frame).put(transmission, lineGeometry);
@@ -340,33 +351,34 @@ public class Canvas extends SimpleApplication {
     public void deleteTransmission (Frame frame, Transmission transmission) {
         if (frameListGeometryHashMap.containsKey(frame) && frameListGeometryHashMap.get(frame).containsKey(transmission)) {
             frameListGeometryHashMap.get(frame).get(transmission).removeFromParent();
+            frameListGeometryHashMap.get(frame).remove(transmission);
         }
     }
 
     public void simpleUpdate (float tpf) {
-        hudText.setText("- Sim Time: " + context.getSimTime() + "\n- Frame in circolo: " + context.getFrames().size() + "\n- Numero di sensori:" +  context.getSensors().size());
-        updateSensorsPositions();
+        hudText.setText("- Sim Time: " + context.getSimTime() + "\n- Frame in circolo: " + context.getFrames().size() + "\n- Numero di sensori:" + context.getSensors().size());
+        updateSensors();
+        updateLinks();
+
+
         //updateLinksPosition();
-
-
-        for (Sensor sensor:sensorSpatialHashMap.keySet()) {
-            if(!sensor.isSink()) {
-                if(!sensor.isTransmitting()){
-                    updateSensorColor(sensor,ColorRGBA.Blue);
-                }else {
-                    updateSensorColor(sensor,ColorRGBA.Red);
-                }
-            }
-
-        }
 
     }
 
-    public void updateSensorColor(Sensor sensor,ColorRGBA colorRGBA) {
-        Geometry sender = (Geometry) sensorSpatialHashMap.get(sensor);
+    private void updateLinks () {
+        for (HashMap<Transmission, Geometry> transmissions : frameListGeometryHashMap.values()) {
+            for (Map.Entry<Transmission, Geometry> transmission : transmissions.entrySet()) {
+                Sensor sender = transmission.getKey().getSender();
+                Sensor receiver = transmission.getKey().getReceiver();
 
-        sender.getMaterial().setColor("Color", colorRGBA);
-        sender.updateModelBound();
+                double distance = H2OSim.SOUND_SPEED * (context.getSimTime() - transmission.getKey().getTime());
+                double total = sender.getEuclideanDistance(receiver);
+                Vector3f point = Canvas.pointBetween(sender.getPosition(), receiver.getPosition(), (float) (distance / total));
+
+                transmission.getValue().getMesh().setBuffer(VertexBuffer.Type.Position, 3, new float[]{sender.getX(), sender.getY(), sender.getZ(), point.x, point.y, point.z});
+                transmission.getValue().updateModelBound();
+            }
+        }
     }
 
 }

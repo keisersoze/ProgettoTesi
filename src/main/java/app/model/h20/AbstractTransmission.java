@@ -11,6 +11,7 @@ public abstract class AbstractTransmission implements Transmission {
     private boolean isSuccessfull;
     private Frame frame;
     private int hop;
+    private double time;
 
 
     public AbstractTransmission (Sensor sender, Sensor receiver, Frame frame, int hop) {
@@ -54,5 +55,14 @@ public abstract class AbstractTransmission implements Transmission {
     @Override
     public int getHop () {
         return hop;
+    }
+
+    @Override
+    public double getTime () {
+        return time;
+    }
+
+    public void setTime(double time){
+        this.time = time;
     }
 }
