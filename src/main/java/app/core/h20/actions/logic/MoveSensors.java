@@ -1,6 +1,6 @@
 package app.core.h20.actions.logic;
 
-import app.MyLib;
+import app.sim.MyLib;
 import app.core.Action;
 import app.core.Event;
 import app.model.Sensor;

@@ -99,7 +99,7 @@ public class MyCoreFactory implements CoreFactory {
         Event e = null;
         if (type.equalsIgnoreCase(EventTypes.ArrivalEvent)) {
             e = new BaseEvent(time, context);
-            e.addAction(new HandleArrival());
+            e.addAction(getAction(ActionTypes.HandleArrival));
             //e.addAction(new RescheduleExpRandom());           //TODO: da decommentare finito il testing
 
         } else if (type.equalsIgnoreCase(EventTypes.BaseEvent)) {
@@ -107,12 +107,12 @@ public class MyCoreFactory implements CoreFactory {
 
         } else if (type.equalsIgnoreCase(EventTypes.MoveEvent)) {
             e = new BaseEvent(time, context);
-            e.addAction(new MoveSensors());
-            e.addAction(new UpdateSNR());
+            e.addAction(getAction(ActionTypes.MoveSensors));
+            e.addAction(getAction(ActionTypes.UpdateSNR));
 
         } else if (type.equalsIgnoreCase(EventTypes.StatisticEvent)) {
             e = new BaseEvent(time, context);
-            e.addAction(new UpdateStats());
+            e.addAction(getAction(ActionTypes.UpdateStats));
 
         }
 

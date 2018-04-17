@@ -1,5 +1,6 @@
-package app;
+package app.sim;
 
+import app.H2OSim;
 import app.model.Sensor;
 import app.sim.SimContext;
 import org.apache.commons.math3.random.MersenneTwister;
@@ -19,7 +20,7 @@ public class MyLib {
     public static List<Sensor> calculateNeighbors (Sensor sensor, SimContext context) {
         List<Sensor> myNeighbors = new ArrayList<>();
         for (Sensor sensor1 : context.getSensors()) {
-            if (powerReceived(sensor.getEuclideanDistance(sensor1))>H2OSim.SENSIBILITY){
+            if (powerReceived(sensor.getEuclideanDistance(sensor1))> H2OSim.SENSIBILITY){
                 System.out.println(1);
                 if (sensor != sensor1) {
                     myNeighbors.add(sensor1);

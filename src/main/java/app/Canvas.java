@@ -35,19 +35,21 @@ public class Canvas extends SimpleApplication {
     private SimContext context;
     private boolean charged;
     private HashMap<Frame, HashMap<Transmission, Geometry>> frameListGeometryHashMap;
+    private HashMap<Frame, ColorRGBA> colorRGBAHashMap;
     private HashMap<Sensor, Spatial> sensorSpatialHashMap;
-    private HashMap<Sensor, Map.Entry<Sphere,Geometry>> sensorBubbleHashMap;
+    private HashMap<Sensor, Map.Entry<Sphere, Geometry>> sensorBubbleHashMap;
     private BitmapText hudText;
 
-    public Canvas (SimContext context) {
+    public Canvas(SimContext context) {
         this.context = context;
         frameListGeometryHashMap = new HashMap<>();
         sensorSpatialHashMap = new HashMap<>();
         charged = false;
         sensorBubbleHashMap = new HashMap<>();
+        colorRGBAHashMap = new HashMap<>();
     }
 
-    public void simpleInitApp () {
+    public void simpleInitApp() {
         field = new Vector3f(200, 100, 200);
 
         viewPort.setBackgroundColor(new ColorRGBA(1f / 255f * 60f, 1f / 255f * 102f, 1f / 255f * 140f, 1f));
@@ -78,14 +80,14 @@ public class Canvas extends SimpleApplication {
         charged = true;
     }
 
-    private void updateSensorsPositions () {
+    private void updateSensorsPositions() {
         for (Map.Entry<Sensor, Spatial> entry : sensorSpatialHashMap.entrySet()) {
             entry.getValue().setLocalTranslation(entry.getKey().getPosition());     //TODO: Da testare se tine la referenza al sensor
 
         }
     }
 
-    private void drawSensor (Sensor sensor) {
+    private void drawSensor(Sensor sensor) {
         if (!sensorSpatialHashMap.containsKey(sensor)) {
             if (!sensor.isSink()) {
                 Sphere sphere = new Sphere(30, 30, 0.5f);
@@ -98,11 +100,10 @@ public class Canvas extends SimpleApplication {
                 sphere_material.setColor("Color", ColorRGBA.Blue);
 
 
-
                 sphere_geometry.setMaterial(sphere_material);
                 sphere_geometry.updateModelBound();
 
-                sensorSpatialHashMap.put(sensor,sphere_geometry);
+                sensorSpatialHashMap.put(sensor, sphere_geometry);
                 rootNode.attachChild(sphere_geometry);
             } else {
                 Spatial sink = assetManager.loadModel("Models/HarborBuoy.obj");
@@ -113,7 +114,7 @@ public class Canvas extends SimpleApplication {
         }
     }
 
-    public Spatial drawSensors (Collection<? extends Sensor> sensors) {
+    public Spatial drawSensors(Collection<? extends Sensor> sensors) {
         for (Sensor sensor : sensors) {
             drawSensor(sensor);
         }
@@ -129,7 +130,7 @@ public class Canvas extends SimpleApplication {
         return true;
     }*/
 
-    private boolean attachGrid (float x, float y, float z, float lineDist, ColorRGBA color) {
+    private boolean attachGrid(float x, float y, float z, float lineDist, ColorRGBA color) {
         Geometry x_grid = gridGeometry(x, z, lineDist, color);
         Geometry y_grid = gridGeometry(y, z, lineDist, color);
         Geometry z_grid = gridGeometry(x, y, lineDist, color);
@@ -147,7 +148,7 @@ public class Canvas extends SimpleApplication {
         return true;
     }
 
-    private Geometry gridGeometry (float x, float y, float lineDist, ColorRGBA color) {
+    private Geometry gridGeometry(float x, float y, float lineDist, ColorRGBA color) {
         int lineX = (int) (x / lineDist) + 1;
         int lineY = (int) (y / lineDist) + 1;
         Geometry g = new Geometry("wireframe grid", new Grid(lineX, lineY, lineDist));
@@ -158,7 +159,7 @@ public class Canvas extends SimpleApplication {
         return g;
     }
 
-    private void attachCoordinateAxes (Vector3f pos) {
+    private void attachCoordinateAxes(Vector3f pos) {
         Arrow arrow = new Arrow(Vector3f.UNIT_X);
         putShape(arrow, ColorRGBA.Red).setLocalTranslation(pos);
 
@@ -169,7 +170,7 @@ public class Canvas extends SimpleApplication {
         putShape(arrow, ColorRGBA.Blue).setLocalTranslation(pos);
     }
 
-    private Geometry putShape (Mesh shape, ColorRGBA color) {
+    private Geometry putShape(Mesh shape, ColorRGBA color) {
         Geometry g = new Geometry("coordinate axis", shape);
         Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
         mat.getAdditionalRenderState().setWireframe(true);
@@ -205,7 +206,7 @@ public class Canvas extends SimpleApplication {
         return true;
     }*/
 
-    private Geometry line (Vector3f inizio, Vector3f fine, ColorRGBA colore) {
+    private Geometry line(Vector3f inizio, Vector3f fine, ColorRGBA colore) {
         Mesh lineMesh = new Mesh();
         lineMesh.setMode(Mesh.Mode.Lines);
         lineMesh.setBuffer(VertexBuffer.Type.Position, 3, new float[]{inizio.x, inizio.y, inizio.z, fine.x, fine.y, fine.z});
@@ -220,7 +221,7 @@ public class Canvas extends SimpleApplication {
         return lineGeometry;
     }
 
-    private Vector3f pointBetween (Vector3f inizio, Vector3f fine, float percentuale) {
+    private Vector3f pointBetween(Vector3f inizio, Vector3f fine, float percentuale) {
         Vector3f point = new Vector3f();
         point.setX(inizio.x + percentuale * (fine.x - inizio.x));
         point.setY(inizio.y + percentuale * (fine.y - inizio.y));
@@ -228,7 +229,7 @@ public class Canvas extends SimpleApplication {
         return point;
     }
 
-    private void generateTerrain () {
+    private void generateTerrain() {
 
         //* 1. Create terrain material and load four textures into it. *//*
         Material mat_terrain = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
@@ -262,7 +263,7 @@ public class Canvas extends SimpleApplication {
         terrain.addControl(control);
     }
 
-    public boolean isCharged () {
+    public boolean isCharged() {
         return charged;
     }
 
@@ -280,14 +281,14 @@ public class Canvas extends SimpleApplication {
         }
     }*/
 
-    public boolean newFrame (Frame frame) {
+    public boolean newFrame(Frame frame) {
         if (!frameListGeometryHashMap.containsKey(frame)) {
             frameListGeometryHashMap.put(frame, new HashMap<>());
         }
         return true;
     }
 
-    public void newTransmission (Frame frame, Transmission transmission) {
+    public void newTransmission(Frame frame, Transmission transmission) {
         if (!frameListGeometryHashMap.get(frame).containsKey(transmission)) {
 
             Vector3f position_1 = sensorSpatialHashMap.get(transmission.getSender()).getLocalTranslation();
@@ -301,7 +302,14 @@ public class Canvas extends SimpleApplication {
             Geometry lineGeometry = new Geometry("link", lineMesh);
             Material lineMaterial = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
 
-            lineMaterial.setColor("Color", ColorRGBA.Green);
+            if (!colorRGBAHashMap.containsKey(frame)) {
+                ColorRGBA colorRGBA = ColorRGBA.randomColor();
+                lineMaterial.setColor("Color", colorRGBA);
+                colorRGBAHashMap.put(frame, colorRGBA);
+            } else {
+                lineMaterial.setColor("Color", colorRGBAHashMap.get(frame));
+            }
+
             //lineMaterial.getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
 
             lineGeometry.setMaterial(lineMaterial);
@@ -337,24 +345,24 @@ public class Canvas extends SimpleApplication {
         }
     }
 
-    public void deleteTransmission (Frame frame, Transmission transmission) {
+    public void deleteTransmission(Frame frame, Transmission transmission) {
         if (frameListGeometryHashMap.containsKey(frame) && frameListGeometryHashMap.get(frame).containsKey(transmission)) {
             frameListGeometryHashMap.get(frame).get(transmission).removeFromParent();
         }
     }
 
-    public void simpleUpdate (float tpf) {
-        hudText.setText("- Sim Time: " + context.getSimTime() + "\n- Frame in circolo: " + context.getFrames().size() + "\n- Numero di sensori:" +  context.getSensors().size());
+    public void simpleUpdate(float tpf) {
+        hudText.setText("- Sim Time: " + context.getSimTime() + "\n- Frame in circolo: " + context.getFrames().size() + "\n- Numero di sensori:" + context.getSensors().size());
         updateSensorsPositions();
         //updateLinksPosition();
 
 
-        for (Sensor sensor:sensorSpatialHashMap.keySet()) {
-            if(!sensor.isSink()) {
-                if(!sensor.isTransmitting()){
-                    updateSensorColor(sensor,ColorRGBA.Blue);
-                }else {
-                    updateSensorColor(sensor,ColorRGBA.Red);
+        for (Sensor sensor : sensorSpatialHashMap.keySet()) {
+            if (!sensor.isSink()) {
+                if (!sensor.isTransmitting()) {
+                    updateSensorColor(sensor, ColorRGBA.Blue);
+                } else {
+                    updateSensorColor(sensor, ColorRGBA.Red);
                 }
             }
 
@@ -362,7 +370,7 @@ public class Canvas extends SimpleApplication {
 
     }
 
-    public void updateSensorColor(Sensor sensor,ColorRGBA colorRGBA) {
+    public void updateSensorColor(Sensor sensor, ColorRGBA colorRGBA) {
         Geometry sender = (Geometry) sensorSpatialHashMap.get(sensor);
 
         sender.getMaterial().setColor("Color", colorRGBA);

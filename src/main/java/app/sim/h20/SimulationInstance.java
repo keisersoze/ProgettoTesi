@@ -1,7 +1,7 @@
 package app.sim.h20;
 
 import app.H2OSim;
-import app.MyLib;
+import app.sim.MyLib;
 import app.core.Event;
 import app.core.Scheduler;
 import app.factory.CoreFactory;
