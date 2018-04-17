@@ -23,16 +23,21 @@ public class HandleTransmission implements Action {
         Sensor sender = event.getSensor();
         int numHop = event.getInt();
 
+        sender.setTransmitting(true);
+
         for (Sensor receiver : sender.getNeighbors()) {
 
             Transmission transmission = context.getModelFactory().getTransmission(sender, receiver, frame, numHop);
 
-            frame.getTransmissionHistory().add(transmission);
+            //frame.getTransmissionHistory().add(transmission);
 
             double time = sender.getEuclideanDistance(receiver) / H2OSim.SOUND_SPEED;
             Event e = context.getCoreFactory().getEvent(EventTypes.ReceivingTransmissionEvent, time, context, transmission);
             context.getScheduler().addEvent(e);
         }
+        double time = frame.getSize() / H2OSim.SENSOR_BANDWIDTH;
+        Event e = context.getCoreFactory().getEvent(EventTypes.EndTransmissionEvent,time,context,sender);
+        context.getScheduler().addEvent(e);
 
     }
 

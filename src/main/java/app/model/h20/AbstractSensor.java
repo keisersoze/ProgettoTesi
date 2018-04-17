@@ -11,10 +11,15 @@ public abstract class AbstractSensor implements Sensor {
     private boolean sink = false;
     private List<Sensor> neighbors;
     private Vector3f position;
+    private boolean transmitting;
+    private boolean receiving;
 
     public AbstractSensor (float x, float y, float z) {
         position = new Vector3f(x, y, z);
         neighbors = new ArrayList<>();
+        transmitting = false;
+        receiving = false;
+
     }
 
     @Override
@@ -85,5 +90,25 @@ public abstract class AbstractSensor implements Sensor {
     @Override
     public void setOffsetPosition (float x, float y, float z) {
         position.addLocal(x, y, z);
+    }
+
+    @Override
+    public boolean isTransmitting() {
+        return transmitting;
+    }
+
+    @Override
+    public boolean isReceiving() {
+        return receiving;
+    }
+
+    @Override
+    public void setTransmitting(boolean transmitting) {
+        this.transmitting = transmitting;
+    }
+
+    @Override
+    public void setReceiving(boolean receiving) {
+        this.receiving = receiving;
     }
 }

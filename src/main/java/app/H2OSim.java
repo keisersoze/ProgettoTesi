@@ -17,7 +17,7 @@ public class H2OSim {
     public static final int LAMDA = 3;
     public static final int NTHREADS = 1;
     public static final int NEVENTS = 100000;
-    public static final double MAX_DISTANCE = 52;
+    public static final double MAX_DISTANCE = 50;
     public static final double SCALE = 10;
 
 

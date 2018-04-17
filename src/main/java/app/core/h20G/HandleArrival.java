@@ -30,7 +30,12 @@ public class HandleArrival implements Action {
         SimContext context = event.getContext();
 
         List<Sensor> sensors = context.getSensors();
-        Sensor owner = sensors.get(context.getMarsenneTwister().nextInt(sensors.size())); //prendo un sensore a caso
+
+        Sensor owner = null;
+        do {
+            owner = sensors.get(context.getMarsenneTwister().nextInt(sensors.size())); //prendo un sensore a caso
+        }while (owner.isTransmitting()||owner.isSink());
+
 
         double x = context.getMarsenneTwister().nextDouble();
         double packetSize = x < H2OSim.MAX_FRAME_RATE ? H2OSim.MAX_FRAME_SIZE : H2OSim.MAX_FRAME_SIZE * (1 - x);
@@ -43,7 +48,7 @@ public class HandleArrival implements Action {
         }
         context.getFrames().add(frame);
 
-        Event e = context.getCoreFactory().getEvent(EventTypes.TrasmissionEvent, 0, context, frame, owner, 0);
+        Event e = context.getCoreFactory().getEvent(EventTypes.TransmissionEvent, 0, context, frame, owner, 0);
 
         context.getScheduler().addEvent(e);
     }

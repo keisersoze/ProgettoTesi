@@ -1,44 +1,19 @@
 package app.core.h20G;
 
 import app.Canvas;
-import app.H2OSim;
-import app.core.Action;
 import app.core.Event;
-import app.factory.h20.EventTypes;
-import app.model.Frame;
-import app.model.Sensor;
-import app.model.Transmission;
-import app.sim.SimContext;
 
-
-public class HandleEndTransmission implements Action {
-
+public class HandleEndTransmission extends app.core.h20.actions.logic.HandleEndTransmission {
     private Canvas canvas;
 
-    public HandleEndTransmission (Canvas canvas) {
+    public HandleEndTransmission(Canvas canvas) {
         this.canvas = canvas;
     }
 
     @Override
-    public void execute (Event event) {
+    public void execute(Event e) {
 
-        SimContext context = event.getContext();
-        Transmission transmission = event.getTransmission();
-        Frame frame = transmission.getFrame();
-        Sensor receiver = transmission.getReceiver();
-        int numHop = transmission.getHop() + 1;
-
-        if (transmission.isSuccessfull()) {
-            if (!transmission.getReceiver().isSink()) {
-                if (transmission.getSender().getY() + H2OSim.THRESHOLD < transmission.getReceiver().getY()) {   // Decido se ritrasmettere in base alla profondità
-                    Event e = context.getCoreFactory().getEvent(EventTypes.TrasmissionEvent, 0, context, frame, receiver, numHop);
-                    context.getScheduler().addEvent(e);
-                } else {
-                    canvas.enqueue(() -> canvas.deleteTransmission(frame, transmission));
-                }
-            } else {
-
-            }
-        }
+        super.execute(e);
+        //canvas.enqueue(() -> canvas.endTransmission(e.getSensor()));
     }
 }

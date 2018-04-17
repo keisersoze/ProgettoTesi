@@ -7,6 +7,7 @@ import app.core.h20.actions.stats.UpdateStats;
 import app.core.h20.actions.utility.Reschedule;
 import app.core.h20.actions.utility.RescheduleExpRandom;
 import app.core.h20.events.BaseEvent;
+import app.core.h20.events.SensorEvent;
 import app.core.h20.events.SensorFrameEvent;
 import app.core.h20.events.TransmissionEvent;
 import app.factory.CoreFactory;
@@ -16,7 +17,7 @@ import app.model.Transmission;
 import app.sim.SimContext;
 
 public class MyCoreFactory implements CoreFactory {
-    private HandleEndTransmission handleEndTrasmission;
+    private HandleEndReception handleEndTrasmission;
     private HandleTransmission handleTransmission;
     private MoveSensors moveSensors;
     private HandleArrival handleArrival;
@@ -25,6 +26,7 @@ public class MyCoreFactory implements CoreFactory {
     private Reschedule reschedule;
     private RescheduleExpRandom rescheduleExpRandom;
     private HandleReception handleReception;
+    private HandleEndTransmission handleEndTransmission;
 
 
     @Override
@@ -62,6 +64,11 @@ public class MyCoreFactory implements CoreFactory {
                 handleReception = new HandleReception();
             }
             return handleReception;
+        }else if (type.equalsIgnoreCase(ActionTypes.HandleEndTransmission)) {
+            if (handleEndTransmission == null) {
+                handleEndTransmission = new HandleEndTransmission();
+            }
+            return handleEndTransmission;
         }
 
         return null;
@@ -120,9 +127,9 @@ public class MyCoreFactory implements CoreFactory {
         }
 
         Event e = null;
-        if (type.equalsIgnoreCase(EventTypes.EndTrasmissionEvent)) {
+        if (type.equalsIgnoreCase(EventTypes.EndReceptionEvent)) {
             e = new TransmissionEvent(time, context, transmission);
-            e.addAction(getAction(ActionTypes.HandleEndTrasmission));
+            e.addAction(getAction(ActionTypes.HandleEndReception));
             e.addAction(getAction(ActionTypes.UpdateSNR));
 
         } else if (type.equalsIgnoreCase((EventTypes.ReceivingTransmissionEvent))) {
@@ -140,11 +147,26 @@ public class MyCoreFactory implements CoreFactory {
             return null;
         }
         Event e = null;
-        if (type.equalsIgnoreCase(EventTypes.TrasmissionEvent)) {
+        if (type.equalsIgnoreCase(EventTypes.TransmissionEvent)) {
             e = new SensorFrameEvent(time, context, frame, sensor, hop);
-            e.addAction(getAction(ActionTypes.HandleTrasmission));
+            e.addAction(getAction(ActionTypes.HandleTransmission));
             e.addAction(getAction(ActionTypes.UpdateSNR));
         }
+        return e;
+    }
+
+    @Override
+    public Event getEvent(String type, double time, SimContext context, Sensor sensor) {
+
+        if (type == null) {
+            return null;
+        }
+        Event e = null;
+        if (type.equalsIgnoreCase(EventTypes.EndTransmissionEvent)) {
+            e = new SensorEvent(time, context,sensor);
+            e.addAction(getAction(ActionTypes.HandleEndTransmission));
+        }
+
         return e;
     }
 }

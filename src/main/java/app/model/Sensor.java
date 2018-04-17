@@ -33,4 +33,12 @@ public interface Sensor {
     void setSink (boolean x);
 
     void setOffsetPosition (float x, float y, float z);
+
+    boolean isTransmitting();
+
+    void setTransmitting(boolean x);
+
+    boolean isReceiving();
+
+    void setReceiving(boolean x);
 }

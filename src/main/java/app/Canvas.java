@@ -10,10 +10,12 @@ import com.jme3.font.BitmapText;
 import com.jme3.font.Rectangle;
 import com.jme3.light.DirectionalLight;
 import com.jme3.material.Material;
+import com.jme3.material.RenderState;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
+import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.*;
 import com.jme3.scene.debug.Arrow;
 import com.jme3.scene.debug.Grid;
@@ -23,6 +25,7 @@ import com.jme3.terrain.geomipmap.TerrainQuad;
 import com.jme3.terrain.heightmap.HillHeightMap;
 import com.jme3.texture.Texture;
 
+import java.util.AbstractMap;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,7 +36,7 @@ public class Canvas extends SimpleApplication {
     private boolean charged;
     private HashMap<Frame, HashMap<Transmission, Geometry>> frameListGeometryHashMap;
     private HashMap<Sensor, Spatial> sensorSpatialHashMap;
-
+    private HashMap<Sensor, Map.Entry<Sphere,Geometry>> sensorBubbleHashMap;
     private BitmapText hudText;
 
     public Canvas (SimContext context) {
@@ -41,6 +44,7 @@ public class Canvas extends SimpleApplication {
         frameListGeometryHashMap = new HashMap<>();
         sensorSpatialHashMap = new HashMap<>();
         charged = false;
+        sensorBubbleHashMap = new HashMap<>();
     }
 
     public void simpleInitApp () {
@@ -77,6 +81,7 @@ public class Canvas extends SimpleApplication {
     private void updateSensorsPositions () {
         for (Map.Entry<Sensor, Spatial> entry : sensorSpatialHashMap.entrySet()) {
             entry.getValue().setLocalTranslation(entry.getKey().getPosition());     //TODO: Da testare se tine la referenza al sensor
+
         }
     }
 
@@ -92,10 +97,12 @@ public class Canvas extends SimpleApplication {
 
                 sphere_material.setColor("Color", ColorRGBA.Blue);
 
+
+
                 sphere_geometry.setMaterial(sphere_material);
                 sphere_geometry.updateModelBound();
 
-                sensorSpatialHashMap.put(sensor, sphere_geometry);
+                sensorSpatialHashMap.put(sensor,sphere_geometry);
                 rootNode.attachChild(sphere_geometry);
             } else {
                 Spatial sink = assetManager.loadModel("Models/HarborBuoy.obj");
@@ -172,6 +179,29 @@ public class Canvas extends SimpleApplication {
         g.setLocalScale(10f);
         rootNode.attachChild(g);
         return g;
+    }
+
+    public boolean newBubble(Sensor sensor){
+        Sphere sphere = new Sphere(50, 50, 0.5f);
+        Geometry sphere_geometry = new Geometry("Sphere", sphere);
+
+        sphere_geometry.setLocalTranslation(sensor.getPosition());
+
+        Material sphere_material = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+
+        sphere_material.setColor("Color", new ColorRGBA(1f,1f,1f,0.2f));
+
+        sphere_material.getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
+
+        sphere_geometry.setQueueBucket(RenderQueue.Bucket.Translucent);
+
+        sphere_geometry.setMaterial(sphere_material);
+        sphere_geometry.updateModelBound();
+
+        sensorSpatialHashMap.put(sensor, sphere_geometry);
+        rootNode.attachChild(sphere_geometry);
+        sensorBubbleHashMap.put(sensor,new AbstractMap.SimpleEntry<>(sphere,sphere_geometry));
+        return true;
     }
 
     private Geometry line (Vector3f inizio, Vector3f fine, ColorRGBA colore) {
@@ -316,6 +346,35 @@ public class Canvas extends SimpleApplication {
         hudText.setText("- Sim Time: " + context.getSimTime() + "\n- Frame in circolo: " + context.getFrames().size() + "\n- Numero di sensori:" +  context.getSensors().size());
         updateSensorsPositions();
         //updateLinksPosition();
+
+
+        for (Sensor sensor:sensorSpatialHashMap.keySet()) {
+            if(!sensor.isSink()) {
+                if(!sensor.isTransmitting()){
+                    updateSensorColor(sensor,ColorRGBA.Blue);
+                }else {
+                    updateSensorColor(sensor,ColorRGBA.Red);
+                }
+            }
+
+        }
+
+
+        for (Map.Entry<Sensor,Map.Entry<Sphere,Geometry>>  entry: sensorBubbleHashMap.entrySet() ) {
+            if (entry.getKey().isTransmitting()  && entry.getValue().getKey().getRadius()<H2OSim.MAX_DISTANCE)
+                entry.getValue().getKey().updateGeometry(50,50, (float) context.getSimTime()*H2OSim.SOUND_SPEED);
+            else {
+                entry.getValue().getKey().updateGeometry(50,50, 0);
+                //sensorBubbleHashMap.remove(entry.getKey());
+            }
+        }
+    }
+
+    public void updateSensorColor(Sensor sensor,ColorRGBA colorRGBA) {
+        Geometry sender = (Geometry) sensorSpatialHashMap.get(sensor);
+
+        sender.getMaterial().setColor("Color", colorRGBA);
+        sender.updateModelBound();
     }
 
 }

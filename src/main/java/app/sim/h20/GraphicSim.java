@@ -46,16 +46,16 @@ public class GraphicSim extends AbstractSimIstance {
         GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
         DisplayMode[] modes = device.getDisplayModes();
         int i = 0; // note: there are usually several, let's pick the first
-        settings.setResolution(modes[i].getWidth(), modes[i].getHeight());
+        settings.setResolution(1024,700);
         settings.setFrequency(modes[i].getRefreshRate());
         settings.setBitsPerPixel(modes[i].getBitDepth());
-        settings.setFullscreen(device.isFullScreenSupported());
+        settings.setFullscreen(false);
 
         settings.setSamples(16);
         settings.setGammaCorrection(true);
         settings.setSettingsDialogImage("Interface/unive.jpg");
 
-        canvas.setShowSettings(true);
+        canvas.setShowSettings(false);
         canvas.setDisplayStatView(false);
         canvas.setSettings(settings);
     }
@@ -74,12 +74,12 @@ public class GraphicSim extends AbstractSimIstance {
             }
         }
 
-        for (int i = 0; i < 10; i++) {
-            Sensor s1 = modelFactory.getSensor(MyLib.random(0, 200), 0, MyLib.random(0, 200));
+        for (int i = 0; i < 300; i++) {
+            Sensor s1 = modelFactory.getSensor(MyLib.random(0, 200), MyLib.random(0, 80), MyLib.random(0, 200));
             sensors.add(s1);
         }
 
-        for (int i = 0; i < 20; i++) {
+        /*for (int i = 0; i < 20; i++) {
             Sensor s1 = modelFactory.getSensor(MyLib.random(0, 200), 50, MyLib.random(0, 200));
             sensors.add(s1);
         }
@@ -87,7 +87,7 @@ public class GraphicSim extends AbstractSimIstance {
         for (int i = 0; i < 30; i++) {
             Sensor s1 = modelFactory.getSensor(MyLib.random(0, 200), 80, MyLib.random(0, 200));
             sensors.add(s1);
-        }
+        }*/
 
         Sensor s1 = modelFactory.getSensor(MyLib.random(0, 200), 100, MyLib.random(0, 200));
         sensors.add(s1);
@@ -116,6 +116,7 @@ public class GraphicSim extends AbstractSimIstance {
 
 
         //aggiungo gli eventi periodici allo scheduler
+
         getScheduler().addEvent(arrival_evt);
 
         //avvio la simulazione
@@ -125,7 +126,7 @@ public class GraphicSim extends AbstractSimIstance {
             setSimTime(evt_scheduled.getTime());
             evt_scheduled.tick();
             try {
-                Thread.sleep(0);
+                Thread.sleep(0,5);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
