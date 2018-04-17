@@ -34,6 +34,7 @@ public class H2OSim {
 
     //variabili endogene
     public static final int SOUND_SPEED = 343; // m/s
+    public static final double T = 1 ; //TODO guardare come si chiama
 
     //pattern singleton per avere accesso alle risorse condivise
     private static H2OSim ourInstance = new H2OSim();
