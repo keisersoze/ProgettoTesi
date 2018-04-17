@@ -35,7 +35,7 @@ public class GraphicCoreFactory extends MyCoreFactory {
         if (type.equalsIgnoreCase(EventTypes.ArrivalEvent)) {
             e = new BaseEvent(time, context);
             e.addAction(new HandleArrival(canvas));
-            //e.addAction(new RescheduleExpRandom());           //TODO: da decommentare finito il testing
+            e.addAction(new RescheduleExpRandom());           //TODO: da decommentare finito il testing
         }
         if (e == null) {
             return super.getEvent(type, time, context);

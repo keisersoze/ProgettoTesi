@@ -2,7 +2,7 @@ package app.sim.h20;
 
 import app.Canvas;
 import app.H2OSim;
-import app.MyLib;
+import app.sim.MyLib;
 import app.core.Event;
 import app.core.Scheduler;
 import app.factory.CoreFactory;
@@ -119,7 +119,7 @@ public class GraphicSim extends AbstractSimIstance {
             setSimTime(evt_scheduled.getTime());
             evt_scheduled.tick();
             try {
-                Thread.sleep(10);
+                Thread.sleep(5);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
