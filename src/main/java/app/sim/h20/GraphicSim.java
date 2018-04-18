@@ -31,7 +31,7 @@ public class GraphicSim extends AbstractSimIstance {
 
     public GraphicSim (Collector collector, Scheduler scheduler) {
         super(collector, scheduler);
-        canvas = new Canvas(this, speed);
+        canvas = new Canvas(this);
         sensors = new ArrayList<>();
         frames = new CopyOnWriteArrayList<>();
         modelFactory = new MyModelFactory();
