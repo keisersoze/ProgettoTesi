@@ -1,4 +1,4 @@
-package app.factory.h20;
+package app.factory;
 
 public class ActionTypes {
 

@@ -1,4 +1,4 @@
-package app.factory.h20;
+package app.factory;
 
 public class EventTypes {
     public static final String BaseEvent = "BASE_EVENT";
