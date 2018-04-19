@@ -23,7 +23,9 @@ import java.util.concurrent.ExecutionException;
 
 public class GraphicSim extends AbstractSimIstance {
     private static Canvas canvas;
-    public static int speed;
+    public static int nanos;
+    public static long millis = 1;
+
     private final CoreFactory coreFactory;
 
     public GraphicSim (Collector collector, Scheduler scheduler) {
@@ -100,7 +102,7 @@ public class GraphicSim extends AbstractSimIstance {
             setSimTime(evt_scheduled.getTime());
             evt_scheduled.tick();
             try {
-                Thread.sleep(0, speed);
+                Thread.sleep(millis, nanos);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

@@ -97,21 +97,35 @@ public class Canvas extends SimpleApplication {
     }
 
     private void initKeys () {
-        inputManager.addMapping("More", new KeyTrigger(KeyInput.KEY_J));
-        inputManager.addMapping("Less", new KeyTrigger(KeyInput.KEY_K));
+        inputManager.addMapping("More_Nanos", new KeyTrigger(KeyInput.KEY_J));
+        inputManager.addMapping("Less_Nanos", new KeyTrigger(KeyInput.KEY_K));
 
-        inputManager.addListener(analogListener, "More", "Less");
+        inputManager.addMapping("More_Millis", new KeyTrigger(KeyInput.KEY_N));
+        inputManager.addMapping("Less_Millis", new KeyTrigger(KeyInput.KEY_M));
+
+        inputManager.addListener(analogListener, "More_Nanos", "Less_Nanos", "More_Millis", "Less_Millis");
     }
 
 
     private final AnalogListener analogListener = (name, value, tpf) -> {
-        if (name.equals("More")) {
-            GraphicSim.speed += 1;
+        if (name.equals("More_Nanos")) {
+            GraphicSim.nanos += 10;
+            if (GraphicSim.nanos > 999)
+                GraphicSim.nanos = 999;
         }
-        if (name.equals("Less")) {
-            GraphicSim.speed -= 1;
-            if (GraphicSim.speed < 0)
-                GraphicSim.speed = 0;
+        if (name.equals("Less_Nanos")) {
+            GraphicSim.nanos -= 10;
+            if (GraphicSim.nanos < 0)
+                GraphicSim.nanos = 0;
+        }
+
+        if (name.equals("More_Millis")) {
+            GraphicSim.millis += 1;
+        }
+        if (name.equals("Less_Millis")) {
+            GraphicSim.millis -= 1;
+            if (GraphicSim.millis < 0)
+                GraphicSim.millis = 0;
         }
     };
 
@@ -278,8 +292,10 @@ public class Canvas extends SimpleApplication {
     }
 
     public void simpleUpdate (float tpf) {
-        hudText.setText("- Sim Time: " + context.getSimTime() + "\n- Frame in circolo: " + context.getFrames().size() + "\n- Numero di sensori:" + context.getSensors().size() +
-                "\n Speed: " + GraphicSim.speed);
+        hudText.setText("- Sim Time: " + context.getSimTime() +
+                "\n- Frame generati: " + context.getFrames().size() +
+                "\n- Numero di sensori:" + context.getSensors().size() +
+                "\n Millis: " + GraphicSim.millis + "," + GraphicSim.nanos);
         updateSensors();
         updateLinks();
     }

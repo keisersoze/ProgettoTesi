@@ -6,7 +6,6 @@ import app.factory.DeploymentTypes;
 import app.sim.SimContext;
 import app.sim.h20.GraphicSim;
 import app.sim.h20.SimulationInstance;
-import app.stats.Sample;
 import app.stats.h20.BaseCollector;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -15,9 +14,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -26,35 +23,34 @@ public class H20Sim extends Application {
     //parametri simulazione
     public static final double MU = 3;
     public static final double LAMDA = 0.1;
-    public static final int NTHREADS = 100;
+
+    private static final int NTHREADS = 5;
     public static final int NEVENTS = 200000;
+
     public static final double MAX_DISTANCE = 50;
     public static final double SCALE = 10;
 
-
-    public static final boolean CANVAS_MODE = false;
+    private static final boolean CANVAS_MODE = true;
 
     public static final int SENSOR_BANDWIDTH = 1000; // b/s
     public static final int MAX_FRAME_SIZE = 1000; //bit (200-1600)
     public static final double MAX_FRAME_RATE = 0.9;
-    public static final double BATTERY_LIFE = 1000; // mA
-    public static final int THRESHOLD = 10;
+
+    public static final int THRESHOLD = 1;
     public static final double SENSIBILITY = -106; //dBm
     public static final double SENSOR_POWER = 5; //dB
     public static final double SENSOR_FREQUENCY = 2400; //HZ
-    public static final String DEPLOYMENT_TYPE = DeploymentTypes.LayerDeployment;
 
-
+    public static final String DEPLOYMENT_TYPE = DeploymentTypes.BaseDeployment;
 
     //variabili endogene
     public static final int SOUND_SPEED = 343; // m/s
     public static final double T = 1; //TODO guardare come si chiama
 
+    private static BaseCollector collector = new BaseCollector();
+    private static Map<Thread, SimContext> threadContextMap = new HashMap<>();
 
-    public static BaseCollector collector = new BaseCollector();
-    public static Map<String, SimContext> contextList = new HashMap<>();
-
-    public static void main(String[] args) {
+    public static void main (String[] args) {
 
         if (CANVAS_MODE) {
             new GraphicSim(collector, new DefaultScheduler()).run();
@@ -62,40 +58,34 @@ public class H20Sim extends Application {
         } else {
             //inizializzazione
 
-            List<Thread> instances = new ArrayList<>();
-
             //avvio dei thread
             for (int i = 0; i < NTHREADS; i++) {
                 String instance_name = String.valueOf(i);
                 collector.addStatSource(instance_name);
                 SimulationInstance context = new SimulationInstance(collector, new DefaultScheduler());
-                instances.add(new Thread(context, instance_name));
-                contextList.put(instance_name, context);
-                instances.get(i).start();
+                Thread thread = new Thread(context, instance_name);
+                threadContextMap.put(thread, context);
+                thread.start();
             }
 
 
             //aspetta che tutte le istanze siano terminate
-            for (int i = 0; i < NTHREADS; i++) {
+            for (Thread t : threadContextMap.keySet()) {
                 try {
-                    instances.get(i).join();
+                    t.join();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
 
             //stampo le statistiche
-            for (int i = 0; i < NTHREADS; i++) {
-                System.out.println(collector.getSourceSamples(String.valueOf(i)));
-            }
-
             launch(args);
 
         }
     }
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start (Stage stage) {
         //stage.setTitle("Line Chart Sample");
         //defining the axes
         final NumberAxis xAxis = new NumberAxis();
@@ -103,8 +93,7 @@ public class H20Sim extends Application {
         xAxis.setLabel("Samples");
         yAxis.setLabel("% rate successfull");
         //creating the chart
-        final LineChart<Number, Number> lineChart =
-                new LineChart<Number, Number>(xAxis, yAxis);
+        final LineChart<Number, Number> lineChart = new LineChart<Number, Number>(xAxis, yAxis);
 
         lineChart.setTitle("Success rate (Frame)");
         //defining a series
@@ -115,20 +104,18 @@ public class H20Sim extends Application {
         int xCont = 0;
         int nMinSamples = -1;
 
-        for (int i = 0; i < NTHREADS; i++) {
-            int x = (int) (contextList.get(String.valueOf(i)).getSimTime() * LAMDA);
-            if (x < nMinSamples || nMinSamples == -1)
-                nMinSamples = x;
+        for (Thread t : threadContextMap.keySet()) {
+            int x = (int) (threadContextMap.get(t).getSimTime() * LAMDA);
+            if (x < nMinSamples || nMinSamples == -1) { nMinSamples = x; }
         }
 
         for (int j = 0; j < nMinSamples; j++) {
             double successfullRateAcc = 0;
-            for (int i = 0; i < NTHREADS; i++) {
-                successfullRateAcc += collector.getSourceSamples(String.valueOf(i)).get(j).getSuccessfullRate()*100;
+            for (Thread t : threadContextMap.keySet()) {
+                successfullRateAcc += collector.getSourceSamples(t.getName()).get(j).getSuccessfullRate() * 100;
             }
             series.getData().add(new XYChart.Data(xCont, successfullRateAcc / NTHREADS));
             xCont++;
-
         }
 
 
