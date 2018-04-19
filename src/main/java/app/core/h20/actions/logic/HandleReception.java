@@ -23,6 +23,7 @@ public class HandleReception implements Action {
             context.getScheduler().addEvent(e);
         } else {
             transmission.setArrived(true);
+            transmission.setSuccessfull(false);
         }
 
     }

@@ -36,28 +36,28 @@ public class SimulationInstance extends AbstractSimIstance implements Runnable {
         Event stats_evt = getCoreFactory().getEvent(EventTypes.StatisticEvent, 0, this);
 
 
-
         //imposto gli eventi periodici
         move_evt.setInterval(10);
-        stats_evt.setInterval(1/ H20Sim.LAMDA);
+        stats_evt.setInterval(1 / H20Sim.LAMDA);
 
         //aggiungo gli eventi periodici allo scheduler
         getScheduler().addEvent(arrival_evt);
         getScheduler().addEvent(stats_evt);
         //avvio la simulazione
 
-        for (int i = 0; i < H20Sim.NEVENTS; i++) {
+        for (double i = 0; i < H20Sim.NEVENTS; i++) {
             Event evt_scheduled = getScheduler().scheduleEvent();
             setSimTime(evt_scheduled.getTime());
             evt_scheduled.tick();
+            System.out.println((i / H20Sim.NEVENTS) * 100 + "% Thread:" + Thread.currentThread().getName());
         }
 
         System.out.println(getSimTime());
 
         int cont = 0;
         for (LinkedList<Double> list : getFramesArrived().values()) {
-            if(list.size()>0)
-                cont ++ ;
+            if (list.size() > 0)
+                cont++;
 
 
         }

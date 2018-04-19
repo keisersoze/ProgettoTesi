@@ -25,14 +25,14 @@ public class H20Sim extends Application {
 
     //parametri simulazione
     public static final double MU = 3;
-    public static final double LAMDA = 1;
-    public static final int NTHREADS = 2;
-    public static final int NEVENTS = 2000000;
+    public static final double LAMDA = 0.1;
+    public static final int NTHREADS = 100;
+    public static final int NEVENTS = 200000;
     public static final double MAX_DISTANCE = 50;
     public static final double SCALE = 10;
 
 
-    public static final boolean CANVAS_MODE = true;
+    public static final boolean CANVAS_MODE = false;
 
     public static final int SENSOR_BANDWIDTH = 1000; // b/s
     public static final int MAX_FRAME_SIZE = 1000; //bit (200-1600)
@@ -42,7 +42,7 @@ public class H20Sim extends Application {
     public static final double SENSIBILITY = -106; //dBm
     public static final double SENSOR_POWER = 5; //dB
     public static final double SENSOR_FREQUENCY = 2400; //HZ
-    public static final String DEPLOYMENT_TYPE = DeploymentTypes.BaseDeployment;
+    public static final String DEPLOYMENT_TYPE = DeploymentTypes.LayerDeployment;
 
 
 
@@ -96,19 +96,20 @@ public class H20Sim extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        stage.setTitle("Line Chart Sample");
+        //stage.setTitle("Line Chart Sample");
         //defining the axes
         final NumberAxis xAxis = new NumberAxis();
         final NumberAxis yAxis = new NumberAxis();
-        xAxis.setLabel("Number of Month");
+        xAxis.setLabel("Samples");
+        yAxis.setLabel("% rate successfull");
         //creating the chart
         final LineChart<Number, Number> lineChart =
                 new LineChart<Number, Number>(xAxis, yAxis);
 
-        lineChart.setTitle("Stock Monitoring, 2010");
+        lineChart.setTitle("Success rate (Frame)");
         //defining a series
         XYChart.Series series = new XYChart.Series();
-        series.setName("My portfolio");
+        //series.setName("My portfolio");
         //populating the series with data
 
         int xCont = 0;
@@ -123,7 +124,7 @@ public class H20Sim extends Application {
         for (int j = 0; j < nMinSamples; j++) {
             double successfullRateAcc = 0;
             for (int i = 0; i < NTHREADS; i++) {
-                successfullRateAcc += collector.getSourceSamples(String.valueOf(i)).get(j).getSuccessfullRate();
+                successfullRateAcc += collector.getSourceSamples(String.valueOf(i)).get(j).getSuccessfullRate()*100;
             }
             series.getData().add(new XYChart.Data(xCont, successfullRateAcc / NTHREADS));
             xCont++;
