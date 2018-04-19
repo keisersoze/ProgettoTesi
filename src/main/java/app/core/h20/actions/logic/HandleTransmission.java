@@ -1,9 +1,9 @@
 package app.core.h20.actions.logic;
 
-import app.H2OSim;
+import app.H20Sim;
 import app.core.Action;
 import app.core.Event;
-import app.factory.h20.EventTypes;
+import app.factory.EventTypes;
 import app.model.Frame;
 import app.model.Sensor;
 import app.model.Transmission;
@@ -31,11 +31,11 @@ public class HandleTransmission implements Action {
 
             //frame.getTransmissionHistory().add(transmission);
 
-            double time = sender.getEuclideanDistance(receiver) / H2OSim.SOUND_SPEED;
+            double time = sender.getEuclideanDistance(receiver) / H20Sim.SOUND_SPEED;
             Event e = context.getCoreFactory().getEvent(EventTypes.ReceivingTransmissionEvent, time, context, transmission);
             context.getScheduler().addEvent(e);
         }
-        double time = frame.getSize() / H2OSim.SENSOR_BANDWIDTH;
+        double time = frame.getSize() / H20Sim.SENSOR_BANDWIDTH;
         Event e = context.getCoreFactory().getEvent(EventTypes.EndTransmissionEvent,time,context,sender);
         context.getScheduler().addEvent(e);
 

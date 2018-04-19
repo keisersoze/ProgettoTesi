@@ -1,10 +1,10 @@
 package app.core.h20G;
 
 import app.Canvas;
-import app.H2OSim;
+import app.H20Sim;
 import app.core.Action;
 import app.core.Event;
-import app.factory.h20.EventTypes;
+import app.factory.EventTypes;
 import app.model.Frame;
 import app.model.Sensor;
 import app.model.Transmission;
@@ -30,7 +30,7 @@ public class HandleTransmission implements Action {
 
         for (Sensor receiver : sender.getNeighbors()) {
 
-            double time = sender.getEuclideanDistance(receiver) / H2OSim.SOUND_SPEED;
+            double time = sender.getEuclideanDistance(receiver) / H20Sim.SOUND_SPEED;
 
             Transmission transmission = context.getModelFactory().getTransmission(sender, receiver, frame, numHop);
             transmission.setTime(context.getSimTime());    // Per il calcolo di quanto sta avanzando la trasmissione (la linea)
@@ -44,7 +44,7 @@ public class HandleTransmission implements Action {
             context.getScheduler().addEvent(e);
         }
 
-        double time = frame.getSize() / H2OSim.SENSOR_BANDWIDTH;
+        double time = frame.getSize() / H20Sim.SENSOR_BANDWIDTH;
         Event e = context.getCoreFactory().getEvent(EventTypes.EndTransmissionEvent, time, context, sender);
         context.getScheduler().addEvent(e);
 

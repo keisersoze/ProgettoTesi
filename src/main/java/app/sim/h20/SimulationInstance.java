@@ -1,11 +1,11 @@
 package app.sim.h20;
 
-import app.H2OSim;
+import app.H20Sim;
 import app.core.Event;
 import app.core.Scheduler;
 import app.factory.CoreFactory;
 import app.factory.ModelFactory;
-import app.factory.h20.EventTypes;
+import app.factory.EventTypes;
 import app.factory.h20.MyCoreFactory;
 import app.factory.h20.MyModelFactory;
 import app.model.Frame;
@@ -16,40 +16,15 @@ import app.stats.Collector;
 import java.util.*;
 
 public class SimulationInstance extends AbstractSimIstance implements Runnable {
-    private final List<Sensor> sensors;
-    private final List<Frame> frames;
-    private final ModelFactory modelFactory;
     private final CoreFactory coreFactory;
 
 
     public SimulationInstance(Collector collector, Scheduler scheduler) {
         super(collector, scheduler);
-        sensors = new ArrayList<>();
-        frames = new ArrayList<>();
-        modelFactory = new MyModelFactory();
         coreFactory = new MyCoreFactory();
-
     }
 
     public void run() {
-
-        for (int i = 0; i < 1000; i++) {
-            Sensor s1 = modelFactory.getSensor(MyLib.random(0, 200), MyLib.random(0, 80), MyLib.random(0, 200));
-            sensors.add(s1);
-        }
-
-        Sensor s1 = modelFactory.getSensor(MyLib.random(0, 200), 90, MyLib.random(0, 200));
-        sensors.add(s1);
-
-        Sensor s2 = modelFactory.getSensor(MyLib.random(0, 200), 90, MyLib.random(0, 200));
-        sensors.add(s2);
-
-        Sensor s3 = modelFactory.getSensor(MyLib.random(0, 200), 90, MyLib.random(0, 200));
-        sensors.add(s3);
-
-        s1.setSink(true);
-        s2.setSink(true);
-        s3.setSink(true);
 
         for (Sensor sensor : getSensors()) {
             sensor.setNeighbors(MyLib.calculateNeighbors(sensor, this));
@@ -64,14 +39,14 @@ public class SimulationInstance extends AbstractSimIstance implements Runnable {
 
         //imposto gli eventi periodici
         move_evt.setInterval(10);
-        stats_evt.setInterval(1/H2OSim.LAMDA);
+        stats_evt.setInterval(1/ H20Sim.LAMDA);
 
         //aggiungo gli eventi periodici allo scheduler
         getScheduler().addEvent(arrival_evt);
         getScheduler().addEvent(stats_evt);
         //avvio la simulazione
 
-        for (int i = 0; i < H2OSim.NEVENTS; i++) {
+        for (int i = 0; i < H20Sim.NEVENTS; i++) {
             Event evt_scheduled = getScheduler().scheduleEvent();
             setSimTime(evt_scheduled.getTime());
             evt_scheduled.tick();
@@ -86,7 +61,7 @@ public class SimulationInstance extends AbstractSimIstance implements Runnable {
 
 
         }
-        System.out.println(frames.size());
+        System.out.println(getFrames().size());
         System.out.println(cont);
     }
 
@@ -95,18 +70,5 @@ public class SimulationInstance extends AbstractSimIstance implements Runnable {
         return coreFactory;
     }
 
-    @Override
-    public List<Sensor> getSensors() {
-        return sensors;
-    }
 
-    @Override
-    public List<Frame> getFrames() {
-        return frames;
-    }
-
-    @Override
-    public ModelFactory getModelFactory() {
-        return modelFactory;
-    }
 }

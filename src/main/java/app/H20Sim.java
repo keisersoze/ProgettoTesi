@@ -2,6 +2,7 @@ package app;
 
 
 import app.core.h20.scheduler.DefaultScheduler;
+import app.factory.DeploymentTypes;
 import app.sim.SimContext;
 import app.sim.h20.GraphicSim;
 import app.sim.h20.SimulationInstance;
@@ -20,18 +21,18 @@ import java.util.List;
 import java.util.Map;
 
 
-public class H2OSim extends Application {
+public class H20Sim extends Application {
 
     //parametri simulazione
     public static final double MU = 3;
-    public static final double LAMDA = 0.1;
+    public static final double LAMDA = 1;
     public static final int NTHREADS = 2;
-    public static final int NEVENTS = 200000;
+    public static final int NEVENTS = 2000000;
     public static final double MAX_DISTANCE = 50;
     public static final double SCALE = 10;
 
 
-    public static final boolean CANVAS_MODE = false;
+    public static final boolean CANVAS_MODE = true;
 
     public static final int SENSOR_BANDWIDTH = 1000; // b/s
     public static final int MAX_FRAME_SIZE = 1000; //bit (200-1600)
@@ -41,6 +42,9 @@ public class H2OSim extends Application {
     public static final double SENSIBILITY = -106; //dBm
     public static final double SENSOR_POWER = 5; //dB
     public static final double SENSOR_FREQUENCY = 2400; //HZ
+    public static final String DEPLOYMENT_TYPE = DeploymentTypes.BaseDeployment;
+
+
 
     //variabili endogene
     public static final int SOUND_SPEED = 343; // m/s

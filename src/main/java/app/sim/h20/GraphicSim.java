@@ -1,12 +1,12 @@
 package app.sim.h20;
 
 import app.Canvas;
-import app.H2OSim;
+import app.H20Sim;
 import app.core.Event;
 import app.core.Scheduler;
 import app.factory.CoreFactory;
 import app.factory.ModelFactory;
-import app.factory.h20.EventTypes;
+import app.factory.EventTypes;
 import app.factory.h20.GraphicCoreFactory;
 import app.factory.h20.MyModelFactory;
 import app.model.Frame;
@@ -23,18 +23,12 @@ import java.util.concurrent.ExecutionException;
 
 public class GraphicSim extends AbstractSimIstance {
     private static Canvas canvas;
-    public static long speed;
-    public final List<Frame> frames;
-    private final List<Sensor> sensors;
-    private final ModelFactory modelFactory;
+    public static int speed;
     private final CoreFactory coreFactory;
 
     public GraphicSim (Collector collector, Scheduler scheduler) {
         super(collector, scheduler);
         canvas = new Canvas(this);
-        sensors = new ArrayList<>();
-        frames = new CopyOnWriteArrayList<>();
-        modelFactory = new MyModelFactory();
         coreFactory = new GraphicCoreFactory(canvas);
     }
 
@@ -75,20 +69,6 @@ public class GraphicSim extends AbstractSimIstance {
             }
         }
 
-        for (int i = 0; i < 300; i++) {
-            Sensor s1 = modelFactory.getSensor(MyLib.random(0, 200), MyLib.random(0, 80), MyLib.random(0, 200));
-            sensors.add(s1);
-        }
-
-        Sensor s1 = modelFactory.getSensor(MyLib.random(0, 200), 100, MyLib.random(0, 200));
-        sensors.add(s1);
-
-        Sensor s2 = modelFactory.getSensor(MyLib.random(0, 200), 100, MyLib.random(0, 200));
-        sensors.add(s2);
-
-        s1.setSink(true);
-        s2.setSink(true);
-
         for (Sensor sensor : getSensors()) {
             sensor.setNeighbors(MyLib.calculateNeighbors(sensor, this));
         }
@@ -115,33 +95,18 @@ public class GraphicSim extends AbstractSimIstance {
 
         //avvio la simulazione
 
-        for (int i = 0; i < H2OSim.NEVENTS; i++) {
+        for (int i = 0; i < H20Sim.NEVENTS; i++) {
             Event evt_scheduled = getScheduler().scheduleEvent();
             setSimTime(evt_scheduled.getTime());
             evt_scheduled.tick();
             try {
-                Thread.sleep(speed);
+                Thread.sleep(0, speed);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
 
         System.out.println(getSimTime() + " " + getSensors().get(0).getPosition());
-    }
-
-    @Override
-    public List<Sensor> getSensors () {
-        return sensors;
-    }
-
-    @Override
-    public List<Frame> getFrames () {
-        return frames;
-    }
-
-    @Override
-    public ModelFactory getModelFactory () {
-        return modelFactory;
     }
 
     @Override

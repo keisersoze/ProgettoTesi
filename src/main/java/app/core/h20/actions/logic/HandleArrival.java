@@ -1,14 +1,13 @@
 package app.core.h20.actions.logic;
 
-import app.H2OSim;
+import app.H20Sim;
 import app.core.Action;
 import app.core.Event;
-import app.factory.h20.EventTypes;
+import app.factory.EventTypes;
 import app.model.Frame;
 import app.model.Sensor;
 import app.sim.SimContext;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -34,7 +33,7 @@ public class HandleArrival implements Action {
         } while (owner.isTransmitting() || owner.isSink()); // accertarsi di avere "tanti" sensori
 
         double x = context.getMarsenneTwister().nextDouble();
-        double packetSize = x < H2OSim.MAX_FRAME_RATE ? H2OSim.MAX_FRAME_SIZE : H2OSim.MAX_FRAME_SIZE * (1 - x);
+        double packetSize = x < H20Sim.MAX_FRAME_RATE ? H20Sim.MAX_FRAME_SIZE : H20Sim.MAX_FRAME_SIZE * (1 - x);
 
         Frame frame = context.getModelFactory().getFrame(packetSize, owner,context.getSimTime());
         context.getFrames().add(frame);

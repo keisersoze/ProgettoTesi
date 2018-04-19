@@ -11,6 +11,8 @@ import app.core.h20G.HandleArrival;
 import app.core.h20G.HandleEndReception;
 import app.core.h20G.HandleEndTransmission;
 import app.core.h20G.HandleTransmission;
+import app.factory.ActionTypes;
+import app.factory.EventTypes;
 import app.model.Frame;
 import app.model.Sensor;
 import app.model.Transmission;

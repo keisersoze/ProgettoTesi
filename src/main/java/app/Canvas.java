@@ -314,7 +314,7 @@ public class Canvas extends SimpleApplication {
                     Sensor sender = transmission.getKey().getSender();
                     Sensor receiver = transmission.getKey().getReceiver();
 
-                    double distance = H2OSim.SOUND_SPEED * (context.getSimTime() - transmission.getKey().getTime());
+                    double distance = H20Sim.SOUND_SPEED * (context.getSimTime() - transmission.getKey().getTime());
                     double total = sender.getEuclideanDistance(receiver);
                     Vector3f point = Canvas.pointBetween(sender.getPosition(), receiver.getPosition(), (float) (distance / total));
 
