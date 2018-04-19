@@ -6,9 +6,14 @@ import app.sim.SimContext;
 import app.stats.Collector;
 import org.apache.commons.math3.random.MersenneTwister;
 
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
+
 public abstract class AbstractSimIstance implements SimContext {
     private final Scheduler scheduler;
     private final Collector collector;
+    private final Map<Frame, LinkedList<Double>> framesArrived;
 
     private final MersenneTwister marsenneTwister = new MersenneTwister();
     private double simTime;
@@ -20,6 +25,8 @@ public abstract class AbstractSimIstance implements SimContext {
         this.scheduler = scheduler;
         simTime = 0.0;
         nframes = 0;
+        framesArrived = new HashMap<>();
+
     }
 
     public Scheduler getScheduler () {
@@ -48,8 +55,8 @@ public abstract class AbstractSimIstance implements SimContext {
     }
 
     @Override
-    public void frameArrived (Frame frame) {
-        nframes++;
+    public Map<Frame, LinkedList<Double>> getFramesArrived() {
+        return framesArrived;
     }
 
 }

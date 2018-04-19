@@ -10,5 +10,5 @@ public interface ModelFactory {
 
     Transmission getTransmission (Sensor sender, Sensor receiver, Frame frame, int hop);
 
-    Frame getFrame (double size, Sensor owner);
+    Frame getFrame (double size, Sensor owner, double arrivalTime);
 }

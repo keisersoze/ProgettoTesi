@@ -75,7 +75,7 @@ public class GraphicSim extends AbstractSimIstance {
             }
         }
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 300; i++) {
             Sensor s1 = modelFactory.getSensor(MyLib.random(0, 200), MyLib.random(0, 80), MyLib.random(0, 200));
             sensors.add(s1);
         }
@@ -137,11 +137,6 @@ public class GraphicSim extends AbstractSimIstance {
     @Override
     public List<Frame> getFrames () {
         return frames;
-    }
-
-    @Override
-    public void addFrame (Frame frame) {
-        frames.add(frame);
     }
 
     @Override

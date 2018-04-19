@@ -11,4 +11,6 @@ public interface Frame {
     Sensor getOwner ();
 
     List<Transmission> getTransmissionHistory ();
+
+    double getArrivalTime();
 }

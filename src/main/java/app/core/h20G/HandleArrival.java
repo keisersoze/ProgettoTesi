@@ -40,7 +40,7 @@ public class HandleArrival implements Action {
         double x = context.getMarsenneTwister().nextDouble();
         double packetSize = x < H2OSim.MAX_FRAME_RATE ? H2OSim.MAX_FRAME_SIZE : H2OSim.MAX_FRAME_SIZE * (1 - x);
 
-        Frame frame = context.getModelFactory().getFrame(packetSize, owner);
+        Frame frame = context.getModelFactory().getFrame(packetSize, owner,context.getSimTime());
         try {
             canvas.enqueue(() -> canvas.newFrame(frame)).get();
         } catch (InterruptedException | ExecutionException e) {

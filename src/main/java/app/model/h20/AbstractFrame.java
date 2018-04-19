@@ -11,11 +11,13 @@ public abstract class AbstractFrame implements Frame {
     private double size;
     private Sensor owner;
     private List<Transmission> transmissions;
+    double arrivalTime;
 
-    public AbstractFrame (double size, Sensor owner) {
+    public AbstractFrame (double size, Sensor owner, double arrivalTime) {
         this.size = size;
         this.owner = owner;
         transmissions = new CopyOnWriteArrayList<>();
+        this.arrivalTime = arrivalTime;
     }
 
 
@@ -32,5 +34,10 @@ public abstract class AbstractFrame implements Frame {
     @Override
     public synchronized List<Transmission> getTransmissionHistory () {
         return transmissions;
+    }
+
+    @Override
+    public double getArrivalTime() {
+        return arrivalTime;
     }
 }

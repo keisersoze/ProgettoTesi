@@ -20,7 +20,7 @@ public class MyModelFactory implements ModelFactory {
     }
 
     @Override
-    public Frame getFrame (double size, Sensor owner) {
-        return new BaseFrame(size, owner);
+    public Frame getFrame (double size, Sensor owner, double arrivalTime) {
+        return new BaseFrame(size, owner, arrivalTime);
     }
 }

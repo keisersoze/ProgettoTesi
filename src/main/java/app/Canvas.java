@@ -106,10 +106,10 @@ public class Canvas extends SimpleApplication {
 
     private final AnalogListener analogListener = (name, value, tpf) -> {
         if (name.equals("More")) {
-            GraphicSim.speed += 10;
+            GraphicSim.speed += 1;
         }
         if (name.equals("Less")) {
-            GraphicSim.speed -= 10;
+            GraphicSim.speed -= 1;
             if (GraphicSim.speed < 0)
                 GraphicSim.speed = 0;
         }

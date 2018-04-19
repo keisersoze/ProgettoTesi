@@ -36,7 +36,25 @@ public class MyCoreFactory implements CoreFactory {
             return null;
         }
 
-        if (type.equalsIgnoreCase(ActionTypes.MoveSensors)) {
+        if (type.equalsIgnoreCase(ActionTypes.HandleEndReception)) {
+            if (handleEndReception == null) {
+                handleEndReception = new HandleEndReception();
+            }
+            return handleEndReception;
+
+        } else if (type.equalsIgnoreCase(ActionTypes.HandleTransmission)) {
+            if (handleTransmission == null) {
+                handleTransmission = new HandleTransmission();
+            }
+            return handleTransmission;
+
+        } else if (type.equalsIgnoreCase(ActionTypes.HandleArrival)) {
+            if (handleArrival == null) {
+                handleArrival = new HandleArrival();
+            }
+            return handleArrival;
+
+        } else if (type.equalsIgnoreCase(ActionTypes.MoveSensors)) {
             if (moveSensors == null) {
                 moveSensors = new MoveSensors();
             }
@@ -100,7 +118,7 @@ public class MyCoreFactory implements CoreFactory {
         if (type.equalsIgnoreCase(EventTypes.ArrivalEvent)) {
             e = new BaseEvent(time, context);
             e.addAction(getAction(ActionTypes.HandleArrival));
-            //e.addAction(new RescheduleExpRandom());           //TODO: da decommentare finito il testing
+            e.addAction(getAction(ActionTypes.RescheduleExpRandom));           //TODO: da decommentare finito il testing
 
         } else if (type.equalsIgnoreCase(EventTypes.BaseEvent)) {
             e = new BaseEvent(time, context);
