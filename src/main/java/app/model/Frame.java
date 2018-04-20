@@ -12,5 +12,5 @@ public interface Frame {
 
     List<Transmission> getTransmissionHistory ();
 
-    double getArrivalTime();
+    double getArrivalTime ();
 }

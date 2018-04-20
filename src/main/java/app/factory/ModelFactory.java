@@ -14,5 +14,5 @@ public interface ModelFactory {
 
     Frame getFrame (double size, Sensor owner, double arrivalTime);
 
-    List<Sensor> deploySensors(String deploymentType);
+    List<Sensor> deploySensors (String deploymentType);
 }

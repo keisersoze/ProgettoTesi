@@ -63,22 +63,22 @@ public abstract class AbstractSimIstance implements SimContext {
     }
 
     @Override
-    public Map<Frame, LinkedList<Double>> getFramesArrived() {
+    public Map<Frame, LinkedList<Double>> getFramesArrived () {
         return framesArrived;
     }
 
     @Override
-    public List<Sensor> getSensors() {
+    public List<Sensor> getSensors () {
         return sensors;
     }
 
     @Override
-    public List<Frame> getFrames() {
+    public List<Frame> getFrames () {
         return frames;
     }
 
     @Override
-    public ModelFactory getModelFactory() {
+    public ModelFactory getModelFactory () {
         return modelFactory;
     }
 

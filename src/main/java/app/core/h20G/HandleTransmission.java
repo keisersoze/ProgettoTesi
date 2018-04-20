@@ -38,7 +38,7 @@ public class HandleTransmission implements Action {
             Event e = context.getCoreFactory().getEvent(EventTypes.ReceivingTransmissionEvent, time, context, transmission);
 
             //if (transmission.getSender().getY() + H2OSim.THRESHOLD < transmission.getReceiver().getY()) {
-                canvas.enqueue(() -> canvas.newTransmission(frame, transmission));
+            canvas.enqueue(() -> canvas.newTransmission(frame, transmission));
             //}
 
             context.getScheduler().addEvent(e);

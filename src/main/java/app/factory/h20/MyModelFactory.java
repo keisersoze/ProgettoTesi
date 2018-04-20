@@ -30,17 +30,16 @@ public class MyModelFactory implements ModelFactory {
     }
 
     @Override
-    public List<Sensor> deploySensors(String deploymentType) {
-        if (deploymentType.equalsIgnoreCase(DeploymentTypes.BaseDeployment)){
+    public List<Sensor> deploySensors (String deploymentType) {
+        if (deploymentType.equalsIgnoreCase(DeploymentTypes.BaseDeployment)) {
             return baseDeployment();
-        }else if (deploymentType.equalsIgnoreCase(DeploymentTypes.LayerDeployment)){
+        } else if (deploymentType.equalsIgnoreCase(DeploymentTypes.LayerDeployment)) {
             return layerDeployment();
-        }else
-            return  null;
+        } else { return null; }
 
     }
 
-    private List<Sensor> layerDeployment() {
+    private List<Sensor> layerDeployment () {
         List<Sensor> sensors = new ArrayList<>();
 
         for (int i = 0; i < 100; i++) {
@@ -73,7 +72,7 @@ public class MyModelFactory implements ModelFactory {
         return sensors;
     }
 
-    private List<Sensor> baseDeployment() {
+    private List<Sensor> baseDeployment () {
         List<Sensor> sensors = new ArrayList<>();
 
         for (int i = 0; i < 500; i++) {

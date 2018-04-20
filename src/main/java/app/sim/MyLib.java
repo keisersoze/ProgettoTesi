@@ -31,8 +31,7 @@ public class MyLib {
     public static double calculateNoise (Sensor sensor, SimContext context) {
         double acc = 0;
         for (Sensor s : context.getSensors()) {
-            if (s.isTransmitting())
-                acc += powerReceived(s.getEuclideanDistance(sensor));
+            if (s.isTransmitting()) { acc += powerReceived(s.getEuclideanDistance(sensor)); }
         }
         return acc;
     }

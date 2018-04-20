@@ -9,11 +9,11 @@ public class StatsSample implements Sample {
     private double nFrames;
     private double nFramesArrived;
 
-    public StatsSample(SimContext context) {
+    public StatsSample (SimContext context) {
         int cont = 0;
         nFrames = context.getFrames().size();
-        for(LinkedList<Double> list : context.getFramesArrived().values()){
-            if(list.size() > 0){
+        for (LinkedList<Double> list : context.getFramesArrived().values()) {
+            if (list.size() > 0) {
                 cont++;
             }
         }
@@ -21,12 +21,12 @@ public class StatsSample implements Sample {
     }
 
     @Override
-    public double getSuccessfullRate() {
+    public double getSuccessfullRate () {
         return nFramesArrived / nFrames;
     }
 
     @Override
-    public String toString() {
+    public String toString () {
         return getSuccessfullRate() + " ";
     }
 }

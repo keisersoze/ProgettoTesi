@@ -4,27 +4,24 @@ import app.H20Sim;
 import app.core.Event;
 import app.core.Scheduler;
 import app.factory.CoreFactory;
-import app.factory.ModelFactory;
 import app.factory.EventTypes;
 import app.factory.h20.MyCoreFactory;
-import app.factory.h20.MyModelFactory;
-import app.model.Frame;
 import app.model.Sensor;
 import app.sim.MyLib;
 import app.stats.Collector;
 
-import java.util.*;
+import java.util.LinkedList;
 
 public class SimulationInstance extends AbstractSimIstance implements Runnable {
     private final CoreFactory coreFactory;
 
 
-    public SimulationInstance(Collector collector, Scheduler scheduler) {
+    public SimulationInstance (Collector collector, Scheduler scheduler) {
         super(collector, scheduler);
         coreFactory = new MyCoreFactory();
     }
 
-    public void run() {
+    public void run () {
 
         for (Sensor sensor : getSensors()) {
             sensor.setNeighbors(MyLib.calculateNeighbors(sensor, this));
@@ -56,8 +53,7 @@ public class SimulationInstance extends AbstractSimIstance implements Runnable {
 
         int cont = 0;
         for (LinkedList<Double> list : getFramesArrived().values()) {
-            if (list.size() > 0)
-                cont++;
+            if (list.size() > 0) { cont++; }
 
 
         }
@@ -66,7 +62,7 @@ public class SimulationInstance extends AbstractSimIstance implements Runnable {
     }
 
     @Override
-    public CoreFactory getCoreFactory() {
+    public CoreFactory getCoreFactory () {
         return coreFactory;
     }
 

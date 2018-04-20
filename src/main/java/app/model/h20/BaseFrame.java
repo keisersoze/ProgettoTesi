@@ -8,8 +8,8 @@ public class BaseFrame extends AbstractFrame implements Frame {
     private static int maxId = 0;
     private int serialId;
 
-    public BaseFrame (double size, Sensor s,double arrivalTime) {
-        super(size, s,arrivalTime);
+    public BaseFrame (double size, Sensor s, double arrivalTime) {
+        super(size, s, arrivalTime);
         serialId = maxId;
         maxId++;
 

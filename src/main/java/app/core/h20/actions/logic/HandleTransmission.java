@@ -36,7 +36,7 @@ public class HandleTransmission implements Action {
             context.getScheduler().addEvent(e);
         }
         double time = frame.getSize() / H20Sim.SENSOR_BANDWIDTH;
-        Event e = context.getCoreFactory().getEvent(EventTypes.EndTransmissionEvent,time,context,sender);
+        Event e = context.getCoreFactory().getEvent(EventTypes.EndTransmissionEvent, time, context, sender);
         context.getScheduler().addEvent(e);
 
     }

@@ -22,7 +22,7 @@ public interface Transmission {
 
     void setTime (double time);
 
-    void setArrived(boolean arrived);
+    boolean isArrived ();
 
-    boolean isArrived();
+    void setArrived (boolean arrived);
 }

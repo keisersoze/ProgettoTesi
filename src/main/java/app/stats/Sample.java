@@ -1,5 +1,5 @@
 package app.stats;
 
 public interface Sample {
-    double getSuccessfullRate();
+    double getSuccessfullRate ();
 }

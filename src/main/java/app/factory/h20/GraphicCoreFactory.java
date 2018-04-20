@@ -41,7 +41,7 @@ public class GraphicCoreFactory extends MyCoreFactory {
         }
         if (e == null) {
             return super.getEvent(type, time, context);
-        } else return e;
+        } else { return e; }
     }
 
     @Override
@@ -59,7 +59,7 @@ public class GraphicCoreFactory extends MyCoreFactory {
 
         if (e == null) {
             return super.getEvent(type, time, context, transmission);
-        } else return e;
+        } else { return e; }
     }
 
     @Override
@@ -76,21 +76,21 @@ public class GraphicCoreFactory extends MyCoreFactory {
 
         if (e == null) {
             return super.getEvent(type, time, context, frame, sensor, hop);
-        } else return e;
+        } else { return e; }
     }
 
     @Override
-    public Event getEvent(String type, double time, SimContext context, Sensor sensor) {
+    public Event getEvent (String type, double time, SimContext context, Sensor sensor) {
         if (type == null) {
             return null;
         }
         Event e = null;
         if (type.equalsIgnoreCase(EventTypes.EndTransmissionEvent)) {
-            e = new SensorEvent(time, context,sensor);
+            e = new SensorEvent(time, context, sensor);
             e.addAction(new HandleEndTransmission(canvas));
         }
         if (e == null) {
             return super.getEvent(type, time, context, sensor);
-        } else return e;
+        } else { return e; }
     }
 }

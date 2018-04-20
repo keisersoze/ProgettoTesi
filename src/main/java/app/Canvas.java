@@ -31,6 +31,24 @@ import java.util.*;
 
 public class Canvas extends SimpleApplication {
     private static Vector3f field;
+    private final AnalogListener analogListener = (name, value, tpf) -> {
+        if (name.equals("More_Nanos")) {
+            GraphicSim.nanos += 10;
+            if (GraphicSim.nanos > 999) { GraphicSim.nanos = 999; }
+        }
+        if (name.equals("Less_Nanos")) {
+            GraphicSim.nanos -= 10;
+            if (GraphicSim.nanos < 0) { GraphicSim.nanos = 0; }
+        }
+
+        if (name.equals("More_Millis")) {
+            GraphicSim.millis += 1;
+        }
+        if (name.equals("Less_Millis")) {
+            GraphicSim.millis -= 1;
+            if (GraphicSim.millis < 0) { GraphicSim.millis = 0; }
+        }
+    };
     protected SimContext context;
     private boolean charged;
     private HashMap<Frame, HashMap<Transmission, Geometry>> frameListGeometryHashMap;
@@ -48,7 +66,7 @@ public class Canvas extends SimpleApplication {
     }
 
     private static Vector3f pointBetween (Vector3f inizio, Vector3f fine, float percentuale) {
-        if (percentuale > 1.0f) percentuale = 1.0f;
+        if (percentuale > 1.0f) { percentuale = 1.0f; }
         Vector3f point = new Vector3f();
         point.setX(inizio.x + percentuale * (fine.x - inizio.x));
         point.setY(inizio.y + percentuale * (fine.y - inizio.y));
@@ -105,29 +123,6 @@ public class Canvas extends SimpleApplication {
 
         inputManager.addListener(analogListener, "More_Nanos", "Less_Nanos", "More_Millis", "Less_Millis");
     }
-
-
-    private final AnalogListener analogListener = (name, value, tpf) -> {
-        if (name.equals("More_Nanos")) {
-            GraphicSim.nanos += 10;
-            if (GraphicSim.nanos > 999)
-                GraphicSim.nanos = 999;
-        }
-        if (name.equals("Less_Nanos")) {
-            GraphicSim.nanos -= 10;
-            if (GraphicSim.nanos < 0)
-                GraphicSim.nanos = 0;
-        }
-
-        if (name.equals("More_Millis")) {
-            GraphicSim.millis += 1;
-        }
-        if (name.equals("Less_Millis")) {
-            GraphicSim.millis -= 1;
-            if (GraphicSim.millis < 0)
-                GraphicSim.millis = 0;
-        }
-    };
 
     public Spatial drawSensors (Collection<? extends Sensor> sensors) {
         for (Sensor sensor : sensors) {
@@ -267,8 +262,8 @@ public class Canvas extends SimpleApplication {
 
             Mesh lineMesh = new Mesh();
             lineMesh.setMode(Mesh.Mode.Lines);
-            lineMesh.setBuffer(VertexBuffer.Type.Position, 3, new float[]{position_1.x, position_1.y, position_1.z, position_1.x, position_1.y, position_1.z});
-            lineMesh.setBuffer(VertexBuffer.Type.Index, 2, new short[]{0, 1});
+            lineMesh.setBuffer(VertexBuffer.Type.Position, 3, new float[] {position_1.x, position_1.y, position_1.z, position_1.x, position_1.y, position_1.z});
+            lineMesh.setBuffer(VertexBuffer.Type.Index, 2, new short[] {0, 1});
 
             Geometry lineGeometry = new Geometry("link", lineMesh);
             Material lineMaterial = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
@@ -292,10 +287,7 @@ public class Canvas extends SimpleApplication {
     }
 
     public void simpleUpdate (float tpf) {
-        hudText.setText("- Sim Time: " + context.getSimTime() +
-                "\n- Frame generati: " + context.getFrames().size() +
-                "\n- Numero di sensori:" + context.getSensors().size() +
-                "\n Millis: " + GraphicSim.millis + "," + GraphicSim.nanos);
+        hudText.setText("- Sim Time: " + context.getSimTime() + "\n- Frame generati: " + context.getFrames().size() + "\n- Numero di sensori:" + context.getSensors().size() + "\n Millis: " + GraphicSim.millis + "," + GraphicSim.nanos);
         updateSensors();
         updateLinks();
     }
@@ -334,7 +326,7 @@ public class Canvas extends SimpleApplication {
                     double total = sender.getEuclideanDistance(receiver);
                     Vector3f point = Canvas.pointBetween(sender.getPosition(), receiver.getPosition(), (float) (distance / total));
 
-                    transmission.getValue().getMesh().setBuffer(VertexBuffer.Type.Position, 3, new float[]{sender.getX(), sender.getY(), sender.getZ(), point.x, point.y, point.z});
+                    transmission.getValue().getMesh().setBuffer(VertexBuffer.Type.Position, 3, new float[] {sender.getX(), sender.getY(), sender.getZ(), point.x, point.y, point.z});
                     transmission.getValue().updateModelBound();
                 } else {
                     toDelete.add(new AbstractMap.SimpleEntry<>(frameTransmissions.getKey(), transmission.getKey()));

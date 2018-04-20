@@ -35,7 +35,7 @@ public class HandleArrival implements Action {
         double x = context.getMarsenneTwister().nextDouble();
         double packetSize = x < H20Sim.MAX_FRAME_RATE ? H20Sim.MAX_FRAME_SIZE : H20Sim.MAX_FRAME_SIZE * (1 - x);
 
-        Frame frame = context.getModelFactory().getFrame(packetSize, owner,context.getSimTime());
+        Frame frame = context.getModelFactory().getFrame(packetSize, owner, context.getSimTime());
         context.getFrames().add(frame);
 
         Event e = context.getCoreFactory().getEvent(EventTypes.TransmissionEvent, 0, context, frame, owner, 0);
@@ -45,7 +45,7 @@ public class HandleArrival implements Action {
 
         // STATS
 
-        context.getFramesArrived().put(frame,new LinkedList<>());
+        context.getFramesArrived().put(frame, new LinkedList<>());
 
     }
 

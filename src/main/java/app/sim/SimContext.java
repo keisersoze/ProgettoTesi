@@ -8,7 +8,6 @@ import app.model.Sensor;
 import app.stats.Collector;
 import org.apache.commons.math3.random.MersenneTwister;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +25,7 @@ public interface SimContext {
 
     List<Frame> getFrames ();
 
-    Map<Frame,LinkedList<Double>> getFramesArrived();
+    Map<Frame, LinkedList<Double>> getFramesArrived ();
 
     void run ();
 

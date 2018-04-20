@@ -5,27 +5,20 @@ import app.H20Sim;
 import app.core.Event;
 import app.core.Scheduler;
 import app.factory.CoreFactory;
-import app.factory.ModelFactory;
 import app.factory.EventTypes;
 import app.factory.h20.GraphicCoreFactory;
-import app.factory.h20.MyModelFactory;
-import app.model.Frame;
 import app.model.Sensor;
 import app.sim.MyLib;
 import app.stats.Collector;
 import com.jme3.system.AppSettings;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class GraphicSim extends AbstractSimIstance {
-    private static Canvas canvas;
     public static int nanos;
     public static long millis = 1;
-
+    private static Canvas canvas;
     private final CoreFactory coreFactory;
 
     public GraphicSim (Collector collector, Scheduler scheduler) {

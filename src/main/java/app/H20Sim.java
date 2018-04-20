@@ -4,7 +4,6 @@ package app;
 import app.core.h20.scheduler.DefaultScheduler;
 import app.factory.DeploymentTypes;
 import app.sim.SimContext;
-import app.sim.h20.GraphicSim;
 import app.sim.h20.SimulationInstance;
 import app.stats.h20.BaseCollector;
 import javafx.application.Application;
@@ -14,6 +13,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,41 +23,33 @@ public class H20Sim extends Application {
     //parametri simulazione
     public static final double MU = 3;
     public static final double LAMDA = 0.1;
-
-    private static final int NTHREADS = 5;
     public static final int NEVENTS = 200000;
-
     public static final double MAX_DISTANCE = 50;
     public static final double SCALE = 10;
-
-    private static final boolean CANVAS_MODE = true;
-
     public static final int SENSOR_BANDWIDTH = 1000; // b/s
     public static final int MAX_FRAME_SIZE = 1000; //bit (200-1600)
     public static final double MAX_FRAME_RATE = 0.9;
-
-    public static final int THRESHOLD = 1;
+    public static final int THRESHOLD = 10;
     public static final double SENSIBILITY = -106; //dBm
     public static final double SENSOR_POWER = 5; //dB
     public static final double SENSOR_FREQUENCY = 2400; //HZ
-
     public static final String DEPLOYMENT_TYPE = DeploymentTypes.BaseDeployment;
-
     //variabili endogene
     public static final int SOUND_SPEED = 343; // m/s
     public static final double T = 1; //TODO guardare come si chiama
-
+    private static final int NTHREADS = 5;
+    private static final boolean CANVAS_MODE = true;
     private static BaseCollector collector = new BaseCollector();
     private static Map<Thread, SimContext> threadContextMap = new HashMap<>();
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
+        settings();
 
         if (CANVAS_MODE) {
-            new GraphicSim(collector, new DefaultScheduler()).run();
+            //new GraphicSim(collector, new DefaultScheduler()).run();
 
         } else {
             //inizializzazione
-
             //avvio dei thread
             for (int i = 0; i < NTHREADS; i++) {
                 String instance_name = String.valueOf(i);
@@ -84,8 +76,25 @@ public class H20Sim extends Application {
         }
     }
 
+    private static void settings() {
+        // set look and feel to the system look and feel
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new Settings().setVisible(true);
+            }
+        });
+    }
+
+    @SuppressWarnings("unchecked")
     @Override
-    public void start (Stage stage) {
+    public void start(Stage stage) {
         //stage.setTitle("Line Chart Sample");
         //defining the axes
         final NumberAxis xAxis = new NumberAxis();
@@ -106,7 +115,9 @@ public class H20Sim extends Application {
 
         for (Thread t : threadContextMap.keySet()) {
             int x = (int) (threadContextMap.get(t).getSimTime() * LAMDA);
-            if (x < nMinSamples || nMinSamples == -1) { nMinSamples = x; }
+            if (x < nMinSamples || nMinSamples == -1) {
+                nMinSamples = x;
+            }
         }
 
         for (int j = 0; j < nMinSamples; j++) {
