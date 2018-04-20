@@ -1,5 +1,7 @@
 package app;
 
+import app.factory.DeploymentTypes;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,18 +14,19 @@ import java.util.List;
 class Settings extends JFrame implements ActionListener {
 
     private JLabel labelUsername = new JLabel("Enter username: ");
-    private JLabel labelPassword = new JLabel("Enter password: ");
     private JTextField textUsername = new JTextField(20);
-    private JPasswordField fieldPassword = new JPasswordField(20);
     private JButton buttonLogin = new JButton("Login");
-    private String[] petStrings = {"Bird", "Cat", "Dog", "Rabbit", "Pig"};
-    private List<String> strings = new ArrayList<>();
-    private JComboBox petList = new JComboBox(petStrings);
+    private List<String> strings;
+    private JComboBox petList;
 
 
     Settings () {
         super("JPanel Demo Program");
-        Collections.addAll(strings, petStrings);
+
+        strings = new ArrayList<>();
+        Collections.addAll(strings, DeploymentTypes.getDeploymentTypes());
+
+        petList = new JComboBox(DeploymentTypes.getDeploymentTypes());
         // create a new panel with GridBagLayout manager
         JPanel newPanel = new JPanel(new GridBagLayout());
 
@@ -40,13 +43,6 @@ class Settings extends JFrame implements ActionListener {
         newPanel.add(textUsername, constraints);
 
         constraints.gridx = 0;
-        constraints.gridy = 1;
-        newPanel.add(labelPassword, constraints);
-
-        constraints.gridx = 1;
-        newPanel.add(fieldPassword, constraints);
-
-        constraints.gridx = 0;
         constraints.gridy = 2;
         constraints.gridwidth = 2;
         constraints.anchor = GridBagConstraints.CENTER;
@@ -54,7 +50,7 @@ class Settings extends JFrame implements ActionListener {
 
         //Create the combo box, select item at index 4.
         //Indices start at 0, so 4 specifies the pig.
-        petList.setSelectedIndex(4);
+        petList.setSelectedIndex(0);
         petList.addActionListener(this);
         newPanel.add(petList, constraints);
 

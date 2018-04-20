@@ -31,12 +31,12 @@ public class MyLib {
     public static double calculateNoise (Sensor sensor, SimContext context) {
         double acc = 0;
         for (Sensor s : context.getSensors()) {
-            if (s.isTransmitting()) { acc += powerReceived(s.getEuclideanDistance(sensor)); }
+            if (s.isTransmitting()) { acc += powerReceived(sensor.getEuclideanDistance(s)); }
         }
         return acc;
     }
 
     public static double powerReceived (double distance) {
-        return H20Sim.SENSOR_POWER - 20 * Math.log10(distance) + 20 * Math.log10(H20Sim.SENSOR_FREQUENCY) - 147.55;
+        return H20Sim.SENSOR_POWER - (20 * Math.log10(distance) + 20 * Math.log10(H20Sim.SENSOR_FREQUENCY) - 147.55);
     }
 }

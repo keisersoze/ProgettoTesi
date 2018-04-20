@@ -31,6 +31,7 @@ public class HandleEndReception implements Action {
 
         receiver.setReceiving(false);
         transmission.setArrived(true);
+        transmission.getFrame().getTransmissionHistory().remove(transmission);
 
         if (transmission.isSuccessfull()) {
             if (!receiver.isSink()) {
@@ -38,6 +39,8 @@ public class HandleEndReception implements Action {
                     Event e = context.getCoreFactory().getEvent(EventTypes.TransmissionEvent, 0, context, frame, receiver, numHop);
                     context.getScheduler().addEvent(e);
                 }
+            } else {
+                context.getFramesArrived().get(frame).addLast(context.getSimTime() - frame.getArrivalTime());
             }
         }
 

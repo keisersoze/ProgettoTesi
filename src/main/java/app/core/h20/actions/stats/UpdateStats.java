@@ -16,6 +16,7 @@ public class UpdateStats implements Action {
 
         SimContext context = event.getContext();
         context.getCollector().update(Thread.currentThread().getName(), new StatsSample(context));
+        context.setPercentageCompleted();
 
     }
 

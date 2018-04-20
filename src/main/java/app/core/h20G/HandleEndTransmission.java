@@ -12,8 +12,6 @@ public class HandleEndTransmission extends app.core.h20.actions.logic.HandleEndT
 
     @Override
     public void execute (Event e) {
-
         super.execute(e);
-        //canvas.enqueue(() -> canvas.endTransmission(e.getSensor()));
     }
 }

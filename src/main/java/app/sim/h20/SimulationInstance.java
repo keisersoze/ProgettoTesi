@@ -40,13 +40,14 @@ public class SimulationInstance extends AbstractSimIstance implements Runnable {
         //aggiungo gli eventi periodici allo scheduler
         getScheduler().addEvent(arrival_evt);
         getScheduler().addEvent(stats_evt);
+        //getScheduler().addEvent(move_evt);
         //avvio la simulazione
 
-        for (double i = 0; i < H20Sim.NEVENTS; i++) {
+        while (getPercentageCompleted() < 100) {
             Event evt_scheduled = getScheduler().scheduleEvent();
             setSimTime(evt_scheduled.getTime());
             evt_scheduled.tick();
-            System.out.println((i / H20Sim.NEVENTS) * 100 + "% Thread:" + Thread.currentThread().getName());
+            System.out.println(getPercentageCompleted() + "% Thread:" + Thread.currentThread().getName());
         }
 
         System.out.println(getSimTime());

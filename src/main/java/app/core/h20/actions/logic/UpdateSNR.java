@@ -22,14 +22,14 @@ public class UpdateSNR implements Action {
 
         List<Frame> frames = context.getFrames();
 
-
         for (Frame frame : frames) {
             for (Transmission t : frame.getTransmissionHistory()) {
-                //TODO t deve essere in uno stato particolare
+
                 double noise_power = MyLib.calculateNoise(t.getReceiver(), context);
-                if (MyLib.powerReceived(t.getReceiver().getEuclideanDistance(t.getSender())) / noise_power > H20Sim.T) {
+                if (MyLib.powerReceived(t.getReceiver().getEuclideanDistance(t.getSender())) / noise_power > H20Sim.GAMMA) {
                     t.setSuccessfull(false);
                 }
+
             }
         }
 

@@ -9,6 +9,7 @@ import app.model.Frame;
 import app.model.Sensor;
 import app.sim.SimContext;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -51,6 +52,8 @@ public class HandleArrival implements Action {
         Event e = context.getCoreFactory().getEvent(EventTypes.TransmissionEvent, 0, context, frame, owner, 0);
 
         context.getScheduler().addEvent(e);
+
+        context.getFramesArrived().put(frame, new LinkedList<>());
     }
 
 }

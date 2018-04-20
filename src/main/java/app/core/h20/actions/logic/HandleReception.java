@@ -11,20 +11,20 @@ import app.sim.SimContext;
 public class HandleReception implements Action {
     @Override
     public void execute (Event event) {
-
         SimContext context = event.getContext();
         Transmission transmission = event.getTransmission();
         Sensor receiver = transmission.getReceiver();
 
-        if (!receiver.isTransmitting() && !receiver.isReceiving()) {
+        if (!receiver.isTransmitting() && !receiver.isReceiving()) {    // Se posso ricevere allora inizio a ricevere
             receiver.setReceiving(true);
-            double time = transmission.getFrame().getSize() / H20Sim.SENSOR_BANDWIDTH;
-            Event e = context.getCoreFactory().getEvent(EventTypes.EndReceptionEvent, time, context, transmission);
-            context.getScheduler().addEvent(e);
-        } else {
-            transmission.setArrived(true);
-            transmission.setSuccessfull(false);
-        }
 
+            double time = transmission.getFrame().getSize() / H20Sim.SENSOR_BANDWIDTH;
+            Event e = context.getCoreFactory().getEvent(EventTypes.EndReceptionEvent, time, context, transmission); // Viene creato un evento per la fine della ricezione
+            context.getScheduler().addEvent(e);
+
+        } else {
+            transmission.setArrived(true); //TODO: da togliere
+            transmission.getFrame().getTransmissionHistory().remove(transmission); // Elimina la trasmissione
+        }
     }
 }

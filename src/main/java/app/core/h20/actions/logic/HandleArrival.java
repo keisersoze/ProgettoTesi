@@ -24,29 +24,23 @@ public class HandleArrival implements Action {
     @Override
     public void execute (Event event) {
         SimContext context = event.getContext();
-
         List<Sensor> sensors = context.getSensors();
 
-        Sensor owner = null;
+        Sensor owner;
         do {
             owner = sensors.get(context.getMarsenneTwister().nextInt(sensors.size())); //prendo un sensore a caso
         } while (owner.isTransmitting() || owner.isSink()); // accertarsi di avere "tanti" sensori
 
         double x = context.getMarsenneTwister().nextDouble();
-        double packetSize = x < H20Sim.MAX_FRAME_RATE ? H20Sim.MAX_FRAME_SIZE : H20Sim.MAX_FRAME_SIZE * (1 - x);
+        double packetSize = x < H20Sim.MAX_FRAME_RATE ? H20Sim.MAX_FRAME_SIZE : H20Sim.MAX_FRAME_SIZE * (1 - x); // Dimensione del pacchetto
 
-        Frame frame = context.getModelFactory().getFrame(packetSize, owner, context.getSimTime());
+        Frame frame = context.getModelFactory().getFrame(packetSize, owner, context.getSimTime());  //Crea il frame
         context.getFrames().add(frame);
 
-        Event e = context.getCoreFactory().getEvent(EventTypes.TransmissionEvent, 0, context, frame, owner, 0);
-
+        Event e = context.getCoreFactory().getEvent(EventTypes.TransmissionEvent, 0, context, frame, owner, 0); // Passa il frame al prossimo evento
         context.getScheduler().addEvent(e);
 
-
         // STATS
-
         context.getFramesArrived().put(frame, new LinkedList<>());
-
     }
-
 }

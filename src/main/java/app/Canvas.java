@@ -262,8 +262,8 @@ public class Canvas extends SimpleApplication {
 
             Mesh lineMesh = new Mesh();
             lineMesh.setMode(Mesh.Mode.Lines);
-            lineMesh.setBuffer(VertexBuffer.Type.Position, 3, new float[] {position_1.x, position_1.y, position_1.z, position_1.x, position_1.y, position_1.z});
-            lineMesh.setBuffer(VertexBuffer.Type.Index, 2, new short[] {0, 1});
+            lineMesh.setBuffer(VertexBuffer.Type.Position, 3, new float[]{position_1.x, position_1.y, position_1.z, position_1.x, position_1.y, position_1.z});
+            lineMesh.setBuffer(VertexBuffer.Type.Index, 2, new short[]{0, 1});
 
             Geometry lineGeometry = new Geometry("link", lineMesh);
             Material lineMaterial = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
@@ -287,7 +287,16 @@ public class Canvas extends SimpleApplication {
     }
 
     public void simpleUpdate (float tpf) {
-        hudText.setText("- Sim Time: " + context.getSimTime() + "\n- Frame generati: " + context.getFrames().size() + "\n- Numero di sensori:" + context.getSensors().size() + "\n Millis: " + GraphicSim.millis + "," + GraphicSim.nanos);
+        double arrived = 0;
+        for (List<Double> list : context.getFramesArrived().values()) {
+            if (!list.isEmpty()) { arrived++; }
+        }
+        hudText.setText("- Sim Time: " + context.getSimTime()
+                + "\n- Frame generati: " + context.getFrames().size()
+                + "\n- Numero di sensori:" + context.getSensors().size()
+                + "\n- Millis: " + GraphicSim.millis + "," + GraphicSim.nanos
+                + "\n- Layout: " + H20Sim.DEPLOYMENT_TYPE
+                + "\n- Arrived: " + arrived / context.getFramesArrived().size() * 100 + "%");
         updateSensors();
         updateLinks();
     }
@@ -317,6 +326,7 @@ public class Canvas extends SimpleApplication {
         List<Map.Entry<Frame, Transmission>> toDelete = new ArrayList<>();
 
         for (Map.Entry<Frame, HashMap<Transmission, Geometry>> frameTransmissions : frameListGeometryHashMap.entrySet()) {
+
             for (Map.Entry<Transmission, Geometry> transmission : frameTransmissions.getValue().entrySet()) {
                 if (!transmission.getKey().isArrived()) {
                     Sensor sender = transmission.getKey().getSender();
@@ -326,7 +336,12 @@ public class Canvas extends SimpleApplication {
                     double total = sender.getEuclideanDistance(receiver);
                     Vector3f point = Canvas.pointBetween(sender.getPosition(), receiver.getPosition(), (float) (distance / total));
 
-                    transmission.getValue().getMesh().setBuffer(VertexBuffer.Type.Position, 3, new float[] {sender.getX(), sender.getY(), sender.getZ(), point.x, point.y, point.z});
+                    transmission.getValue().getMesh().setBuffer(VertexBuffer.Type.Position, 3, new float[]{sender.getX(), sender.getY(), sender.getZ(), point.x, point.y, point.z});
+
+                    if (!transmission.getKey().isSuccessfull()) {
+                        transmission.getValue().getMaterial().setColor("Color", ColorRGBA.Red);
+                    }
+
                     transmission.getValue().updateModelBound();
                 } else {
                     toDelete.add(new AbstractMap.SimpleEntry<>(frameTransmissions.getKey(), transmission.getKey()));

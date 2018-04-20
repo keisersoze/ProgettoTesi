@@ -35,11 +35,11 @@ public class HandleTransmission implements Action {
             Transmission transmission = context.getModelFactory().getTransmission(sender, receiver, frame, numHop);
             transmission.setTime(context.getSimTime());    // Per il calcolo di quanto sta avanzando la trasmissione (la linea)
 
-            Event e = context.getCoreFactory().getEvent(EventTypes.ReceivingTransmissionEvent, time, context, transmission);
+            frame.getTransmissionHistory().add(transmission);
 
-            //if (transmission.getSender().getY() + H2OSim.THRESHOLD < transmission.getReceiver().getY()) {
+            Event e = context.getCoreFactory().getEvent(EventTypes.ReceptionEvent, time, context, transmission);
+
             canvas.enqueue(() -> canvas.newTransmission(frame, transmission));
-            //}
 
             context.getScheduler().addEvent(e);
         }

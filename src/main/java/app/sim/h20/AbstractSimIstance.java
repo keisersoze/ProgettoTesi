@@ -11,6 +11,7 @@ import app.stats.Collector;
 import org.apache.commons.math3.random.MersenneTwister;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class AbstractSimIstance implements SimContext {
     private final Scheduler scheduler;
@@ -19,6 +20,7 @@ public abstract class AbstractSimIstance implements SimContext {
     private final List<Sensor> sensors;
     private final List<Frame> frames;
     private final ModelFactory modelFactory;
+    private double nSamples;
 
     private final MersenneTwister marsenneTwister = new MersenneTwister();
     private double simTime;
@@ -31,10 +33,10 @@ public abstract class AbstractSimIstance implements SimContext {
         this.scheduler = scheduler;
         simTime = 0.0;
         nframes = 0;
-        framesArrived = new HashMap<>();
+        framesArrived = new ConcurrentHashMap<>();
         modelFactory = new MyModelFactory();
         sensors = modelFactory.deploySensors(H20Sim.DEPLOYMENT_TYPE);
-
+        nSamples = 0;
     }
 
     public Scheduler getScheduler () {
@@ -82,5 +84,13 @@ public abstract class AbstractSimIstance implements SimContext {
         return modelFactory;
     }
 
+    @Override
+    public double getPercentageCompleted () {
+        return nSamples / H20Sim.N_SAMPLES * 100;
+    }
 
+    @Override
+    public void setPercentageCompleted () {
+        nSamples++;
+    }
 }

@@ -78,14 +78,14 @@ public class GraphicSim extends AbstractSimIstance {
 
         Event arrival_evt = getCoreFactory().getEvent(EventTypes.ArrivalEvent, 0, this);
         Event dummy = getCoreFactory().getEvent(EventTypes.MoveEvent, 0, this);
-
         //imposto gli eventi periodici
-        dummy.setInterval(0.001);
+        dummy.setInterval(10);
 
         //aggiungo gli eventi periodici allo scheduler
 
         getScheduler().addEvent(arrival_evt);
-        //getScheduler().addEvent(dummy);
+        getScheduler().addEvent(dummy);
+
 
 
         //avvio la simulazione

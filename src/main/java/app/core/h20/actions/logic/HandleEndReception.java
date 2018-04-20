@@ -25,6 +25,7 @@ public class HandleEndReception implements Action {
         int numHop = transmission.getHop() + 1;
 
         receiver.setReceiving(false);
+        transmission.getFrame().getTransmissionHistory().remove(transmission);
 
         if (transmission.isSuccessfull()) {
             if (!transmission.getReceiver().isSink()) {
