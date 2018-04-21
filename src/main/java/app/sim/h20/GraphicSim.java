@@ -12,10 +12,14 @@ import app.sim.MyLib;
 import app.stats.Collector;
 import com.jme3.system.AppSettings;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
-public class GraphicSim extends AbstractSimIstance {
+public class GraphicSim extends AbstractSimIstance implements Runnable {
     public static int nanos;
     public static long millis = 1;
     private static Canvas canvas;
@@ -36,14 +40,19 @@ public class GraphicSim extends AbstractSimIstance {
         GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
         DisplayMode[] modes = device.getDisplayModes();
         int i = 0; // note: there are usually several, let's pick the first
-        settings.setResolution(1024, 700);
+        settings.setResolution(1400, 900);
         settings.setFrequency(modes[i].getRefreshRate());
         settings.setBitsPerPixel(modes[i].getBitDepth());
         settings.setFullscreen(false);
-
         settings.setSamples(16);
         settings.setGammaCorrection(true);
         settings.setSettingsDialogImage("Interface/unive.jpg");
+
+        try {
+            settings.setIcons(new BufferedImage[]{ImageIO.read(new File("assets/Interface/unive_red.jpg"))});
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         canvas.setShowSettings(false);
         canvas.setDisplayStatView(false);
@@ -77,20 +86,19 @@ public class GraphicSim extends AbstractSimIstance {
         // creo l'evento che richiama la funzionalità di campionamento per le statistiche
 
         Event arrival_evt = getCoreFactory().getEvent(EventTypes.ArrivalEvent, 0, this);
-        Event dummy = getCoreFactory().getEvent(EventTypes.MoveEvent, 0, this);
+        Event stats_evt = getCoreFactory().getEvent(EventTypes.StatisticEvent, 0, this);
         //imposto gli eventi periodici
-        dummy.setInterval(10);
+        stats_evt.setInterval(1 / H20Sim.LAMDA);
 
         //aggiungo gli eventi periodici allo scheduler
 
         getScheduler().addEvent(arrival_evt);
-        getScheduler().addEvent(dummy);
-
+        getScheduler().addEvent(stats_evt);
 
 
         //avvio la simulazione
 
-        for (int i = 0; i < H20Sim.NEVENTS; i++) {
+        while (getPercentageCompleted() < 100) {
             Event evt_scheduled = getScheduler().scheduleEvent();
             setSimTime(evt_scheduled.getTime());
             evt_scheduled.tick();
@@ -101,7 +109,6 @@ public class GraphicSim extends AbstractSimIstance {
             }
         }
 
-        System.out.println(getSimTime() + " " + getSensors().get(0).getPosition());
     }
 
     @Override

@@ -20,57 +20,68 @@ import java.util.Map;
 
 
 public class H20Sim extends Application {
-    public static final int N_SAMPLES = 200;
+    public static volatile boolean START = false;
+
+    public static int N_SAMPLES = 200;
     //parametri simulazione
-    public static final double MU = 3;
-    public static final double LAMDA = 0.1;
-    public static final double MOVEMENT_SPEED = 0.5;
+    public static double MU = 3;
+    public static double LAMDA = 0.1;
+    public static double MOVEMENT_SPEED = 0.5;
 
-    private static final int NTHREADS = 1;
-    public static final int NEVENTS = 700000;
+    public static int NTHREADS = 1;
+    public static int NEVENTS = 700000;
 
-    public static final double MAX_DISTANCE = 50;
-    public static final double SCALE = 10;
+    public static double SCALE = 10;
 
-    public static final int SENSOR_BANDWIDTH = 1000; // b/s
-    public static final int MAX_FRAME_SIZE = 1000; //bit (200-1600)
-    public static final double MAX_FRAME_RATE = 0.9;
+    public static int SENSOR_BANDWIDTH = 100; // b/s
+    public static int MAX_FRAME_SIZE = 1000; //bit (200-1600)
+    public static double MAX_FRAME_RATE = 0.9;
 
-    public static final int THRESHOLD = 20;
+    public static int THRESHOLD = 20;
 
-    public static final double SENSIBILITY = -110; //dBm
-    public static final double SENSOR_POWER = -130; //dB
-    public static final double SENSOR_FREQUENCY = 2400; //HZ
+    public static double SENSIBILITY = -110; //dBm
+    public static double SENSOR_POWER = -133; //dB
+    public static double SENSOR_FREQUENCY = 40000; //HZ
 
-    public static final String DEPLOYMENT_TYPE = DeploymentTypes.LayerProportionalDeployment;
+    public static String DEPLOYMENT_TYPE = DeploymentTypes.BaseDeployment;
 
     //variabili endogene
-    public static final int SOUND_SPEED = 343; // m/s
-    public static final double GAMMA = 1; //TODO guardare come si chiama
+    public static int SOUND_SPEED = 343; // m/s
+    public static double GAMMA = 1; //TODO guardare come si chiama
 
-    private static final boolean CANVAS_MODE = false;
+    public static boolean CANVAS_MODE = true;
+
 
     private static BaseCollector collector = new BaseCollector();
-    private static Map<Thread, SimContext> threadContextMap = new HashMap<>();
+    public static Map<Thread, SimContext> threadContextMap = new HashMap<>();
 
-    public static void main(String[] args) {
+    public static void main (String[] args) {
         settings();
 
-        if (CANVAS_MODE) {
-            new GraphicSim(collector, new DefaultScheduler()).run();
+        while (true) {
+            while (!START) {
+                Thread.onSpinWait();
+            }
+            START = false;
 
-        } else {
-            //inizializzazione
-            //avvio dei thread
-            for (int i = 0; i < NTHREADS; i++) {
-                String instance_name = String.valueOf(i);
-                collector.addStatSource(instance_name);
-                SimulationInstance context = new SimulationInstance(collector, new DefaultScheduler());
-                Thread thread = new Thread(context, instance_name);
+            if (CANVAS_MODE) {
+                GraphicSim context = new GraphicSim(collector, new DefaultScheduler());
+                collector.addStatSource("0");
+                Thread thread = new Thread(context, "0");
                 threadContextMap.put(thread, context);
                 thread.start();
+            } else {
+                //inizializzazione
+                //avvio dei thread
+                for (int i = 0; i < NTHREADS; i++) {
+                    String instance_name = String.valueOf(i);
+                    collector.addStatSource(instance_name);
+                    SimulationInstance context = new SimulationInstance(collector, new DefaultScheduler());
+                    Thread thread = new Thread(context, instance_name);
+                    threadContextMap.put(thread, context);
+                    thread.start();
+                }
             }
-
 
             //aspetta che tutte le istanze siano terminate
             for (Thread t : threadContextMap.keySet()) {
@@ -82,12 +93,14 @@ public class H20Sim extends Application {
             }
 
             //stampo le statistiche
-            launch(args);
-
+            if (threadContextMap.keySet().size() > 0) {
+                launch(args);
+                break;
+            }
         }
     }
 
-    private static void settings() {
+    private static void settings () {
         // set look and feel to the system look and feel
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -95,12 +108,13 @@ public class H20Sim extends Application {
             ex.printStackTrace();
         }
 
-        SwingUtilities.invokeLater(() -> new Settings().setVisible(true));
+        SwingUtilities.invokeLater(Settings::createAndShowGUI);
+
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public void start(Stage stage) {
+    public void start (Stage stage) {
         //stage.setTitle("Line Chart Sample");
         //defining the axes
         final NumberAxis xAxis = new NumberAxis();

@@ -37,16 +37,14 @@ public class Canvas extends SimpleApplication {
             if (GraphicSim.nanos > 999) { GraphicSim.nanos = 999; }
         }
         if (name.equals("Less_Nanos")) {
-            GraphicSim.nanos -= 10;
-            if (GraphicSim.nanos < 0) { GraphicSim.nanos = 0; }
+            if (GraphicSim.nanos - 10 < 0) { GraphicSim.nanos = 0; } else { GraphicSim.nanos -= 10; }
         }
 
         if (name.equals("More_Millis")) {
             GraphicSim.millis += 1;
         }
         if (name.equals("Less_Millis")) {
-            GraphicSim.millis -= 1;
-            if (GraphicSim.millis < 0) { GraphicSim.millis = 0; }
+            if (GraphicSim.millis - 1 < 0) { GraphicSim.millis = 0; } else { GraphicSim.millis -= 1; }
         }
     };
     protected SimContext context;
@@ -82,7 +80,7 @@ public class Canvas extends SimpleApplication {
 
         attachCoordinateAxes(Vector3f.ZERO);
         attachGrid(field.x, field.y, field.z, 10f, ColorRGBA.White);
-        viewPort.setBackgroundColor(new ColorRGBA(1f / 255f * 60f, 1f / 255f * 102f, 1f / 255f * 140f, 1f));
+        viewPort.setBackgroundColor(new ColorRGBA(1f / 255f * 54f, 1f / 255f * 84f, 1f / 255f * 132f, 1f));
         //generateTerrain();
 
         charged = true;
@@ -277,7 +275,6 @@ public class Canvas extends SimpleApplication {
             }
 
             //lineMaterial.getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
-
             lineGeometry.setMaterial(lineMaterial);
             lineGeometry.updateModelBound();
             rootNode.attachChild(lineGeometry);
@@ -296,7 +293,8 @@ public class Canvas extends SimpleApplication {
                 + "\n- Numero di sensori:" + context.getSensors().size()
                 + "\n- Millis: " + GraphicSim.millis + "," + GraphicSim.nanos
                 + "\n- Layout: " + H20Sim.DEPLOYMENT_TYPE
-                + "\n- Arrived: " + arrived / context.getFramesArrived().size() * 100 + "%");
+                + "\n- Arrived: " + (int) (arrived / context.getFramesArrived().size() * 100) + "%"
+                + "\n- " + (int) context.getPercentageCompleted() + "%");
         updateSensors();
         updateLinks();
     }

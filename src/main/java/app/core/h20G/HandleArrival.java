@@ -44,9 +44,7 @@ public class HandleArrival implements Action {
         Frame frame = context.getModelFactory().getFrame(packetSize, owner, context.getSimTime());
         try {
             canvas.enqueue(() -> canvas.newFrame(frame)).get();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
+        } catch (InterruptedException | ExecutionException ignored) {}
         context.getFrames().add(frame);
 
         Event e = context.getCoreFactory().getEvent(EventTypes.TransmissionEvent, 0, context, frame, owner, 0);

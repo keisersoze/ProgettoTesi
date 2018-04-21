@@ -59,13 +59,7 @@ public class MyModelFactory implements ModelFactory {
             sensors.add(s1);
         }
 
-        for (int i = 30; i <= 170; i += 60) {
-            for (int j = 30; j <= 170; j += 60) {
-                Sensor s1 = getSensor(i, 100, j);
-                s1.setSink(true);
-                sensors.add(s1);
-            }
-        }
+        deploySink(sensors);
         return sensors;
     }
 
@@ -73,46 +67,44 @@ public class MyModelFactory implements ModelFactory {
         List<Sensor> sensors = new ArrayList<>();
 
         for (int i = 0; i < 100; i++) {
-            Sensor s1 = getSensor(MyLib.random(0, 200), MyLib.random(15, 25), MyLib.random(0, 200));
+            Sensor s1 = getSensor(MyLib.random(0, 200), MyLib.random(0, 10), MyLib.random(0, 200));
             sensors.add(s1);
         }
 
         for (int i = 0; i < 100; i++) {
-            Sensor s1 = getSensor(MyLib.random(0, 200), MyLib.random(35, 45), MyLib.random(0, 200));
+            Sensor s1 = getSensor(MyLib.random(0, 200), MyLib.random(30, 40), MyLib.random(0, 200));
             sensors.add(s1);
         }
 
         for (int i = 0; i < 100; i++) {
-            Sensor s1 = getSensor(MyLib.random(0, 200), MyLib.random(55, 65), MyLib.random(0, 200));
+            Sensor s1 = getSensor(MyLib.random(0, 200), MyLib.random(60, 70), MyLib.random(0, 200));
             sensors.add(s1);
         }
 
-        for (int i = 0; i < 100; i++) {
-            Sensor s1 = getSensor(MyLib.random(0, 200), MyLib.random(75, 85), MyLib.random(0, 200));
-            sensors.add(s1);
-        }
+        deploySink(sensors);
 
-        for (int i = 0; i < 10; i++) {
-            Sensor s1 = getSensor(MyLib.random(0, 200), 100, MyLib.random(0, 200));
-            s1.setSink(true);
-            sensors.add(s1);
-        }
         return sensors;
+    }
+
+    private void deploySink (List<Sensor> sensors) {
+        for (int i = 30; i <= 170; i += 60) {
+            for (int j = 30; j <= 170; j += 60) {
+                Sensor s1 = getSensor(i, 100, j);
+                s1.setSink(true);
+                sensors.add(s1);
+            }
+        }
     }
 
     private List<Sensor> baseDeployment () {
         List<Sensor> sensors = new ArrayList<>();
 
-        for (int i = 0; i < 500; i++) {
-            Sensor s1 = getSensor(MyLib.random(0, 200), MyLib.random(0, 80), MyLib.random(0, 200));
+        for (int i = 0; i < 300; i++) {
+            Sensor s1 = getSensor(MyLib.random(0, 200), MyLib.random(0, 90), MyLib.random(0, 200));
             sensors.add(s1);
         }
 
-        for (int i = 0; i < 10; i++) {
-            Sensor s1 = getSensor(MyLib.random(0, 200), 100, MyLib.random(0, 200));
-            s1.setSink(true);
-            sensors.add(s1);
-        }
+        deploySink(sensors);
 
         return sensors;
     }
