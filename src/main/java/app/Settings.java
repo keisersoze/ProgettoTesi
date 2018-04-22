@@ -3,6 +3,10 @@ package app;
 import app.factory.DeploymentTypes;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.basic.BasicSplitPaneDivider;
+import javax.swing.plaf.basic.BasicSplitPaneUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,6 +35,7 @@ class Settings extends JPanel implements ActionListener, PropertyChangeListener 
     private JLabel labelPower;
     private JLabel labelFrequency;
     private JLabel labelLambda;
+    private JLabel labelField;
 
     private JFormattedTextField valSamples;
     private JFormattedTextField valThread;
@@ -42,19 +47,23 @@ class Settings extends JPanel implements ActionListener, PropertyChangeListener 
     private JFormattedTextField valPower;
     private JFormattedTextField valFrequency;
     private JFormattedTextField valLambda;
+    private JFormattedTextField valFieldx;
+    private JFormattedTextField valFieldy;
+    private JFormattedTextField valFieldz;
 
-    private JButton buttonStart = new JButton("Start");
-    private JButton buttonStop = new JButton("Stop");
+    static JButton buttonStart = new JButton("Start");
+    static JButton buttonStop = new JButton("Stop");
 
     private JComboBox deployType = new JComboBox(DeploymentTypes.getDeploymentTypes());
     private JComboBox graphicMode = new JComboBox(new String[]{"Graphic Mode", "Stats mode"});
     private List<String> deployStrings = new ArrayList<>();
     private List<String> graphicStrings = new ArrayList<>();
 
-
     private Settings () {
         super();
         setUpFormats();
+
+        Color backgroudVal = new Color(189, 189, 189);
 
         labelSamples = new JLabel("Number of Samples: ");
         labelThread = new JLabel("Number of Thread: ");
@@ -66,57 +75,86 @@ class Settings extends JPanel implements ActionListener, PropertyChangeListener 
         labelPower = new JLabel("Power of sensors (dbm): ");
         labelFrequency = new JLabel("Frequency of sensors (Hz): ");
         labelLambda = new JLabel("Lambda: ");
+        labelField = new JLabel("Field (x,y,z): ");
 
 
         valSamples = new JFormattedTextField(amountFormat);
+        valSamples.setBackground(backgroudVal);
         valSamples.setValue(H20Sim.N_SAMPLES);
         valSamples.setColumns(10);
         valSamples.addPropertyChangeListener("value", this);
 
         valThread = new JFormattedTextField(amountFormat);
+        valThread.setBackground(backgroudVal);
         valThread.setValue(H20Sim.NTHREADS);
         valThread.setColumns(3);
         valThread.addPropertyChangeListener("value", this);
 
         valSensorBandwidth = new JFormattedTextField(amountFormat);
+        valSensorBandwidth.setBackground(backgroudVal);
         valSensorBandwidth.setValue(H20Sim.SENSOR_BANDWIDTH);
         valSensorBandwidth.setColumns(10);
         valSensorBandwidth.addPropertyChangeListener("value", this);
 
         valMaxFrameSize = new JFormattedTextField(amountFormat);
+        valMaxFrameSize.setBackground(backgroudVal);
         valMaxFrameSize.setValue(H20Sim.MAX_FRAME_SIZE);
         valMaxFrameSize.setColumns(10);
         valMaxFrameSize.addPropertyChangeListener("value", this);
 
         valRateMaxFrame = new JFormattedTextField(amountFormat);
+        valRateMaxFrame.setBackground(backgroudVal);
         valRateMaxFrame.setValue(H20Sim.MAX_FRAME_RATE);
         valRateMaxFrame.setColumns(5);
         valRateMaxFrame.addPropertyChangeListener("value", this);
 
         valThreshold = new JFormattedTextField(amountFormat);
+        valThreshold.setBackground(backgroudVal);
         valThreshold.setValue(H20Sim.THRESHOLD);
         valThreshold.setColumns(3);
         valThreshold.addPropertyChangeListener("value", this);
 
         valSensibility = new JFormattedTextField(amountFormat);
+        valSensibility.setBackground(backgroudVal);
         valSensibility.setValue(H20Sim.SENSIBILITY);
         valSensibility.setColumns(3);
         valSensibility.addPropertyChangeListener("value", this);
 
         valPower = new JFormattedTextField(amountFormat);
+        valPower.setBackground(backgroudVal);
         valPower.setValue(H20Sim.SENSOR_POWER);
         valPower.setColumns(3);
         valPower.addPropertyChangeListener("value", this);
 
         valFrequency = new JFormattedTextField(amountFormat);
+        valFrequency.setBackground(backgroudVal);
         valFrequency.setValue(H20Sim.SENSOR_FREQUENCY);
         valFrequency.setColumns(3);
         valFrequency.addPropertyChangeListener("value", this);
 
         valLambda = new JFormattedTextField(amountFormat);
+        valLambda.setBackground(backgroudVal);
         valLambda.setValue(H20Sim.LAMDA);
         valLambda.setColumns(15);
         valLambda.addPropertyChangeListener("value", this);
+
+        valFieldx = new JFormattedTextField(amountFormat);
+        valFieldx.setBackground(backgroudVal);
+        valFieldx.setValue(H20Sim.FIELD_X);
+        valFieldx.setColumns(15);
+        valFieldx.addPropertyChangeListener("value", this);
+
+        valFieldy = new JFormattedTextField(amountFormat);
+        valFieldy.setBackground(backgroudVal);
+        valFieldy.setValue(H20Sim.FIELD_Y);
+        valFieldy.setColumns(15);
+        valFieldx.addPropertyChangeListener("value", this);
+
+        valFieldz = new JFormattedTextField(amountFormat);
+        valFieldz.setBackground(backgroudVal);
+        valFieldz.setValue(H20Sim.FIELD_Z);
+        valFieldz.setColumns(15);
+        valFieldz.addPropertyChangeListener("value", this);
 
         labelSamples.setLabelFor(valSamples);
         labelThread.setLabelFor(valThread);
@@ -128,7 +166,17 @@ class Settings extends JPanel implements ActionListener, PropertyChangeListener 
         labelPower.setLabelFor(valPower);
         labelFrequency.setLabelFor(valFrequency);
         labelLambda.setLabelFor(valLambda);
+        labelField.setLabelFor(valFieldx);
+        labelField.setLabelFor(valFieldy);
+        labelField.setLabelFor(valFieldz);
 
+
+        JPanel gridPanel2 = new JPanel(new GridLayout(0, 4));
+
+        gridPanel2.add(labelField);
+        gridPanel2.add(valFieldx);
+        gridPanel2.add(valFieldy);
+        gridPanel2.add(valFieldz);
 
         JPanel gridPanel = new JPanel(new GridLayout(0, 2, 10, 10));
         gridPanel.add(labelSamples);
@@ -176,8 +224,31 @@ class Settings extends JPanel implements ActionListener, PropertyChangeListener 
         buttonStop.setEnabled(false);
         gridPanel.add(buttonStop);
 
-        add(gridPanel);
-        add(gridPanel);
+        gridPanel2.setBorder(new EmptyBorder(10, 10, 10, 10));
+        gridPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+
+        JSplitPane splitPaneH = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        splitPaneH.setLeftComponent(gridPanel2);
+        splitPaneH.setRightComponent(gridPanel);
+
+        splitPaneH.setUI(new BasicSplitPaneUI() {
+            public BasicSplitPaneDivider createDefaultDivider () {
+                return new BasicSplitPaneDivider(this) {
+                    public void setBorder (Border b) {
+                    }
+
+                    @Override
+                    public void paint (Graphics g) {
+                        g.setColor(Color.GRAY);
+                        g.fillRect(0, 0, getSize().width, getSize().height);
+                        super.paint(g);
+                    }
+                };
+            }
+        });
+        splitPaneH.setBorder(null);
+
+        add(splitPaneH);
 
         Collections.addAll(deployStrings, DeploymentTypes.getDeploymentTypes());
         Collections.addAll(graphicStrings, "Graphic Mode", "Stats mode");
@@ -221,6 +292,12 @@ class Settings extends JPanel implements ActionListener, PropertyChangeListener 
             H20Sim.SENSOR_FREQUENCY = ((Number) valFrequency.getValue()).doubleValue();
         } else if (source == valLambda) {
             H20Sim.LAMDA = ((Number) valLambda.getValue()).doubleValue();
+        }else if (source == valFieldx) {
+            H20Sim.FIELD_X = ((Number) valFieldx.getValue()).doubleValue();
+        }else if (source == valFieldy) {
+            H20Sim.FIELD_Y = ((Number) valFieldy.getValue()).doubleValue();
+        }else if (source == valFieldz) {
+            H20Sim.FIELD_Z = ((Number) valFieldz.getValue()).doubleValue();
         }
     }
 
@@ -241,12 +318,9 @@ class Settings extends JPanel implements ActionListener, PropertyChangeListener 
             buttonStop.setEnabled(true);
             H20Sim.START = true;
         } else if (e.getSource() == buttonStop) {
-            for (Thread thread : H20Sim.threadContextMap.keySet()) {
-                thread.stop();
-                H20Sim.threadContextMap.remove(thread);
-            }
             buttonStart.setEnabled(true);
             buttonStop.setEnabled(false);
+            H20Sim.STOPPED = true;
         }
     }
 
@@ -254,4 +328,5 @@ class Settings extends JPanel implements ActionListener, PropertyChangeListener 
         amountFormat = NumberFormat.getNumberInstance();
         amountFormat.setMaximumFractionDigits(Integer.MAX_VALUE);
     }
+
 }

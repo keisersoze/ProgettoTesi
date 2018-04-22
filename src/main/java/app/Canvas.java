@@ -31,22 +31,6 @@ import java.util.*;
 
 public class Canvas extends SimpleApplication {
     private static Vector3f field;
-    private final AnalogListener analogListener = (name, value, tpf) -> {
-        if (name.equals("More_Nanos")) {
-            GraphicSim.nanos += 10;
-            if (GraphicSim.nanos > 999) { GraphicSim.nanos = 999; }
-        }
-        if (name.equals("Less_Nanos")) {
-            if (GraphicSim.nanos - 10 < 0) { GraphicSim.nanos = 0; } else { GraphicSim.nanos -= 10; }
-        }
-
-        if (name.equals("More_Millis")) {
-            GraphicSim.millis += 1;
-        }
-        if (name.equals("Less_Millis")) {
-            if (GraphicSim.millis - 1 < 0) { GraphicSim.millis = 0; } else { GraphicSim.millis -= 1; }
-        }
-    };
     protected SimContext context;
     private boolean charged;
     private HashMap<Frame, HashMap<Transmission, Geometry>> frameListGeometryHashMap;
@@ -119,8 +103,33 @@ public class Canvas extends SimpleApplication {
         inputManager.addMapping("More_Millis", new KeyTrigger(KeyInput.KEY_N));
         inputManager.addMapping("Less_Millis", new KeyTrigger(KeyInput.KEY_M));
 
-        inputManager.addListener(analogListener, "More_Nanos", "Less_Nanos", "More_Millis", "Less_Millis");
+        inputManager.deleteMapping(SimpleApplication.INPUT_MAPPING_EXIT); // Elimino il binding precedente, altrimenti se premo esc la sim va in loop nelle chiamate a canvas
+        inputManager.addMapping("Esc", new KeyTrigger(KeyInput.KEY_ESCAPE));
+
+        inputManager.addListener(analogListener, "More_Nanos", "Less_Nanos", "More_Millis", "Less_Millis", "Esc");
     }
+
+    private final AnalogListener analogListener = (name, value, tpf) -> {
+        if (name.equals("More_Nanos")) {
+            GraphicSim.nanos += 10;
+            if (GraphicSim.nanos > 999) { GraphicSim.nanos = 999; }
+        }
+        if (name.equals("Less_Nanos")) {
+            if (GraphicSim.nanos - 10 < 0) { GraphicSim.nanos = 0; } else { GraphicSim.nanos -= 10; }
+        }
+
+        if (name.equals("More_Millis")) {
+            GraphicSim.millis += 1;
+        }
+        if (name.equals("Less_Millis")) {
+            if (GraphicSim.millis - 1 < 0) { GraphicSim.millis = 0; } else { GraphicSim.millis -= 1; }
+        }
+        if (name.equals("Esc")) {
+            H20Sim.STOPPED = true;
+            Settings.buttonStop.setEnabled(false);
+            Settings.buttonStart.setEnabled(true);
+        }
+    };
 
     public Spatial drawSensors (Collection<? extends Sensor> sensors) {
         for (Sensor sensor : sensors) {
@@ -284,6 +293,10 @@ public class Canvas extends SimpleApplication {
     }
 
     public void simpleUpdate (float tpf) {
+        if (H20Sim.STOPPED) {
+            stop();
+        }
+
         double arrived = 0;
         for (List<Double> list : context.getFramesArrived().values()) {
             if (!list.isEmpty()) { arrived++; }

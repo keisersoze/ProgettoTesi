@@ -98,7 +98,7 @@ public class GraphicSim extends AbstractSimIstance implements Runnable {
 
         //avvio la simulazione
 
-        while (getPercentageCompleted() < 100) {
+        while (getPercentageCompleted() < 100 && !H20Sim.STOPPED) {
             Event evt_scheduled = getScheduler().scheduleEvent();
             setSimTime(evt_scheduled.getTime());
             evt_scheduled.tick();
@@ -108,7 +108,6 @@ public class GraphicSim extends AbstractSimIstance implements Runnable {
                 e.printStackTrace();
             }
         }
-
     }
 
     @Override

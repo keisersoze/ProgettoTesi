@@ -20,7 +20,12 @@ import java.util.Map;
 
 
 public class H20Sim extends Application {
+    public static double FIELD_X = 2000;
+    public static double FIELD_Y = 1000;
+    public static double FIELD_Z = 2000;
+
     public static volatile boolean START = false;
+    public static boolean STOPPED = false;
 
     public static int N_SAMPLES = 200;
     //parametri simulazione
@@ -63,6 +68,7 @@ public class H20Sim extends Application {
                 Thread.onSpinWait();
             }
             START = false;
+            STOPPED = false;
 
             if (CANVAS_MODE) {
                 GraphicSim context = new GraphicSim(collector, new DefaultScheduler());
@@ -93,9 +99,13 @@ public class H20Sim extends Application {
             }
 
             //stampo le statistiche
-            if (threadContextMap.keySet().size() > 0) {
+            if (!STOPPED) {
                 launch(args);
+                Settings.buttonStop.setEnabled(false);
+                Settings.buttonStart.setEnabled(false);
                 break;
+            } else {
+                threadContextMap.clear();
             }
         }
     }
