@@ -20,14 +20,14 @@ import java.util.Map;
 
 
 public class H20Sim extends Application {
-    public static double FIELD_X = 2000;
-    public static double FIELD_Y = 1000;
-    public static double FIELD_Z = 2000;
+    public static float FIELD_X = 2000;
+    public static float FIELD_Y = 1000;
+    public static float FIELD_Z = 2000;
 
     public static volatile boolean START = false;
     public static boolean STOPPED = false;
 
-    public static int N_SAMPLES = 200;
+    public static int N_SAMPLES = 2000;
     //parametri simulazione
     public static double MU = 3;
     public static double LAMDA = 0.1;
@@ -36,7 +36,7 @@ public class H20Sim extends Application {
     public static int NTHREADS = 1;
     public static int NEVENTS = 700000;
 
-    public static double SCALE = 10;
+    public static float SCALE = 10f;
 
     public static int SENSOR_BANDWIDTH = 100; // b/s
     public static int MAX_FRAME_SIZE = 1000; //bit (200-1600)
@@ -45,7 +45,7 @@ public class H20Sim extends Application {
     public static int THRESHOLD = 20;
 
     public static double SENSIBILITY = -110; //dBm
-    public static double SENSOR_POWER = -133; //dB
+    public static double SENSOR_POWER = -115; //dB
     public static double SENSOR_FREQUENCY = 40000; //HZ
 
     public static String DEPLOYMENT_TYPE = DeploymentTypes.BaseDeployment;

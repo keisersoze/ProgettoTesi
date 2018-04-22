@@ -43,7 +43,7 @@ public class Canvas extends SimpleApplication {
         frameListGeometryHashMap = new HashMap<>();
         sensorSpatialHashMap = new HashMap<>();
         colorRGBAHashMap = new HashMap<>();
-        field = new Vector3f(200, 100, 200);
+        field = new Vector3f(H20Sim.FIELD_X, H20Sim.FIELD_Y, H20Sim.FIELD_Z).divide(H20Sim.SCALE);
         charged = false;
     }
 
@@ -143,13 +143,8 @@ public class Canvas extends SimpleApplication {
             if (!sensor.isSink()) {
                 Sphere sphere = new Sphere(30, 30, 0.5f);
                 Geometry sphere_geometry = new Geometry("Sphere", sphere);
-
-                sphere_geometry.setLocalTranslation(sensor.getPosition());
-
                 Material sphere_material = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-
                 sphere_material.setColor("Color", ColorRGBA.Blue);
-
 
                 sphere_geometry.setMaterial(sphere_material);
                 sphere_geometry.updateModelBound();
@@ -314,7 +309,7 @@ public class Canvas extends SimpleApplication {
 
     private void updateSensors () {
         for (Map.Entry<Sensor, Spatial> entry : sensorSpatialHashMap.entrySet()) {
-            entry.getValue().setLocalTranslation(entry.getKey().getPosition());
+            entry.getValue().setLocalTranslation(entry.getKey().getPosition().divide(H20Sim.SCALE));
             if (!entry.getKey().isSink()) {
                 if (!entry.getKey().isTransmitting()) {
                     updateSensorColor(entry.getKey(), ColorRGBA.Blue);
@@ -347,7 +342,14 @@ public class Canvas extends SimpleApplication {
                     double total = sender.getEuclideanDistance(receiver);
                     Vector3f point = Canvas.pointBetween(sender.getPosition(), receiver.getPosition(), (float) (distance / total));
 
-                    transmission.getValue().getMesh().setBuffer(VertexBuffer.Type.Position, 3, new float[]{sender.getX(), sender.getY(), sender.getZ(), point.x, point.y, point.z});
+                    transmission.getValue().getMesh().setBuffer(VertexBuffer.Type.Position,
+                            3,
+                            new float[]{sender.getX() / H20Sim.SCALE,
+                                    sender.getY() / H20Sim.SCALE,
+                                    sender.getZ() / H20Sim.SCALE,
+                                    point.x / H20Sim.SCALE,
+                                    point.y / H20Sim.SCALE,
+                                    point.z / H20Sim.SCALE});
 
                     if (!transmission.getKey().isSuccessfull()) {
                         transmission.getValue().getMaterial().setColor("Color", ColorRGBA.Red);

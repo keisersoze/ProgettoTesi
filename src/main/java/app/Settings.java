@@ -293,11 +293,11 @@ class Settings extends JPanel implements ActionListener, PropertyChangeListener 
         } else if (source == valLambda) {
             H20Sim.LAMDA = ((Number) valLambda.getValue()).doubleValue();
         }else if (source == valFieldx) {
-            H20Sim.FIELD_X = ((Number) valFieldx.getValue()).doubleValue();
+            H20Sim.FIELD_X = ((Number) valFieldx.getValue()).floatValue();
         }else if (source == valFieldy) {
-            H20Sim.FIELD_Y = ((Number) valFieldy.getValue()).doubleValue();
+            H20Sim.FIELD_Y = ((Number) valFieldy.getValue()).floatValue();
         }else if (source == valFieldz) {
-            H20Sim.FIELD_Z = ((Number) valFieldz.getValue()).doubleValue();
+            H20Sim.FIELD_Z = ((Number) valFieldz.getValue()).floatValue();
         }
     }
 
