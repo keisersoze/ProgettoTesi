@@ -9,6 +9,10 @@ import app.model.Sensor;
 import app.model.Transmission;
 import app.sim.SimContext;
 
+import java.util.stream.Collectors;
+
+import static org.apache.commons.math3.util.FastMath.log;
+
 public class HandleTransmission implements Action {
 
     @Override
@@ -18,20 +22,33 @@ public class HandleTransmission implements Action {
         Sensor sender = event.getSensor();
         int numHop = event.getInt();
 
-        sender.setTransmitting(true);
+        if (CSMA(sender, context, frame, numHop)) {
+            sender.setTransmitting(true);
 
-        for (Sensor receiver : sender.getNeighbors()) {     // Per tutti i sensori che possono ricevere viene creato un nuovo evento
-            Transmission transmission = context.getModelFactory().getTransmission(sender, receiver, frame, numHop);
-            frame.getTransmissionHistory().add(transmission);
+            for (Sensor receiver : sender.getNeighbors()) {     // Per tutti i sensori che possono ricevere viene creato un nuovo evento
+                Transmission transmission = context.getModelFactory().getTransmission(sender, receiver, frame, numHop);
+                frame.getTransmissionHistory().add(transmission);
 
-            double time = sender.getEuclideanDistance(receiver) / H20Sim.SOUND_SPEED;   // Tra quanto schedulo l'evento
-            Event e = context.getCoreFactory().getEvent(EventTypes.ReceptionEvent, time, context, transmission);
+                double time = sender.getEuclideanDistance(receiver) / H20Sim.SOUND_SPEED;   // Tra quanto schedulo l'evento
+                Event e = context.getCoreFactory().getEvent(EventTypes.ReceptionEvent, time, context, transmission);
+                context.getScheduler().addEvent(e);
+            }
+            double time = frame.getSize() / H20Sim.SENSOR_BANDWIDTH;    // Schedulo tra quanto finisco di trasmettere
+            Event e = context.getCoreFactory().getEvent(EventTypes.EndTransmissionEvent, time, context, sender);    // Creo un evento per la fine della trasmissione
             context.getScheduler().addEvent(e);
         }
-        double time = frame.getSize() / H20Sim.SENSOR_BANDWIDTH;    // Schedulo tra quanto finisco di trasmettere
-        Event e = context.getCoreFactory().getEvent(EventTypes.EndTransmissionEvent, time, context, sender);    // Creo un evento per la fine della trasmissione
-        context.getScheduler().addEvent(e);
 
+    }
+
+    protected boolean CSMA (Sensor sender, SimContext context, Frame frame, int numHop) {
+        // se uno dei miei vicini stra trasmettendo allora io non posso trasmettere, CSMA non persistente
+        if (sender.getNeighbors().stream().filter(Sensor::isTransmitting).collect(Collectors.toList()).size() > 0) {
+            double time = -log(context.getMarsenneTwister().nextDouble()) / H20Sim.LAMDA;   //TODO : da capire se va bene oppure se cambiarlo
+            Event e = context.getCoreFactory().getEvent(EventTypes.TransmissionEvent, time, context, frame, sender, numHop);
+            context.getScheduler().addEvent(e);
+            return false;
+        }
+        return true;
     }
 
 }

@@ -19,10 +19,11 @@ import java.util.List;
 
 
 @SuppressWarnings("unchecked")
-class Settings extends JPanel implements ActionListener, PropertyChangeListener {
+public class Settings extends JPanel implements ActionListener, PropertyChangeListener {
 
     static JButton buttonStart = new JButton("Start");
     static JButton buttonStop = new JButton("Stop");
+    private static final JProgressBar progressBar = new JProgressBar(0, 100);
     //Formats to format and parse numbers
     private NumberFormat amountFormat;
     private JFormattedTextField valSamples;
@@ -61,7 +62,6 @@ class Settings extends JPanel implements ActionListener, PropertyChangeListener 
         JLabel labelFrequency = new JLabel("Frequency of sensors (Hz): ");
         JLabel labelLambda = new JLabel("Lambda: ");
         JLabel labelField = new JLabel("Field (x,y,z): ");
-
 
         valSamples = new JFormattedTextField(amountFormat);
         valSamples.setBackground(backgroudVal);
@@ -209,6 +209,16 @@ class Settings extends JPanel implements ActionListener, PropertyChangeListener 
         buttonStop.setEnabled(false);
         gridPanel.add(buttonStop);
 
+        JPanel progressPanel = new JPanel();
+        progressBar.setValue(0);
+        progressBar.setStringPainted(true);
+        progressPanel.add(progressBar);
+
+        Dimension prefSize = progressBar.getPreferredSize();
+        prefSize.height = 20;//some width
+        prefSize.width = 500;
+        progressBar.setPreferredSize(prefSize);
+
         gridPanel2.setBorder(new EmptyBorder(10, 10, 10, 10));
         gridPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
@@ -233,7 +243,12 @@ class Settings extends JPanel implements ActionListener, PropertyChangeListener 
         });
         splitPaneH.setBorder(null);
 
-        add(splitPaneH);
+        JPanel gui = new JPanel(new BorderLayout(3,3));
+        gui.setBorder(new EmptyBorder(5,5,5,5));
+
+        gui.add(splitPaneH, BorderLayout.NORTH);
+        gui.add(progressPanel, BorderLayout.SOUTH);
+        add(gui);
 
         Collections.addAll(deployStrings, DeploymentTypes.getDeploymentTypes());
         Collections.addAll(graphicStrings, "Graphic Mode", "Stats mode");
@@ -312,6 +327,16 @@ class Settings extends JPanel implements ActionListener, PropertyChangeListener 
     private void setUpFormats () {
         amountFormat = NumberFormat.getNumberInstance();
         amountFormat.setMaximumFractionDigits(Integer.MAX_VALUE);
+    }
+
+    public static void updateProgressBar (double percentage) {
+        if ((int) percentage > progressBar.getValue()) {
+            progressBar.setValue((int) percentage);
+        }
+    }
+
+    public static void resetProgressBar(){
+        progressBar.setValue(0);
     }
 
 }
