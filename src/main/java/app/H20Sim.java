@@ -24,19 +24,17 @@ public class H20Sim extends Application {
     public static float FIELD_Y = 1000;
     public static float FIELD_Z = 2000;
 
-    public static volatile boolean START = false;
+    static volatile boolean START = false;
     public static boolean STOPPED = false;
 
     public static int N_SAMPLES = 2000;
     //parametri simulazione
-    public static double MU = 3;
     public static double LAMDA = 0.1;
     public static double MOVEMENT_SPEED = 0.5;
 
-    public static int NTHREADS = 1;
-    public static int NEVENTS = 700000;
+    static int NTHREADS = 1;
 
-    public static float SCALE = 10f;
+    static float SCALE = 10f;
 
     public static int SENSOR_BANDWIDTH = 100; // b/s
     public static int MAX_FRAME_SIZE = 1000; //bit (200-1600)
@@ -54,11 +52,9 @@ public class H20Sim extends Application {
     public static int SOUND_SPEED = 343; // m/s
     public static double GAMMA = 1;
 
-    public static boolean CANVAS_MODE = true;
-
-
+    static boolean CANVAS_MODE = true;
+    private static Map<Thread, SimContext> threadContextMap = new HashMap<>();
     private static BaseCollector collector = new BaseCollector();
-    public static Map<Thread, SimContext> threadContextMap = new HashMap<>();
 
     public static void main (String[] args) {
         settings();
@@ -132,7 +128,7 @@ public class H20Sim extends Application {
         xAxis.setLabel("Samples");
         yAxis.setLabel("% rate successfull");
         //creating the chart
-        final LineChart<Number, Number> lineChart = new LineChart<Number, Number>(xAxis, yAxis);
+        final LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
 
         lineChart.setTitle("Success rate (Frame)");
         //defining a series

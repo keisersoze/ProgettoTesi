@@ -8,12 +8,12 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public abstract class AbstractFrame implements Frame {
-    double arrivalTime;
+    private double arrivalTime;
     private double size;
     private Sensor owner;
     private List<Transmission> transmissions;
 
-    public AbstractFrame (double size, Sensor owner, double arrivalTime) {
+    AbstractFrame (double size, Sensor owner, double arrivalTime) {
         this.size = size;
         this.owner = owner;
         transmissions = new CopyOnWriteArrayList<>();

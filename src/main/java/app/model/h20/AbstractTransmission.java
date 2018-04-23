@@ -14,7 +14,7 @@ public abstract class AbstractTransmission implements Transmission {
     private double time;
     private boolean arrived;
 
-    public AbstractTransmission (Sensor sender, Sensor receiver, Frame frame, int hop) {
+    AbstractTransmission (Sensor sender, Sensor receiver, Frame frame, int hop) {
         this.sender = sender;
         this.receiver = receiver;
         isSuccessfull = true;

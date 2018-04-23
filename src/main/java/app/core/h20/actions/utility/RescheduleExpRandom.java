@@ -9,10 +9,6 @@ import static org.apache.commons.math3.util.FastMath.log;
 
 public class RescheduleExpRandom implements Action {
 
-    public RescheduleExpRandom () {
-
-    }
-
     @Override
     public void execute (Event event) {
 

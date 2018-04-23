@@ -12,19 +12,13 @@ import java.util.List;
 
 public class UpdateSNR implements Action {
 
-    public UpdateSNR () {
-    }
-
     @Override
     public void execute (Event event) {
-
         SimContext context = event.getContext();
-
         List<Frame> frames = context.getFrames();
 
         for (Frame frame : frames) {
             for (Transmission t : frame.getTransmissionHistory()) {
-
                 double noise_power = MyLib.calculateNoise(t.getReceiver(), context);
                 if (MyLib.powerReceived(t.getReceiver().getEuclideanDistance(t.getSender())) / noise_power > H20Sim.GAMMA) {
                     t.setSuccessfull(false);
@@ -32,8 +26,5 @@ public class UpdateSNR implements Action {
 
             }
         }
-
-
     }
-
 }

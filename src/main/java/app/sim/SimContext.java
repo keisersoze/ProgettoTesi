@@ -35,7 +35,7 @@ public interface SimContext {
 
     ModelFactory getModelFactory ();
 
-    double getPercentageCompleted();
+    double getPercentageCompleted ();
 
-    void setPercentageCompleted();
+    void setPercentageCompleted ();
 }

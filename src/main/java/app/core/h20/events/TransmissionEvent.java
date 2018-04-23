@@ -5,7 +5,7 @@ import app.sim.SimContext;
 
 public class TransmissionEvent extends BaseEvent {
 
-    Transmission transmission;
+    private Transmission transmission;
 
     public TransmissionEvent (double time, SimContext context, Transmission transmission) {
         super(time, context);

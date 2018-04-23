@@ -5,8 +5,8 @@ import app.model.Sensor;
 import app.sim.SimContext;
 
 public class SensorFrameEvent extends FrameEvent {
-    Sensor sensor;
-    int hop;
+    private Sensor sensor;
+    private int hop;
 
     public SensorFrameEvent (double time, SimContext context, Frame frame, Sensor sensor, int hop) {
         super(time, context, frame);

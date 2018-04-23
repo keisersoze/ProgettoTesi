@@ -12,9 +12,6 @@ import app.sim.SimContext;
 
 public class HandleEndReception implements Action {
 
-    public HandleEndReception () {
-    }
-
     @Override
     public void execute (Event event) {
 

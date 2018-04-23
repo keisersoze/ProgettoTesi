@@ -14,7 +14,7 @@ public abstract class AbstractSensor implements Sensor {
     private boolean transmitting;
     private boolean receiving;
 
-    public AbstractSensor (float x, float y, float z) {
+    AbstractSensor (float x, float y, float z) {
         position = new Vector3f(x, y, z);
         neighbors = new ArrayList<>();
         transmitting = false;

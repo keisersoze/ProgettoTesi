@@ -20,9 +20,6 @@ import app.sim.SimContext;
 
 public class GraphicCoreFactory extends MyCoreFactory {
     private Canvas canvas;
-    private HandleEndReception handleEndTrasmission;
-    private HandleTransmission handleTransmission;
-    private HandleArrival handleArrival;
 
     public GraphicCoreFactory (Canvas canvas) {
         this.canvas = canvas;

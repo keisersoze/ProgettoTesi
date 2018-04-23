@@ -31,6 +31,27 @@ import java.util.*;
 
 public class Canvas extends SimpleApplication {
     private static Vector3f field;
+    private final AnalogListener analogListener = (name, value, tpf) -> {
+        if (name.equals("More_Nanos")) {
+            GraphicSim.nanos += 10;
+            if (GraphicSim.nanos > 999) { GraphicSim.nanos = 999; }
+        }
+        if (name.equals("Less_Nanos")) {
+            if (GraphicSim.nanos - 10 < 0) { GraphicSim.nanos = 0; } else { GraphicSim.nanos -= 10; }
+        }
+
+        if (name.equals("More_Millis")) {
+            GraphicSim.millis += 1;
+        }
+        if (name.equals("Less_Millis")) {
+            if (GraphicSim.millis - 1 < 0) { GraphicSim.millis = 0; } else { GraphicSim.millis -= 1; }
+        }
+        if (name.equals("Esc")) {
+            H20Sim.STOPPED = true;
+            Settings.buttonStop.setEnabled(false);
+            Settings.buttonStart.setEnabled(true);
+        }
+    };
     protected SimContext context;
     private boolean charged;
     private HashMap<Frame, HashMap<Transmission, Geometry>> frameListGeometryHashMap;
@@ -108,28 +129,6 @@ public class Canvas extends SimpleApplication {
 
         inputManager.addListener(analogListener, "More_Nanos", "Less_Nanos", "More_Millis", "Less_Millis", "Esc");
     }
-
-    private final AnalogListener analogListener = (name, value, tpf) -> {
-        if (name.equals("More_Nanos")) {
-            GraphicSim.nanos += 10;
-            if (GraphicSim.nanos > 999) { GraphicSim.nanos = 999; }
-        }
-        if (name.equals("Less_Nanos")) {
-            if (GraphicSim.nanos - 10 < 0) { GraphicSim.nanos = 0; } else { GraphicSim.nanos -= 10; }
-        }
-
-        if (name.equals("More_Millis")) {
-            GraphicSim.millis += 1;
-        }
-        if (name.equals("Less_Millis")) {
-            if (GraphicSim.millis - 1 < 0) { GraphicSim.millis = 0; } else { GraphicSim.millis -= 1; }
-        }
-        if (name.equals("Esc")) {
-            H20Sim.STOPPED = true;
-            Settings.buttonStop.setEnabled(false);
-            Settings.buttonStart.setEnabled(true);
-        }
-    };
 
     public Spatial drawSensors (Collection<? extends Sensor> sensors) {
         for (Sensor sensor : sensors) {

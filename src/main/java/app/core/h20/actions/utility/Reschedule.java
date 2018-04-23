@@ -6,7 +6,7 @@ import app.sim.SimContext;
 
 public class Reschedule implements Action {
 
-    double interval;
+    private double interval;
 
     public Reschedule (double interval) {
         this.interval = interval;

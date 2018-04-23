@@ -21,22 +21,10 @@ import java.util.List;
 @SuppressWarnings("unchecked")
 class Settings extends JPanel implements ActionListener, PropertyChangeListener {
 
+    static JButton buttonStart = new JButton("Start");
+    static JButton buttonStop = new JButton("Stop");
     //Formats to format and parse numbers
     private NumberFormat amountFormat;
-
-    //Labels to identify the fields
-    private JLabel labelSamples;
-    private JLabel labelThread;
-    private JLabel labelSensorBandwidth;
-    private JLabel labelMaxFrameSize;
-    private JLabel labelRateMaxFrame;
-    private JLabel labelThreshod;
-    private JLabel labelSensibility;
-    private JLabel labelPower;
-    private JLabel labelFrequency;
-    private JLabel labelLambda;
-    private JLabel labelField;
-
     private JFormattedTextField valSamples;
     private JFormattedTextField valThread;
     private JFormattedTextField valSensorBandwidth;
@@ -50,10 +38,6 @@ class Settings extends JPanel implements ActionListener, PropertyChangeListener 
     private JFormattedTextField valFieldx;
     private JFormattedTextField valFieldy;
     private JFormattedTextField valFieldz;
-
-    static JButton buttonStart = new JButton("Start");
-    static JButton buttonStop = new JButton("Stop");
-
     private JComboBox deployType = new JComboBox(DeploymentTypes.getDeploymentTypes());
     private JComboBox graphicMode = new JComboBox(new String[]{"Graphic Mode", "Stats mode"});
     private List<String> deployStrings = new ArrayList<>();
@@ -65,17 +49,18 @@ class Settings extends JPanel implements ActionListener, PropertyChangeListener 
 
         Color backgroudVal = new Color(189, 189, 189);
 
-        labelSamples = new JLabel("Number of Samples: ");
-        labelThread = new JLabel("Number of Thread: ");
-        labelSensorBandwidth = new JLabel("Sensor Bandwidth (b/s): ");
-        labelMaxFrameSize = new JLabel("Max Frame Size (b): ");
-        labelRateMaxFrame = new JLabel("Rate of frame with max size (0-1): ");
-        labelThreshod = new JLabel("Threshold (only 1, 3 protocols): ");
-        labelSensibility = new JLabel("Sensibility of sensors (dbm): ");
-        labelPower = new JLabel("Power of sensors (dbm): ");
-        labelFrequency = new JLabel("Frequency of sensors (Hz): ");
-        labelLambda = new JLabel("Lambda: ");
-        labelField = new JLabel("Field (x,y,z): ");
+        //Labels to identify the fields
+        JLabel labelSamples = new JLabel("Number of Samples: ");
+        JLabel labelThread = new JLabel("Number of Thread: ");
+        JLabel labelSensorBandwidth = new JLabel("Sensor Bandwidth (b/s): ");
+        JLabel labelMaxFrameSize = new JLabel("Max Frame Size (b): ");
+        JLabel labelRateMaxFrame = new JLabel("Rate of frame with max size (0-1): ");
+        JLabel labelThreshod = new JLabel("Threshold (only 1, 3 protocols): ");
+        JLabel labelSensibility = new JLabel("Sensibility of sensors (dbm): ");
+        JLabel labelPower = new JLabel("Power of sensors (dbm): ");
+        JLabel labelFrequency = new JLabel("Frequency of sensors (Hz): ");
+        JLabel labelLambda = new JLabel("Lambda: ");
+        JLabel labelField = new JLabel("Field (x,y,z): ");
 
 
         valSamples = new JFormattedTextField(amountFormat);
@@ -292,11 +277,11 @@ class Settings extends JPanel implements ActionListener, PropertyChangeListener 
             H20Sim.SENSOR_FREQUENCY = ((Number) valFrequency.getValue()).doubleValue();
         } else if (source == valLambda) {
             H20Sim.LAMDA = ((Number) valLambda.getValue()).doubleValue();
-        }else if (source == valFieldx) {
+        } else if (source == valFieldx) {
             H20Sim.FIELD_X = ((Number) valFieldx.getValue()).floatValue();
-        }else if (source == valFieldy) {
+        } else if (source == valFieldy) {
             H20Sim.FIELD_Y = ((Number) valFieldy.getValue()).floatValue();
-        }else if (source == valFieldz) {
+        } else if (source == valFieldz) {
             H20Sim.FIELD_Z = ((Number) valFieldz.getValue()).floatValue();
         }
     }

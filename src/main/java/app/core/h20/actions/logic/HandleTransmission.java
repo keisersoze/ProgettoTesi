@@ -11,10 +11,6 @@ import app.sim.SimContext;
 
 public class HandleTransmission implements Action {
 
-
-    public HandleTransmission () {
-    }
-
     @Override
     public void execute (Event event) {
         SimContext context = event.getContext();

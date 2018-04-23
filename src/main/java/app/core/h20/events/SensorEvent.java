@@ -4,7 +4,7 @@ import app.model.Sensor;
 import app.sim.SimContext;
 
 public class SensorEvent extends BaseEvent {
-    Sensor sensor;
+    private Sensor sensor;
 
     public SensorEvent (double time, SimContext context, Sensor sensor) {
         super(time, context);

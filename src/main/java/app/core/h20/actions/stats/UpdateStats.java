@@ -7,10 +7,6 @@ import app.stats.h20.StatsSample;
 
 public class UpdateStats implements Action {
 
-    public UpdateStats () {
-
-    }
-
     @Override
     public void execute (Event event) {
 

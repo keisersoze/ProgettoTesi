@@ -10,7 +10,10 @@ import app.sim.SimContext;
 import app.stats.Collector;
 import org.apache.commons.math3.random.MersenneTwister;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class AbstractSimIstance implements SimContext {
@@ -20,19 +23,16 @@ public abstract class AbstractSimIstance implements SimContext {
     private final List<Sensor> sensors;
     private final List<Frame> frames;
     private final ModelFactory modelFactory;
-    private double nSamples;
-
     private final MersenneTwister marsenneTwister = new MersenneTwister();
+    private double nSamples;
     private double simTime;
     //Dati statistici che vengono utilizzati dal collector
-    private int nframes; // numero di frame arrivati ai sink
 
     AbstractSimIstance (Collector collector, Scheduler scheduler) {
         frames = new ArrayList<>();
         this.collector = collector;
         this.scheduler = scheduler;
         simTime = 0.0;
-        nframes = 0;
         framesArrived = new ConcurrentHashMap<>();
         modelFactory = new MyModelFactory();
         sensors = modelFactory.deploySensors(H20Sim.DEPLOYMENT_TYPE);
