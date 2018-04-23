@@ -8,6 +8,7 @@ import app.model.Frame;
 import app.model.Sensor;
 import app.model.Transmission;
 import app.sim.SimContext;
+import app.utils.MyLib;
 
 import java.util.stream.Collectors;
 
@@ -42,12 +43,12 @@ public class HandleTransmission implements Action {
 
     protected boolean CSMA (Sensor sender, SimContext context, Frame frame, int numHop) {
         // se uno dei miei vicini stra trasmettendo allora io non posso trasmettere, CSMA non persistente
-        if (sender.getNeighbors().stream().filter(Sensor::isTransmitting).collect(Collectors.toList()).size() > 0) {
+        /*if (MyLib.calculateNoise(sender,context) > ) {
             double time = -log(context.getMarsenneTwister().nextDouble()) / H20Sim.LAMDA;   //TODO : da capire se va bene oppure se cambiarlo
             Event e = context.getCoreFactory().getEvent(EventTypes.TransmissionEvent, time, context, frame, sender, numHop);
             context.getScheduler().addEvent(e);
             return false;
-        }
+        }*/
         return true;
     }
 
