@@ -9,7 +9,7 @@ import app.model.Transmission;
 import app.model.h20.BaseFrame;
 import app.model.h20.BaseSensor;
 import app.model.h20.BaseTransmission;
-import app.sim.MyLib;
+import app.utils.MyLib;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,8 +38,16 @@ public class MyModelFactory implements ModelFactory {
             return layerDeployment();
         } else if (deploymentType.equalsIgnoreCase(DeploymentTypes.LayerProportionalDeployment)) {
             return layerDeploymentInverted();
+        }if (deploymentType.equalsIgnoreCase(DeploymentTypes.OneSDeployment)) {
+            return oneSDeployment();
         } else { return null; }
 
+    }
+
+    private List<Sensor> oneSDeployment() {
+        List<Sensor> sensors = new ArrayList<>();
+        sensors.add(getSensor(0,0,0));
+        return sensors;
     }
 
     private List<Sensor> layerDeploymentInverted () {

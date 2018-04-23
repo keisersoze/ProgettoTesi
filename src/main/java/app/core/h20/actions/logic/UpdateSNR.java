@@ -5,7 +5,7 @@ import app.core.Action;
 import app.core.Event;
 import app.model.Frame;
 import app.model.Transmission;
-import app.sim.MyLib;
+import app.utils.MyLib;
 import app.sim.SimContext;
 
 import java.util.List;

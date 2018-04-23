@@ -55,3 +55,5 @@ fabric.properties
 OpenAL64\.dll
 
 lwjgl64\.dll
+
+*.log

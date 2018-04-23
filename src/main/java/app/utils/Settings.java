@@ -44,6 +44,10 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
     private JFormattedTextField valFieldx;
     private JFormattedTextField valFieldy;
     private JFormattedTextField valFieldz;
+
+    private JFormattedTextField valMSpeed;
+    private JFormattedTextField valMRadius;
+
     private JComboBox deployType = new JComboBox(DeploymentTypes.getDeploymentTypes());
     private JComboBox graphicMode = new JComboBox(new String[]{"Graphic Mode", "Stats mode"});
     private List<String> deployStrings = new ArrayList<>();
@@ -67,6 +71,8 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
         JLabel labelFrequency = new JLabel("Frequency of sensors (Hz): ");
         JLabel labelLambda = new JLabel("Lambda: ");
         JLabel labelField = new JLabel("Field (x,y,z): ");
+        JLabel labelMSpeed = new JLabel("Move speed: ");
+        JLabel labelMRadius = new JLabel("Move radius: ");
 
         valSamples = new JFormattedTextField(amountFormat);
         valSamples.setBackground(backgroudVal);
@@ -138,13 +144,25 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
         valFieldy.setBackground(backgroudVal);
         valFieldy.setValue(H20Sim.FIELD_Y);
         valFieldy.setColumns(15);
-        valFieldx.addPropertyChangeListener("value", this);
+        valFieldy.addPropertyChangeListener("value", this);
 
         valFieldz = new JFormattedTextField(amountFormat);
         valFieldz.setBackground(backgroudVal);
         valFieldz.setValue(H20Sim.FIELD_Z);
         valFieldz.setColumns(15);
         valFieldz.addPropertyChangeListener("value", this);
+
+        valMSpeed = new JFormattedTextField(amountFormat);
+        valMSpeed.setBackground(backgroudVal);
+        valMSpeed.setValue(H20Sim.MOVEMENT_SPEED);
+        valMSpeed.setColumns(15);
+        valMSpeed.addPropertyChangeListener("value", this);
+
+        valMRadius = new JFormattedTextField(amountFormat);
+        valMRadius.setBackground(backgroudVal);
+        valMRadius.setValue(H20Sim.MOVE_RADIUS);
+        valMRadius.setColumns(15);
+        valMRadius.addPropertyChangeListener("value", this);
 
         labelSamples.setLabelFor(valSamples);
         labelThread.setLabelFor(valThread);
@@ -159,7 +177,8 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
         labelField.setLabelFor(valFieldx);
         labelField.setLabelFor(valFieldy);
         labelField.setLabelFor(valFieldz);
-
+        labelMSpeed.setLabelFor(valMSpeed);
+        labelMRadius.setLabelFor(valMRadius);
 
         JPanel gridPanel2 = new JPanel(new GridLayout(0, 4));
 
@@ -198,6 +217,12 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
 
         gridPanel.add(labelLambda);
         gridPanel.add(valLambda);
+
+        gridPanel.add(labelMSpeed);
+        gridPanel.add(valMSpeed);
+
+        gridPanel.add(labelMRadius);
+        gridPanel.add(valMRadius);
 
         deployType.setSelectedIndex(0);
         deployType.addActionListener(this);
@@ -303,6 +328,10 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
             H20Sim.FIELD_Y = ((Number) valFieldy.getValue()).floatValue();
         } else if (source == valFieldz) {
             H20Sim.FIELD_Z = ((Number) valFieldz.getValue()).floatValue();
+        } else if (source == valMRadius) {
+            H20Sim.MOVE_RADIUS = ((Number) valMRadius.getValue()).floatValue();
+        } else if (source == valMSpeed) {
+            H20Sim.MOVEMENT_SPEED = ((Number) valMSpeed.getValue()).floatValue();
         }
     }
 

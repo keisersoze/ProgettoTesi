@@ -9,7 +9,7 @@ import app.factory.CoreFactory;
 import app.factory.EventTypes;
 import app.factory.h20.GraphicCoreFactory;
 import app.model.Sensor;
-import app.sim.MyLib;
+import app.utils.MyLib;
 import app.stats.Collector;
 import com.jme3.system.AppSettings;
 
@@ -84,18 +84,7 @@ public class GraphicSim extends AbstractSimIstance implements Runnable {
             e.printStackTrace();
         }
 
-        // creo l'evento che richiama la funzionalità di campionamento per le statistiche
-
-        Event arrival_evt = getCoreFactory().getEvent(EventTypes.ArrivalEvent, 0, this);
-        Event stats_evt = getCoreFactory().getEvent(EventTypes.StatisticEvent, 0, this);
-        //imposto gli eventi periodici
-        stats_evt.setInterval(1 / H20Sim.LAMDA);
-
-        //aggiungo gli eventi periodici allo scheduler
-
-        getScheduler().addEvent(arrival_evt);
-        getScheduler().addEvent(stats_evt);
-
+        super.initEvents();
 
         //avvio la simulazione
 

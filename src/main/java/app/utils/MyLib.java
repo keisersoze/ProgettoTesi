@@ -1,7 +1,8 @@
-package app.sim;
+package app.utils;
 
 import app.H20Sim;
 import app.model.Sensor;
+import app.sim.SimContext;
 import org.apache.commons.math3.random.MersenneTwister;
 
 import java.util.ArrayList;

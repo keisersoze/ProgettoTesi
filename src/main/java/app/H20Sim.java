@@ -28,12 +28,16 @@ public class H20Sim extends Application {
     public static volatile boolean START = false;
     public static boolean STOPPED = false;
 
+    public static int NTHREADS = 1;
     public static int N_SAMPLES = 2000;
+
     //parametri simulazione
     public static double LAMDA = 0.1;
-    public static double MOVEMENT_SPEED = 0.5;
 
-    public static int NTHREADS = 1;
+
+    public static double MOVEMENT_SPEED = 0.5; // m/s
+    public static double MOVE_REFRESH = 2 ; // unità di sim time
+    public static double MOVE_RADIUS = 20; //m
 
     public static float SCALE = 10f;
 

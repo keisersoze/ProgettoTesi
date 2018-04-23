@@ -1,7 +1,9 @@
 package app.sim.h20;
 
 import app.H20Sim;
+import app.core.Event;
 import app.core.Scheduler;
+import app.factory.EventTypes;
 import app.factory.ModelFactory;
 import app.factory.h20.MyModelFactory;
 import app.model.Frame;
@@ -92,5 +94,22 @@ public abstract class AbstractSimIstance implements SimContext {
     @Override
     public void setPercentageCompleted () {
         nSamples++;
+    }
+
+    protected void initEvents(){
+        Event move_evt = getCoreFactory().getEvent(EventTypes.MoveEvent, 0, this);
+        Event arrival_evt = getCoreFactory().getEvent(EventTypes.ArrivalEvent, 0, this);
+        Event stats_evt = getCoreFactory().getEvent(EventTypes.StatisticEvent, 0, this);
+
+
+        //imposto gli eventi periodici
+        move_evt.setInterval(H20Sim.MOVE_REFRESH);
+        stats_evt.setInterval(1 / H20Sim.LAMDA);
+
+        //aggiungo gli eventi periodici allo scheduler
+        getScheduler().addEvent(arrival_evt);
+        getScheduler().addEvent(stats_evt);
+        getScheduler().addEvent(move_evt);
+
     }
 }

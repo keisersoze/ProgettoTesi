@@ -8,7 +8,7 @@ import app.factory.CoreFactory;
 import app.factory.EventTypes;
 import app.factory.h20.MyCoreFactory;
 import app.model.Sensor;
-import app.sim.MyLib;
+import app.utils.MyLib;
 import app.stats.Collector;
 
 import java.util.LinkedList;
@@ -29,21 +29,7 @@ public class SimulationInstance extends AbstractSimIstance implements Runnable {
         }
         // creo l'evento che richiama la funzionalità di campionamento per le statistiche
 
-        Event move_evt = getCoreFactory().getEvent(EventTypes.MoveEvent, 0, this);
-        Event arrival_evt = getCoreFactory().getEvent(EventTypes.ArrivalEvent, 0, this);
-        Event stats_evt = getCoreFactory().getEvent(EventTypes.StatisticEvent, 0, this);
-
-
-        //imposto gli eventi periodici
-        move_evt.setInterval(10);
-        stats_evt.setInterval(1 / H20Sim.LAMDA);
-
-        //aggiungo gli eventi periodici allo scheduler
-        getScheduler().addEvent(arrival_evt);
-        getScheduler().addEvent(stats_evt);
-        //getScheduler().addEvent(move_evt);
-        //avvio la simulazione
-
+        super.initEvents();
         while (getPercentageCompleted() < 100 && !H20Sim.STOPPED) {
             Event evt_scheduled = getScheduler().scheduleEvent();
             setSimTime(evt_scheduled.getTime());
