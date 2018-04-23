@@ -88,11 +88,18 @@ public class MyModelFactory implements ModelFactory {
     }
 
     private void deploySink (List<Sensor> sensors) {
-        for (int i = 300; i <= H20Sim.FIELD_X; i += 600) {
-            for (int j = 300; j <= H20Sim.FIELD_Z; j += 600) {
-                Sensor s1 = getSensor(i, H20Sim.FIELD_Y, j);
-                s1.setSink(true);
-                sensors.add(s1);
+        int startX = (int) H20Sim.FIELD_X / 10;
+        int endX = (int) (H20Sim.FIELD_X - H20Sim.FIELD_X / 10);
+        int startZ = (int) H20Sim.FIELD_Z / 10;
+        int endZ = (int) (H20Sim.FIELD_Z - H20Sim.FIELD_Z / 10);
+        int offsetX = (int) H20Sim.FIELD_X / 4;
+        int offsetZ = (int) H20Sim.FIELD_Z / 4;
+
+        for (int i = startX; i <= endX; i += offsetX) {
+            for (int j = startZ; j <= endZ; j += offsetZ) {
+                Sensor sensor = getSensor(i, H20Sim.FIELD_Y, j);
+                sensor.setSink(true);
+                sensors.add(sensor);
             }
         }
     }
@@ -100,7 +107,7 @@ public class MyModelFactory implements ModelFactory {
     private List<Sensor> baseDeployment () {
         List<Sensor> sensors = new ArrayList<>();
 
-        for (int i = 0; i < 300; i++) {
+        for (int i = 0; i < 200; i++) {
             Sensor s1 = getSensor(MyLib.random(0, H20Sim.FIELD_X), MyLib.random(0, H20Sim.FIELD_Y - H20Sim.FIELD_Y / 10), MyLib.random(0, H20Sim.FIELD_Z));
             sensors.add(s1);
         }

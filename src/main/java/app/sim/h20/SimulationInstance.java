@@ -47,7 +47,7 @@ public class SimulationInstance extends AbstractSimIstance implements Runnable {
             Event evt_scheduled = getScheduler().scheduleEvent();
             setSimTime(evt_scheduled.getTime());
             evt_scheduled.tick();
-            System.out.println(getPercentageCompleted() + "% Thread:" + Thread.currentThread().getName());
+            System.out.println((int) getPercentageCompleted() + "% Thread:" + Thread.currentThread().getName());
         }
 
         System.out.println(getSimTime());

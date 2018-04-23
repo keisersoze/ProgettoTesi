@@ -52,7 +52,7 @@ public class H20Sim extends Application {
 
     //variabili endogene
     public static int SOUND_SPEED = 343; // m/s
-    public static double GAMMA = 1; //TODO guardare come si chiama
+    public static double GAMMA = 1;
 
     public static boolean CANVAS_MODE = true;
 
