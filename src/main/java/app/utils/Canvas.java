@@ -1,5 +1,10 @@
-package app;
+/*
+ * Copyright (c) 2018. Tesi di laurea in Informatica Università Ca' Foscari di Venezia. Creato da Alessio Del Conte e Filippo Maganza
+ */
 
+package app.utils;
+
+import app.H20Sim;
 import app.model.Frame;
 import app.model.Sensor;
 import app.model.Transmission;

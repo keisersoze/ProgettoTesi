@@ -1,7 +1,7 @@
 package app.sim.h20;
 
 import app.H20Sim;
-import app.Settings;
+import app.utils.Settings;
 import app.core.Event;
 import app.core.Scheduler;
 import app.factory.CoreFactory;

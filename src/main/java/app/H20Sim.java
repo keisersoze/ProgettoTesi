@@ -7,6 +7,7 @@ import app.sim.SimContext;
 import app.sim.h20.GraphicSim;
 import app.sim.h20.SimulationInstance;
 import app.stats.h20.BaseCollector;
+import app.utils.Settings;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
@@ -24,7 +25,7 @@ public class H20Sim extends Application {
     public static float FIELD_Y = 1000;
     public static float FIELD_Z = 2000;
 
-    static volatile boolean START = false;
+    public static volatile boolean START = false;
     public static boolean STOPPED = false;
 
     public static int N_SAMPLES = 2000;
@@ -32,9 +33,9 @@ public class H20Sim extends Application {
     public static double LAMDA = 0.1;
     public static double MOVEMENT_SPEED = 0.5;
 
-    static int NTHREADS = 1;
+    public static int NTHREADS = 1;
 
-    static float SCALE = 10f;
+    public static float SCALE = 10f;
 
     public static int SENSOR_BANDWIDTH = 100; // b/s
     public static int MAX_FRAME_SIZE = 1000; //bit (200-1600)
@@ -52,7 +53,7 @@ public class H20Sim extends Application {
     public static int SOUND_SPEED = 343; // m/s
     public static double GAMMA = 1;
 
-    static boolean CANVAS_MODE = true;
+    public static boolean CANVAS_MODE = true;
     private static Map<Thread, SimContext> threadContextMap = new HashMap<>();
     private static BaseCollector collector = new BaseCollector();
 

@@ -1,6 +1,6 @@
 package app.factory.h20;
 
-import app.Canvas;
+import app.utils.Canvas;
 import app.core.Event;
 import app.core.h20.actions.utility.RescheduleExpRandom;
 import app.core.h20.events.BaseEvent;

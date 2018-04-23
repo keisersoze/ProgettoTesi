@@ -1,6 +1,6 @@
 package app.core.h20.actions.logic;
 
-import app.ConsoleColors;
+import app.utils.ConsoleColors;
 import app.H20Sim;
 import app.core.Action;
 import app.core.Event;

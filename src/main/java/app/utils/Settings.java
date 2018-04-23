@@ -1,5 +1,10 @@
-package app;
+/*
+ * Copyright (c) 2018. Tesi di laurea in Informatica Università Ca' Foscari di Venezia. Creato da Alessio Del Conte e Filippo Maganza
+ */
 
+package app.utils;
+
+import app.H20Sim;
 import app.factory.DeploymentTypes;
 
 import javax.swing.*;
@@ -21,8 +26,8 @@ import java.util.List;
 @SuppressWarnings("unchecked")
 public class Settings extends JPanel implements ActionListener, PropertyChangeListener {
 
-    static JButton buttonStart = new JButton("Start");
-    static JButton buttonStop = new JButton("Stop");
+    public static JButton buttonStart = new JButton("Start");
+    public static JButton buttonStop = new JButton("Stop");
     private static final JProgressBar progressBar = new JProgressBar(0, 100);
     //Formats to format and parse numbers
     private NumberFormat amountFormat;
@@ -254,7 +259,7 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
         Collections.addAll(graphicStrings, "Graphic Mode", "Stats mode");
     }
 
-    static void createAndShowGUI () {
+    public static void createAndShowGUI () {
         //Create and set up the window.
         JFrame frame = new JFrame("Configurazione di simulazione");
         ImageIcon img = new ImageIcon("assets/Interface/settings.png");

@@ -1,7 +1,7 @@
 package app.core.h20G;
 
-import app.Canvas;
-import app.ConsoleColors;
+import app.utils.Canvas;
+import app.utils.ConsoleColors;
 import app.H20Sim;
 import app.core.Action;
 import app.core.Event;

@@ -1,6 +1,6 @@
 package app.core.h20G;
 
-import app.Canvas;
+import app.utils.Canvas;
 import app.core.Event;
 
 public class HandleEndTransmission extends app.core.h20.actions.logic.HandleEndTransmission {
