@@ -5,15 +5,15 @@ import app.core.Action;
 import app.core.Event;
 import app.model.Frame;
 import app.model.Transmission;
-import app.utils.MyLib;
 import app.sim.SimContext;
+import app.utils.MyLib;
 
 import java.util.List;
 
 public class UpdateSNR implements Action {
 
     @Override
-    public void execute(Event event) {
+    public void execute (Event event) {
         SimContext context = event.getContext();
         List<Frame> frames = context.getFrames();
 
@@ -23,7 +23,6 @@ public class UpdateSNR implements Action {
                 if (noise_power != 0 && MyLib.powerReceived(t.getReceiver().getEuclideanDistance(t.getSender())) / noise_power < H20Sim.GAMMA) {
                     t.setSuccessfull(false);
                 }
-
             }
         }
     }

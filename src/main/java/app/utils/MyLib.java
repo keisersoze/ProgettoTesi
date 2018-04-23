@@ -33,7 +33,7 @@ public class MyLib {
         double acc = 0;
         for (Sensor s : context.getSensors()) {
             if (s.isTransmitting() && !s.equals(sender)) {
-                acc += Math.pow(powerReceived(sensor.getEuclideanDistance(s) / 10), 10);
+                acc += Math.pow(10, powerReceived(sensor.getEuclideanDistance(s)) / 10);
             }
         }
         return acc == 0 ? 0 : 10 * Math.log10(acc);
