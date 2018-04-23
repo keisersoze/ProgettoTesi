@@ -2,7 +2,6 @@ package app.core.h20G;
 
 import app.Canvas;
 import app.H20Sim;
-import app.core.Action;
 import app.core.Event;
 import app.factory.EventTypes;
 import app.model.Frame;
@@ -10,7 +9,7 @@ import app.model.Sensor;
 import app.model.Transmission;
 import app.sim.SimContext;
 
-public class HandleTransmission implements Action {
+public class HandleTransmission extends app.core.h20.actions.logic.HandleTransmission {
 
     private Canvas canvas;
 
@@ -26,28 +25,26 @@ public class HandleTransmission implements Action {
         Sensor sender = event.getSensor();
         int numHop = event.getInt();
 
-        sender.setTransmitting(true);
+        if (CSMA(sender, context, frame, numHop)) {
+            sender.setTransmitting(true);
 
-        for (Sensor receiver : sender.getNeighbors()) {
+            for (Sensor receiver : sender.getNeighbors()) {
+                Transmission transmission = context.getModelFactory().getTransmission(sender, receiver, frame, numHop);
+                transmission.setTime(context.getSimTime());    // Per il calcolo di quanto sta avanzando la trasmissione (la linea)
 
-            double time = sender.getEuclideanDistance(receiver) / H20Sim.SOUND_SPEED;
+                frame.getTransmissionHistory().add(transmission);
 
-            Transmission transmission = context.getModelFactory().getTransmission(sender, receiver, frame, numHop);
-            transmission.setTime(context.getSimTime());    // Per il calcolo di quanto sta avanzando la trasmissione (la linea)
+                double time = sender.getEuclideanDistance(receiver) / H20Sim.SOUND_SPEED;
+                Event e = context.getCoreFactory().getEvent(EventTypes.ReceptionEvent, time, context, transmission);
+                context.getScheduler().addEvent(e);
 
-            frame.getTransmissionHistory().add(transmission);
+                canvas.enqueue(() -> canvas.newTransmission(frame, transmission));
+            }
 
-            Event e = context.getCoreFactory().getEvent(EventTypes.ReceptionEvent, time, context, transmission);
-
-            canvas.enqueue(() -> canvas.newTransmission(frame, transmission));
-
+            double time = frame.getSize() / H20Sim.SENSOR_BANDWIDTH;
+            Event e = context.getCoreFactory().getEvent(EventTypes.EndTransmissionEvent, time, context, sender);
             context.getScheduler().addEvent(e);
         }
-
-        double time = frame.getSize() / H20Sim.SENSOR_BANDWIDTH;
-        Event e = context.getCoreFactory().getEvent(EventTypes.EndTransmissionEvent, time, context, sender);
-        context.getScheduler().addEvent(e);
-
     }
 
 }

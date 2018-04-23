@@ -65,6 +65,7 @@ public class H20Sim extends Application {
             }
             START = false;
             STOPPED = false;
+            Settings.resetProgressBar();
 
             if (CANVAS_MODE) {
                 GraphicSim context = new GraphicSim(collector, new DefaultScheduler());

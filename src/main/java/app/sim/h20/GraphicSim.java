@@ -2,6 +2,7 @@ package app.sim.h20;
 
 import app.Canvas;
 import app.H20Sim;
+import app.Settings;
 import app.core.Event;
 import app.core.Scheduler;
 import app.factory.CoreFactory;
@@ -102,6 +103,7 @@ public class GraphicSim extends AbstractSimIstance implements Runnable {
             Event evt_scheduled = getScheduler().scheduleEvent();
             setSimTime(evt_scheduled.getTime());
             evt_scheduled.tick();
+            Settings.updateProgressBar(getPercentageCompleted());
             try {
                 Thread.sleep(millis, nanos);
             } catch (InterruptedException e) {
