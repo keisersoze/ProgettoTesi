@@ -36,7 +36,7 @@ public class MyLib {
                 acc += Math.pow(10, powerReceived(sensor.getEuclideanDistance(s)) / 10);
             }
         }
-        return acc == 0 ? 0 : 10 * Math.log10(acc);
+        return acc;
     }
 
     public static double powerReceived(double distance) {

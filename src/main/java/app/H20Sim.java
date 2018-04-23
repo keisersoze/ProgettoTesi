@@ -54,7 +54,7 @@ public class H20Sim extends Application {
     public static String DEPLOYMENT_TYPE = DeploymentTypes.BaseDeployment;
 
     //variabili endogene
-    public static int SOUND_SPEED = 343; // m/s
+    public static int SOUND_SPEED = 1440; // m/s in acqua
     public static double GAMMA = 1;
 
     public static boolean CANVAS_MODE = true;
