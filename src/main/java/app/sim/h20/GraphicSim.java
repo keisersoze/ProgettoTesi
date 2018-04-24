@@ -99,6 +99,7 @@ public class GraphicSim extends AbstractSimIstance implements Runnable {
                 e.printStackTrace();
             }
         }
+
     }
 
     @Override

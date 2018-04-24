@@ -8,6 +8,7 @@ import app.H20Sim;
 import app.factory.DeploymentTypes;
 import app.sim.SimContext;
 import app.stats.Collector;
+import app.utils.charts.Chart;
 import app.utils.charts.ChartSuccessfulRate;
 import app.utils.charts.ChartThrougput;
 import org.jfree.chart.ChartPanel;
@@ -56,10 +57,11 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
     private JFormattedTextField valMSpeed;
     private JFormattedTextField valMRadius;
 
+    //charts
     private static ChartPanel chartPanelSR;
     private static JPanel east;
-    private static ChartThrougput c1;
-    private static ChartSuccessfulRate c2;
+    private static Chart c1;
+    private static Chart c2;
 
     private JComboBox deployType = new JComboBox(DeploymentTypes.getDeploymentTypes());
     private JComboBox graphicMode = new JComboBox(new String[]{"Graphic Mode", "Stats mode"});

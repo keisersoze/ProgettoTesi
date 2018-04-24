@@ -36,17 +36,6 @@ public class SimulationInstance extends AbstractSimIstance implements Runnable {
             evt_scheduled.tick();
             Settings.updateProgressBar(getPercentageCompleted());
         }
-
-        System.out.println(getSimTime());
-
-        int cont = 0;
-        for (LinkedList<Double> list : getFramesArrived().values()) {
-            if (list.size() > 0) { cont++; }
-
-
-        }
-        System.out.println(getFrames().size());
-        System.out.println(cont);
     }
 
     @Override

@@ -8,19 +8,13 @@ import app.sim.h20.GraphicSim;
 import app.sim.h20.SimulationInstance;
 import app.stats.h20.BaseCollector;
 import app.utils.Settings;
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
-import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.util.HashMap;
 import java.util.Map;
 
 
-public class H20Sim extends Application {
+public class H20Sim  {
     public static float FIELD_X = 5000;
     public static float FIELD_Y = 3000;
     public static float FIELD_Z = 5000;
@@ -104,6 +98,7 @@ public class H20Sim extends Application {
             if(!STOPPED) {
                 Settings.drawCharts(collector, threadContextMap);
             }
+
             threadContextMap.clear();
 
 
@@ -122,38 +117,4 @@ public class H20Sim extends Application {
 
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public void start (Stage stage) {
-        //stage.setTitle("Line Chart Sample");
-        //defining the axes
-        final NumberAxis xAxis = new NumberAxis();
-        final NumberAxis yAxis = new NumberAxis();
-        xAxis.setLabel("Samples");
-        yAxis.setLabel("% rate successfull");
-        //creating the chart
-        final LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
-
-        lineChart.setTitle("Success rate (Frame)");
-        //defining a series
-        XYChart.Series series = new XYChart.Series();
-        //series.setName("My portfolio");
-        //populating the series with data
-
-
-        for (int j = 0; j < N_SAMPLES; j++) {
-            double successfullRateAcc = 0;
-            for (Thread t : threadContextMap.keySet()) {
-                successfullRateAcc += collector.getSourceSamples(t.getName()).get(j).getSuccessfullRate() * 100;
-            }
-            series.getData().add(new XYChart.Data(j, successfullRateAcc / NTHREADS));
-        }
-
-
-        Scene scene = new Scene(lineChart, 800, 600);
-        lineChart.getData().add(series);
-
-        stage.setScene(scene);
-        stage.show();
-    }
 }

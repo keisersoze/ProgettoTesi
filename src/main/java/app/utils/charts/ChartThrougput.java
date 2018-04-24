@@ -17,14 +17,14 @@ import org.jfree.data.xy.XYSeriesCollection;
 import java.awt.*;
 import java.util.Map;
 
-public class ChartThrougput {
+public class ChartThrougput implements Chart{
     private JFreeChart chart;
 
     public ChartThrougput(Collector collector, Map<Thread, SimContext> threadContextMap) {
         chart= createChart(createDataset(collector,threadContextMap));
     }
 
-    public static JFreeChart createChart(XYDataset dataset) {
+    private static JFreeChart createChart(XYDataset dataset) {
 
         JFreeChart chart = ChartFactory.createXYLineChart(
                 "Throughput",
@@ -63,7 +63,7 @@ public class ChartThrougput {
 
     }
 
-    public static XYDataset createDataset(Collector collector, Map<Thread, SimContext> threadContextMap) {
+    private static XYDataset createDataset(Collector collector, Map<Thread, SimContext> threadContextMap) {
 
         XYSeries series = new XYSeries("Throughput");
         for (int j = 0; j < H20Sim.N_SAMPLES; j++) {
