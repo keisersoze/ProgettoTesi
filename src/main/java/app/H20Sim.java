@@ -21,9 +21,9 @@ import java.util.Map;
 
 
 public class H20Sim extends Application {
-    public static float FIELD_X = 2000;
-    public static float FIELD_Y = 1000;
-    public static float FIELD_Z = 2000;
+    public static float FIELD_X = 5000;
+    public static float FIELD_Y = 3000;
+    public static float FIELD_Z = 5000;
 
     public static volatile boolean START = false;
     public static boolean STOPPED = false;
@@ -32,12 +32,12 @@ public class H20Sim extends Application {
     public static int N_SAMPLES = 2000;
 
     //parametri simulazione
-    public static double LAMDA = 0.1;
+    public static double LAMDA = 0.05;
 
 
     public static double MOVEMENT_SPEED = 0.5; // m/s
     public static double MOVE_REFRESH = 2 ; // unità di sim time
-    public static double MOVE_RADIUS = 20; //m
+    public static double MOVE_RADIUS = 200; //m
 
     public static float SCALE = 10f;
 
@@ -45,10 +45,10 @@ public class H20Sim extends Application {
     public static int MAX_FRAME_SIZE = 1000; //bit (200-1600)
     public static double MAX_FRAME_RATE = 0.9;
 
-    public static int THRESHOLD = 20;
+    public static int THRESHOLD = 300;
 
     public static double SENSIBILITY = -110; //dBm
-    public static double SENSOR_POWER = -115; //dB
+    public static double SENSOR_POWER = -104; //dB
     public static double SENSOR_FREQUENCY = 40000; //HZ
 
     public static String DEPLOYMENT_TYPE = DeploymentTypes.BaseDeployment;

@@ -29,11 +29,11 @@ public class MyLib {
         return myNeighbors;
     }
 
-    public static double calculateNoise(Sensor sensor, SimContext context, Sensor sender) {
+    public static double calculateNoise(Sensor sender, Sensor receiver, SimContext context, double time) {
         double acc = 0;
         for (Sensor s : context.getSensors()) {
-            if (s.isTransmitting() && !s.equals(sender)) {
-                acc += Math.pow(10, powerReceived(sensor.getEuclideanDistance(s)) / 10);
+            if (s.isTransmitting() && !s.equals(sender) && (receiver.getEuclideanDistance(s) >= H20Sim.SOUND_SPEED * (context.getSimTime() - time))) {
+                acc += Math.pow(10, powerReceived(receiver.getEuclideanDistance(s)) / 10);
             }
         }
         return acc;

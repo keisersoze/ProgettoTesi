@@ -8,7 +8,6 @@ import app.model.Frame;
 import app.model.Sensor;
 import app.model.Transmission;
 import app.sim.SimContext;
-import app.utils.MyLib;
 
 import java.util.stream.Collectors;
 
@@ -28,6 +27,7 @@ public class HandleTransmission implements Action {
 
             for (Sensor receiver : sender.getNeighbors()) {     // Per tutti i sensori che possono ricevere viene creato un nuovo evento
                 Transmission transmission = context.getModelFactory().getTransmission(sender, receiver, frame, numHop);
+                transmission.setTime(context.getSimTime());
                 frame.getTransmissionHistory().add(transmission);
 
                 double time = sender.getEuclideanDistance(receiver) / H20Sim.SOUND_SPEED;   // Tra quanto schedulo l'evento
@@ -43,12 +43,12 @@ public class HandleTransmission implements Action {
 
     protected boolean CSMA (Sensor sender, SimContext context, Frame frame, int numHop) {
         // se uno dei miei vicini stra trasmettendo allora io non posso trasmettere, CSMA non persistente
-        /*if (MyLib.calculateNoise(sender,context) > ) {
+        if (sender.getNeighbors().stream().filter(Sensor::isTransmitting).collect(Collectors.toList()).size() > 0) {
             double time = -log(context.getMarsenneTwister().nextDouble()) / H20Sim.LAMDA;   //TODO : da capire se va bene oppure se cambiarlo
             Event e = context.getCoreFactory().getEvent(EventTypes.TransmissionEvent, time, context, frame, sender, numHop);
             context.getScheduler().addEvent(e);
             return false;
-        }*/
+        }
         return true;
     }
 

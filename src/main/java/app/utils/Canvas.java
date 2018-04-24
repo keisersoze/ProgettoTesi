@@ -89,8 +89,8 @@ public class Canvas extends SimpleApplication {
         initKeys();
 
         attachCoordinateAxes(Vector3f.ZERO);
-        attachGrid(field.x, field.y, field.z, 10f, ColorRGBA.White);
-        viewPort.setBackgroundColor(new ColorRGBA(1f / 255f * 54f, 1f / 255f * 84f, 1f / 255f * 132f, 1f));
+        attachGrid(field.x, field.y, field.z, 50f, ColorRGBA.White);
+        viewPort.setBackgroundColor(new ColorRGBA(0.1f, 0.1f, 0.11f, 1f));
         //generateTerrain();
 
         charged = true;
@@ -110,6 +110,7 @@ public class Canvas extends SimpleApplication {
         cam.setLocation(cam_position);
         cam.lookAt(Vector3f.ZERO, Vector3f.ZERO);
         flyCam.setMoveSpeed(100);
+        cam.setFrustumFar(5000);
     }
 
     private void initHUD () {
