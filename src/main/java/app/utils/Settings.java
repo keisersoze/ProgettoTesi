@@ -6,6 +6,13 @@ package app.utils;
 
 import app.H20Sim;
 import app.factory.DeploymentTypes;
+import app.sim.SimContext;
+import app.stats.Collector;
+import app.utils.charts.ChartSuccessfulRate;
+import app.utils.charts.ChartThrougput;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.xy.XYDataset;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -21,6 +28,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 
 @SuppressWarnings("unchecked")
@@ -48,10 +56,17 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
     private JFormattedTextField valMSpeed;
     private JFormattedTextField valMRadius;
 
+    private static ChartPanel chartPanelSR;
+    private static JPanel east;
+    private static ChartThrougput c1;
+    private static ChartSuccessfulRate c2;
+
     private JComboBox deployType = new JComboBox(DeploymentTypes.getDeploymentTypes());
     private JComboBox graphicMode = new JComboBox(new String[]{"Graphic Mode", "Stats mode"});
+    private JComboBox chartType = new JComboBox(new String[]{"Throughput", "Successful Rate"});
     private List<String> deployStrings = new ArrayList<>();
     private List<String> graphicStrings = new ArrayList<>();
+    private List<String> chartStrings = new ArrayList<>();
 
     private Settings () {
         super();
@@ -273,15 +288,33 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
         });
         splitPaneH.setBorder(null);
 
+        chartPanelSR = new ChartPanel(null);
+        chartPanelSR.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        chartPanelSR.setBackground(Color.white);
+
         JPanel gui = new JPanel(new BorderLayout(3,3));
         gui.setBorder(new EmptyBorder(5,5,5,5));
 
         gui.add(splitPaneH, BorderLayout.NORTH);
         gui.add(progressPanel, BorderLayout.SOUTH);
-        add(gui);
+
+        east = new JPanel(new BorderLayout(3,3));
+
+        chartType.setSelectedIndex(1);
+        chartType.addActionListener(this);
+        east.add(chartType, BorderLayout.NORTH);
+        east.add(chartPanelSR, BorderLayout.SOUTH);
+
+        east.setVisible(false);
+
+        JPanel gui2 = new JPanel(new BorderLayout(3,3));
+        gui2.add(gui, BorderLayout.WEST);
+        gui2.add(east, BorderLayout.EAST);
+        add(gui2);
 
         Collections.addAll(deployStrings, DeploymentTypes.getDeploymentTypes());
         Collections.addAll(graphicStrings, "Graphic Mode", "Stats mode");
+        Collections.addAll(chartStrings, "Throughput", "Successful Rate");
     }
 
     public static void createAndShowGUI () {
@@ -297,7 +330,6 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
         //Display the window.
         frame.pack();
         frame.setVisible(true);
-
     }
 
     public void propertyChange (PropertyChangeEvent e) {
@@ -355,6 +387,18 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
             buttonStart.setEnabled(true);
             buttonStop.setEnabled(false);
             H20Sim.STOPPED = true;
+        }else if (e.getSource() == chartType) {
+            JComboBox cb = (JComboBox) e.getSource();
+            String item = (String) cb.getSelectedItem();
+            chartType.setSelectedIndex(chartStrings.indexOf(item));
+            assert item != null;
+            if(item.equals("Throughput")){
+                JFreeChart chart = c1.getChart();
+                chartPanelSR.setChart(chart);
+            } else if(item.equals("Successful Rate")){
+                JFreeChart chart = c2.getChart();
+                chartPanelSR.setChart(chart);
+            }
         }
     }
 
@@ -371,6 +415,15 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
 
     public static void resetProgressBar(){
         progressBar.setValue(0);
+    }
+
+    public static void drawCharts(Collector collector, Map<Thread, SimContext> threads){
+        c1 = new ChartThrougput(collector,threads);
+        c2 = new ChartSuccessfulRate(collector,threads);
+
+        JFreeChart chart = c2.getChart();
+        chartPanelSR.setChart(chart);
+        east.setVisible(true);
     }
 
 }

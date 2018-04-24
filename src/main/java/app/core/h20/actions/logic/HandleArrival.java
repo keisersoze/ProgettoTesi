@@ -24,7 +24,7 @@ public class HandleArrival implements Action {
     public void execute (Event event) {
         SimContext context = event.getContext();
         List<Sensor> possibleOwners = context.getSensors().stream()
-                .filter(sensor -> !sensor.isTransmitting() && !sensor.isReceiving())
+                .filter(sensor -> !sensor.isOccupied())
                 .collect(Collectors.toList());
 
         if (possibleOwners.size() > 0) {

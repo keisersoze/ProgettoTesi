@@ -101,14 +101,12 @@ public class H20Sim extends Application {
             }
 
             //stampo le statistiche
-            if (!STOPPED) {
-                launch(args);
-                Settings.buttonStop.setEnabled(false);
-                Settings.buttonStart.setEnabled(false);
-                break;
-            } else {
-                threadContextMap.clear();
+            if(!STOPPED) {
+                Settings.drawCharts(collector, threadContextMap);
             }
+            threadContextMap.clear();
+
+
         }
     }
 

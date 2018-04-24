@@ -13,12 +13,14 @@ public abstract class AbstractSensor implements Sensor {
     private Vector3f position;
     private boolean transmitting;
     private boolean receiving;
+    private boolean waiting;
 
     AbstractSensor (float x, float y, float z) {
         position = new Vector3f(x, y, z);
         neighbors = new ArrayList<>();
         transmitting = false;
         receiving = false;
+        waiting = false;
 
     }
 
@@ -110,5 +112,20 @@ public abstract class AbstractSensor implements Sensor {
     @Override
     public void setReceiving (boolean receiving) {
         this.receiving = receiving;
+    }
+
+    @Override
+    public boolean isWaiting() {
+        return waiting;
+    }
+
+    @Override
+    public void setWaiting(boolean waiting) {
+        this.waiting = waiting;
+    }
+
+    @Override
+    public boolean isOccupied() {
+        return receiving||transmitting||waiting;
     }
 }

@@ -56,8 +56,8 @@ public class MoveSensors implements Action {
     private void setNewDirection(Sensor s) {
         double angle = MyLib.random(0, (float) (2 * Math.PI));
         Vector3f v1 = sensorsDeployment.get(s);
-        float x = (float) ((H20Sim.MOVE_RADIUS) * Math.cos(angle)); // angle is in radians
-        float z = (float) ((H20Sim.MOVE_RADIUS) * Math.sin(angle));
+        float x = (float) (MyLib.map(s.getY(), 0, H20Sim.FIELD_Y, 5, H20Sim.MOVE_RADIUS) * Math.cos(angle)); // angle is in radians
+        float z = (float) (MyLib.map(s.getY(), 0, H20Sim.FIELD_Y, 5, H20Sim.MOVE_RADIUS) * Math.sin(angle));
         sensorsDirections.put(s, new Vector3f(x, v1.y, z).addLocal(v1.x, 0, v1.z));
     }
 

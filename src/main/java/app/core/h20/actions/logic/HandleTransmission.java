@@ -21,7 +21,7 @@ public class HandleTransmission implements Action {
         Frame frame = event.getFrame();
         Sensor sender = event.getSensor();
         int numHop = event.getInt();
-
+        sender.setWaiting(false);
         if (CSMA(sender, context, frame, numHop)) {
             sender.setTransmitting(true);
 
@@ -44,6 +44,7 @@ public class HandleTransmission implements Action {
     protected boolean CSMA (Sensor sender, SimContext context, Frame frame, int numHop) {
         // se uno dei miei vicini stra trasmettendo allora io non posso trasmettere, CSMA non persistente
         if (sender.getNeighbors().stream().filter(Sensor::isTransmitting).collect(Collectors.toList()).size() > 0) {
+            sender.setWaiting(true);
             double time = -log(context.getMarsenneTwister().nextDouble()) / H20Sim.LAMDA;   //TODO : da capire se va bene oppure se cambiarlo
             Event e = context.getCoreFactory().getEvent(EventTypes.TransmissionEvent, time, context, frame, sender, numHop);
             context.getScheduler().addEvent(e);

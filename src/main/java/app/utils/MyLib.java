@@ -20,7 +20,7 @@ public class MyLib {
     public static List<Sensor> calculateNeighbors(Sensor sensor, SimContext context) {
         List<Sensor> myNeighbors = new ArrayList<>();
         for (Sensor sensor1 : context.getSensors()) {
-            if (powerReceived(sensor.getEuclideanDistance(sensor1)) > H20Sim.SENSIBILITY) {
+            if (powerReceivedFPL(sensor.getEuclideanDistance(sensor1)) > H20Sim.SENSIBILITY) {
                 if (sensor != sensor1) {
                     myNeighbors.add(sensor1);
                 }
@@ -33,13 +33,20 @@ public class MyLib {
         double acc = 0;
         for (Sensor s : context.getSensors()) {
             if (s.isTransmitting() && !s.equals(sender) && (receiver.getEuclideanDistance(s) >= H20Sim.SOUND_SPEED * (context.getSimTime() - time))) {
-                acc += Math.pow(10, powerReceived(receiver.getEuclideanDistance(s)) / 10);
+                acc += Math.pow(10, powerReceivedFPL(receiver.getEuclideanDistance(s)) / 10);
             }
         }
         return acc;
     }
 
-    public static double powerReceived(double distance) {
+    //Modelli path loss
+
+    public static double powerReceivedFPL(double distance) {
         return H20Sim.SENSOR_POWER - (20 * Math.log10(distance) + 20 * Math.log10(H20Sim.SENSOR_FREQUENCY) - 147.55);
     }
+
+    public static double powerReceivedSPL(double distance) {
+        return H20Sim.SENSOR_POWER - (20 * Math.log10(distance) + 20 * Math.log10(H20Sim.SENSOR_FREQUENCY) - 147.55);
+    }
+
 }

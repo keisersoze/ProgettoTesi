@@ -15,7 +15,7 @@ public class HandleReception implements Action {
         Transmission transmission = event.getTransmission();
         Sensor receiver = transmission.getReceiver();
 
-        if (!receiver.isTransmitting() && !receiver.isReceiving()) {    // Se posso ricevere allora inizio a ricevere
+        if (!receiver.isOccupied()) {    // Se posso ricevere allora inizio a ricevere
             receiver.setReceiving(true);
 
             double time = transmission.getFrame().getSize() / H20Sim.SENSOR_BANDWIDTH;
