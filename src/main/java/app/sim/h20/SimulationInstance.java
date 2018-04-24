@@ -1,17 +1,14 @@
 package app.sim.h20;
 
 import app.H20Sim;
-import app.utils.Settings;
 import app.core.Event;
 import app.core.Scheduler;
 import app.factory.CoreFactory;
-import app.factory.EventTypes;
 import app.factory.h20.MyCoreFactory;
 import app.model.Sensor;
-import app.utils.MyLib;
 import app.stats.Collector;
-
-import java.util.LinkedList;
+import app.utils.MyLib;
+import app.utils.Settings;
 
 public class SimulationInstance extends AbstractSimIstance implements Runnable {
     private final CoreFactory coreFactory;
@@ -30,6 +27,7 @@ public class SimulationInstance extends AbstractSimIstance implements Runnable {
         // creo l'evento che richiama la funzionalità di campionamento per le statistiche
 
         super.initEvents();
+
         while (getPercentageCompleted() < 100 && !H20Sim.STOPPED) {
             Event evt_scheduled = getScheduler().scheduleEvent();
             setSimTime(evt_scheduled.getTime());

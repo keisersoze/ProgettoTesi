@@ -17,10 +17,10 @@ import org.jfree.data.xy.XYSeriesCollection;
 import java.awt.*;
 import java.util.Map;
 
-public class ChartThrougput implements Chart{
+public class ChartThroughput implements Chart{
     private JFreeChart chart;
 
-    public ChartThrougput(Collector collector, Map<Thread, SimContext> threadContextMap) {
+    public ChartThroughput (Collector collector, Map<Thread, SimContext> threadContextMap) {
         chart= createChart(createDataset(collector,threadContextMap));
     }
 

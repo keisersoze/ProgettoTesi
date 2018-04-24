@@ -10,10 +10,9 @@ import app.sim.SimContext;
 import app.stats.Collector;
 import app.utils.charts.Chart;
 import app.utils.charts.ChartSuccessfulRate;
-import app.utils.charts.ChartThrougput;
+import app.utils.charts.ChartThroughput;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.data.xy.XYDataset;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -58,17 +57,19 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
     private JFormattedTextField valMRadius;
 
     //charts
-    private static ChartPanel chartPanelSR;
+    private static ChartPanel chartPanel;
     private static JPanel east;
-    private static Chart c1;
-    private static Chart c2;
+    private static Chart chartThrougput;
+    private static Chart chartSR;
 
-    private JComboBox deployType = new JComboBox(DeploymentTypes.getDeploymentTypes());
-    private JComboBox graphicMode = new JComboBox(new String[]{"Graphic Mode", "Stats mode"});
-    private JComboBox chartType = new JComboBox(new String[]{"Throughput", "Successful Rate"});
-    private List<String> deployStrings = new ArrayList<>();
-    private List<String> graphicStrings = new ArrayList<>();
-    private List<String> chartStrings = new ArrayList<>();
+    private static JComboBox deployType = new JComboBox(DeploymentTypes.getDeploymentTypes());
+    private static JComboBox graphicMode = new JComboBox(new String[]{"Graphic Mode", "Stats mode"});
+    private static JComboBox chartType = new JComboBox(new String[]{"Throughput", "Successful Rate"});
+    private static List<String> deployStrings = new ArrayList<>();
+    private static List<String> graphicStrings = new ArrayList<>();
+    private static List<String> chartStrings = new ArrayList<>();
+
+    private static JFrame frame;
 
     private Settings () {
         super();
@@ -197,64 +198,64 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
         labelMSpeed.setLabelFor(valMSpeed);
         labelMRadius.setLabelFor(valMRadius);
 
-        JPanel gridPanel2 = new JPanel(new GridLayout(0, 4));
+        JPanel gridPanelField = new JPanel(new GridLayout(0, 4));
 
-        gridPanel2.add(labelField);
-        gridPanel2.add(valFieldx);
-        gridPanel2.add(valFieldy);
-        gridPanel2.add(valFieldz);
+        gridPanelField.add(labelField);
+        gridPanelField.add(valFieldx);
+        gridPanelField.add(valFieldy);
+        gridPanelField.add(valFieldz);
 
-        JPanel gridPanel = new JPanel(new GridLayout(0, 2, 10, 10));
-        gridPanel.add(labelSamples);
-        gridPanel.add(valSamples);
+        JPanel gridPanelSettings = new JPanel(new GridLayout(0, 2, 10, 10));
+        gridPanelSettings.add(labelSamples);
+        gridPanelSettings.add(valSamples);
 
-        gridPanel.add(labelThread);
-        gridPanel.add(valThread);
+        gridPanelSettings.add(labelThread);
+        gridPanelSettings.add(valThread);
 
-        gridPanel.add(labelSensorBandwidth);
-        gridPanel.add(valSensorBandwidth);
+        gridPanelSettings.add(labelSensorBandwidth);
+        gridPanelSettings.add(valSensorBandwidth);
 
-        gridPanel.add(labelMaxFrameSize);
-        gridPanel.add(valMaxFrameSize);
+        gridPanelSettings.add(labelMaxFrameSize);
+        gridPanelSettings.add(valMaxFrameSize);
 
-        gridPanel.add(labelRateMaxFrame);
-        gridPanel.add(valRateMaxFrame);
+        gridPanelSettings.add(labelRateMaxFrame);
+        gridPanelSettings.add(valRateMaxFrame);
 
-        gridPanel.add(labelThreshod);
-        gridPanel.add(valThreshold);
+        gridPanelSettings.add(labelThreshod);
+        gridPanelSettings.add(valThreshold);
 
-        gridPanel.add(labelSensibility);
-        gridPanel.add(valSensibility);
+        gridPanelSettings.add(labelSensibility);
+        gridPanelSettings.add(valSensibility);
 
-        gridPanel.add(labelPower);
-        gridPanel.add(valPower);
+        gridPanelSettings.add(labelPower);
+        gridPanelSettings.add(valPower);
 
-        gridPanel.add(labelFrequency);
-        gridPanel.add(valFrequency);
+        gridPanelSettings.add(labelFrequency);
+        gridPanelSettings.add(valFrequency);
 
-        gridPanel.add(labelLambda);
-        gridPanel.add(valLambda);
+        gridPanelSettings.add(labelLambda);
+        gridPanelSettings.add(valLambda);
 
-        gridPanel.add(labelMSpeed);
-        gridPanel.add(valMSpeed);
+        gridPanelSettings.add(labelMSpeed);
+        gridPanelSettings.add(valMSpeed);
 
-        gridPanel.add(labelMRadius);
-        gridPanel.add(valMRadius);
+        gridPanelSettings.add(labelMRadius);
+        gridPanelSettings.add(valMRadius);
 
         deployType.setSelectedIndex(0);
         deployType.addActionListener(this);
-        gridPanel.add(deployType);
+        gridPanelSettings.add(deployType);
 
         graphicMode.setSelectedIndex(0);
         graphicMode.addActionListener(this);
-        gridPanel.add(graphicMode);
+        gridPanelSettings.add(graphicMode);
 
         buttonStart.addActionListener(this);
-        gridPanel.add(buttonStart);
+        gridPanelSettings.add(buttonStart);
 
         buttonStop.addActionListener(this);
         buttonStop.setEnabled(false);
-        gridPanel.add(buttonStop);
+        gridPanelSettings.add(buttonStop);
 
         JPanel progressPanel = new JPanel();
         progressBar.setValue(0);
@@ -266,12 +267,12 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
         prefSize.width = 500;
         progressBar.setPreferredSize(prefSize);
 
-        gridPanel2.setBorder(new EmptyBorder(10, 10, 10, 10));
-        gridPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        gridPanelField.setBorder(new EmptyBorder(10, 10, 10, 10));
+        gridPanelSettings.setBorder(new EmptyBorder(10, 10, 10, 10));
 
         JSplitPane splitPaneH = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-        splitPaneH.setLeftComponent(gridPanel2);
-        splitPaneH.setRightComponent(gridPanel);
+        splitPaneH.setLeftComponent(gridPanelField);
+        splitPaneH.setRightComponent(gridPanelSettings);
 
         splitPaneH.setUI(new BasicSplitPaneUI() {
             public BasicSplitPaneDivider createDefaultDivider () {
@@ -290,29 +291,37 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
         });
         splitPaneH.setBorder(null);
 
-        chartPanelSR = new ChartPanel(null);
-        chartPanelSR.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
-        chartPanelSR.setBackground(Color.white);
+        chartPanel = new ChartPanel(null);
+        chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        chartPanel.setBackground(Color.white);
+        prefSize = chartPanel.getPreferredSize();
+        prefSize.height = 500;
+        prefSize.width = 850;
+        chartPanel.setPreferredSize(prefSize);
 
-        JPanel gui = new JPanel(new BorderLayout(3,3));
-        gui.setBorder(new EmptyBorder(5,5,5,5));
+        JPanel west = new JPanel(new BorderLayout(3, 3));
+        west.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-        gui.add(splitPaneH, BorderLayout.NORTH);
-        gui.add(progressPanel, BorderLayout.SOUTH);
+        west.add(splitPaneH, BorderLayout.NORTH);
+        west.add(progressPanel, BorderLayout.SOUTH);
 
-        east = new JPanel(new BorderLayout(3,3));
+        east = new JPanel(new BorderLayout(3, 3));
 
-        chartType.setSelectedIndex(1);
+        JPanel eastNorth = new JPanel(new BorderLayout(3, 3));
+        chartType.setSelectedIndex(0);
         chartType.addActionListener(this);
-        east.add(chartType, BorderLayout.NORTH);
-        east.add(chartPanelSR, BorderLayout.SOUTH);
+        eastNorth.add(chartType);
+        eastNorth.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+        east.add(eastNorth, BorderLayout.NORTH);
+        east.add(chartPanel, BorderLayout.SOUTH);
 
         east.setVisible(false);
 
-        JPanel gui2 = new JPanel(new BorderLayout(3,3));
-        gui2.add(gui, BorderLayout.WEST);
-        gui2.add(east, BorderLayout.EAST);
-        add(gui2);
+        JPanel gui = new JPanel(new BorderLayout(3, 3));
+        gui.add(west, BorderLayout.WEST);
+        gui.add(east, BorderLayout.EAST);
+        add(gui);
 
         Collections.addAll(deployStrings, DeploymentTypes.getDeploymentTypes());
         Collections.addAll(graphicStrings, "Graphic Mode", "Stats mode");
@@ -321,7 +330,7 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
 
     public static void createAndShowGUI () {
         //Create and set up the window.
-        JFrame frame = new JFrame("Configurazione di simulazione");
+        frame = new JFrame("Configurazione di simulazione");
         ImageIcon img = new ImageIcon("assets/Interface/settings.png");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setIconImage(img.getImage());
@@ -389,17 +398,19 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
             buttonStart.setEnabled(true);
             buttonStop.setEnabled(false);
             H20Sim.STOPPED = true;
-        }else if (e.getSource() == chartType) {
+        } else if (e.getSource() == chartType) {
             JComboBox cb = (JComboBox) e.getSource();
             String item = (String) cb.getSelectedItem();
             chartType.setSelectedIndex(chartStrings.indexOf(item));
             assert item != null;
-            if(item.equals("Throughput")){
-                JFreeChart chart = c1.getChart();
-                chartPanelSR.setChart(chart);
-            } else if(item.equals("Successful Rate")){
-                JFreeChart chart = c2.getChart();
-                chartPanelSR.setChart(chart);
+            if (item.equals("Throughput")) {
+                JFreeChart chart = chartThrougput.getChart();
+                chartPanel.setChart(chart);
+                frame.pack();
+            } else if (item.equals("Successful Rate")) {
+                JFreeChart chart = Settings.chartSR.getChart();
+                chartPanel.setChart(chart);
+                frame.pack();
             }
         }
     }
@@ -415,17 +426,21 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
         }
     }
 
-    public static void resetProgressBar(){
+    public static void resetProgressBar () {
         progressBar.setValue(0);
     }
 
-    public static void drawCharts(Collector collector, Map<Thread, SimContext> threads){
-        c1 = new ChartThrougput(collector,threads);
-        c2 = new ChartSuccessfulRate(collector,threads);
-
-        JFreeChart chart = c2.getChart();
-        chartPanelSR.setChart(chart);
+    public static void drawCharts (Collector collector, Map<Thread, SimContext> threads) {
+        chartThrougput = new ChartThroughput(collector, threads);
+        chartSR = new ChartSuccessfulRate(collector, threads);
+        JFreeChart chart;
+        if (chartStrings.get(chartType.getSelectedIndex()).equals("Throughput")) {
+            chart = chartThrougput.getChart();
+        } else{
+            chart = Settings.chartSR.getChart();
+        }
+        chartPanel.setChart(chart);
         east.setVisible(true);
+        frame.pack();
     }
-
 }

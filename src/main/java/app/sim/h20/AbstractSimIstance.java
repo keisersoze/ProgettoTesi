@@ -96,7 +96,7 @@ public abstract class AbstractSimIstance implements SimContext {
         nSamples++;
     }
 
-    protected void initEvents(){
+    void initEvents () {
         Event move_evt = getCoreFactory().getEvent(EventTypes.MoveEvent, 0, this);
         Event arrival_evt = getCoreFactory().getEvent(EventTypes.ArrivalEvent, 0, this);
         Event stats_evt = getCoreFactory().getEvent(EventTypes.StatisticEvent, 0, this);
@@ -109,7 +109,9 @@ public abstract class AbstractSimIstance implements SimContext {
         //aggiungo gli eventi periodici allo scheduler
         getScheduler().addEvent(arrival_evt);
         getScheduler().addEvent(stats_evt);
-        getScheduler().addEvent(move_evt);
+        if (H20Sim.MOVEMENT_SPEED > 0) {
+            getScheduler().addEvent(move_evt);
+        }
 
     }
 }

@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class H20Sim  {
+public class H20Sim {
     public static float FIELD_X = 5000;
     public static float FIELD_Y = 3000;
     public static float FIELD_Z = 5000;
@@ -30,7 +30,7 @@ public class H20Sim  {
 
 
     public static double MOVEMENT_SPEED = 0.5; // m/s
-    public static double MOVE_REFRESH = 2 ; // unità di sim time
+    public static double MOVE_REFRESH = 30; // unità di sim time
     public static double MOVE_RADIUS = 200; //m
 
     public static float SCALE = 10f;
@@ -95,26 +95,21 @@ public class H20Sim  {
             }
 
             //stampo le statistiche
-            if(!STOPPED) {
+            if (!STOPPED) {
                 Settings.drawCharts(collector, threadContextMap);
+                Settings.buttonStart.setEnabled(true);
+                Settings.buttonStop.setEnabled(false);
             }
-
             threadContextMap.clear();
-
-
         }
     }
 
     private static void settings () {
-        // set look and feel to the system look and feel
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
         SwingUtilities.invokeLater(Settings::createAndShowGUI);
-
     }
-
 }
