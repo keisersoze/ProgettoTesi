@@ -41,7 +41,7 @@ public class ChartThroughput implements Chart{
 
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
         renderer.setSeriesPaint(0, Color.RED);
-        renderer.setSeriesStroke(0, new BasicStroke(2.0f));
+        renderer.setSeriesStroke(0, new BasicStroke(.5f));
 
         plot.setRenderer(renderer);
         plot.setBackgroundPaint(Color.white);

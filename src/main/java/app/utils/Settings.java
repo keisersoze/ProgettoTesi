@@ -9,10 +9,12 @@ import app.factory.DeploymentTypes;
 import app.sim.SimContext;
 import app.stats.Collector;
 import app.utils.charts.Chart;
+import app.utils.charts.ChartDepthSuccessRate;
 import app.utils.charts.ChartSuccessfulRate;
 import app.utils.charts.ChartThroughput;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.ui.RefineryUtilities;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -61,10 +63,12 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
     private static JPanel east;
     private static Chart chartThrougput;
     private static Chart chartSR;
+    private static Chart chartDSR;
+
 
     private static JComboBox deployType = new JComboBox(DeploymentTypes.getDeploymentTypes());
     private static JComboBox graphicMode = new JComboBox(new String[]{"Graphic Mode", "Stats mode"});
-    private static JComboBox chartType = new JComboBox(new String[]{"Throughput", "Successful Rate"});
+    private static JComboBox chartType = new JComboBox(new String[]{"Throughput", "Successful Rate", "Depth Successful Rate"});
     private static List<String> deployStrings = new ArrayList<>();
     private static List<String> graphicStrings = new ArrayList<>();
     private static List<String> chartStrings = new ArrayList<>();
@@ -95,7 +99,7 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
         valSamples = new JFormattedTextField(amountFormat);
         valSamples.setBackground(backgroudVal);
         valSamples.setValue(H20Sim.N_SAMPLES);
-        valSamples.setColumns(10);
+        valSamples.setColumns(3);
         valSamples.addPropertyChangeListener("value", this);
 
         valThread = new JFormattedTextField(amountFormat);
@@ -107,19 +111,19 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
         valSensorBandwidth = new JFormattedTextField(amountFormat);
         valSensorBandwidth.setBackground(backgroudVal);
         valSensorBandwidth.setValue(H20Sim.SENSOR_BANDWIDTH);
-        valSensorBandwidth.setColumns(10);
+        valSensorBandwidth.setColumns(3);
         valSensorBandwidth.addPropertyChangeListener("value", this);
 
         valMaxFrameSize = new JFormattedTextField(amountFormat);
         valMaxFrameSize.setBackground(backgroudVal);
         valMaxFrameSize.setValue(H20Sim.MAX_FRAME_SIZE);
-        valMaxFrameSize.setColumns(10);
+        valMaxFrameSize.setColumns(3);
         valMaxFrameSize.addPropertyChangeListener("value", this);
 
         valRateMaxFrame = new JFormattedTextField(amountFormat);
         valRateMaxFrame.setBackground(backgroudVal);
         valRateMaxFrame.setValue(H20Sim.MAX_FRAME_RATE);
-        valRateMaxFrame.setColumns(5);
+        valRateMaxFrame.setColumns(3);
         valRateMaxFrame.addPropertyChangeListener("value", this);
 
         valThreshold = new JFormattedTextField(amountFormat);
@@ -149,37 +153,37 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
         valLambda = new JFormattedTextField(amountFormat);
         valLambda.setBackground(backgroudVal);
         valLambda.setValue(H20Sim.LAMDA);
-        valLambda.setColumns(15);
+        valLambda.setColumns(3);
         valLambda.addPropertyChangeListener("value", this);
 
         valFieldx = new JFormattedTextField(amountFormat);
         valFieldx.setBackground(backgroudVal);
         valFieldx.setValue(H20Sim.FIELD_X);
-        valFieldx.setColumns(15);
+        valFieldx.setColumns(3);
         valFieldx.addPropertyChangeListener("value", this);
 
         valFieldy = new JFormattedTextField(amountFormat);
         valFieldy.setBackground(backgroudVal);
         valFieldy.setValue(H20Sim.FIELD_Y);
-        valFieldy.setColumns(15);
+        valFieldy.setColumns(3);
         valFieldy.addPropertyChangeListener("value", this);
 
         valFieldz = new JFormattedTextField(amountFormat);
         valFieldz.setBackground(backgroudVal);
         valFieldz.setValue(H20Sim.FIELD_Z);
-        valFieldz.setColumns(15);
+        valFieldz.setColumns(3);
         valFieldz.addPropertyChangeListener("value", this);
 
         valMSpeed = new JFormattedTextField(amountFormat);
         valMSpeed.setBackground(backgroudVal);
         valMSpeed.setValue(H20Sim.MOVEMENT_SPEED);
-        valMSpeed.setColumns(15);
+        valMSpeed.setColumns(3);
         valMSpeed.addPropertyChangeListener("value", this);
 
         valMRadius = new JFormattedTextField(amountFormat);
         valMRadius.setBackground(backgroudVal);
         valMRadius.setValue(H20Sim.MOVE_RADIUS);
-        valMRadius.setColumns(15);
+        valMRadius.setColumns(3);
         valMRadius.addPropertyChangeListener("value", this);
 
         labelSamples.setLabelFor(valSamples);
@@ -295,7 +299,7 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
         chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
         chartPanel.setBackground(Color.white);
         prefSize = chartPanel.getPreferredSize();
-        prefSize.height = 500;
+        prefSize.height = 600;
         prefSize.width = 850;
         chartPanel.setPreferredSize(prefSize);
 
@@ -325,7 +329,7 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
 
         Collections.addAll(deployStrings, DeploymentTypes.getDeploymentTypes());
         Collections.addAll(graphicStrings, "Graphic Mode", "Stats mode");
-        Collections.addAll(chartStrings, "Throughput", "Successful Rate");
+        Collections.addAll(chartStrings, "Throughput", "Successful Rate", "Depth Successful Rate");
     }
 
     public static void createAndShowGUI () {
@@ -340,6 +344,7 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
 
         //Display the window.
         frame.pack();
+        RefineryUtilities.centerFrameOnScreen(frame);
         frame.setVisible(true);
     }
 
@@ -403,15 +408,21 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
             String item = (String) cb.getSelectedItem();
             chartType.setSelectedIndex(chartStrings.indexOf(item));
             assert item != null;
-            if (item.equals("Throughput")) {
-                JFreeChart chart = chartThrougput.getChart();
-                chartPanel.setChart(chart);
-                frame.pack();
-            } else if (item.equals("Successful Rate")) {
-                JFreeChart chart = Settings.chartSR.getChart();
-                chartPanel.setChart(chart);
-                frame.pack();
+            switch (item) {
+                case "Throughput":
+                    chartPanel.setChart(chartThrougput.getChart());
+                    frame.pack();
+                    break;
+                case "Successful Rate":
+                    chartPanel.setChart(Settings.chartSR.getChart());
+                    frame.pack();
+                    break;
+                case "Depth Successful Rate":
+                    chartPanel.setChart(Settings.chartDSR.getChart());
+                    frame.pack();
+                    break;
             }
+            RefineryUtilities.centerFrameOnScreen(frame);
         }
     }
 
@@ -433,14 +444,23 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
     public static void drawCharts (Collector collector, Map<Thread, SimContext> threads) {
         chartThrougput = new ChartThroughput(collector, threads);
         chartSR = new ChartSuccessfulRate(collector, threads);
-        JFreeChart chart;
-        if (chartStrings.get(chartType.getSelectedIndex()).equals("Throughput")) {
-            chart = chartThrougput.getChart();
-        } else{
-            chart = Settings.chartSR.getChart();
+        chartDSR = new ChartDepthSuccessRate(collector, threads);
+
+        JFreeChart chart = null;
+        switch (chartStrings.get(chartType.getSelectedIndex())) {
+            case "Throughput":
+                chart = chartThrougput.getChart();
+                break;
+            case "Successful Rate":
+                chart = Settings.chartSR.getChart();
+                break;
+            case "Depth Successful Rate":
+                chart = Settings.chartDSR.getChart();
+                break;
         }
         chartPanel.setChart(chart);
         east.setVisible(true);
         frame.pack();
+        RefineryUtilities.centerFrameOnScreen(frame);
     }
 }

@@ -40,6 +40,4 @@ public class SimulationInstance extends AbstractSimIstance implements Runnable {
     public CoreFactory getCoreFactory () {
         return coreFactory;
     }
-
-
 }

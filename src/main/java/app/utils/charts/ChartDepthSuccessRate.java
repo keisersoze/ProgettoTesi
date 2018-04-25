@@ -14,21 +14,23 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 import java.awt.*;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
-public class ChartSuccessfulRate implements Chart {
-    private JFreeChart chart;
+public class ChartDepthSuccessRate implements Chart {
 
-    public ChartSuccessfulRate (Collector collector, Map<Thread, SimContext> threadContextMap) {
+    private final JFreeChart chart;
+
+    public ChartDepthSuccessRate (Collector collector, Map<Thread, SimContext> threadContextMap) {
         chart = createChart(createDataset(collector, threadContextMap));
     }
 
-    public ChartSuccessfulRate () {}
-
-    static JFreeChart createChart (XYDataset dataset) {
+    public static JFreeChart createChart (XYDataset dataset) {
 
         JFreeChart chart = ChartFactory.createXYLineChart(
-                "Successful rate",
+                "Depth Successful rate",
                 "Samples",
                 "% Frames arrived",
                 dataset,
@@ -42,7 +44,7 @@ public class ChartSuccessfulRate implements Chart {
 
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
         renderer.setSeriesPaint(0, Color.RED);
-        renderer.setSeriesStroke(0, new BasicStroke(.5f));
+        renderer.setSeriesLinesVisible(0,false);
 
         plot.setRenderer(renderer);
         plot.setBackgroundPaint(Color.white);
@@ -58,23 +60,30 @@ public class ChartSuccessfulRate implements Chart {
         return chart;
     }
 
-    private static XYDataset createDataset (Collector collector, Map<Thread, SimContext> threadContextMap) {
 
+    private static XYDataset createDataset (Collector collector, Map<Thread, SimContext> threadContextMap) {
+        Map<Float, Double> stats = new HashMap<>();
         XYSeries series = new XYSeries("Successful rate");
+
         for (int j = 0; j < H20Sim.N_SAMPLES; j++) {
-            double successfullRateAcc = 0;
-            for (Thread t : threadContextMap.keySet()) {
-                successfullRateAcc += collector.getSourceSamples(t.getName()).get(j).getSuccessfullRate() * 100;
+            for (Thread thread : threadContextMap.keySet()) {
+                collector.getSourceSamples(thread.getName()).get(j).getDeptArrivalSuccessRate().forEach((k, v) -> stats.merge(k, v, (t, u) -> (t + u) / 2));
             }
-            series.add(j, successfullRateAcc / H20Sim.NTHREADS);
         }
 
+        SortedSet<Float> keys = new TreeSet<>(stats.keySet());
+        for (Float depth : keys) {
+            series.add(depth, stats.get(depth));
+            System.out.println(depth);
+        }
         XYSeriesCollection dataset = new XYSeriesCollection();
         dataset.addSeries(series);
 
         return dataset;
     }
 
+
+    @Override
     public JFreeChart getChart () {
         return chart;
     }
