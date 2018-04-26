@@ -8,10 +8,7 @@ import app.H20Sim;
 import app.factory.DeploymentTypes;
 import app.sim.SimContext;
 import app.stats.Collector;
-import app.utils.charts.Chart;
-import app.utils.charts.ChartDepthSuccessRate;
-import app.utils.charts.ChartSuccessfulRate;
-import app.utils.charts.ChartThroughput;
+import app.utils.charts.*;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.ui.RefineryUtilities;
@@ -64,11 +61,12 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
     private static Chart chartThrougput;
     private static Chart chartSR;
     private static Chart chartDSR;
+    private static Chart chartRT;
 
 
     private static JComboBox deployType = new JComboBox(DeploymentTypes.getDeploymentTypes());
     private static JComboBox graphicMode = new JComboBox(new String[]{"Graphic Mode", "Stats mode"});
-    private static JComboBox chartType = new JComboBox(new String[]{"Throughput", "Successful Rate", "Depth Successful Rate"});
+    private static JComboBox chartType = new JComboBox(new String[]{"Throughput", "Successful Rate", "Depth Successful Rate", "Response Time"});
     private static List<String> deployStrings = new ArrayList<>();
     private static List<String> graphicStrings = new ArrayList<>();
     private static List<String> chartStrings = new ArrayList<>();
@@ -329,7 +327,7 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
 
         Collections.addAll(deployStrings, DeploymentTypes.getDeploymentTypes());
         Collections.addAll(graphicStrings, "Graphic Mode", "Stats mode");
-        Collections.addAll(chartStrings, "Throughput", "Successful Rate", "Depth Successful Rate");
+        Collections.addAll(chartStrings, "Throughput", "Successful Rate", "Depth Successful Rate", "Response Time");
     }
 
     public static void createAndShowGUI () {
@@ -421,6 +419,10 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
                     chartPanel.setChart(Settings.chartDSR.getChart());
                     frame.pack();
                     break;
+                case "Response Time":
+                    chartPanel.setChart(Settings.chartRT.getChart());
+                    frame.pack();
+                    break;
             }
             RefineryUtilities.centerFrameOnScreen(frame);
         }
@@ -445,6 +447,7 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
         chartThrougput = new ChartThroughput(collector, threads);
         chartSR = new ChartSuccessfulRate(collector, threads);
         chartDSR = new ChartDepthSuccessRate(collector, threads);
+        chartRT = new ChartResponseTime(collector, threads);
 
         JFreeChart chart = null;
         switch (chartStrings.get(chartType.getSelectedIndex())) {
@@ -456,6 +459,9 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
                 break;
             case "Depth Successful Rate":
                 chart = Settings.chartDSR.getChart();
+                break;
+            case "Reposnse Time":
+                chart = Settings.chartRT.getChart();
                 break;
         }
         chartPanel.setChart(chart);

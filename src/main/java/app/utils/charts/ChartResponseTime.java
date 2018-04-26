@@ -16,19 +16,19 @@ import org.jfree.data.xy.XYSeriesCollection;
 import java.awt.*;
 import java.util.Map;
 
-public class ChartSuccessfulRate implements Chart {
+public class ChartResponseTime implements Chart {
     private JFreeChart chart;
 
-    public ChartSuccessfulRate (Collector collector, Map<Thread, SimContext> threadContextMap) {
+    public ChartResponseTime (Collector collector, Map<Thread, SimContext> threadContextMap) {
         chart = createChart(createDataset(collector, threadContextMap));
     }
 
     static JFreeChart createChart (XYDataset dataset) {
 
         JFreeChart chart = ChartFactory.createXYLineChart(
-                "Successful rate",
+                "Response time",
                 "Samples",
-                "% Frames arrived",
+                "Response Time (s)",
                 dataset,
                 PlotOrientation.VERTICAL,
                 true,
@@ -57,12 +57,11 @@ public class ChartSuccessfulRate implements Chart {
     }
 
     private static XYDataset createDataset (Collector collector, Map<Thread, SimContext> threadContextMap) {
-
-        XYSeries series = new XYSeries("Successful rate");
+        XYSeries series = new XYSeries("Response time");
         for (int j = 0; j < H20Sim.N_SAMPLES; j++) {
             double successfullRateAcc = 0;
             for (Thread t : threadContextMap.keySet()) {
-                successfullRateAcc += collector.getSourceSamples(t.getName()).get(j).getSuccessfullRate();
+                successfullRateAcc += collector.getSourceSamples(t.getName()).get(j).getAvgResponseTime();
             }
             series.add(j, successfullRateAcc / H20Sim.NTHREADS);
         }

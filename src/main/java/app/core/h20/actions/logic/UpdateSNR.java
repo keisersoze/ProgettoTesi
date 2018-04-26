@@ -20,7 +20,7 @@ public class UpdateSNR implements Action {
         for (Frame frame : frames) {
             for (Transmission t : frame.getTransmissionHistory()) {
                 double noise_power = MyLib.calculateNoise(t.getSender(), t.getReceiver(), context, t.getTime());
-                double power_received = Math.pow(10, MyLib.powerReceivedFPL(t.getReceiver().getEuclideanDistance(t.getSender())) / 10);
+                double power_received = Math.pow(10, MyLib.powerReceived(t.getReceiver().getEuclideanDistance(t.getSender())) / 10);
                 if (noise_power != 0 && power_received / noise_power < H20Sim.GAMMA) {
                     t.setSuccessfull(false);
                 }

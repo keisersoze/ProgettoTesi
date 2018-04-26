@@ -15,6 +15,7 @@ import java.util.Map;
 
 
 public class H20Sim {
+    public static final double K = 1.5;
     public static float FIELD_X = 5000;
     public static float FIELD_Y = 3000;
     public static float FIELD_Z = 5000;
