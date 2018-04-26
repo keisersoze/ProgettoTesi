@@ -62,7 +62,7 @@ public class ChartDepthSuccessRate implements Chart {
 
 
     private static XYDataset createDataset (Collector collector, Map<Thread, SimContext> threadContextMap) {
-        Map<Float, Double> stats = new HashMap<>();
+        Map<Integer, Double> stats = new HashMap<>();
         XYSeries series = new XYSeries("Successful rate");
 
         for (int j = 0; j < H20Sim.N_SAMPLES; j++) {
@@ -71,10 +71,9 @@ public class ChartDepthSuccessRate implements Chart {
             }
         }
 
-        SortedSet<Float> keys = new TreeSet<>(stats.keySet());
-        for (Float depth : keys) {
+        SortedSet<Integer> keys = new TreeSet<>(stats.keySet());
+        for (Integer depth : keys) {
             series.add(depth, stats.get(depth));
-            System.out.println(depth);
         }
         XYSeriesCollection dataset = new XYSeriesCollection();
         dataset.addSeries(series);

@@ -1,13 +1,11 @@
 package app.stats.h20;
 
+import app.H20Sim;
 import app.model.Frame;
 import app.sim.SimContext;
 import app.stats.Sample;
 
-import java.util.AbstractMap;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
 
 public class StatsSample implements Sample {
     private double nFrames;
@@ -15,9 +13,11 @@ public class StatsSample implements Sample {
     private double simTime;
     private double avgResponseTime;
 
-    private Map<Float, Map.Entry<Double, Double>> percentageToY = new HashMap<>();
+    private Map<Integer, Double[]> intervalToSuccessfulRate;
+    private Map<Integer, Double> intervalToSuccessful2Rate;
 
-    public StatsSample (SimContext context) {
+    public StatsSample(SimContext context) {
+
         //throughput
         simTime = context.getSimTime();
 
@@ -34,49 +34,47 @@ public class StatsSample implements Sample {
         avgResponseTime /= nFramesArrived;
 
         // Tiene traccia dei frame partiti da una certa profondità in relazione al successo di arrivo ai sink
+        intervalToSuccessfulRate = new HashMap<>();
         for (Map.Entry<Frame, LinkedList<Double>> entry : context.getFramesArrived().entrySet()) {
-            if (percentageToY.containsKey(entry.getKey().getOwner().getY())) {
-                double prevNumberOfArrivalAtY = percentageToY.get(entry.getKey().getOwner().getY()).getKey();
-                double prevNumberOfSuccessAtY = percentageToY.get(entry.getKey().getOwner().getY()).getValue();
-
-                prevNumberOfSuccessAtY += entry.getValue().size() > 0 ? 1 : 0;
-                Map.Entry<Double, Double> newEntry = new AbstractMap.SimpleEntry<>(prevNumberOfArrivalAtY + 1, prevNumberOfSuccessAtY);
-
-                percentageToY.put(entry.getKey().getOwner().getY(), newEntry);
-            } else {
-                Map.Entry<Double, Double> newEntry = new AbstractMap.SimpleEntry<>(1d, entry.getValue().size() > 0 ? 1d : 0d);
-                percentageToY.put(entry.getKey().getOwner().getY(), newEntry);
+            double y = entry.getKey().getOwner().getY();
+            if (!intervalToSuccessfulRate.containsKey(heightToIndex(y)))
+                intervalToSuccessfulRate.put(heightToIndex(y),new Double[]{0d,0d});
+            intervalToSuccessfulRate.get(heightToIndex(y))[0]++;
+            if (entry.getValue().size() > 0) {
+                intervalToSuccessfulRate.get(heightToIndex(y))[1]++;
             }
         }
+        intervalToSuccessful2Rate = new HashMap<>();
+        intervalToSuccessfulRate.forEach((k,v)-> intervalToSuccessful2Rate.put(k,v[1]/v[0]*100));
     }
 
     @Override
-    public double getSuccessfullRate () {
+    public double getSuccessfullRate() {
         return nFramesArrived / nFrames;
     }
 
     @Override
-    public double getGoodput () {
+    public double getGoodput() {
         return nFramesArrived / simTime;
     }
 
     @Override
-    public double getAvgResponseTime () {
+    public double getAvgResponseTime() {
         return avgResponseTime;
     }
 
     @Override
-    public Map<Float, Double> getDeptArrivalSuccessRate () {
-        Map<Float, Double> stats = new HashMap<>();
-        for (Map.Entry<Float, Map.Entry<Double, Double>> entry : percentageToY.entrySet()) {
-            stats.put(entry.getKey(), entry.getValue().getValue()/entry.getValue().getKey() * 100);
-        }
-        return stats;
+    public Map<Integer, Double> getDeptArrivalSuccessRate() {
+        return intervalToSuccessful2Rate;
     }
 
     @Override
-    public String toString () {
+    public String toString() {
         return getSuccessfullRate() + " ";
+    }
+
+    private static int heightToIndex(double height) {
+        return (int) height / 100;
     }
 
 

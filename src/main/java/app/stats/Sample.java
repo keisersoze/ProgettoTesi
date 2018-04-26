@@ -6,5 +6,5 @@ public interface Sample {
     double getSuccessfullRate ();
     double getGoodput();
     double getAvgResponseTime();
-    Map<Float, Double> getDeptArrivalSuccessRate();
+    Map<Integer,Double> getDeptArrivalSuccessRate();
 }
