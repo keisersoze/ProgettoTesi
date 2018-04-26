@@ -62,7 +62,7 @@ public class ChartSuccessfulRate implements Chart {
         for (int j = 0; j < H20Sim.N_SAMPLES; j++) {
             double successfullRateAcc = 0;
             for (Thread t : threadContextMap.keySet()) {
-                successfullRateAcc += collector.getSourceSamples(t.getName()).get(j).getSuccessfullRate();
+                successfullRateAcc += collector.getSourceSamples(t.getName()).get(j).getSuccessfullRate() * 100;
             }
             series.add(j, successfullRateAcc / H20Sim.NTHREADS);
         }

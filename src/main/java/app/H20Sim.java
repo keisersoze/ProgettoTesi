@@ -29,7 +29,7 @@ public class H20Sim {
     //parametri simulazione
     public static double LAMDA = 0.05;
 
-
+    public static double N_SENSORS = 300;
     public static double MOVEMENT_SPEED = 0.5; // m/s
     public static double MOVE_REFRESH = 30; // unità di sim time
     public static double MOVE_RADIUS = 200; //m
@@ -44,7 +44,7 @@ public class H20Sim {
 
     public static double SENSIBILITY = -110; //dBm
     public static double SENSOR_POWER = -104; //dB
-    public static double SENSOR_FREQUENCY = 40000; //HZ
+    public static double SENSOR_FREQUENCY = 25000; //HZ
 
     public static String DEPLOYMENT_TYPE = DeploymentTypes.BaseDeployment;
 
