@@ -36,10 +36,12 @@ public class MyModelFactory implements ModelFactory {
             return baseDeployment();
         } else if (deploymentType.equalsIgnoreCase(DeploymentTypes.LayerDeployment)) {
             return layerDeployment();
-        } else if (deploymentType.equalsIgnoreCase(DeploymentTypes.LayerProportionalDeployment)) {
+        } else if (deploymentType.equalsIgnoreCase(DeploymentTypes.LayerInvProportionalDeployment)) {
             return layerDeploymentInverted();
         }if (deploymentType.equalsIgnoreCase(DeploymentTypes.OneSDeployment)) {
             return oneSDeployment();
+        }if (deploymentType.equalsIgnoreCase(DeploymentTypes.LayerProportionalDeployment)) {
+            return layerDeploymentM();
         } else { return null; }
 
     }
@@ -67,6 +69,31 @@ public class MyModelFactory implements ModelFactory {
         }
 
         for (int i = 0; i < p3; i++) {
+            Sensor s1 = getSensor(MyLib.random(0, H20Sim.FIELD_X), MyLib.random(H20Sim.FIELD_Y / 1.5f, H20Sim.FIELD_Y / 1.35f), MyLib.random(0, H20Sim.FIELD_Z));
+            sensors.add(s1);
+        }
+
+        deploySink(sensors);
+        return sensors;
+    }
+
+    private List<Sensor> layerDeploymentM () {
+        List<Sensor> sensors = new ArrayList<>();
+        int p1 = (int) (H20Sim.N_SENSORS/2);
+        int p2 = (int) (H20Sim.N_SENSORS/3);
+        int p3 = (int) H20Sim.N_SENSORS-p1-p2;
+
+        for (int i = 0; i < p3; i++) {
+            Sensor s1 = getSensor(MyLib.random(0, H20Sim.FIELD_X), MyLib.random(0, H20Sim.FIELD_Y / 10), MyLib.random(0, H20Sim.FIELD_Z));
+            sensors.add(s1);
+        }
+
+        for (int i = 0; i < p2; i++) {
+            Sensor s1 = getSensor(MyLib.random(0, H20Sim.FIELD_X), MyLib.random(H20Sim.FIELD_Y / 2.75f, H20Sim.FIELD_Y / 2.5f), MyLib.random(0, H20Sim.FIELD_Z));
+            sensors.add(s1);
+        }
+
+        for (int i = 0; i < p1; i++) {
             Sensor s1 = getSensor(MyLib.random(0, H20Sim.FIELD_X), MyLib.random(H20Sim.FIELD_Y / 1.5f, H20Sim.FIELD_Y / 1.35f), MyLib.random(0, H20Sim.FIELD_Z));
             sensors.add(s1);
         }
