@@ -55,6 +55,8 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
     private JFormattedTextField valMSpeed;
     private JFormattedTextField valMRadius;
 
+    private JFormattedTextField valNSensors;
+
     //charts
     private static ChartPanel chartPanel;
     private static JPanel east;
@@ -93,12 +95,19 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
         JLabel labelField = new JLabel("Field (x,y,z): ");
         JLabel labelMSpeed = new JLabel("Move speed: ");
         JLabel labelMRadius = new JLabel("Move radius: ");
+        JLabel labelNSensors = new JLabel("Number of sensors: ");
 
         valSamples = new JFormattedTextField(amountFormat);
         valSamples.setBackground(backgroudVal);
         valSamples.setValue(H20Sim.N_SAMPLES);
         valSamples.setColumns(3);
         valSamples.addPropertyChangeListener("value", this);
+
+        valNSensors = new JFormattedTextField(amountFormat);
+        valNSensors.setBackground(backgroudVal);
+        valNSensors.setValue(H20Sim.N_SENSORS);
+        valNSensors.setColumns(3);
+        valNSensors.addPropertyChangeListener("value", this);
 
         valThread = new JFormattedTextField(amountFormat);
         valThread.setBackground(backgroudVal);
@@ -199,6 +208,7 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
         labelField.setLabelFor(valFieldz);
         labelMSpeed.setLabelFor(valMSpeed);
         labelMRadius.setLabelFor(valMRadius);
+        labelNSensors.setLabelFor(valNSensors);
 
         JPanel gridPanelField = new JPanel(new GridLayout(0, 4));
 
@@ -213,6 +223,9 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
 
         gridPanelSettings.add(labelThread);
         gridPanelSettings.add(valThread);
+
+        gridPanelSettings.add(labelNSensors);
+        gridPanelSettings.add(valNSensors);
 
         gridPanelSettings.add(labelSensorBandwidth);
         gridPanelSettings.add(valSensorBandwidth);
@@ -378,6 +391,8 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
             H20Sim.MOVE_RADIUS = ((Number) valMRadius.getValue()).floatValue();
         } else if (source == valMSpeed) {
             H20Sim.MOVEMENT_SPEED = ((Number) valMSpeed.getValue()).floatValue();
+        }else if (source == valNSensors) {
+            H20Sim.N_SENSORS = ((Number) valNSensors.getValue()).floatValue();
         }
     }
 

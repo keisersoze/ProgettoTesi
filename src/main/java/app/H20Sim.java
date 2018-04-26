@@ -29,7 +29,7 @@ public class H20Sim {
     //parametri simulazione
     public static double LAMDA = 0.05;
 
-
+    public static double N_SENSORS = 300;
     public static double MOVEMENT_SPEED = 0.5; // m/s
     public static double MOVE_REFRESH = 30; // unità di sim time
     public static double MOVE_RADIUS = 200; //m
