@@ -460,7 +460,7 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
             case "Depth Successful Rate":
                 chart = Settings.chartDSR.getChart();
                 break;
-            case "Reposnse Time":
+            case "Response Time":
                 chart = Settings.chartRT.getChart();
                 break;
         }

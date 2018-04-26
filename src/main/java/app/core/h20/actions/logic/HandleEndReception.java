@@ -31,7 +31,6 @@ public class HandleEndReception implements Action {
                     context.getScheduler().addEvent(e);
                 }
             } else {
-
                 context.getFramesArrived().get(frame).addLast(context.getSimTime() - frame.getArrivalTime());
             }
         }

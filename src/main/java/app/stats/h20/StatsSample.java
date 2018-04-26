@@ -1,11 +1,12 @@
 package app.stats.h20;
 
-import app.H20Sim;
 import app.model.Frame;
 import app.sim.SimContext;
 import app.stats.Sample;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
 
 public class StatsSample implements Sample {
     private double nFrames;
@@ -16,7 +17,7 @@ public class StatsSample implements Sample {
     private Map<Integer, Double[]> intervalToSuccessfulRate;
     private Map<Integer, Double> intervalToSuccessful2Rate;
 
-    public StatsSample(SimContext context) {
+    public StatsSample (SimContext context) {
 
         //throughput
         simTime = context.getSimTime();
@@ -28,7 +29,7 @@ public class StatsSample implements Sample {
         for (Map.Entry<Frame, LinkedList<Double>> entry : context.getFramesArrived().entrySet()) {
             if (entry.getValue().size() > 0) {
                 nFramesArrived++;
-                avgResponseTime += entry.getValue().get(0) - entry.getKey().getArrivalTime();
+                avgResponseTime += entry.getValue().getFirst();
             }
         }
         avgResponseTime /= nFramesArrived;
@@ -37,43 +38,44 @@ public class StatsSample implements Sample {
         intervalToSuccessfulRate = new HashMap<>();
         for (Map.Entry<Frame, LinkedList<Double>> entry : context.getFramesArrived().entrySet()) {
             double y = entry.getKey().getOwner().getY();
-            if (!intervalToSuccessfulRate.containsKey(heightToIndex(y)))
-                intervalToSuccessfulRate.put(heightToIndex(y),new Double[]{0d,0d});
+            if (!intervalToSuccessfulRate.containsKey(heightToIndex(y))) {
+                intervalToSuccessfulRate.put(heightToIndex(y), new Double[]{0d, 0d});
+            }
             intervalToSuccessfulRate.get(heightToIndex(y))[0]++;
             if (entry.getValue().size() > 0) {
                 intervalToSuccessfulRate.get(heightToIndex(y))[1]++;
             }
         }
         intervalToSuccessful2Rate = new HashMap<>();
-        intervalToSuccessfulRate.forEach((k,v)-> intervalToSuccessful2Rate.put(k,v[1]/v[0]*100));
+        intervalToSuccessfulRate.forEach((k, v) -> intervalToSuccessful2Rate.put(k, v[1] / v[0] * 100));
     }
 
     @Override
-    public double getSuccessfullRate() {
+    public double getSuccessfullRate () {
         return nFramesArrived / nFrames;
     }
 
     @Override
-    public double getGoodput() {
+    public double getGoodput () {
         return nFramesArrived / simTime;
     }
 
     @Override
-    public double getAvgResponseTime() {
+    public double getAvgResponseTime () {
         return avgResponseTime;
     }
 
     @Override
-    public Map<Integer, Double> getDeptArrivalSuccessRate() {
+    public Map<Integer, Double> getDeptArrivalSuccessRate () {
         return intervalToSuccessful2Rate;
     }
 
     @Override
-    public String toString() {
+    public String toString () {
         return getSuccessfullRate() + " ";
     }
 
-    private static int heightToIndex(double height) {
+    private static int heightToIndex (double height) {
         return (int) height / 100;
     }
 

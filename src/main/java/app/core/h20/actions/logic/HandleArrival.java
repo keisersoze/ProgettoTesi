@@ -1,6 +1,5 @@
 package app.core.h20.actions.logic;
 
-import app.utils.ConsoleColors;
 import app.H20Sim;
 import app.core.Action;
 import app.core.Event;
@@ -8,6 +7,7 @@ import app.factory.EventTypes;
 import app.model.Frame;
 import app.model.Sensor;
 import app.sim.SimContext;
+import app.utils.ConsoleColors;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -24,7 +24,7 @@ public class HandleArrival implements Action {
     public void execute (Event event) {
         SimContext context = event.getContext();
         List<Sensor> possibleOwners = context.getSensors().stream()
-                .filter(sensor -> !sensor.isOccupied()&&!sensor.isSink())
+                .filter(sensor -> !sensor.isOccupied() && !sensor.isSink())
                 .collect(Collectors.toList());
 
         if (possibleOwners.size() > 0) {

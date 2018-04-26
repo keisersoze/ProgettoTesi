@@ -44,7 +44,7 @@ public class H20Sim {
 
     public static double SENSIBILITY = -110; //dBm
     public static double SENSOR_POWER = -104; //dB
-    public static double SENSOR_FREQUENCY = 40000; //HZ
+    public static double SENSOR_FREQUENCY = 25000; //HZ
 
     public static String DEPLOYMENT_TYPE = DeploymentTypes.BaseDeployment;
 
