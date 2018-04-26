@@ -316,10 +316,14 @@ public class Canvas extends SimpleApplication {
         for (Map.Entry<Sensor, Spatial> entry : sensorSpatialHashMap.entrySet()) {
             entry.getValue().setLocalTranslation(entry.getKey().getPosition().divide(H20Sim.SCALE));
             if (!entry.getKey().isSink()) {
-                if (!entry.getKey().isTransmitting()) {
-                    updateSensorColor(entry.getKey(), ColorRGBA.Blue);
-                } else {
+                if (entry.getKey().isWaiting()) {
                     updateSensorColor(entry.getKey(), ColorRGBA.Red);
+                } else if (entry.getKey().isReceiving()) {
+                    updateSensorColor(entry.getKey(), ColorRGBA.BlackNoAlpha);
+                } else if (entry.getKey().isTransmitting()) {
+                    updateSensorColor(entry.getKey(), ColorRGBA.Green);
+                } else {
+                    updateSensorColor(entry.getKey(), ColorRGBA.Blue);
                 }
             }
 

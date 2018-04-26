@@ -21,7 +21,6 @@ public abstract class AbstractSensor implements Sensor {
         transmitting = false;
         receiving = false;
         waiting = false;
-
     }
 
     @Override
@@ -115,17 +114,17 @@ public abstract class AbstractSensor implements Sensor {
     }
 
     @Override
-    public boolean isWaiting() {
+    public boolean isWaiting () {
         return waiting;
     }
 
     @Override
-    public void setWaiting(boolean waiting) {
+    public void setWaiting (boolean waiting) {
         this.waiting = waiting;
     }
 
     @Override
-    public boolean isOccupied() {
-        return receiving||transmitting||waiting;
+    public boolean isOccupied () {
+        return receiving || transmitting || waiting;
     }
 }
