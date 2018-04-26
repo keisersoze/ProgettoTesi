@@ -54,6 +54,7 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
 
     private JFormattedTextField valMSpeed;
     private JFormattedTextField valMRadius;
+    private JFormattedTextField valCSMAStreght;
 
     private JFormattedTextField valNSensors;
 
@@ -96,6 +97,7 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
         JLabel labelMSpeed = new JLabel("Move speed: ");
         JLabel labelMRadius = new JLabel("Move radius: ");
         JLabel labelNSensors = new JLabel("Number of sensors: ");
+        JLabel labelCSMA = new JLabel("CSMA strength: ");
 
         valSamples = new JFormattedTextField(amountFormat);
         valSamples.setBackground(backgroudVal);
@@ -193,6 +195,12 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
         valMRadius.setColumns(3);
         valMRadius.addPropertyChangeListener("value", this);
 
+        valCSMAStreght = new JFormattedTextField(amountFormat);
+        valCSMAStreght.setBackground(backgroudVal);
+        valCSMAStreght.setValue(H20Sim.CSMA_STRENGTH);
+        valCSMAStreght.setColumns(3);
+        valCSMAStreght.addPropertyChangeListener("value", this);
+
         labelSamples.setLabelFor(valSamples);
         labelThread.setLabelFor(valThread);
         labelSensorBandwidth.setLabelFor(valSensorBandwidth);
@@ -209,6 +217,7 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
         labelMSpeed.setLabelFor(valMSpeed);
         labelMRadius.setLabelFor(valMRadius);
         labelNSensors.setLabelFor(valNSensors);
+        labelCSMA.setLabelFor(valCSMAStreght);
 
         JPanel gridPanelField = new JPanel(new GridLayout(0, 4));
 
@@ -238,6 +247,9 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
 
         gridPanelSettings.add(labelThreshod);
         gridPanelSettings.add(valThreshold);
+
+        gridPanelSettings.add(labelCSMA);
+        gridPanelSettings.add(valCSMAStreght);
 
         gridPanelSettings.add(labelSensibility);
         gridPanelSettings.add(valSensibility);
@@ -393,6 +405,8 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
             H20Sim.MOVEMENT_SPEED = ((Number) valMSpeed.getValue()).floatValue();
         }else if (source == valNSensors) {
             H20Sim.N_SENSORS = ((Number) valNSensors.getValue()).floatValue();
+        }else if (source == valCSMAStreght) {
+            H20Sim.CSMA_STRENGTH = ((Number) valCSMAStreght.getValue()).doubleValue();
         }
     }
 

@@ -44,7 +44,7 @@ public class HandleTransmission implements Action {
 
     protected boolean CSMA(Sensor sender, SimContext context, Frame frame, int numHop) {
         // se uno dei miei vicini stra trasmettendo allora io non posso trasmettere, CSMA non persistente
-        if (MyLib.tomW(H20Sim.SENSOR_POWER) / MyLib.calculateNoise(sender, context) < 3) {
+        if (MyLib.tomW(H20Sim.SENSOR_POWER) / MyLib.calculateNoise(sender, context) < H20Sim.CSMA_STRENGTH) {
             sender.setWaiting(true);
             double time = -log(context.getMarsenneTwister().nextDouble()) / H20Sim.LAMDA;   //TODO : da capire se va bene oppure se cambiarlo
             Event e = context.getCoreFactory().getEvent(EventTypes.TransmissionEvent, time, context, frame, sender, numHop);

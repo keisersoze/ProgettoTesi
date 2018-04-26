@@ -28,6 +28,7 @@ public class H20Sim {
 
     //parametri simulazione
     public static double LAMDA = 0.05;
+    public static double CSMA_STRENGTH = 3;
 
     public static double N_SENSORS = 300;
     public static double MOVEMENT_SPEED = 0.5; // m/s
