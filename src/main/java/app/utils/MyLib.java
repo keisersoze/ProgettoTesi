@@ -44,9 +44,4 @@ public class MyLib {
     public static double powerReceivedFPL(double distance) {
         return H20Sim.SENSOR_POWER - (20 * Math.log10(distance) + 20 * Math.log10(H20Sim.SENSOR_FREQUENCY) - 147.55);
     }
-
-    public static double powerReceivedSPL(double distance) {
-        return H20Sim.SENSOR_POWER - (20 * Math.log10(distance) + 20 * Math.log10(H20Sim.SENSOR_FREQUENCY) - 147.55);
-    }
-
 }

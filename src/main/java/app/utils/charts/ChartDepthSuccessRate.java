@@ -5,13 +5,20 @@ import app.sim.SimContext;
 import app.stats.Collector;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.block.BlockBorder;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.IntervalMarker;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.chart.renderer.xy.XYBarRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.data.xy.IntervalXYDataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+import org.jfree.ui.RectangleAnchor;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -27,26 +34,20 @@ public class ChartDepthSuccessRate implements Chart {
         chart = createChart(createDataset(collector, threadContextMap));
     }
 
-    public static JFreeChart createChart (XYDataset dataset) {
+    public static JFreeChart createChart (IntervalXYDataset dataset) {
 
-        JFreeChart chart = ChartFactory.createXYLineChart(
-                "Depth Successful rate",
-                "Samples",
-                "% Frames arrived",
+        final JFreeChart chart = ChartFactory.createXYBarChart(
+                "Depth Succesuful Rate",
+                "% Frame Arrived",
+                false,
+                "Depth",
                 dataset,
                 PlotOrientation.VERTICAL,
                 true,
                 true,
                 false
         );
-
-        XYPlot plot = chart.getXYPlot();
-
-        XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
-        renderer.setSeriesPaint(0, Color.RED);
-        renderer.setSeriesLinesVisible(0,false);
-
-        plot.setRenderer(renderer);
+        XYPlot plot = (XYPlot) chart.getPlot();
         plot.setBackgroundPaint(Color.white);
 
         plot.setRangeGridlinesVisible(true);
@@ -57,11 +58,17 @@ public class ChartDepthSuccessRate implements Chart {
 
         chart.getLegend().setFrame(BlockBorder.NONE);
 
+        final XYBarRenderer renderer = (XYBarRenderer) plot.getRenderer();
+        renderer.setShadowVisible(false);
+        renderer.setMargin(0);
+        chart.setAntiAlias(true);
+        chart.setTextAntiAlias(true);
+
         return chart;
     }
 
 
-    private static XYDataset createDataset (Collector collector, Map<Thread, SimContext> threadContextMap) {
+    private static IntervalXYDataset createDataset (Collector collector, Map<Thread, SimContext> threadContextMap) {
         Map<Integer, Double> stats = new HashMap<>();
         XYSeries series = new XYSeries("Successful rate");
 
@@ -73,12 +80,9 @@ public class ChartDepthSuccessRate implements Chart {
 
         SortedSet<Integer> keys = new TreeSet<>(stats.keySet());
         for (Integer depth : keys) {
-            series.add(depth, stats.get(depth));
+            series.add(H20Sim.FIELD_Y - depth * 100, stats.get(depth));
         }
-        XYSeriesCollection dataset = new XYSeriesCollection();
-        dataset.addSeries(series);
-
-        return dataset;
+        return new XYSeriesCollection(series);
     }
 
 
