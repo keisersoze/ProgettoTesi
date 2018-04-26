@@ -52,6 +52,7 @@ public class H20Sim {
     public static double GAMMA = 1;
 
     public static boolean CANVAS_MODE = true;
+
     private static Map<Thread, SimContext> threadContextMap = new HashMap<>();
     private static BaseCollector collector = new BaseCollector();
 
