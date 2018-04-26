@@ -29,24 +29,64 @@ public class MyLib {
         return myNeighbors;
     }
 
-    public static double calculateNoise (Sensor sender, Sensor receiver, SimContext context, double time) {
+    /**
+     *
+     * @param sender
+     * @param receiver
+     * @param context
+     * @return mW
+     */
+    public static double calculateNoise (Sensor sender, Sensor receiver, SimContext context) {
         double acc = 0;
         for (Sensor s : context.getSensors()) {
-            if (s.isTransmitting() && !s.equals(sender) && (receiver.getEuclideanDistance(s) >= H20Sim.SOUND_SPEED * (context.getSimTime() - time))) {
+            if (s.isTransmitting() && !s.equals(sender)) {
                 acc += Math.pow(10, powerReceived(receiver.getEuclideanDistance(s)) / 10);
             }
         }
         return acc;
     }
 
-    //Modelli path loss
+    /**
+     *
+     * @param receiver
+     * @param context
+     * @return mW
+     */
+    public static double calculateNoise ( Sensor receiver, SimContext context) {
+        double acc = 0;
+        for (Sensor s : context.getSensors()) {
+            if (s.isTransmitting()) {
+                acc += Math.pow(10, powerReceived(receiver.getEuclideanDistance(s)) / 10);
+            }
+        }
+        return acc;
+    }
+
+    /**
+     *
+     * @param distance
+     * @return dB
+     */
     public static double powerReceived (double distance) {
         return H20Sim.SENSOR_POWER - (Math.pow(distance / 1000, H20Sim.K) * Math.pow(Math.pow(10, throp(H20Sim.SENSOR_FREQUENCY) / 10), distance / 1000));
     }
 
+    /**
+     *
+     * @param f
+     * @return db/km
+     */
     private static double throp (double f) {
         f = f / 1000;
         return (0.11 * Math.pow(f, 2)) / (1 + Math.pow(f, 2)) + (44 * Math.pow(f, 2)) / (4100 + Math.pow(f, 2)) + 2.75 * Math.pow(10, -4) * Math.pow(f, 2) + 0.003;
+    }
+
+    public static double todBm(double x){
+        return 10*Math.log10(x);
+    }
+
+    public static double tomW(double x){
+        return Math.pow(10,x/10);
     }
 
 

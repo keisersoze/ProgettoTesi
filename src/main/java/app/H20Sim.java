@@ -36,7 +36,7 @@ public class H20Sim {
 
     public static float SCALE = 10f;
 
-    public static int SENSOR_BANDWIDTH = 100; // b/s
+    public static int SENSOR_BANDWIDTH = 1000; // b/s
     public static int MAX_FRAME_SIZE = 1000; //bit (200-1600)
     public static double MAX_FRAME_RATE = 0.9;
 
