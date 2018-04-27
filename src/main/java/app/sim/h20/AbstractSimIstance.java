@@ -30,7 +30,7 @@ public abstract class AbstractSimIstance implements SimContext {
     private double simTime;
     //Dati statistici che vengono utilizzati dal collector
 
-    AbstractSimIstance (Collector collector, Scheduler scheduler) {
+    public AbstractSimIstance (Collector collector, Scheduler scheduler) {
         frames = new ArrayList<>();
         this.collector = collector;
         this.scheduler = scheduler;
@@ -97,7 +97,7 @@ public abstract class AbstractSimIstance implements SimContext {
         nSamples++;
     }
 
-    void initEvents () {
+    public void initEvents () {
         Event move_evt = getCoreFactory().getEvent(EventTypes.MoveEvent, 0, this);
         Event arrival_evt = getCoreFactory().getEvent(EventTypes.ArrivalEvent, 0, this);
         Event stats_evt = getCoreFactory().getEvent(EventTypes.StatisticEvent, 0, this);

@@ -4,7 +4,7 @@ package app;
 import app.core.h20.scheduler.DefaultScheduler;
 import app.factory.DeploymentTypes;
 import app.sim.SimContext;
-import app.sim.h20.GraphicSim;
+import app.sim.h20G.GraphicSim;
 import app.sim.h20.SimulationInstance;
 import app.stats.h20.BaseCollector;
 import app.utils.Settings;

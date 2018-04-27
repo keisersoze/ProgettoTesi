@@ -1,13 +1,13 @@
-package app.sim.h20;
+package app.sim.h20G;
 
+import app.sim.h20.AbstractSimIstance;
 import app.utils.Canvas;
 import app.H20Sim;
 import app.utils.Settings;
 import app.core.Event;
 import app.core.Scheduler;
 import app.factory.CoreFactory;
-import app.factory.EventTypes;
-import app.factory.h20.GraphicCoreFactory;
+import app.factory.h20G.GraphicCoreFactory;
 import app.model.Sensor;
 import app.utils.MyLib;
 import app.stats.Collector;

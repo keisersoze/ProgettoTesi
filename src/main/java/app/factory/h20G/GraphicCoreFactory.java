@@ -1,5 +1,6 @@
-package app.factory.h20;
+package app.factory.h20G;
 
+import app.factory.h20.MyCoreFactory;
 import app.utils.Canvas;
 import app.core.Event;
 import app.core.h20.actions.utility.RescheduleExpRandom;

@@ -9,7 +9,7 @@ import app.model.Frame;
 import app.model.Sensor;
 import app.model.Transmission;
 import app.sim.SimContext;
-import app.sim.h20.GraphicSim;
+import app.sim.h20G.GraphicSim;
 import com.jme3.app.SimpleApplication;
 import com.jme3.font.BitmapFont;
 import com.jme3.font.BitmapText;
