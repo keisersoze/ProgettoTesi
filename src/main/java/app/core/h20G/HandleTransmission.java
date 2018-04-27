@@ -26,6 +26,7 @@ public class HandleTransmission extends app.core.h20.actions.logic.HandleTransmi
         int numHop = event.getInt();
 
         sender.setWaiting(false);
+
         if (CSMA(sender, context, frame, numHop)) {
             sender.setTransmitting(true);
 

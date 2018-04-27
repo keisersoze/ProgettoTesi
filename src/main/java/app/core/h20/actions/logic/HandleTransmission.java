@@ -10,8 +10,6 @@ import app.model.Transmission;
 import app.sim.SimContext;
 import app.utils.MyLib;
 
-import java.util.stream.Collectors;
-
 import static org.apache.commons.math3.util.FastMath.log;
 
 public class HandleTransmission implements Action {
@@ -42,7 +40,7 @@ public class HandleTransmission implements Action {
 
     }
 
-    protected boolean CSMA(Sensor sender, SimContext context, Frame frame, int numHop) {
+    protected static boolean CSMA(Sensor sender, SimContext context, Frame frame, int numHop) {
         // se uno dei miei vicini stra trasmettendo allora io non posso trasmettere, CSMA non persistente
         if (MyLib.tomW(H20Sim.SENSOR_POWER) / MyLib.calculateNoise(sender, context) < H20Sim.CSMA_STRENGTH) {
             sender.setWaiting(true);

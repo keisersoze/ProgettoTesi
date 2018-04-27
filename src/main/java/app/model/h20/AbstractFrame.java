@@ -4,8 +4,8 @@ import app.model.Frame;
 import app.model.Sensor;
 import app.model.Transmission;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public abstract class AbstractFrame implements Frame {
     private double arrivalTime;
@@ -16,7 +16,7 @@ public abstract class AbstractFrame implements Frame {
     AbstractFrame (double size, Sensor owner, double arrivalTime) {
         this.size = size;
         this.owner = owner;
-        transmissions = new CopyOnWriteArrayList<>();
+        transmissions = new ArrayList<>();
         this.arrivalTime = arrivalTime;
     }
 

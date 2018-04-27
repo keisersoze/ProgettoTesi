@@ -90,7 +90,7 @@ public class Canvas extends SimpleApplication {
 
         attachCoordinateAxes(Vector3f.ZERO);
         attachGrid(field.x, field.y, field.z, 50f, ColorRGBA.White);
-        viewPort.setBackgroundColor(new ColorRGBA(212/255f, 224/255f, 1f, 1f));
+        viewPort.setBackgroundColor(new ColorRGBA(21/255f, 22/255f, 0.15f, 1f));
         //generateTerrain();
 
         charged = true;

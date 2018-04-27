@@ -8,6 +8,8 @@ import app.model.Frame;
 import app.model.Sensor;
 import app.model.Transmission;
 import app.sim.SimContext;
+import app.utils.MyLib;
+import org.apache.commons.math3.random.MersenneTwister;
 
 
 public class HandleEndReception implements Action {
@@ -26,13 +28,29 @@ public class HandleEndReception implements Action {
 
         if (transmission.isSuccessfull()) {
             if (!transmission.getReceiver().isSink()) {
-                if (transmission.getSender().getY() + H20Sim.THRESHOLD < transmission.getReceiver().getY()) {   // Decido se ritrasmettere in base alla profondità
-                    Event e = context.getCoreFactory().getEvent(EventTypes.TransmissionEvent, 0, context, frame, receiver, numHop);
+                if (protocol(transmission)) {   // Decido se ritrasmettere in base alla profondità
+                    Event e = context.getCoreFactory().getEvent(EventTypes.TransmissionEvent, MyLib.random(.2f, .4f), context, frame, receiver, numHop);
                     context.getScheduler().addEvent(e);
                 }
             } else {
                 context.getFramesArrived().get(frame).addLast(context.getSimTime() - frame.getArrivalTime());
             }
+        }
+    }
+
+    protected static boolean protocol (Transmission transmission) {
+        if (transmission.getHop() > 3) {
+            return false;
+        }
+        switch (H20Sim.PROTOCOL) {
+            case "Deterministic":
+                return transmission.getSender().getY() + H20Sim.THRESHOLD < transmission.getReceiver().getY();
+            case "Probabilistic":
+                return new MersenneTwister().nextDouble() < 0.3;
+            case "":
+                return transmission.getSender().getY() + H20Sim.THRESHOLD < transmission.getReceiver().getY() && new MersenneTwister().nextDouble() < 0.7;
+            default:
+                return true;
         }
     }
 }

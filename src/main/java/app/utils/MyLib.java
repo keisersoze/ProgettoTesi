@@ -30,7 +30,6 @@ public class MyLib {
     }
 
     /**
-     *
      * @param sender
      * @param receiver
      * @param context
@@ -47,12 +46,11 @@ public class MyLib {
     }
 
     /**
-     *
      * @param receiver
      * @param context
      * @return mW
      */
-    public static double calculateNoise ( Sensor receiver, SimContext context) {
+    public static double calculateNoise (Sensor receiver, SimContext context) {
         double acc = 0;
         for (Sensor s : context.getSensors()) {
             if (s.isTransmitting()) {
@@ -63,7 +61,6 @@ public class MyLib {
     }
 
     /**
-     *
      * @param distance
      * @return dB
      */
@@ -72,7 +69,6 @@ public class MyLib {
     }
 
     /**
-     *
      * @param f
      * @return db/km
      */
@@ -81,12 +77,12 @@ public class MyLib {
         return (0.11 * Math.pow(f, 2)) / (1 + Math.pow(f, 2)) + (44 * Math.pow(f, 2)) / (4100 + Math.pow(f, 2)) + 2.75 * Math.pow(10, -4) * Math.pow(f, 2) + 0.003;
     }
 
-    public static double todBm(double x){
-        return 10*Math.log10(x);
+    public static double todBm (double x) {
+        return 10 * Math.log10(x);
     }
 
-    public static double tomW(double x){
-        return Math.pow(10,x/10);
+    public static double tomW (double x) {
+        return Math.pow(10, x / 10);
     }
 
 
