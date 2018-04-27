@@ -37,14 +37,15 @@ public class MyModelFactory implements ModelFactory {
         } else if (deploymentType.equalsIgnoreCase(DeploymentTypes.LayerDeployment)) {
             return layerDeployment();
         } else if (deploymentType.equalsIgnoreCase(DeploymentTypes.LayerInvProportionalDeployment)) {
-            return layerDeploymentInverted();
+            return invProportionalLayerDeployment();
         }if (deploymentType.equalsIgnoreCase(DeploymentTypes.OneSDeployment)) {
             return oneSDeployment();
         }if (deploymentType.equalsIgnoreCase(DeploymentTypes.LayerProportionalDeployment)) {
-            return layerDeploymentM();
+            return proportionalLayerDeployment();
         } else { return null; }
 
     }
+
 
     private List<Sensor> oneSDeployment() {
         List<Sensor> sensors = new ArrayList<>();
@@ -52,63 +53,43 @@ public class MyModelFactory implements ModelFactory {
         return sensors;
     }
 
-    private List<Sensor> layerDeploymentInverted () {
-        List<Sensor> sensors = new ArrayList<>();
+    private List<Sensor> invProportionalLayerDeployment() {
+
         int p1 = (int) (H20Sim.N_SENSORS/2);
         int p2 = (int) (H20Sim.N_SENSORS/3);
         int p3 = (int) H20Sim.N_SENSORS-p1-p2;
-
-        for (int i = 0; i < p1; i++) {
-            Sensor s1 = getSensor(MyLib.random(0, H20Sim.FIELD_X), MyLib.random(0, H20Sim.FIELD_Y / 10), MyLib.random(0, H20Sim.FIELD_Z));
-            sensors.add(s1);
-        }
-
-        for (int i = 0; i < p2; i++) {
-            Sensor s1 = getSensor(MyLib.random(0, H20Sim.FIELD_X), MyLib.random(H20Sim.FIELD_Y / 2.75f, H20Sim.FIELD_Y / 2.5f), MyLib.random(0, H20Sim.FIELD_Z));
-            sensors.add(s1);
-        }
-
-        for (int i = 0; i < p3; i++) {
-            Sensor s1 = getSensor(MyLib.random(0, H20Sim.FIELD_X), MyLib.random(H20Sim.FIELD_Y / 1.5f, H20Sim.FIELD_Y / 1.35f), MyLib.random(0, H20Sim.FIELD_Z));
-            sensors.add(s1);
-        }
-
+        List<Sensor> sensors = threeLayerDeployment(p1,p2,p3);
         deploySink(sensors);
+
         return sensors;
     }
 
-    private List<Sensor> layerDeploymentM () {
-        List<Sensor> sensors = new ArrayList<>();
+    private List<Sensor> proportionalLayerDeployment() {
+
         int p1 = (int) (H20Sim.N_SENSORS/2);
         int p2 = (int) (H20Sim.N_SENSORS/3);
         int p3 = (int) H20Sim.N_SENSORS-p1-p2;
-
-        for (int i = 0; i < p3; i++) {
-            Sensor s1 = getSensor(MyLib.random(0, H20Sim.FIELD_X), MyLib.random(0, H20Sim.FIELD_Y / 10), MyLib.random(0, H20Sim.FIELD_Z));
-            sensors.add(s1);
-        }
-
-        for (int i = 0; i < p2; i++) {
-            Sensor s1 = getSensor(MyLib.random(0, H20Sim.FIELD_X), MyLib.random(H20Sim.FIELD_Y / 2.75f, H20Sim.FIELD_Y / 2.5f), MyLib.random(0, H20Sim.FIELD_Z));
-            sensors.add(s1);
-        }
-
-        for (int i = 0; i < p1; i++) {
-            Sensor s1 = getSensor(MyLib.random(0, H20Sim.FIELD_X), MyLib.random(H20Sim.FIELD_Y / 1.5f, H20Sim.FIELD_Y / 1.35f), MyLib.random(0, H20Sim.FIELD_Z));
-            sensors.add(s1);
-        }
-
+        List<Sensor> sensors = threeLayerDeployment(p3,p2,p1);
         deploySink(sensors);
+
         return sensors;
     }
 
     private List<Sensor> layerDeployment () {
-        List<Sensor> sensors = new ArrayList<>();
+
         int p1 = (int) (H20Sim.N_SENSORS/3);
         int p2 = (int) H20Sim.N_SENSORS-2*p1;
+        List<Sensor> sensors = threeLayerDeployment(p1,p1,p2);
+        deploySink(sensors);
+
+        return sensors;
+    }
+
+    private List<Sensor> threeLayerDeployment (int p1 , int p2 , int p3) {
+        List<Sensor> sensors = new ArrayList<>();
 
         for (int i = 0; i < p1; i++) {
-            Sensor s1 = getSensor(MyLib.random(0, MyLib.random(0, H20Sim.FIELD_X)), MyLib.random(0, H20Sim.FIELD_Y / 10), MyLib.random(0, H20Sim.FIELD_Z));
+            Sensor s1 = getSensor(MyLib.random(0, H20Sim.FIELD_X), MyLib.random(0, H20Sim.FIELD_Y / 10), MyLib.random(0, H20Sim.FIELD_Z));
             sensors.add(s1);
         }
 
@@ -117,12 +98,10 @@ public class MyModelFactory implements ModelFactory {
             sensors.add(s1);
         }
 
-        for (int i = 0; i < p1; i++) {
+        for (int i = 0; i < p3; i++) {
             Sensor s1 = getSensor(MyLib.random(0, H20Sim.FIELD_X), MyLib.random(H20Sim.FIELD_Y / 1.5f, H20Sim.FIELD_Y / 1.35f), MyLib.random(0, H20Sim.FIELD_Z));
             sensors.add(s1);
         }
-
-        deploySink(sensors);
 
         return sensors;
     }

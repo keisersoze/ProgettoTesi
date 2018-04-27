@@ -28,7 +28,7 @@ public class HandleEndReception implements Action {
 
         if (transmission.isSuccessfull()) {
             if (!transmission.getReceiver().isSink()) {
-                if (protocol(transmission)) {   // Decido se ritrasmettere in base alla profondità
+                if (protocol(transmission)) {
                     Event e = context.getCoreFactory().getEvent(EventTypes.TransmissionEvent, MyLib.random(.2f, .4f), context, frame, receiver, numHop);
                     context.getScheduler().addEvent(e);
                 }

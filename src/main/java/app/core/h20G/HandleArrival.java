@@ -53,7 +53,7 @@ public class HandleArrival implements Action {
             // STATS
             context.getFramesArrived().put(frame, new LinkedList<>());
         } else {
-            System.out.println(ConsoleColors.RED + "WARNING: No sensors available to handle the ArrivalEvent " + this + ConsoleColors.RESET);
+            System.out.println(ConsoleColors.RED + "WARNING: No sensors available to handle the ArrivalEvent" + this + ConsoleColors.RESET);
         }
     }
 
