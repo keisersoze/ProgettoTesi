@@ -23,7 +23,6 @@ public class HandleTransmission implements Action {
         sender.setWaiting(false);
         if (CSMA(sender, context, frame, numHop)) {
             sender.setTransmitting(true);
-
             for (Sensor receiver : sender.getNeighbors()) {     // Per tutti i sensori che possono ricevere viene creato un nuovo evento
                 Transmission transmission = context.getModelFactory().getTransmission(sender, receiver, frame, numHop);
                 transmission.setTime(context.getSimTime());

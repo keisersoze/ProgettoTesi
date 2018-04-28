@@ -65,11 +65,12 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
     private static Chart chartSR;
     private static Chart chartDSR;
     private static Chart chartRT;
+    private static Chart chartModalitiesRates;
 
 
     private static JComboBox deployType = new JComboBox(DeploymentTypes.getDeploymentTypes());
     private static JComboBox graphicMode = new JComboBox(new String[]{"Graphic Mode", "Stats mode"});
-    private static JComboBox chartType = new JComboBox(new String[]{"Throughput", "Successful Rate", "Depth Successful Rate", "Response Time"});
+    private static JComboBox chartType = new JComboBox(new String[]{"Throughput", "Successful Rate", "Depth Successful Rate", "Response Time","Modalities Rates"});
     private static List<String> deployStrings = new ArrayList<>();
     private static List<String> graphicStrings = new ArrayList<>();
     private static List<String> chartStrings = new ArrayList<>();
@@ -352,7 +353,7 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
 
         Collections.addAll(deployStrings, DeploymentTypes.getDeploymentTypes());
         Collections.addAll(graphicStrings, "Graphic Mode", "Stats mode");
-        Collections.addAll(chartStrings, "Throughput", "Successful Rate", "Depth Successful Rate", "Response Time");
+        Collections.addAll(chartStrings, "Throughput", "Successful Rate", "Depth Successful Rate", "Response Time","Modalities Rates");
     }
 
     public static void createAndShowGUI () {
@@ -452,6 +453,10 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
                     chartPanel.setChart(Settings.chartRT.getChart());
                     frame.pack();
                     break;
+                case "Modalities Rates":
+                    chartPanel.setChart(Settings.chartModalitiesRates.getChart());
+                    frame.pack();
+                    break;
             }
             RefineryUtilities.centerFrameOnScreen(frame);
         }
@@ -477,6 +482,7 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
         chartSR = new ChartSuccessfulRate(collector, threads);
         chartDSR = new ChartDepthSuccessRate(collector, threads);
         chartRT = new ChartResponseTime(collector, threads);
+        chartModalitiesRates = new ChartModalities(collector, threads);
 
         JFreeChart chart = null;
         switch (chartStrings.get(chartType.getSelectedIndex())) {
@@ -491,6 +497,9 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
                 break;
             case "Response Time":
                 chart = Settings.chartRT.getChart();
+                break;
+            case "Modalities Rates":
+                chart = Settings.chartModalitiesRates.getChart();
                 break;
         }
         chartPanel.setChart(chart);
