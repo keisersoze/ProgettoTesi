@@ -9,4 +9,11 @@ public class EventTypes {
     public static final String TransmissionEvent = "TRASMISSION_EVENT";
     public static final String ReceptionEvent = "ReceptionEvent";
     public static final String EndTransmissionEvent = "EndTransmissionEvent";
+
+    //h20Reliable
+    public static final String AckTransmissionEvent = "AckTransmissionEvent";
+    public static final String AckReceptionEvent = "AckReceptionEvent";
+    public static final String EndAckReceptionEvent = "EndAckReceptionEvent";
+    public static final String EndAckTransmissionEvent = "EndAckTrasmissionEvent";
+
 }

@@ -14,4 +14,11 @@ public class ActionTypes {
     public static final String HandleReception = "HandleReception";
 
 
+    //H20Reliable
+    public static final String HandleAckTransmission = "HandleAckTransmission";
+    public static final String HandleAckReception = "HandleAckReception";
+    public static final String HandleEndAckReception = "HandleEndAckReception";
+    public static final String HandleEndAckTransmission = "HandleEndAckTransmission";
+
+
 }
