@@ -32,7 +32,7 @@ public abstract class AbstractFrame implements Frame {
     }
 
     @Override
-    public synchronized List<Transmission> getTransmissionHistory () {
+    public synchronized List<Transmission> getTransmissions() {
         return transmissions;
     }
 

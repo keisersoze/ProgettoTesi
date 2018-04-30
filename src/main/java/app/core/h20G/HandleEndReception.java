@@ -8,7 +8,6 @@ import app.model.Sensor;
 import app.model.Transmission;
 import app.sim.SimContext;
 import app.utils.Canvas;
-import app.utils.MyLib;
 
 
 public class HandleEndReception extends app.core.h20.actions.logic.HandleEndReception implements Action {
@@ -30,12 +29,12 @@ public class HandleEndReception extends app.core.h20.actions.logic.HandleEndRece
 
         receiver.setReceiving(false);
         transmission.setArrived(true);
-        transmission.getFrame().getTransmissionHistory().remove(transmission);
+        transmission.getFrame().getTransmissions().remove(transmission);
 
         if (transmission.isSuccessfull()) {
             if (!receiver.isSink()) {
                 if (protocol(transmission)) {   // Decido se ritrasmettere in base alla profondità
-                    Event e = context.getCoreFactory().getEvent(EventTypes.TransmissionEvent, MyLib.random(.2f, .4f), context, frame, receiver, numHop);
+                    Event e = context.getCoreFactory().getEvent(EventTypes.TransmissionEvent, 0, context, frame, receiver, numHop);
                     context.getScheduler().addEvent(e);
                 }
             } else {

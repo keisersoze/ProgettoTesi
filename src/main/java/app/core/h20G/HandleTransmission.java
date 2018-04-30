@@ -36,7 +36,7 @@ public class HandleTransmission extends app.core.h20.actions.logic.HandleTransmi
                 Transmission transmission = context.getModelFactory().getTransmission(sender, receiver, frame, numHop);
                 transmission.setTime(context.getSimTime());    // Per il calcolo di quanto sta avanzando la trasmissione (la linea)
 
-                frame.getTransmissionHistory().add(transmission);
+                frame.getTransmissions().add(transmission);
 
                 double time = sender.getEuclideanDistance(receiver) / H20Sim.SOUND_SPEED;
                 Event e = context.getCoreFactory().getEvent(EventTypes.ReceptionEvent, time, context, transmission);

@@ -8,7 +8,6 @@ import app.model.Frame;
 import app.model.Sensor;
 import app.model.Transmission;
 import app.sim.SimContext;
-import app.utils.MyLib;
 import org.apache.commons.math3.random.MersenneTwister;
 
 
@@ -24,7 +23,7 @@ public class HandleEndReception implements Action {
         int numHop = transmission.getHop() + 1;
 
         receiver.setReceiving(false);
-        transmission.getFrame().getTransmissionHistory().remove(transmission);
+        transmission.getFrame().getTransmissions().remove(transmission);
 
         if (transmission.isSuccessfull()) {
             if (!transmission.getReceiver().isSink()) {

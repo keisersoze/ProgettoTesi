@@ -24,7 +24,7 @@ public class HandleReception implements Action {
 
         } else {
             transmission.setArrived(true); //TODO: da togliere
-            transmission.getFrame().getTransmissionHistory().remove(transmission); // Elimina la trasmissione
+            transmission.getFrame().getTransmissions().remove(transmission); // Elimina la trasmissione
         }
     }
 }

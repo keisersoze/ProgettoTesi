@@ -26,7 +26,7 @@ public class HandleTransmission implements Action {
             for (Sensor receiver : sender.getNeighbors()) {     // Per tutti i sensori che possono ricevere viene creato un nuovo evento
                 Transmission transmission = context.getModelFactory().getTransmission(sender, receiver, frame, numHop);
                 transmission.setTime(context.getSimTime());
-                frame.getTransmissionHistory().add(transmission);
+                frame.getTransmissions().add(transmission);
 
                 double time = sender.getEuclideanDistance(receiver) / H20Sim.SOUND_SPEED;   // Tra quanto schedulo l'evento
                 Event e = context.getCoreFactory().getEvent(EventTypes.ReceptionEvent, time, context, transmission);

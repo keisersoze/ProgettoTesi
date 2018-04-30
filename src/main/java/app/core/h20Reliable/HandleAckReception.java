@@ -15,16 +15,16 @@ public class HandleAckReception implements Action {
         Transmission transmission = e.getTransmission();
         Sensor receiver = transmission.getReceiver();
 
-        if (!receiver.isOccupied()) {    // Se posso ricevere allora inizio a ricevere
+        if (!receiver.isOccupied()) {
             receiver.setReceiving(true);
 
             double time = 380 / H20Sim.SENSOR_BANDWIDTH;
-            Event newEvent = context.getCoreFactory().getEvent(EventTypes.EndAckReceptionEvent, time, context, transmission); // Viene creato un evento per la fine della ricezione
+            Event newEvent = context.getCoreFactory().getEvent(EventTypes.EndAckReceptionEvent, time, context, transmission);
             context.getScheduler().addEvent(newEvent);
 
         } else {
             transmission.setArrived(true); //TODO: da togliere
-            transmission.getFrame().getTransmissionHistory().remove(transmission); // Elimina la trasmissione
+            transmission.getFrame().getTransmissions().remove(transmission);
         }
 
     }

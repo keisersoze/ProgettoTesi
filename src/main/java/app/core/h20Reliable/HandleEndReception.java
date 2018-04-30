@@ -7,7 +7,6 @@ import app.model.Frame;
 import app.model.Sensor;
 import app.model.Transmission;
 import app.sim.SimContext;
-import app.utils.MyLib;
 
 public class HandleEndReception extends app.core.h20.actions.logic.HandleEndReception implements Action {
     @Override
@@ -19,7 +18,7 @@ public class HandleEndReception extends app.core.h20.actions.logic.HandleEndRece
         int numHop = transmission.getHop() + 1;
 
         receiver.setReceiving(false);
-        transmission.getFrame().getTransmissionHistory().remove(transmission);
+        transmission.getFrame().getTransmissions().remove(transmission);
 
         if (transmission.isSuccessfull()) {
             if (protocol(transmission)) {
