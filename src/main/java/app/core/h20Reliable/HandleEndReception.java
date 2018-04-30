@@ -23,7 +23,7 @@ public class HandleEndReception extends app.core.h20.actions.logic.HandleEndRece
 
         if (transmission.isSuccessfull()) {
             if (protocol(transmission)) {
-                Event newEvent = context.getCoreFactory().getEvent(EventTypes.AckTransmissionEvent, 0, context, frame, receiver, numHop);
+                Event newEvent = context.getCoreFactory().getEvent(EventTypes.AckTransmissionEvent, 0, context,transmission);
                 context.getScheduler().addEvent(newEvent);
             }
             if (transmission.getReceiver().isSink()) {

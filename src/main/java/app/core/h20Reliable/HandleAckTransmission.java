@@ -31,6 +31,7 @@ public class HandleAckTransmission implements Action {
             time = 380 / H20Sim.SENSOR_BANDWIDTH;    // Schedulo tra quanto finisco di trasmettere l'Ack
             Event newEvent2 = context.getCoreFactory().getEvent(EventTypes.EndAckTransmissionEvent, time, context, sender);    // Creo un evento per la fine della trasmissione
             context.getScheduler().addEvent(newEvent2);
+
         }else {
             receiver.setWaiting(true);
             double time = -log(context.getMarsenneTwister().nextDouble()) / H20Sim.LAMDA;
