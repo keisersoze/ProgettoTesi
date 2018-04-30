@@ -50,7 +50,6 @@ public class GraphicCoreFactory extends MyCoreFactory {
         if (type.equalsIgnoreCase(EventTypes.EndReceptionEvent)) {
             e = new TransmissionEvent(time, context, transmission);
             e.addAction(new HandleEndReception(canvas));
-            e.addAction(getAction(ActionTypes.UpdateSNR));
         }
 
         if (e == null) {
