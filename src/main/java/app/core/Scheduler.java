@@ -16,4 +16,10 @@ public interface Scheduler {
      */
     void addEvent (Event e);
 
+    /**
+     *
+     * @param e
+     */
+    void removeEvent (Event e);
+
 }

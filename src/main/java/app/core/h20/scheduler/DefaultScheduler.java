@@ -28,5 +28,10 @@ public class DefaultScheduler implements Scheduler {
         eventQueue.add(e);
     }
 
+    @Override
+    public void removeEvent(Event e) {
+        eventQueue.remove(e);
+    }
+
 
 }

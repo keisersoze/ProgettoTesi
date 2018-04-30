@@ -7,7 +7,16 @@ import app.model.Sensor;
 import app.model.Transmission;
 import app.sim.SimContext;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class HandleEndAckReception implements Action {
+    private Map<Sensor,Event> sensorEventMap;
+
+    public HandleEndAckReception() {
+        this.sensorEventMap = new HashMap<>();
+    }
+
     @Override
     public void execute(Event e) {
         SimContext context = e.getContext();
@@ -21,8 +30,11 @@ public class HandleEndAckReception implements Action {
         transmission.getFrame().getTransmissions().remove(transmission);
 
         if (transmission.isSuccessfull()) {
-
+            context.getScheduler();
         }
+    }
 
+    public void add (Sensor s, Event e){
+        sensorEventMap.put(s,e);
     }
 }
