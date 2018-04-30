@@ -25,14 +25,14 @@ public class HandleEndAckReception extends HandleEndReception implements Action 
         if (transmission.isSuccessfull()) {
             if (!transmission.getReceiver().isSink()) {
                 if (protocol(transmission)) {
-                    Event e = context.getCoreFactory().getEvent(EventTypes.TransmissionEvent, MyLib.random(.2f, .4f), context, frame, receiver, numHop);
+                    Event newEvent = context.getCoreFactory().getEvent(EventTypes.TransmissionEvent, MyLib.random(.2f, .4f), context, frame, receiver, numHop);
                     context.getScheduler().addEvent(e);
                 }
             } else {
                 context.getFramesArrived().get(frame).addLast(context.getSimTime() - frame.getArrivalTime());
             }
         }
-        Event e = context.getCoreFactory().getEvent(EventTypes.TransmissionEvent, MyLib.random(.2f, .4f), context, frame, receiver, numHop);
+        Event newEvent = context.getCoreFactory().getEvent(EventTypes.TransmissionEvent, MyLib.random(.2f, .4f), context, frame, receiver, numHop);
         context.getScheduler().addEvent(e);
     }
 }

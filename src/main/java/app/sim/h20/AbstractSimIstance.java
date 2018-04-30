@@ -39,7 +39,6 @@ public abstract class AbstractSimIstance implements SimContext {
         modelFactory = new MyModelFactory();
         sensors = modelFactory.deploySensors(H20Sim.DEPLOYMENT_TYPE);
         nSamples = 0;
-        System.out.println(sensors.size());
     }
 
     public Scheduler getScheduler () {

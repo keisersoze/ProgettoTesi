@@ -21,7 +21,7 @@ public class HandleTransmission implements Action {
         Sensor sender = event.getSensor();
         int numHop = event.getInt();
         sender.setWaiting(false);
-        if (CSMA(sender, context, frame, numHop)) {
+        if (CSMA(sender, context)) {
             sender.setTransmitting(true);
             for (Sensor receiver : sender.getNeighbors()) {     // Per tutti i sensori che possono ricevere viene creato un nuovo evento
                 Transmission transmission = context.getModelFactory().getTransmission(sender, receiver, frame, numHop);
@@ -35,20 +35,17 @@ public class HandleTransmission implements Action {
             double time = frame.getSize() / H20Sim.SENSOR_BANDWIDTH;    // Schedulo tra quanto finisco di trasmettere
             Event e = context.getCoreFactory().getEvent(EventTypes.EndTransmissionEvent, time, context, sender);    // Creo un evento per la fine della trasmissione
             context.getScheduler().addEvent(e);
-        }
-
-    }
-
-    protected static boolean CSMA(Sensor sender, SimContext context, Frame frame, int numHop) {
-        // se uno dei miei vicini stra trasmettendo allora io non posso trasmettere, CSMA non persistente
-        if (MyLib.tomW(H20Sim.SENSOR_POWER) / MyLib.calculateNoise(sender, context) < H20Sim.CSMA_STRENGTH) {
+        }else {
+            // CSMA non persistente
             sender.setWaiting(true);
             double time = -log(context.getMarsenneTwister().nextDouble()) / H20Sim.LAMDA;   //TODO : da capire se va bene oppure se cambiarlo
             Event e = context.getCoreFactory().getEvent(EventTypes.TransmissionEvent, time, context, frame, sender, numHop);
             context.getScheduler().addEvent(e);
-            return false;
         }
-        return true;
+    }
+
+    protected static boolean CSMA(Sensor sender, SimContext context) {
+        return MyLib.tomW(H20Sim.SENSOR_POWER) / MyLib.calculateNoise(sender, context) >= H20Sim.CSMA_STRENGTH;
     }
 
 }

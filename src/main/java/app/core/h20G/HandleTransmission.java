@@ -9,6 +9,8 @@ import app.model.Sensor;
 import app.model.Transmission;
 import app.sim.SimContext;
 
+import static org.apache.commons.math3.util.FastMath.log;
+
 public class HandleTransmission extends app.core.h20.actions.logic.HandleTransmission {
 
     private Canvas canvas;
@@ -27,7 +29,7 @@ public class HandleTransmission extends app.core.h20.actions.logic.HandleTransmi
 
         sender.setWaiting(false);
 
-        if (CSMA(sender, context, frame, numHop)) {
+        if (CSMA(sender, context)) {
             sender.setTransmitting(true);
 
             for (Sensor receiver : sender.getNeighbors()) {
@@ -45,6 +47,11 @@ public class HandleTransmission extends app.core.h20.actions.logic.HandleTransmi
 
             double time = frame.getSize() / H20Sim.SENSOR_BANDWIDTH;
             Event e = context.getCoreFactory().getEvent(EventTypes.EndTransmissionEvent, time, context, sender);
+            context.getScheduler().addEvent(e);
+        }else {
+            sender.setWaiting(true);
+            double time = -log(context.getMarsenneTwister().nextDouble()) / H20Sim.LAMDA;   //TODO : da capire se va bene oppure se cambiarlo
+            Event e = context.getCoreFactory().getEvent(EventTypes.TransmissionEvent, time, context, frame, sender, numHop);
             context.getScheduler().addEvent(e);
         }
     }
