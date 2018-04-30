@@ -150,7 +150,6 @@ public class MyCoreFactory implements CoreFactory {
         if (type.equalsIgnoreCase(EventTypes.EndReceptionEvent)) {
             e = new TransmissionEvent(time, context, transmission);
             e.addAction(getAction(ActionTypes.HandleEndReception));
-            e.addAction(getAction(ActionTypes.UpdateSNR));
 
         } else if (type.equalsIgnoreCase((EventTypes.ReceptionEvent))) {
             e = new TransmissionEvent(time, context, transmission);
@@ -185,6 +184,7 @@ public class MyCoreFactory implements CoreFactory {
         if (type.equalsIgnoreCase(EventTypes.EndTransmissionEvent)) {
             e = new SensorEvent(time, context, sensor);
             e.addAction(getAction(ActionTypes.HandleEndTransmission));
+            e.addAction(getAction(ActionTypes.UpdateSNR));
         }
 
         return e;

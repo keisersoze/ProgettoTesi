@@ -69,7 +69,6 @@ public class StatsSample implements Sample {
                 else
                     nSleep++;
         }
-        System.out.println(nSleep/H20Sim.N_SENSORS);
     }
 
     @Override
