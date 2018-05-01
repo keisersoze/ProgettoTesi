@@ -49,6 +49,7 @@ public class HandleTransmission extends app.core.h20.actions.logic.HandleTransmi
             Event e = context.getCoreFactory().getEvent(EventTypes.EndTransmissionEvent, time, context, sender);
             context.getScheduler().addEvent(e);
         }else {
+            //CSMA non persistente
             sender.setWaiting(true);
             double time = -log(context.getMarsenneTwister().nextDouble()) / H20Sim.LAMDA;   //TODO : da capire se va bene oppure se cambiarlo
             Event e = context.getCoreFactory().getEvent(EventTypes.TransmissionEvent, time, context, frame, sender, numHop);

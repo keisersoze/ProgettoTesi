@@ -20,17 +20,14 @@ public class HandleEndAckReception implements Action {
     @Override
     public void execute(Event e) {
         SimContext context = e.getContext();
-        Transmission transmission = e.getTransmission();
-        Frame frame = transmission.getFrame();
-        Sensor sender = transmission.getReceiver();
-        Sensor receiver = transmission.getSender();
-        int numHop = transmission.getHop() + 1;
+        Transmission ackTransmission = e.getTransmission();
+        Sensor receiver = e.getSensor();
 
         receiver.setReceiving(false);
-        transmission.getFrame().getTransmissions().remove(transmission);
 
-        if (transmission.isSuccessfull()) {
-            context.getScheduler();
+        if (ackTransmission.isSuccessfull()) {
+            if (sensorEventMap.containsKey(receiver))
+                context.getScheduler().removeEvent(sensorEventMap.get(receiver));
         }
     }
 

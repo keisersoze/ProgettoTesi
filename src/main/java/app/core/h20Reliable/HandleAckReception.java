@@ -4,6 +4,7 @@ import app.H20Sim;
 import app.core.Action;
 import app.core.Event;
 import app.factory.EventTypes;
+import app.model.Frame;
 import app.model.Sensor;
 import app.model.Transmission;
 import app.sim.SimContext;
@@ -14,12 +15,16 @@ public class HandleAckReception implements Action {
         SimContext context = e.getContext();
         Transmission transmission = e.getTransmission();
         Sensor receiver = transmission.getReceiver();
+        Sensor sender = transmission.getSender();
 
-        if (!receiver.isOccupied()) {
-            receiver.setReceiving(true);
+        if (!sender.isOccupied()) {
+            sender.setReceiving(true);
 
-            double time = 380 / H20Sim.SENSOR_BANDWIDTH;
-            Event newEvent = context.getCoreFactory().getEvent(EventTypes.EndAckReceptionEvent, time, context, transmission);
+            double size = 380;
+            double time = size / H20Sim.SENSOR_BANDWIDTH;
+            Frame ackFrame= context.getModelFactory().getFrame(size,receiver,context.getSimTime());
+            Transmission ackTransmission = context.getModelFactory().getTransmission(receiver,sender, ackFrame,0);
+            Event newEvent = context.getCoreFactory().getEvent(EventTypes.EndAckReceptionEvent, time, context, transmission,sender);
             context.getScheduler().addEvent(newEvent);
 
         } else {

@@ -18,8 +18,6 @@ public class HandleEndReception extends app.core.h20.actions.logic.HandleEndRece
         Transmission transmission = e.getTransmission();
         Frame frame = transmission.getFrame();
         Sensor receiver = transmission.getReceiver();
-        Sensor sender = transmission.getReceiver();
-
 
         receiver.setReceiving(false);
         transmission.getFrame().getTransmissions().remove(transmission);
@@ -28,8 +26,6 @@ public class HandleEndReception extends app.core.h20.actions.logic.HandleEndRece
             if (protocol(transmission)) {
                 Event newEvent = context.getCoreFactory().getEvent(EventTypes.AckTransmissionEvent, 0, context,transmission);
                 context.getScheduler().addEvent(newEvent);
-
-                ((HandleEndAckReception)context.getCoreFactory().getAction(ActionTypes.HandleEndAckReception)).add(sender,newEvent);
             }
             if (transmission.getReceiver().isSink()) {
                 context.getFramesArrived().get(frame).addLast(context.getSimTime() - frame.getArrivalTime());

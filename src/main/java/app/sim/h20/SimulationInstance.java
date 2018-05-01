@@ -5,6 +5,7 @@ import app.core.Event;
 import app.core.Scheduler;
 import app.factory.CoreFactory;
 import app.factory.h20.MyCoreFactory;
+import app.factory.h20Reliable.h20RCoreFactory;
 import app.model.Sensor;
 import app.stats.Collector;
 import app.utils.MyLib;
@@ -16,7 +17,10 @@ public class SimulationInstance extends AbstractSimIstance implements Runnable {
 
     public SimulationInstance (Collector collector, Scheduler scheduler) {
         super(collector, scheduler);
-        coreFactory = new MyCoreFactory();
+        if (true)
+            coreFactory = new MyCoreFactory();
+        else
+            coreFactory = new h20RCoreFactory();
     }
 
     public void run () {

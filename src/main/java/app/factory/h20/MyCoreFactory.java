@@ -189,4 +189,9 @@ public class MyCoreFactory implements CoreFactory {
 
         return e;
     }
+
+    @Override
+    public Event getEvent(String type, double time, SimContext context, Transmission transmission, Sensor sensor) {
+        return null;
+    }
 }
