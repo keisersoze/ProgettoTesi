@@ -24,8 +24,7 @@ public class HandleAckVerification implements Action {
             Event newEvent= context.getCoreFactory().getEvent(EventTypes.TransmissionEvent,0,context,frame,sender,numHop);
             context.getScheduler().addEvent(newEvent);
             System.out.println(1);
-        }else
-            System.out.println(0);
+        }
 
 
     }
