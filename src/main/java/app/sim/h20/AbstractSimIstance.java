@@ -93,6 +93,7 @@ public abstract class AbstractSimIstance implements SimContext {
 
     @Override
     public void setPercentageCompleted () {
+
         nSamples++;
     }
 
