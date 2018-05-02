@@ -3,7 +3,6 @@ package app.core.h20Reliable;
 import app.H20Sim;
 import app.core.Action;
 import app.core.Event;
-import app.core.h20Reliable.ack.HandleEndAckReception;
 import app.factory.ActionTypes;
 import app.factory.EventTypes;
 import app.model.Frame;
@@ -43,6 +42,7 @@ public class HandleTransmission extends app.core.h20.actions.logic.HandleTransmi
 
             Event newEvent= context.getCoreFactory().getEvent(EventTypes.AckVerifyEvent,time+ H20Sim.ACK_TIMEOUT,context,frame,sender,numHop);
             context.getScheduler().addEvent(newEvent);
+
             List<Sensor> sensors = ((HandleEndAckReception)context.getCoreFactory().getAction(ActionTypes.HandleEndAckReception)).getSensors();
             if (!sensors.contains(sender))
                 sensors.add(sender);

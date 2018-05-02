@@ -7,6 +7,7 @@ import app.factory.EventTypes;
 import app.model.Sensor;
 import app.model.Transmission;
 import app.sim.SimContext;
+import app.utils.MyLib;
 
 public class HandleReception implements Action {
     @Override
@@ -15,7 +16,7 @@ public class HandleReception implements Action {
         Transmission transmission = event.getTransmission();
         Sensor receiver = transmission.getReceiver();
 
-        if (!receiver.isOccupied()) {    // Se posso ricevere allora inizio a ricevere
+        if (!receiver.isOccupied() && (MyLib.probabilisticProtocol(context)||receiver.isSink())) {    // Se posso ricevere allora inizio a ricevere
             receiver.setReceiving(true);
 
             double time = transmission.getFrame().getSize() / H20Sim.SENSOR_BANDWIDTH;

@@ -8,7 +8,7 @@ import app.model.Frame;
 import app.model.Sensor;
 import app.model.Transmission;
 import app.sim.SimContext;
-import org.apache.commons.math3.random.MersenneTwister;
+import app.utils.MyLib;
 
 
 public class HandleEndReception implements Action {
@@ -27,8 +27,9 @@ public class HandleEndReception implements Action {
 
         if (transmission.isSuccessfull()) {
             if (!transmission.getReceiver().isSink()) {
-                if (protocol(transmission)) {
-                    Event e = context.getCoreFactory().getEvent(EventTypes.TransmissionEvent,0, context, frame, receiver, numHop);
+                if (MyLib.deterministicProtocol(transmission)) {
+                    double time = H20Sim.SLOW_RETRANSMITION == true? MyLib.random(0.2f,0.4f) : 0;
+                    Event e = context.getCoreFactory().getEvent(EventTypes.TransmissionEvent,time, context, frame, receiver, numHop);
                     context.getScheduler().addEvent(e);
                 }
             } else {
@@ -37,19 +38,5 @@ public class HandleEndReception implements Action {
         }
     }
 
-    protected static boolean protocol (Transmission transmission) {
-        if (transmission.getHop() > 3) {
-            return false;
-        }
-        switch (H20Sim.PROTOCOL) {
-            case "Deterministic":
-                return transmission.getSender().getY() + H20Sim.THRESHOLD < transmission.getReceiver().getY();
-            case "Probabilistic":
-                return new MersenneTwister().nextDouble() < 0.3;
-            case "":
-                return transmission.getSender().getY() + H20Sim.THRESHOLD < transmission.getReceiver().getY() && new MersenneTwister().nextDouble() < 0.7;
-            default:
-                return true;
-        }
-    }
+
 }

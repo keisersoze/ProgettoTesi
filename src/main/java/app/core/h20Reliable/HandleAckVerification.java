@@ -1,6 +1,5 @@
-package app.core.h20Reliable.ack;
+package app.core.h20Reliable;
 
-import app.H20Sim;
 import app.core.Action;
 import app.core.Event;
 import app.factory.ActionTypes;

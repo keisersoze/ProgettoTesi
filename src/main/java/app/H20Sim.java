@@ -16,7 +16,8 @@ import java.util.Map;
 
 public class H20Sim {
     public static final double K = 1.5;
-    public static String PROTOCOL = "Deterministic";
+    public static final boolean SLOW_RETRANSMITION = true;
+    public static String PROTOCOL = "Deterministic"; //Deterministic  Probabilistic
     public static float FIELD_X = 5000;
     public static float FIELD_Y = 3000;
     public static float FIELD_Z = 5000;
@@ -28,7 +29,7 @@ public class H20Sim {
     public static int N_SAMPLES = 2000;
 
     //parametri simulazione
-    public static double LAMDA = 0.05;
+    public static double LAMDA = 1;
     public static double CSMA_STRENGTH = 3;
 
     public static double N_SENSORS = 300;
@@ -42,7 +43,7 @@ public class H20Sim {
     public static int MAX_FRAME_SIZE = 1000; //bit (200-1600)
     public static double MAX_FRAME_RATE = 0.9;
 
-    public static int THRESHOLD = 300;
+    public static int THRESHOLD = 500;
 
     public static double SENSIBILITY = -110; //dBm
     public static double SENSOR_POWER = -104; //dB

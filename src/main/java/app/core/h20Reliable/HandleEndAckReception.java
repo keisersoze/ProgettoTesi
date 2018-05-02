@@ -1,4 +1,4 @@
-package app.core.h20Reliable.ack;
+package app.core.h20Reliable;
 
 import app.core.Action;
 import app.core.Event;

@@ -24,8 +24,12 @@ public class HandleEndReception extends app.core.h20.actions.logic.HandleEndRece
         transmission.getFrame().getTransmissions().remove(transmission);
 
         if (transmission.isSuccessfull()) {
-            Event newEvent = context.getCoreFactory().getEvent(EventTypes.EndAckReceptionEvent, 0, context,null,transmission.getSender());
-            context.getScheduler().addEvent(newEvent);
+
+            /*if (protocol(transmission)) {
+                Event newEvent = context.getCoreFactory().getEvent(EventTypes.EndAckReceptionEvent, 0, context, null, transmission.getSender());
+                context.getScheduler().addEvent(newEvent);
+            }
+
             if (!transmission.getReceiver().isSink()) {
                 if (protocol(transmission)) {
                     Event e = context.getCoreFactory().getEvent(EventTypes.TransmissionEvent,0, context, frame, receiver, numHop);
@@ -34,6 +38,7 @@ public class HandleEndReception extends app.core.h20.actions.logic.HandleEndRece
             } else {
                 context.getFramesArrived().get(frame).addLast(context.getSimTime() - frame.getArrivalTime());
             }
+            */
         }
         
     }
