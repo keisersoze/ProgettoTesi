@@ -5,10 +5,7 @@ import app.core.Event;
 import app.core.h20.events.SensorFrameEvent;
 import app.core.h20.events.TransmissionEvent;
 import app.core.h20Reliable.*;
-import app.core.h20Reliable.ack.HandleAckReception;
-import app.core.h20Reliable.ack.HandleAckTransmission;
-import app.core.h20Reliable.ack.HandleEndAckReception;
-import app.core.h20Reliable.ack.HandleEndAckTransmission;
+import app.core.h20Reliable.ack.*;
 import app.core.h20Reliable.events.SensorTransmissionEvent;
 import app.factory.ActionTypes;
 import app.factory.CoreFactory;
@@ -27,10 +24,11 @@ public class h20RCoreFactory extends MyCoreFactory implements CoreFactory {
     HandleAckReception handleAckReception;
     HandleEndAckReception handleEndAckReception;
     HandleEndAckTransmission handleEndAckTransmission;
+    HandleAckVerification handleAckVerification;
 
 
     @Override
-    public Action getAction (String type) {
+    public Action getAction(String type) {
 
         if (type == null) {
             return null;
@@ -41,12 +39,12 @@ public class h20RCoreFactory extends MyCoreFactory implements CoreFactory {
                 handleEndReception = new HandleEndReception();
             }
             return handleEndReception;
-        }else if (type.equalsIgnoreCase(ActionTypes.HandleTransmission)) {
+        } else if (type.equalsIgnoreCase(ActionTypes.HandleTransmission)) {
             if (handleTransmission == null) {
                 handleTransmission = new HandleTransmission();
             }
             return handleTransmission;
-        } else  if (type.equalsIgnoreCase(ActionTypes.HandleAckTransmission)) {
+        } else if (type.equalsIgnoreCase(ActionTypes.HandleAckTransmission)) {
             if (handleAckTransmission == null) {
                 handleAckTransmission = new HandleAckTransmission();
             }
@@ -56,7 +54,7 @@ public class h20RCoreFactory extends MyCoreFactory implements CoreFactory {
                 handleAckReception = new HandleAckReception();
             }
             return handleAckReception;
-        }else  if (type.equalsIgnoreCase(ActionTypes.HandleEndAckReception)) {
+        } else if (type.equalsIgnoreCase(ActionTypes.HandleEndAckReception)) {
             if (handleEndAckReception == null) {
                 handleEndAckReception = new HandleEndAckReception();
             }
@@ -66,13 +64,18 @@ public class h20RCoreFactory extends MyCoreFactory implements CoreFactory {
                 handleEndAckTransmission = new HandleEndAckTransmission();
             }
             return handleEndAckTransmission;
+        } else if (type.equalsIgnoreCase(ActionTypes.HandleAckVerification)) {
+            if (handleAckVerification == null) {
+                handleAckVerification = new HandleAckVerification();
+            }
+            return handleAckVerification;
         }
 
         return super.getAction(type);
     }
 
     @Override
-    public Event getEvent (String type, double time, SimContext context, Frame frame, Sensor sensor, int hop) {
+    public Event getEvent(String type, double time, SimContext context, Frame frame, Sensor sensor, int hop) {
         if (type == null) {
             return null;
         }
@@ -81,11 +84,16 @@ public class h20RCoreFactory extends MyCoreFactory implements CoreFactory {
             e = new SensorFrameEvent(time, context, frame, sensor, hop);
             e.addAction(getAction(ActionTypes.HandleTransmission));
             e.addAction(getAction(ActionTypes.UpdateSNR));
+        } else if (type.equalsIgnoreCase(EventTypes.AckVerifyEvent)) {
+            e = new SensorFrameEvent(time, context, frame, sensor, hop);
+            e.addAction(getAction(ActionTypes.HandleAckVerification));
         }
 
         if (e == null) {
             return super.getEvent(type, time, context, frame, sensor, hop);
-        } else { return e; }
+        } else {
+            return e;
+        }
     }
 
     @Override
@@ -105,15 +113,17 @@ public class h20RCoreFactory extends MyCoreFactory implements CoreFactory {
         } else if (type.equalsIgnoreCase(EventTypes.AckReceptionEvent)) {
             e = new TransmissionEvent(time, context, transmission);
             e.addAction(getAction(ActionTypes.HandleAckReception));
-        }else if (type.equalsIgnoreCase(EventTypes.EndAckTransmissionEvent)) {
+        } else if (type.equalsIgnoreCase(EventTypes.EndAckTransmissionEvent)) {
             e = new TransmissionEvent(time, context, transmission);
             e.addAction(getAction(ActionTypes.HandleEndAckTransmission));
             e.addAction(getAction(ActionTypes.UpdateSNR));
         }
 
         if (e == null) {
-            return super.getEvent(type, time, context,transmission);
-        } else { return e; }
+            return super.getEvent(type, time, context, transmission);
+        } else {
+            return e;
+        }
     }
 
     @Override
@@ -123,13 +133,15 @@ public class h20RCoreFactory extends MyCoreFactory implements CoreFactory {
         }
 
         Event e = null;
-        if (type.equalsIgnoreCase(EventTypes.EndAckReceptionEvent)){
+        if (type.equalsIgnoreCase(EventTypes.EndAckReceptionEvent)) {
             e = new SensorTransmissionEvent(time, context, transmission, sensor);
             e.addAction(getAction(ActionTypes.HandleEndAckReception));
         }
 
         if (e == null) {
-            return super.getEvent(type, time, context, transmission,sensor);
-        } else { return e; }
+            return super.getEvent(type, time, context, transmission, sensor);
+        } else {
+            return e;
+        }
     }
 }

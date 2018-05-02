@@ -17,23 +17,22 @@ public class HandleAckReception implements Action {
         Sensor receiver = transmission.getReceiver();
         Sensor sender = transmission.getSender();
 
-        if (!sender.isOccupied()) {
+
+        double size = H20Sim.ACK_SIZE;
+        double time = size / H20Sim.SENSOR_BANDWIDTH;
+
+        Frame ackFrame= context.getModelFactory().getFrame(size,receiver,context.getSimTime());
+
+        Transmission ackTransmission = context.getModelFactory().getTransmission(receiver,sender, ackFrame,0);
+
+        Event newEvent = context.getCoreFactory().getEvent(EventTypes.EndAckReceptionEvent, 0, context, ackTransmission,sender);
+        context.getScheduler().addEvent(newEvent);
+
+        /*if (!sender.isOccupied()) {
             sender.setReceiving(true);
 
-            double size = H20Sim.ACK_SIZE;
-            double time = size / H20Sim.SENSOR_BANDWIDTH;
 
-            Frame ackFrame= context.getModelFactory().getFrame(size,receiver,context.getSimTime());
-
-            Transmission ackTransmission = context.getModelFactory().getTransmission(receiver,sender, ackFrame,0);
-
-            Event newEvent = context.getCoreFactory().getEvent(EventTypes.EndAckReceptionEvent, time, context, ackTransmission,sender);
-            context.getScheduler().addEvent(newEvent);
-
-        } else {
-            transmission.setArrived(true); //TODO: da togliere
-            transmission.getFrame().getTransmissions().remove(transmission);
-        }
+        }*/
 
     }
 }

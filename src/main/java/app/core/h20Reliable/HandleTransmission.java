@@ -11,6 +11,8 @@ import app.model.Sensor;
 import app.model.Transmission;
 import app.sim.SimContext;
 
+import java.util.List;
+
 import static org.apache.commons.math3.util.FastMath.log;
 
 public class HandleTransmission extends app.core.h20.actions.logic.HandleTransmission implements Action{
@@ -39,9 +41,11 @@ public class HandleTransmission extends app.core.h20.actions.logic.HandleTransmi
             Event e = context.getCoreFactory().getEvent(EventTypes.EndTransmissionEvent, time, context, sender);    // Creo un evento per la fine della trasmissione
             context.getScheduler().addEvent(e);
 
-            Event newEvent= context.getCoreFactory().getEvent(EventTypes.TransmissionEvent,time+ H20Sim.ACK_TIMEOUT,context,event.getFrame(),event.getSensor(),event.getInt());
+            Event newEvent= context.getCoreFactory().getEvent(EventTypes.AckVerifyEvent,time+ H20Sim.ACK_TIMEOUT,context,frame,sender,numHop);
             context.getScheduler().addEvent(newEvent);
-            ((HandleEndAckReception)context.getCoreFactory().getAction(ActionTypes.HandleEndAckReception)).add(event.getSensor(),newEvent);
+            List<Sensor> sensors = ((HandleEndAckReception)context.getCoreFactory().getAction(ActionTypes.HandleEndAckReception)).getSensors();
+            if (!sensors.contains(sender))
+                sensors.add(sender);
 
         }else {
             // CSMA non persistente

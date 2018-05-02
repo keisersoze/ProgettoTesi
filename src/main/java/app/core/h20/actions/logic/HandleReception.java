@@ -23,7 +23,7 @@ public class HandleReception implements Action {
             context.getScheduler().addEvent(e);
         }else {
             transmission.setArrived(true); //TODO: da togliere
-            transmission.getFrame().getTransmissions().remove(transmission); // Elimina la trasmissione 
+            transmission.getFrame().getTransmissions().remove(transmission); // Elimina la trasmissione
         }
     }
 }

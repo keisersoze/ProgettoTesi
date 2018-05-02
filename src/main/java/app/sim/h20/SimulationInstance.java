@@ -38,6 +38,7 @@ public class SimulationInstance extends AbstractSimIstance implements Runnable {
             evt_scheduled.tick();
             Settings.updateProgressBar(getPercentageCompleted());
         }
+        System.out.println(getSimTime());
     }
 
     @Override

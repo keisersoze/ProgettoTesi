@@ -16,10 +16,12 @@ public class HandleEndAckTransmission implements Action {
         Sensor receiver = event.getTransmission().getReceiver();
         int numHop = event.getTransmission().getHop()+1;
 
-
-        receiver.setTransmitting(false);
-
         Event e = context.getCoreFactory().getEvent(EventTypes.TransmissionEvent, 0, context, frame, receiver, numHop);
         context.getScheduler().addEvent(e);
+
+        /*receiver.setTransmitting(false);
+        if (!receiver.isSink()) {
+
+        }*/
     }
 }

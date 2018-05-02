@@ -15,5 +15,5 @@ public class EventTypes {
     public static final String AckReceptionEvent = "AckReceptionEvent";
     public static final String EndAckReceptionEvent = "EndAckReceptionEvent";
     public static final String EndAckTransmissionEvent = "EndAckTrasmissionEvent";
-
+    public static final String AckVerifyEvent = "AckVerifyEvent";
 }

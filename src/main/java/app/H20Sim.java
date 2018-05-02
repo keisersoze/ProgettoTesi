@@ -48,8 +48,8 @@ public class H20Sim {
     public static double SENSOR_POWER = -104; //dB
     public static double SENSOR_FREQUENCY = 25000; //HZ
 
-    public static final double ACK_TIMEOUT = 5; //s
-    public static final int ACK_SIZE = 50; //bit
+    public static final double ACK_TIMEOUT = 100; //s
+    public static final int ACK_SIZE = 0; //bit
 
     public static String DEPLOYMENT_TYPE = DeploymentTypes.BaseDeployment;
 

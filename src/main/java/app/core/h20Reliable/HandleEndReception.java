@@ -22,11 +22,13 @@ public class HandleEndReception extends app.core.h20.actions.logic.HandleEndRece
         receiver.setReceiving(false);
         transmission.getFrame().getTransmissions().remove(transmission);
 
+        Event newEvent = context.getCoreFactory().getEvent(EventTypes.AckTransmissionEvent, 0, context,transmission);
+        context.getScheduler().addEvent(newEvent);
         if (transmission.isSuccessfull()) {
-            if (protocol(transmission)) {
-                Event newEvent = context.getCoreFactory().getEvent(EventTypes.AckTransmissionEvent, 0, context,transmission);
-                context.getScheduler().addEvent(newEvent);
-            }
+
+            /*if (protocol(transmission)) {
+
+            }*/
             if (transmission.getReceiver().isSink()) {
                 context.getFramesArrived().get(frame).addLast(context.getSimTime() - frame.getArrivalTime());
             }
