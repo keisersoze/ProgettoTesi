@@ -1,6 +1,5 @@
 package app.core.h20G;
 
-import app.utils.Canvas;
 import app.H20Sim;
 import app.core.Event;
 import app.factory.EventTypes;
@@ -8,6 +7,7 @@ import app.model.Frame;
 import app.model.Sensor;
 import app.model.Transmission;
 import app.sim.SimContext;
+import app.utils.Canvas;
 
 import static org.apache.commons.math3.util.FastMath.log;
 
@@ -48,7 +48,7 @@ public class HandleTransmission extends app.core.h20.actions.logic.HandleTransmi
             double time = frame.getSize() / H20Sim.SENSOR_BANDWIDTH;
             Event e = context.getCoreFactory().getEvent(EventTypes.EndTransmissionEvent, time, context, sender);
             context.getScheduler().addEvent(e);
-        }else {
+        } else {
             //CSMA non persistente
             sender.setWaiting(true);
             double time = -log(context.getMarsenneTwister().nextDouble()) / H20Sim.LAMDA;   //TODO : da capire se va bene oppure se cambiarlo

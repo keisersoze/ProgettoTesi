@@ -4,11 +4,9 @@ import app.H20Sim;
 import app.core.Action;
 import app.core.Event;
 import app.model.Sensor;
-import app.utils.MyLib;
 import app.sim.SimContext;
-import com.jme3.math.Vector2f;
+import app.utils.MyLib;
 import com.jme3.math.Vector3f;
-import org.apache.commons.math3.geometry.spherical.twod.Circle;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,14 +17,14 @@ public class MoveSensors implements Action {
     private Map<Sensor, Vector3f> sensorsDirections;
     private boolean collected;
 
-    public MoveSensors() {
+    public MoveSensors () {
         this.sensorsDeployment = new HashMap<>();
         this.sensorsDirections = new HashMap<>();
         collected = false;
     }
 
     @Override
-    public void execute(Event event) {
+    public void execute (Event event) {
         SimContext context = event.getContext();
         if (!collected) {
             context.getSensors().forEach(sensor -> sensorsDeployment.put(sensor, new Vector3f(sensor.getPosition())));
@@ -44,8 +42,9 @@ public class MoveSensors implements Action {
             double scalar = distance / total <= 1 ? distance / total : 1;
             sensor.setX(sensor.getX() + (float) scalar * (sensorsDirections.get(sensor).getX() - sensor.getX()));
             sensor.setZ(sensor.getZ() + (float) scalar * (sensorsDirections.get(sensor).getZ() - sensor.getZ()));
-            if (scalar == 1)
+            if (scalar == 1) {
                 setNewDirection(sensor);
+            }
         }
 
         for (Sensor sensor : context.getSensors()) {
@@ -53,7 +52,7 @@ public class MoveSensors implements Action {
         }
     }
 
-    private void setNewDirection(Sensor s) {
+    private void setNewDirection (Sensor s) {
         double angle = MyLib.random(0, (float) (2 * Math.PI));
         Vector3f v1 = sensorsDeployment.get(s);
         float x = (float) (MyLib.map(s.getY(), 0, H20Sim.FIELD_Y, 5, H20Sim.MOVE_RADIUS) * Math.cos(angle)); // angle is in radians

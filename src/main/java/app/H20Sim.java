@@ -6,7 +6,6 @@ import app.factory.DeploymentTypes;
 import app.sim.SimContext;
 import app.sim.h20.ThreesholdGraphicSim;
 import app.sim.h20G.GraphicSim;
-import app.sim.h20.SimulationInstance;
 import app.stats.h20.BaseCollector;
 import app.utils.Settings;
 
@@ -17,42 +16,32 @@ import java.util.Map;
 
 public class H20Sim {
     public static final double K = 1.5;
-    public static final boolean SLOW_RETRANSMITION = true;
+    public static boolean SLOW_RETRANSMITION = true;
+    public static final double ACK_TIMEOUT = 100; //s
+    public static final int ACK_SIZE = 0; //bit
     public static String PROTOCOL = "Deterministic"; //Deterministic  Probabilistic
     public static float FIELD_X = 5000;
     public static float FIELD_Y = 3000;
     public static float FIELD_Z = 5000;
-
     public static volatile boolean START = false;
     public static boolean STOPPED = false;
-
     public static int NTHREADS = 1;
     public static int N_SAMPLES = 2000;
-
     //parametri simulazione
     public static double LAMDA = 1;
     public static double CSMA_STRENGTH = 3;
-
     public static double N_SENSORS = 300;
     public static double MOVEMENT_SPEED = 0.5; // m/s
     public static double MOVE_REFRESH = 30; // unità di sim time
     public static double MOVE_RADIUS = 200; //m
-
     public static float SCALE = 10f;
-
     public static int SENSOR_BANDWIDTH = 1000; // b/s
     public static int MAX_FRAME_SIZE = 1000; //bit (200-1600)
     public static double MAX_FRAME_RATE = 0.9;
-
     public static int THRESHOLD = 0;
-
     public static double SENSIBILITY = -110; //dBm
     public static double SENSOR_POWER = -104; //dB
     public static double SENSOR_FREQUENCY = 25000; //HZ
-
-    public static final double ACK_TIMEOUT = 100; //s
-    public static final int ACK_SIZE = 0; //bit
-
     public static String DEPLOYMENT_TYPE = DeploymentTypes.BaseDeployment;
 
     //variabili endogene

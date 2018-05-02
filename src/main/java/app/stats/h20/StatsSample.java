@@ -23,7 +23,7 @@ public class StatsSample implements Sample {
     private double nReceiving;
     private double nSleep;
 
-    public StatsSample(SimContext context) {
+    public StatsSample (SimContext context) {
 
         //throughput
         simTime = context.getSimTime();
@@ -60,59 +60,61 @@ public class StatsSample implements Sample {
         nReceiving = 0;
         nSleep = 0;
 
-        for (Sensor s: context.getSensors()){
-            if (!s.isSink())
-                if (s.isTransmitting())
-                    nTransmitting ++;
-                else if (s.isReceiving())
-                    nReceiving ++;
-                else
+        for (Sensor s : context.getSensors()) {
+            if (!s.isSink()) {
+                if (s.isTransmitting()) {
+                    nTransmitting++;
+                } else if (s.isReceiving()) {
+                    nReceiving++;
+                } else {
                     nSleep++;
+                }
+            }
         }
     }
 
+    private static int heightToIndex (double height) {
+        return (int) height / 100;
+    }
+
     @Override
-    public double getSuccessfullRate() {
+    public double getSuccessfullRate () {
         return nFramesArrived / nFrames;
     }
 
     @Override
-    public double getGoodput() {
+    public double getGoodput () {
         return nFramesArrived / simTime;
     }
 
     @Override
-    public double getAvgResponseTime() {
+    public double getAvgResponseTime () {
         return avgResponseTime;
     }
 
     @Override
-    public Map<Integer, Double> getDeptArrivalSuccessRate() {
+    public Map<Integer, Double> getDeptArrivalSuccessRate () {
         return intervalToSuccessful2Rate;
     }
 
     @Override
-    public double getTransmittingModeRate() {
-        return nTransmitting/H20Sim.N_SENSORS *100;
+    public double getTransmittingModeRate () {
+        return nTransmitting / H20Sim.N_SENSORS * 100;
     }
 
     @Override
-    public double getReceivingModeRate() {
-        return nReceiving/H20Sim.N_SENSORS *100;
+    public double getReceivingModeRate () {
+        return nReceiving / H20Sim.N_SENSORS * 100;
     }
 
     @Override
-    public double getSleepModeRate() {
-        return nSleep/H20Sim.N_SENSORS *100;
+    public double getSleepModeRate () {
+        return nSleep / H20Sim.N_SENSORS * 100;
     }
 
     @Override
-    public String toString() {
+    public String toString () {
         return getSuccessfullRate() + " ";
-    }
-
-    private static int heightToIndex(double height) {
-        return (int) height / 100;
     }
 
 

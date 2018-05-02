@@ -23,9 +23,7 @@ public class HandleArrival implements Action {
     @Override
     public void execute (Event event) {
         SimContext context = event.getContext();
-        List<Sensor> possibleOwners = context.getSensors().stream()
-                .filter(sensor -> !sensor.isOccupied() && !sensor.isSink())
-                .collect(Collectors.toList());
+        List<Sensor> possibleOwners = context.getSensors().stream().filter(sensor -> !sensor.isOccupied() && !sensor.isSink()).collect(Collectors.toList());
 
         if (possibleOwners.size() > 0) {
             Sensor owner = possibleOwners.get(context.getMarsenneTwister().nextInt(possibleOwners.size()));

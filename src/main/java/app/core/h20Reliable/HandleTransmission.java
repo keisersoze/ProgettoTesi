@@ -14,10 +14,10 @@ import java.util.List;
 
 import static org.apache.commons.math3.util.FastMath.log;
 
-public class HandleTransmission extends app.core.h20.actions.logic.HandleTransmission implements Action{
+public class HandleTransmission extends app.core.h20.actions.logic.HandleTransmission implements Action {
 
     @Override
-    public void execute(Event event) {
+    public void execute (Event event) {
         SimContext context = event.getContext();
         Frame frame = event.getFrame();
         Sensor sender = event.getSensor();
@@ -40,14 +40,15 @@ public class HandleTransmission extends app.core.h20.actions.logic.HandleTransmi
             Event e = context.getCoreFactory().getEvent(EventTypes.EndTransmissionEvent, time, context, sender);    // Creo un evento per la fine della trasmissione
             context.getScheduler().addEvent(e);
 
-            Event newEvent= context.getCoreFactory().getEvent(EventTypes.AckVerifyEvent,time+ H20Sim.ACK_TIMEOUT,context,frame,sender,numHop);
+            Event newEvent = context.getCoreFactory().getEvent(EventTypes.AckVerifyEvent, time + H20Sim.ACK_TIMEOUT, context, frame, sender, numHop);
             context.getScheduler().addEvent(newEvent);
 
-            List<Sensor> sensors = ((HandleEndAckReception)context.getCoreFactory().getAction(ActionTypes.HandleEndAckReception)).getSensors();
-            if (!sensors.contains(sender))
+            List<Sensor> sensors = ((HandleEndAckReception) context.getCoreFactory().getAction(ActionTypes.HandleEndAckReception)).getSensors();
+            if (!sensors.contains(sender)) {
                 sensors.add(sender);
+            }
 
-        }else {
+        } else {
             // CSMA non persistente
             sender.setWaiting(true);
             double time = -log(context.getMarsenneTwister().nextDouble()) / H20Sim.LAMDA;   //TODO : da capire se va bene oppure se cambiarlo

@@ -17,7 +17,6 @@ public interface Scheduler {
     void addEvent (Event e);
 
     /**
-     *
      * @param e
      */
     void removeEvent (Event e);
@@ -25,6 +24,6 @@ public interface Scheduler {
     /**
      *
      */
-    void clear();
+    void clear ();
 
 }

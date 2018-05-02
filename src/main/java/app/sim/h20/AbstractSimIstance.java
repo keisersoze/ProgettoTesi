@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public abstract class AbstractSimIstance implements SimContext,Runnable {
+public abstract class AbstractSimIstance implements SimContext, Runnable {
     private final Scheduler scheduler;
     private final Collector collector;
     private final Map<Frame, LinkedList<Double>> framesArrived;

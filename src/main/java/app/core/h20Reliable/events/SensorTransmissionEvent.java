@@ -8,13 +8,13 @@ import app.sim.SimContext;
 public class SensorTransmissionEvent extends TransmissionEvent {
     Sensor sensor;
 
-    public SensorTransmissionEvent(double time, SimContext context, Transmission transmission, Sensor sensor) {
+    public SensorTransmissionEvent (double time, SimContext context, Transmission transmission, Sensor sensor) {
         super(time, context, transmission);
-        this.sensor= sensor;
+        this.sensor = sensor;
     }
 
     @Override
-    public Sensor getSensor() {
+    public Sensor getSensor () {
         return sensor;
     }
 }

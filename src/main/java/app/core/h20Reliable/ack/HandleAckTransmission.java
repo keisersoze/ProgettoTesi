@@ -3,20 +3,15 @@ package app.core.h20Reliable.ack;
 import app.H20Sim;
 import app.core.Action;
 import app.core.Event;
-import app.core.h20.actions.logic.HandleEndReception;
 import app.core.h20.actions.logic.HandleTransmission;
 import app.factory.EventTypes;
-import app.model.Frame;
 import app.model.Sensor;
 import app.model.Transmission;
 import app.sim.SimContext;
-import app.utils.MyLib;
-
-import static org.apache.commons.math3.util.FastMath.log;
 
 public class HandleAckTransmission extends HandleTransmission implements Action {
     @Override
-    public void execute(Event event) {
+    public void execute (Event event) {
         SimContext context = event.getContext();
         Transmission transmission = event.getTransmission();
         Sensor sender = transmission.getSender();

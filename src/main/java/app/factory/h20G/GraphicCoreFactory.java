@@ -1,7 +1,5 @@
 package app.factory.h20G;
 
-import app.factory.h20.MyCoreFactory;
-import app.utils.Canvas;
 import app.core.Event;
 import app.core.h20.actions.utility.RescheduleExpRandom;
 import app.core.h20.events.BaseEvent;
@@ -12,10 +10,12 @@ import app.core.h20G.HandleEndReception;
 import app.core.h20G.HandleTransmission;
 import app.factory.ActionTypes;
 import app.factory.EventTypes;
+import app.factory.h20.MyCoreFactory;
 import app.model.Frame;
 import app.model.Sensor;
 import app.model.Transmission;
 import app.sim.SimContext;
+import app.utils.Canvas;
 
 public class GraphicCoreFactory extends MyCoreFactory {
     private Canvas canvas;
@@ -37,7 +37,9 @@ public class GraphicCoreFactory extends MyCoreFactory {
         }
         if (e == null) {
             return super.getEvent(type, time, context);
-        } else { return e; }
+        } else {
+            return e;
+        }
     }
 
     @Override
@@ -54,7 +56,9 @@ public class GraphicCoreFactory extends MyCoreFactory {
 
         if (e == null) {
             return super.getEvent(type, time, context, transmission);
-        } else { return e; }
+        } else {
+            return e;
+        }
     }
 
     @Override
@@ -71,6 +75,8 @@ public class GraphicCoreFactory extends MyCoreFactory {
 
         if (e == null) {
             return super.getEvent(type, time, context, frame, sensor, hop);
-        } else { return e; }
+        } else {
+            return e;
+        }
     }
 }

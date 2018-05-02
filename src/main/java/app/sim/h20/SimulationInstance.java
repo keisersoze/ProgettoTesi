@@ -11,16 +11,17 @@ import app.stats.Collector;
 import app.utils.MyLib;
 import app.utils.Settings;
 
-public class SimulationInstance extends AbstractSimIstance  {
+public class SimulationInstance extends AbstractSimIstance {
     private final CoreFactory coreFactory;
 
 
     public SimulationInstance (Collector collector, Scheduler scheduler) {
         super(collector, scheduler);
-        if (true)
+        if (true) {
             coreFactory = new MyCoreFactory();
-        else
+        } else {
             coreFactory = new h20RCoreFactory();
+        }
     }
 
     public void run () {
@@ -48,7 +49,7 @@ public class SimulationInstance extends AbstractSimIstance  {
 
 
     @Override
-    public double getThreeshold() {
+    public double getThreeshold () {
         return H20Sim.THRESHOLD;
     }
 }

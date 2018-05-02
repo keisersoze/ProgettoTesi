@@ -27,9 +27,9 @@ public class HandleEndReception implements Action {
 
         if (transmission.isSuccessfull()) {
             if (!transmission.getReceiver().isSink()) {
-                if (MyLib.deterministicProtocol(transmission,context)) {
-                    double time = H20Sim.SLOW_RETRANSMITION == true? MyLib.random(0.2f,0.4f) : 0;
-                    Event e = context.getCoreFactory().getEvent(EventTypes.TransmissionEvent,time, context, frame, receiver, numHop);
+                if (MyLib.deterministicProtocol(transmission, context)) {
+                    double time = H20Sim.SLOW_RETRANSMITION == true ? MyLib.random(0.2f, 0.4f) : 0;
+                    Event e = context.getCoreFactory().getEvent(EventTypes.TransmissionEvent, time, context, frame, receiver, numHop);
                     context.getScheduler().addEvent(e);
                 }
             } else {

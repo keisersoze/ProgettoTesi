@@ -29,12 +29,12 @@ public class DefaultScheduler implements Scheduler {
     }
 
     @Override
-    public void removeEvent(Event e) {
+    public void removeEvent (Event e) {
         eventQueue.remove(e);
     }
 
     @Override
-    public void clear() {
+    public void clear () {
         eventQueue.clear();
     }
 

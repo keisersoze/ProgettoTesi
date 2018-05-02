@@ -25,16 +25,7 @@ public class ChartResponseTime implements Chart {
 
     static JFreeChart createChart (XYDataset dataset) {
 
-        JFreeChart chart = ChartFactory.createXYLineChart(
-                "Response time",
-                "Samples",
-                "Response Time (s)",
-                dataset,
-                PlotOrientation.VERTICAL,
-                true,
-                true,
-                false
-        );
+        JFreeChart chart = ChartFactory.createXYLineChart("Response time", "Samples", "Response Time (s)", dataset, PlotOrientation.VERTICAL, true, true, false);
 
         XYPlot plot = chart.getXYPlot();
 

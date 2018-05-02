@@ -42,9 +42,9 @@ public interface Sensor {
 
     void setReceiving (boolean x);
 
-    boolean isWaiting();
+    boolean isWaiting ();
 
-    void setWaiting(boolean x);
+    void setWaiting (boolean x);
 
-    boolean isOccupied();
+    boolean isOccupied ();
 }

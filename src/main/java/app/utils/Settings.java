@@ -33,9 +33,26 @@ import java.util.Map;
 @SuppressWarnings("unchecked")
 public class Settings extends JPanel implements ActionListener, PropertyChangeListener {
 
+    private static final JProgressBar progressBar = new JProgressBar(0, 100);
     public static JButton buttonStart = new JButton("Start");
     public static JButton buttonStop = new JButton("Stop");
-    private static final JProgressBar progressBar = new JProgressBar(0, 100);
+    //charts
+    private static ChartPanel chartPanel;
+    private static JPanel east;
+    private static Chart chartThrougput;
+    private static Chart chartSR;
+    private static Chart chartDSR;
+    private static Chart chartRT;
+    private static Chart chartModalitiesRates;
+    private static JComboBox deployType = new JComboBox(DeploymentTypes.getDeploymentTypes());
+    private static JComboBox graphicMode = new JComboBox(new String[]{"Graphic Mode", "Stats mode"});
+    private static JComboBox chartType = new JComboBox(new String[]{"Throughput", "Successful Rate", "Depth Successful Rate", "Response Time", "Modalities Rates"});
+    private static JComboBox protocolType = new JComboBox(new String[]{"Deterministic", "Probabilistic", "Combined"});
+    private static List<String> deployStrings = new ArrayList<>();
+    private static List<String> graphicStrings = new ArrayList<>();
+    private static List<String> chartStrings = new ArrayList<>();
+    private static List<String> protocolStrings = new ArrayList<>();
+    private static JFrame frame;
     //Formats to format and parse numbers
     private NumberFormat amountFormat;
     private JFormattedTextField valSamples;
@@ -51,31 +68,11 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
     private JFormattedTextField valFieldx;
     private JFormattedTextField valFieldy;
     private JFormattedTextField valFieldz;
-
     private JFormattedTextField valMSpeed;
     private JFormattedTextField valMRadius;
     private JFormattedTextField valCSMAStreght;
-
     private JFormattedTextField valNSensors;
-
-    //charts
-    private static ChartPanel chartPanel;
-    private static JPanel east;
-    private static Chart chartThrougput;
-    private static Chart chartSR;
-    private static Chart chartDSR;
-    private static Chart chartRT;
-    private static Chart chartModalitiesRates;
-
-
-    private static JComboBox deployType = new JComboBox(DeploymentTypes.getDeploymentTypes());
-    private static JComboBox graphicMode = new JComboBox(new String[]{"Graphic Mode", "Stats mode"});
-    private static JComboBox chartType = new JComboBox(new String[]{"Throughput", "Successful Rate", "Depth Successful Rate", "Response Time","Modalities Rates"});
-    private static List<String> deployStrings = new ArrayList<>();
-    private static List<String> graphicStrings = new ArrayList<>();
-    private static List<String> chartStrings = new ArrayList<>();
-
-    private static JFrame frame;
+    JCheckBox check = new JCheckBox("Slow Retransmit");
 
     private Settings () {
         super();
@@ -278,6 +275,14 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
         graphicMode.addActionListener(this);
         gridPanelSettings.add(graphicMode);
 
+        protocolType.setSelectedIndex(0);
+        protocolType.addActionListener(this);
+        gridPanelSettings.add(protocolType);
+
+        check.addActionListener(this);
+        check.setSelected(H20Sim.SLOW_RETRANSMITION);
+        gridPanelSettings.add(check);
+
         buttonStart.addActionListener(this);
         gridPanelSettings.add(buttonStart);
 
@@ -353,7 +358,9 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
 
         Collections.addAll(deployStrings, DeploymentTypes.getDeploymentTypes());
         Collections.addAll(graphicStrings, "Graphic Mode", "Stats mode");
-        Collections.addAll(chartStrings, "Throughput", "Successful Rate", "Depth Successful Rate", "Response Time","Modalities Rates");
+        Collections.addAll(chartStrings, "Throughput", "Successful Rate", "Depth Successful Rate", "Response Time", "Modalities Rates");
+        Collections.addAll(protocolStrings, "Deterministic", "Probabilistic", "Combined");
+
     }
 
     public static void createAndShowGUI () {
@@ -370,6 +377,47 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
         frame.pack();
         RefineryUtilities.centerFrameOnScreen(frame);
         frame.setVisible(true);
+    }
+
+    public static void updateProgressBar (double percentage) {
+        if ((int) percentage > progressBar.getValue()) {
+            progressBar.setValue((int) percentage);
+        }
+    }
+
+    public static void resetProgressBar () {
+        progressBar.setValue(0);
+    }
+
+    public static void drawCharts (Collector collector, Map<Thread, SimContext> threads) {
+        chartThrougput = new ChartThroughput(collector, threads);
+        chartSR = new ChartSuccessfulRate(collector, threads);
+        chartDSR = new ChartDepthSuccessRate(collector, threads);
+        chartRT = new ChartResponseTime(collector, threads);
+        chartModalitiesRates = new ChartModalities(collector, threads);
+
+        JFreeChart chart = null;
+        switch (chartStrings.get(chartType.getSelectedIndex())) {
+            case "Throughput":
+                chart = chartThrougput.getChart();
+                break;
+            case "Successful Rate":
+                chart = Settings.chartSR.getChart();
+                break;
+            case "Depth Successful Rate":
+                chart = Settings.chartDSR.getChart();
+                break;
+            case "Response Time":
+                chart = Settings.chartRT.getChart();
+                break;
+            case "Modalities Rates":
+                chart = Settings.chartModalitiesRates.getChart();
+                break;
+        }
+        chartPanel.setChart(chart);
+        east.setVisible(true);
+        frame.pack();
+        RefineryUtilities.centerFrameOnScreen(frame);
     }
 
     public void propertyChange (PropertyChangeEvent e) {
@@ -404,9 +452,9 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
             H20Sim.MOVE_RADIUS = ((Number) valMRadius.getValue()).floatValue();
         } else if (source == valMSpeed) {
             H20Sim.MOVEMENT_SPEED = ((Number) valMSpeed.getValue()).floatValue();
-        }else if (source == valNSensors) {
+        } else if (source == valNSensors) {
             H20Sim.N_SENSORS = ((Number) valNSensors.getValue()).floatValue();
-        }else if (source == valCSMAStreght) {
+        } else if (source == valCSMAStreght) {
             H20Sim.CSMA_STRENGTH = ((Number) valCSMAStreght.getValue()).doubleValue();
         }
     }
@@ -423,6 +471,13 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
             graphicMode.setSelectedIndex(graphicStrings.indexOf(item));
             assert item != null;
             H20Sim.CANVAS_MODE = item.equals("Graphic Mode");
+        } else if (e.getSource() == check) {
+            H20Sim.SLOW_RETRANSMITION  = !H20Sim.SLOW_RETRANSMITION;
+        } else if (e.getSource() == protocolType) {
+            JComboBox cb = (JComboBox) e.getSource();
+            String item = (String) cb.getSelectedItem();
+            protocolType.setSelectedIndex(protocolStrings.indexOf(item));
+            H20Sim.PROTOCOL = item;
         } else if (e.getSource() == buttonStart) {
             buttonStart.setEnabled(false);
             buttonStop.setEnabled(true);
@@ -465,46 +520,5 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
     private void setUpFormats () {
         amountFormat = NumberFormat.getNumberInstance();
         amountFormat.setMaximumFractionDigits(Integer.MAX_VALUE);
-    }
-
-    public static void updateProgressBar (double percentage) {
-        if ((int) percentage > progressBar.getValue()) {
-            progressBar.setValue((int) percentage);
-        }
-    }
-
-    public static void resetProgressBar () {
-        progressBar.setValue(0);
-    }
-
-    public static void drawCharts (Collector collector, Map<Thread, SimContext> threads) {
-        chartThrougput = new ChartThroughput(collector, threads);
-        chartSR = new ChartSuccessfulRate(collector, threads);
-        chartDSR = new ChartDepthSuccessRate(collector, threads);
-        chartRT = new ChartResponseTime(collector, threads);
-        chartModalitiesRates = new ChartModalities(collector, threads);
-
-        JFreeChart chart = null;
-        switch (chartStrings.get(chartType.getSelectedIndex())) {
-            case "Throughput":
-                chart = chartThrougput.getChart();
-                break;
-            case "Successful Rate":
-                chart = Settings.chartSR.getChart();
-                break;
-            case "Depth Successful Rate":
-                chart = Settings.chartDSR.getChart();
-                break;
-            case "Response Time":
-                chart = Settings.chartRT.getChart();
-                break;
-            case "Modalities Rates":
-                chart = Settings.chartModalitiesRates.getChart();
-                break;
-        }
-        chartPanel.setChart(chart);
-        east.setVisible(true);
-        frame.pack();
-        RefineryUtilities.centerFrameOnScreen(frame);
     }
 }

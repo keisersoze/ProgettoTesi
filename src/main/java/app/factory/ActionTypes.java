@@ -19,5 +19,5 @@ public class ActionTypes {
     public static final String HandleAckReception = "HandleAckReception";
     public static final String HandleEndAckReception = "HandleEndAckReception";
     public static final String HandleEndAckTransmission = "HandleEndAckTransmission";
-    public static final String HandleAckVerification = "HandleAckVerification" ;
+    public static final String HandleAckVerification = "HandleAckVerification";
 }

@@ -39,17 +39,27 @@ public class Canvas extends SimpleApplication {
     private final AnalogListener analogListener = (name, value, tpf) -> {
         if (name.equals("More_Nanos")) {
             GraphicSim.nanos += 10;
-            if (GraphicSim.nanos > 999) { GraphicSim.nanos = 999; }
+            if (GraphicSim.nanos > 999) {
+                GraphicSim.nanos = 999;
+            }
         }
         if (name.equals("Less_Nanos")) {
-            if (GraphicSim.nanos - 10 < 0) { GraphicSim.nanos = 0; } else { GraphicSim.nanos -= 10; }
+            if (GraphicSim.nanos - 10 < 0) {
+                GraphicSim.nanos = 0;
+            } else {
+                GraphicSim.nanos -= 10;
+            }
         }
 
         if (name.equals("More_Millis")) {
             GraphicSim.millis += 1;
         }
         if (name.equals("Less_Millis")) {
-            if (GraphicSim.millis - 1 < 0) { GraphicSim.millis = 0; } else { GraphicSim.millis -= 1; }
+            if (GraphicSim.millis - 1 < 0) {
+                GraphicSim.millis = 0;
+            } else {
+                GraphicSim.millis -= 1;
+            }
         }
         if (name.equals("Esc")) {
             H20Sim.STOPPED = true;
@@ -74,7 +84,9 @@ public class Canvas extends SimpleApplication {
     }
 
     private static Vector3f pointBetween (Vector3f inizio, Vector3f fine, float percentuale) {
-        if (percentuale > 1.0f) { percentuale = 1.0f; }
+        if (percentuale > 1.0f) {
+            percentuale = 1.0f;
+        }
         Vector3f point = new Vector3f();
         point.setX(inizio.x + percentuale * (fine.x - inizio.x));
         point.setY(inizio.y + percentuale * (fine.y - inizio.y));
@@ -90,7 +102,7 @@ public class Canvas extends SimpleApplication {
 
         attachCoordinateAxes(Vector3f.ZERO);
         attachGrid(field.x, field.y, field.z, 50f, ColorRGBA.White);
-        viewPort.setBackgroundColor(new ColorRGBA(21/255f, 22/255f, 0.15f, 1f));
+        viewPort.setBackgroundColor(new ColorRGBA(21 / 255f, 22 / 255f, 0.15f, 1f));
         //generateTerrain();
 
         charged = true;
@@ -299,15 +311,11 @@ public class Canvas extends SimpleApplication {
 
         double arrived = 0;
         for (List<Double> list : context.getFramesArrived().values()) {
-            if (!list.isEmpty()) { arrived++; }
+            if (!list.isEmpty()) {
+                arrived++;
+            }
         }
-        hudText.setText("- Sim Time: " + context.getSimTime()
-                + "\n- Frame generati: " + context.getFrames().size()
-                + "\n- Numero di sensori:" + context.getSensors().size()
-                + "\n- Millis: " + GraphicSim.millis + "," + GraphicSim.nanos
-                + "\n- Layout: " + H20Sim.DEPLOYMENT_TYPE
-                + "\n- Arrived: " + (int) (arrived / context.getFramesArrived().size() * 100) + "%"
-                + "\n- " + (int) context.getPercentageCompleted() + "%");
+        hudText.setText("- Sim Time: " + context.getSimTime() + "\n- Frame generati: " + context.getFrames().size() + "\n- Numero di sensori:" + context.getSensors().size() + "\n- Millis: " + GraphicSim.millis + "," + GraphicSim.nanos + "\n- Layout: " + H20Sim.DEPLOYMENT_TYPE + "\n- Arrived: " + (int) (arrived / context.getFramesArrived().size() * 100) + "%" + "\n- " + (int) context.getPercentageCompleted() + "%");
         updateSensors();
         updateLinks();
     }
@@ -351,14 +359,7 @@ public class Canvas extends SimpleApplication {
                     double total = sender.getEuclideanDistance(receiver);
                     Vector3f point = Canvas.pointBetween(sender.getPosition(), receiver.getPosition(), (float) (distance / total));
 
-                    transmission.getValue().getMesh().setBuffer(VertexBuffer.Type.Position,
-                            3,
-                            new float[]{sender.getX() / H20Sim.SCALE,
-                                    sender.getY() / H20Sim.SCALE,
-                                    sender.getZ() / H20Sim.SCALE,
-                                    point.x / H20Sim.SCALE,
-                                    point.y / H20Sim.SCALE,
-                                    point.z / H20Sim.SCALE});
+                    transmission.getValue().getMesh().setBuffer(VertexBuffer.Type.Position, 3, new float[]{sender.getX() / H20Sim.SCALE, sender.getY() / H20Sim.SCALE, sender.getZ() / H20Sim.SCALE, point.x / H20Sim.SCALE, point.y / H20Sim.SCALE, point.z / H20Sim.SCALE});
 
                     if (!transmission.getKey().isSuccessfull()) {
                         transmission.getValue().getMaterial().setColor("Color", ColorRGBA.Red);

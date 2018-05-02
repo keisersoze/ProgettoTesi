@@ -8,6 +8,6 @@ public class DeploymentTypes {
     public static final String OneSDeployment = "Debug deployment";
 
     public static String[] getDeploymentTypes () {
-        return new String[]{BaseDeployment, LayerDeployment, LayerInvProportionalDeployment,OneSDeployment,LayerProportionalDeployment};
+        return new String[]{BaseDeployment, LayerDeployment, LayerInvProportionalDeployment, OneSDeployment, LayerProportionalDeployment};
     }
 }

@@ -10,7 +10,7 @@ public interface Frame {
 
     Sensor getOwner ();
 
-    List<Transmission> getTransmissions();
+    List<Transmission> getTransmissions ();
 
     double getArrivalTime ();
 }

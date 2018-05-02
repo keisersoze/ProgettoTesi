@@ -14,8 +14,12 @@ import static org.apache.commons.math3.util.FastMath.log;
 
 public class HandleTransmission implements Action {
 
+    protected static boolean CSMA (Sensor sender, SimContext context) {
+        return MyLib.tomW(H20Sim.SENSOR_POWER) / MyLib.calculateNoise(sender, context) >= H20Sim.CSMA_STRENGTH;
+    }
+
     @Override
-    public void execute(Event event) {
+    public void execute (Event event) {
         SimContext context = event.getContext();
         Frame frame = event.getFrame();
         Sensor sender = event.getSensor();
@@ -35,17 +39,13 @@ public class HandleTransmission implements Action {
             double time = frame.getSize() / H20Sim.SENSOR_BANDWIDTH;    // Schedulo tra quanto finisco di trasmettere
             Event e = context.getCoreFactory().getEvent(EventTypes.EndTransmissionEvent, time, context, sender);    // Creo un evento per la fine della trasmissione
             context.getScheduler().addEvent(e);
-        }else {
+        } else {
             // CSMA non persistente
             sender.setWaiting(true);
             double time = -log(context.getMarsenneTwister().nextDouble()) / H20Sim.LAMDA;   //TODO : da capire se va bene oppure se cambiarlo
             Event e = context.getCoreFactory().getEvent(EventTypes.TransmissionEvent, time, context, frame, sender, numHop);
             context.getScheduler().addEvent(e);
         }
-    }
-
-    protected static boolean CSMA(Sensor sender, SimContext context) {
-        return MyLib.tomW(H20Sim.SENSOR_POWER) / MyLib.calculateNoise(sender, context) >= H20Sim.CSMA_STRENGTH;
     }
 
 }

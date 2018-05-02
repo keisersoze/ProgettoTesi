@@ -1,7 +1,5 @@
 package app.core.h20G;
 
-import app.utils.Canvas;
-import app.utils.ConsoleColors;
 import app.H20Sim;
 import app.core.Action;
 import app.core.Event;
@@ -9,6 +7,8 @@ import app.factory.EventTypes;
 import app.model.Frame;
 import app.model.Sensor;
 import app.sim.SimContext;
+import app.utils.Canvas;
+import app.utils.ConsoleColors;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -31,9 +31,7 @@ public class HandleArrival implements Action {
     @Override
     public void execute (Event event) {
         SimContext context = event.getContext();
-        List<Sensor> possibleOwners = context.getSensors().stream()
-                .filter(sensor ->  !sensor.isOccupied()&&!sensor.isSink())
-                .collect(Collectors.toList());
+        List<Sensor> possibleOwners = context.getSensors().stream().filter(sensor -> !sensor.isOccupied() && !sensor.isSink()).collect(Collectors.toList());
 
         if (possibleOwners.size() > 0) {
             Sensor owner = possibleOwners.get(context.getMarsenneTwister().nextInt(possibleOwners.size()));
@@ -45,7 +43,8 @@ public class HandleArrival implements Action {
 
             try {
                 canvas.enqueue(() -> canvas.newFrame(frame)).get();
-            } catch (InterruptedException | ExecutionException ignored) {}
+            } catch (InterruptedException | ExecutionException ignored) {
+            }
 
             Event e = context.getCoreFactory().getEvent(EventTypes.TransmissionEvent, 0, context, frame, owner, 0); // Passa il frame al prossimo evento
             context.getScheduler().addEvent(e);

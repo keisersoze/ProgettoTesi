@@ -4,21 +4,19 @@ import app.core.Action;
 import app.core.Event;
 import app.model.Sensor;
 import app.model.Transmission;
-import app.sim.SimContext;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class HandleEndAckReception implements Action {
     private List<Sensor> sensors;
 
-    public HandleEndAckReception() {
+    public HandleEndAckReception () {
         this.sensors = new ArrayList<>();
     }
 
     @Override
-    public void execute(Event e) {
+    public void execute (Event e) {
 
         Transmission ackTransmission = e.getTransmission();
         Sensor receiver = e.getSensor();
@@ -32,7 +30,7 @@ public class HandleEndAckReception implements Action {
         }*/
     }
 
-    public List<Sensor> getSensors() {
+    public List<Sensor> getSensors () {
         return sensors;
     }
 }

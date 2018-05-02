@@ -5,20 +5,13 @@ import app.sim.SimContext;
 import app.stats.Collector;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.block.BlockBorder;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.IntervalMarker;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.renderer.xy.XYBarRenderer;
-import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.IntervalXYDataset;
-import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-import org.jfree.ui.RectangleAnchor;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -36,17 +29,7 @@ public class ChartDepthSuccessRate implements Chart {
 
     public static JFreeChart createChart (IntervalXYDataset dataset) {
 
-        final JFreeChart chart = ChartFactory.createXYBarChart(
-                "Depth Succesuful Rate",
-                "% Frame Arrived",
-                false,
-                "Depth",
-                dataset,
-                PlotOrientation.VERTICAL,
-                true,
-                true,
-                false
-        );
+        final JFreeChart chart = ChartFactory.createXYBarChart("Depth Succesuful Rate", "% Frame Arrived", false, "Depth", dataset, PlotOrientation.VERTICAL, true, true, false);
         XYPlot plot = (XYPlot) chart.getPlot();
         plot.setBackgroundPaint(Color.white);
 

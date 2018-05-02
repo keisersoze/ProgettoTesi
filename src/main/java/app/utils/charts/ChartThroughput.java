@@ -9,7 +9,6 @@ import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
-import org.jfree.chart.title.TextTitle;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
@@ -17,25 +16,16 @@ import org.jfree.data.xy.XYSeriesCollection;
 import java.awt.*;
 import java.util.Map;
 
-public class ChartThroughput implements Chart{
+public class ChartThroughput implements Chart {
     private JFreeChart chart;
 
     public ChartThroughput (Collector collector, Map<Thread, SimContext> threadContextMap) {
-        chart= createChart(createDataset(collector,threadContextMap));
+        chart = createChart(createDataset(collector, threadContextMap));
     }
 
-    private static JFreeChart createChart(XYDataset dataset) {
+    private static JFreeChart createChart (XYDataset dataset) {
 
-        JFreeChart chart = ChartFactory.createXYLineChart(
-                "Throughput",
-                "Samples",
-                "Frame/s",
-                dataset,
-                PlotOrientation.VERTICAL,
-                true,
-                true,
-                false
-        );
+        JFreeChart chart = ChartFactory.createXYLineChart("Throughput", "Samples", "Frame/s", dataset, PlotOrientation.VERTICAL, true, true, false);
 
         XYPlot plot = chart.getXYPlot();
 
@@ -63,13 +53,13 @@ public class ChartThroughput implements Chart{
 
     }
 
-    private static XYDataset createDataset(Collector collector, Map<Thread, SimContext> threadContextMap) {
+    private static XYDataset createDataset (Collector collector, Map<Thread, SimContext> threadContextMap) {
 
         XYSeries series = new XYSeries("Throughput");
         for (int j = 0; j < H20Sim.N_SAMPLES; j++) {
             double successfullRateAcc = 0;
             for (Thread t : threadContextMap.keySet()) {
-                successfullRateAcc += collector.getSourceSamples(t.getName()).get(j).getGoodput() ;
+                successfullRateAcc += collector.getSourceSamples(t.getName()).get(j).getGoodput();
             }
             series.add(j, successfullRateAcc / H20Sim.NTHREADS);
         }
@@ -79,7 +69,7 @@ public class ChartThroughput implements Chart{
         return dataset;
     }
 
-    public JFreeChart getChart() {
+    public JFreeChart getChart () {
         return chart;
     }
 }

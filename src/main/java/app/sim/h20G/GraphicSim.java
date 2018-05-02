@@ -1,16 +1,16 @@
 package app.sim.h20G;
 
-import app.sim.h20.AbstractSimIstance;
-import app.utils.Canvas;
 import app.H20Sim;
-import app.utils.Settings;
 import app.core.Event;
 import app.core.Scheduler;
 import app.factory.CoreFactory;
 import app.factory.h20G.GraphicCoreFactory;
 import app.model.Sensor;
-import app.utils.MyLib;
+import app.sim.h20.AbstractSimIstance;
 import app.stats.Collector;
+import app.utils.Canvas;
+import app.utils.MyLib;
+import app.utils.Settings;
 import com.jme3.system.AppSettings;
 
 import javax.imageio.ImageIO;
@@ -109,7 +109,7 @@ public class GraphicSim extends AbstractSimIstance implements Runnable {
 
 
     @Override
-    public double getThreeshold() {
+    public double getThreeshold () {
         return H20Sim.THRESHOLD;
     }
 }
