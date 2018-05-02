@@ -17,7 +17,7 @@ public class SimulationInstance extends AbstractSimIstance implements Runnable {
 
     public SimulationInstance (Collector collector, Scheduler scheduler) {
         super(collector, scheduler);
-        if (true)
+        if (false)
             coreFactory = new MyCoreFactory();
         else
             coreFactory = new h20RCoreFactory();
