@@ -106,4 +106,10 @@ public class GraphicSim extends AbstractSimIstance implements Runnable {
     public CoreFactory getCoreFactory () {
         return coreFactory;
     }
+
+
+    @Override
+    public double getThreeshold() {
+        return H20Sim.THRESHOLD;
+    }
 }

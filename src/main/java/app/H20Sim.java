@@ -4,6 +4,7 @@ package app;
 import app.core.h20.scheduler.DefaultScheduler;
 import app.factory.DeploymentTypes;
 import app.sim.SimContext;
+import app.sim.h20.ThreesholdGraphicSim;
 import app.sim.h20G.GraphicSim;
 import app.sim.h20.SimulationInstance;
 import app.stats.h20.BaseCollector;
@@ -43,7 +44,7 @@ public class H20Sim {
     public static int MAX_FRAME_SIZE = 1000; //bit (200-1600)
     public static double MAX_FRAME_RATE = 0.9;
 
-    public static int THRESHOLD = 500;
+    public static int THRESHOLD = 0;
 
     public static double SENSIBILITY = -110; //dBm
     public static double SENSOR_POWER = -104; //dB
@@ -86,7 +87,7 @@ public class H20Sim {
                 for (int i = 0; i < NTHREADS; i++) {
                     String instance_name = String.valueOf(i);
                     collector.addStatSource(instance_name);
-                    SimulationInstance context = new SimulationInstance(collector, new DefaultScheduler());
+                    ThreesholdGraphicSim context = new ThreesholdGraphicSim(collector, new DefaultScheduler());
                     Thread thread = new Thread(context, instance_name);
                     threadContextMap.put(thread, context);
                     thread.start();

@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public abstract class AbstractSimIstance implements SimContext {
+public abstract class AbstractSimIstance implements SimContext,Runnable {
     private final Scheduler scheduler;
     private final Collector collector;
     private final Map<Frame, LinkedList<Double>> framesArrived;
@@ -97,7 +97,7 @@ public abstract class AbstractSimIstance implements SimContext {
         nSamples++;
     }
 
-    public void initEvents () {
+    protected void initEvents () {
         Event move_evt = getCoreFactory().getEvent(EventTypes.MoveEvent, 0, this);
         Event arrival_evt = getCoreFactory().getEvent(EventTypes.ArrivalEvent, 0, this);
         Event stats_evt = getCoreFactory().getEvent(EventTypes.StatisticEvent, 0, this);

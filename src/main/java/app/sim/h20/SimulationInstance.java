@@ -11,7 +11,7 @@ import app.stats.Collector;
 import app.utils.MyLib;
 import app.utils.Settings;
 
-public class SimulationInstance extends AbstractSimIstance implements Runnable {
+public class SimulationInstance extends AbstractSimIstance  {
     private final CoreFactory coreFactory;
 
 
@@ -44,5 +44,11 @@ public class SimulationInstance extends AbstractSimIstance implements Runnable {
     @Override
     public CoreFactory getCoreFactory () {
         return coreFactory;
+    }
+
+
+    @Override
+    public double getThreeshold() {
+        return H20Sim.THRESHOLD;
     }
 }

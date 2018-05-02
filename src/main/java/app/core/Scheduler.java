@@ -22,4 +22,9 @@ public interface Scheduler {
      */
     void removeEvent (Event e);
 
+    /**
+     *
+     */
+    void clear();
+
 }

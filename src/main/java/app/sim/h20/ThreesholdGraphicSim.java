@@ -13,11 +13,12 @@ import app.utils.Settings;
 
 public class ThreesholdGraphicSim extends AbstractSimIstance{
     private final CoreFactory coreFactory;
+    private double threeshold;
     private static double THREESHOLD_MAX = 1000 ;
 
     public ThreesholdGraphicSim (Collector collector, Scheduler scheduler) {
         super(collector, scheduler);
-
+        threeshold = 0;
         coreFactory = new MyCoreFactory();
 
     }
@@ -37,7 +38,7 @@ public class ThreesholdGraphicSim extends AbstractSimIstance{
             evt_scheduled.tick();
             Settings.updateProgressBar(getPercentageCompleted());
         }
-        System.out.println(getSimTime());
+
     }
 
     @Override
@@ -48,7 +49,32 @@ public class ThreesholdGraphicSim extends AbstractSimIstance{
     @Override
     public void setPercentageCompleted() {
         super.setPercentageCompleted();
-        if (super.getPercentageCompleted()%10 == 0) //TODO attenzione
-            H20Sim.THRESHOLD+=THREESHOLD_MAX*0.1;
+        if (super.getPercentageCompleted()%20 == 0) { //TODO attenzione
+            threeshold += THREESHOLD_MAX * 0.2;
+            System.out.println(threeshold);
+
+            //pulisco tutto
+            getScheduler().clear();
+            getFrames().clear();
+            getFramesArrived().clear();
+            setSimTime(0);
+            for (Sensor s:getSensors()) {
+                s.setTransmitting(false);
+                s.setReceiving(false);
+                s.setWaiting(false);
+            }
+
+            //si ricomincia
+            for (Sensor sensor : getSensors()) {
+                sensor.setNeighbors(MyLib.calculateNeighbors(sensor, this));
+            }
+
+            initEvents();
+        }
+    }
+
+    @Override
+    public double getThreeshold() {
+        return threeshold;
     }
 }

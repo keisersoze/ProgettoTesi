@@ -33,5 +33,10 @@ public class DefaultScheduler implements Scheduler {
         eventQueue.remove(e);
     }
 
+    @Override
+    public void clear() {
+        eventQueue.clear();
+    }
+
 
 }

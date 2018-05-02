@@ -38,4 +38,6 @@ public interface SimContext {
     double getPercentageCompleted ();
 
     void setPercentageCompleted ();
+
+    double getThreeshold ();
 }

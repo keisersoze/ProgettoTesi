@@ -87,12 +87,12 @@ public class MyLib {
     }
 
 
-    public static boolean deterministicProtocol(Transmission transmission) {
+    public static boolean deterministicProtocol(Transmission transmission,SimContext context) {
         if (transmission.getHop() > 10) {
             return false;
         }
         if (H20Sim.PROTOCOL.equals("Deterministic") || H20Sim.PROTOCOL.equals("Best")) {
-            return transmission.getSender().getY() + H20Sim.THRESHOLD < transmission.getReceiver().getY();
+            return transmission.getSender().getY() + context.getThreeshold() < transmission.getReceiver().getY();
         }
         return true;
     }
