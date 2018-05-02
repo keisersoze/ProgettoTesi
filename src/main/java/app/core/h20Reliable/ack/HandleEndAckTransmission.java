@@ -18,6 +18,7 @@ public class HandleEndAckTransmission implements Action {
 
 
         receiver.setTransmitting(false);
+
         Event e = context.getCoreFactory().getEvent(EventTypes.TransmissionEvent, 0, context, frame, receiver, numHop);
         context.getScheduler().addEvent(e);
     }

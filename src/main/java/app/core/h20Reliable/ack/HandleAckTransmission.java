@@ -16,20 +16,20 @@ import static org.apache.commons.math3.util.FastMath.log;
 
 public class HandleAckTransmission extends HandleTransmission implements Action {
     @Override
-    public void execute(Event e) {
-        SimContext context = e.getContext();
-        Transmission transmission = e.getTransmission();
+    public void execute(Event event) {
+        SimContext context = event.getContext();
+        Transmission transmission = event.getTransmission();
         Sensor sender = transmission.getSender();
         Sensor receiver = transmission.getReceiver();
-        sender.setWaiting(false);
+        receiver.setWaiting(false);
 
-        if (CSMA(sender, context)) {
+        if (CSMA(receiver, context)) {
             receiver.setTransmitting(true);
             double time = receiver.getEuclideanDistance(sender) / H20Sim.SOUND_SPEED;
             Event newEvent = context.getCoreFactory().getEvent(EventTypes.AckReceptionEvent, time, context, transmission);
             context.getScheduler().addEvent(newEvent);
 
-            time = 380 / H20Sim.SENSOR_BANDWIDTH;    // Schedulo tra quanto finisco di trasmettere l'Ack
+            time = H20Sim.ACK_SIZE / H20Sim.SENSOR_BANDWIDTH;    // Schedulo tra quanto finisco di trasmettere l'Ack
             Event newEvent2 = context.getCoreFactory().getEvent(EventTypes.EndAckTransmissionEvent, time, context, transmission); //TODO numhop da sistemare
             context.getScheduler().addEvent(newEvent2);
 
@@ -37,7 +37,7 @@ public class HandleAckTransmission extends HandleTransmission implements Action 
             receiver.setWaiting(true);
             double time = -log(context.getMarsenneTwister().nextDouble()) / H20Sim.LAMDA;
             Event newEvent = context.getCoreFactory().getEvent(EventTypes.AckTransmissionEvent, time, context, transmission);
-            context.getScheduler().addEvent(e);
+            context.getScheduler().addEvent(newEvent);
         }
 
     }
