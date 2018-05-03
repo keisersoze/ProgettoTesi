@@ -1,7 +1,7 @@
 package app.utils.charts;
 
 import app.H20Sim;
-import app.sim.SimContext;
+import app.sim.h20.AbstractSimInstance;
 import app.stats.Collector;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
@@ -14,14 +14,14 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 import java.awt.*;
-import java.util.Map;
+import java.util.List;
 
 public class ChartModalities implements Chart {
 
     private final JFreeChart chart;
 
-    public ChartModalities (Collector collector, Map<Thread, SimContext> threadContextMap) {
-        chart = createChart(createDataset(collector, threadContextMap));
+    public ChartModalities (Collector collector, List<AbstractSimInstance> instances) {
+        chart = createChart(createDataset(collector, instances));
     }
 
     private static JFreeChart createChart (XYDataset dataset) {
@@ -54,12 +54,12 @@ public class ChartModalities implements Chart {
 
     }
 
-    private static XYDataset createDataset (Collector collector, Map<Thread, SimContext> threadContextMap) {
+    private static XYDataset createDataset (Collector collector, List<AbstractSimInstance> instances) {
 
         XYSeries series = new XYSeries("Trasmission modality rate");
         for (int j = 0; j < H20Sim.N_SAMPLES; j++) {
             double transmissionModeRateAcc = 0;
-            for (Thread t : threadContextMap.keySet()) {
+            for (Thread t : instances) {
                 transmissionModeRateAcc += collector.getSourceSamples(t.getName()).get(j).getTransmittingModeRate();
             }
             series.add(j, transmissionModeRateAcc / H20Sim.NTHREADS);
@@ -68,7 +68,7 @@ public class ChartModalities implements Chart {
         XYSeries series2 = new XYSeries("Receiving modality rate");
         for (int j = 0; j < H20Sim.N_SAMPLES; j++) {
             double receivingModeRateAcc = 0;
-            for (Thread t : threadContextMap.keySet()) {
+            for (Thread t : instances) {
                 receivingModeRateAcc += collector.getSourceSamples(t.getName()).get(j).getReceivingModeRate();
             }
             series2.add(j, receivingModeRateAcc / H20Sim.NTHREADS);
@@ -77,7 +77,7 @@ public class ChartModalities implements Chart {
         XYSeries series3 = new XYSeries("Sleep modality rate");
         for (int j = 0; j < H20Sim.N_SAMPLES; j++) {
             double sleepModeRateAcc = 0;
-            for (Thread t : threadContextMap.keySet()) {
+            for (Thread t : instances) {
                 sleepModeRateAcc += collector.getSourceSamples(t.getName()).get(j).getSleepModeRate();
             }
             series3.add(j, sleepModeRateAcc / H20Sim.NTHREADS);

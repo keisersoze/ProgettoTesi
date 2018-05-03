@@ -11,12 +11,13 @@ import app.stats.Collector;
 import app.utils.MyLib;
 import app.utils.Settings;
 
-public class SimulationInstance extends AbstractSimIstance {
+public class SimulationInstance extends AbstractSimInstance {
     private final CoreFactory coreFactory;
 
 
-    public SimulationInstance (Collector collector, Scheduler scheduler) {
+    public SimulationInstance (Collector collector, Scheduler scheduler, String instanceName) {
         super(collector, scheduler);
+        setName(instanceName);
         if (true) {
             coreFactory = new MyCoreFactory();
         } else {

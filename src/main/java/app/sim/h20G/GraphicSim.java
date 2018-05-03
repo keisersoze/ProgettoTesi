@@ -6,7 +6,7 @@ import app.core.Scheduler;
 import app.factory.CoreFactory;
 import app.factory.h20G.GraphicCoreFactory;
 import app.model.Sensor;
-import app.sim.h20.AbstractSimIstance;
+import app.sim.h20.AbstractSimInstance;
 import app.stats.Collector;
 import app.utils.Canvas;
 import app.utils.MyLib;
@@ -20,7 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
-public class GraphicSim extends AbstractSimIstance implements Runnable {
+public class GraphicSim extends AbstractSimInstance implements Runnable {
     public static int nanos;
     public static long millis = 1;
     private static Canvas canvas;

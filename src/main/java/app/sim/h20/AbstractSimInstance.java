@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public abstract class AbstractSimIstance implements SimContext, Runnable {
+public abstract class AbstractSimInstance extends Thread implements SimContext, Runnable {
     private final Scheduler scheduler;
     private final Collector collector;
     private final Map<Frame, LinkedList<Double>> framesArrived;
@@ -30,7 +30,7 @@ public abstract class AbstractSimIstance implements SimContext, Runnable {
     private double simTime;
     //Dati statistici che vengono utilizzati dal collector
 
-    public AbstractSimIstance (Collector collector, Scheduler scheduler) {
+    public AbstractSimInstance (Collector collector, Scheduler scheduler) {
         frames = new ArrayList<>();
         this.collector = collector;
         this.scheduler = scheduler;

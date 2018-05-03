@@ -10,16 +10,16 @@ import app.stats.Collector;
 import app.utils.MyLib;
 import app.utils.Settings;
 
-public class ThreesholdGraphicSim extends AbstractSimIstance {
+public class ThreesholdGraphicSim extends AbstractSimInstance {
     private static double THREESHOLD_MAX = 1000;
     private final CoreFactory coreFactory;
     private double threeshold;
 
-    public ThreesholdGraphicSim (Collector collector, Scheduler scheduler) {
+    public ThreesholdGraphicSim (Collector collector, Scheduler scheduler, String instanceName) {
         super(collector, scheduler);
         threeshold = 0;
         coreFactory = new MyCoreFactory();
-
+        setName(instanceName);
     }
 
     public void run () {
@@ -49,7 +49,9 @@ public class ThreesholdGraphicSim extends AbstractSimIstance {
     public void setPercentageCompleted () {
         super.setPercentageCompleted();
         if (super.getPercentageCompleted() % 20 == 0) { //TODO attenzione
-            threeshold += THREESHOLD_MAX * 0.2;
+            if (getName().equals("0")) {
+                threeshold += THREESHOLD_MAX * 0.2;
+            }
             System.out.println(threeshold);
 
             //pulisco tutto
@@ -67,7 +69,6 @@ public class ThreesholdGraphicSim extends AbstractSimIstance {
             for (Sensor sensor : getSensors()) {
                 sensor.setNeighbors(MyLib.calculateNeighbors(sensor, this));
             }
-
             initEvents();
         }
     }

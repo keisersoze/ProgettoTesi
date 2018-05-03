@@ -1,7 +1,7 @@
 package app.utils.charts;
 
 import app.H20Sim;
-import app.sim.SimContext;
+import app.sim.h20.AbstractSimInstance;
 import app.stats.Collector;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
@@ -14,13 +14,13 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 import java.awt.*;
-import java.util.Map;
+import java.util.List;
 
 public class ChartResponseTime implements Chart {
     private JFreeChart chart;
 
-    public ChartResponseTime (Collector collector, Map<Thread, SimContext> threadContextMap) {
-        chart = createChart(createDataset(collector, threadContextMap));
+    public ChartResponseTime (Collector collector, List<AbstractSimInstance> instances) {
+        chart = createChart(createDataset(collector, instances));
     }
 
     static JFreeChart createChart (XYDataset dataset) {
@@ -47,11 +47,11 @@ public class ChartResponseTime implements Chart {
         return chart;
     }
 
-    private static XYDataset createDataset (Collector collector, Map<Thread, SimContext> threadContextMap) {
+    private static XYDataset createDataset (Collector collector, List<AbstractSimInstance> instances) {
         XYSeries series = new XYSeries("Response time");
         for (int j = 0; j < H20Sim.N_SAMPLES; j++) {
             double successfullRateAcc = 0;
-            for (Thread t : threadContextMap.keySet()) {
+            for (Thread t : instances) {
                 successfullRateAcc += collector.getSourceSamples(t.getName()).get(j).getAvgResponseTime();
             }
             series.add(j, successfullRateAcc / H20Sim.NTHREADS);

@@ -3,19 +3,21 @@ package app;
 
 import app.core.h20.scheduler.DefaultScheduler;
 import app.factory.DeploymentTypes;
-import app.sim.SimContext;
+import app.sim.h20.AbstractSimInstance;
+import app.sim.h20.SimulationInstance;
 import app.sim.h20.ThreesholdGraphicSim;
 import app.sim.h20G.GraphicSim;
 import app.stats.h20.BaseCollector;
 import app.utils.Settings;
 
 import javax.swing.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class H20Sim {
     public static final double K = 1.5;
+    public static boolean SERIAL_SIM = false;
     public static boolean SLOW_RETRANSMITION = true;
     public static final double ACK_TIMEOUT = 100; //s
     public static final int ACK_SIZE = 0; //bit
@@ -50,7 +52,7 @@ public class H20Sim {
 
     public static boolean CANVAS_MODE = true;
 
-    private static Map<Thread, SimContext> threadContextMap = new HashMap<>();
+    private static List<AbstractSimInstance> instances = new ArrayList<>();
     private static BaseCollector collector = new BaseCollector();
 
     public static void main (String[] args) {
@@ -68,7 +70,7 @@ public class H20Sim {
                 GraphicSim context = new GraphicSim(collector, new DefaultScheduler());
                 collector.addStatSource("0");
                 Thread thread = new Thread(context, "0");
-                threadContextMap.put(thread, context);
+                instances.add(context);
                 thread.start();
             } else {
                 //inizializzazione
@@ -76,15 +78,19 @@ public class H20Sim {
                 for (int i = 0; i < NTHREADS; i++) {
                     String instance_name = String.valueOf(i);
                     collector.addStatSource(instance_name);
-                    ThreesholdGraphicSim context = new ThreesholdGraphicSim(collector, new DefaultScheduler());
-                    Thread thread = new Thread(context, instance_name);
-                    threadContextMap.put(thread, context);
-                    thread.start();
+                    AbstractSimInstance context;
+                    if (H20Sim.SERIAL_SIM) {
+                        context = new ThreesholdGraphicSim(collector, new DefaultScheduler(), instance_name);
+                    } else {
+                        context = new SimulationInstance(collector, new DefaultScheduler(), instance_name);
+                    }
+                    instances.add(context);
+                    context.start();
                 }
             }
 
             //aspetta che tutte le istanze siano terminate
-            for (Thread t : threadContextMap.keySet()) {
+            for (AbstractSimInstance t : instances) {
                 try {
                     t.join();
                 } catch (InterruptedException e) {
@@ -94,11 +100,11 @@ public class H20Sim {
 
             //stampo le statistiche
             if (!STOPPED) {
-                Settings.drawCharts(collector, threadContextMap);
+                Settings.drawCharts(collector, instances);
                 Settings.buttonStart.setEnabled(true);
                 Settings.buttonStop.setEnabled(false);
             }
-            threadContextMap.clear();
+            instances.clear();
         }
     }
 

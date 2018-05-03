@@ -6,7 +6,7 @@ package app.utils;
 
 import app.H20Sim;
 import app.factory.DeploymentTypes;
-import app.sim.SimContext;
+import app.sim.h20.AbstractSimInstance;
 import app.stats.Collector;
 import app.utils.charts.*;
 import org.jfree.chart.ChartPanel;
@@ -27,7 +27,6 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 
 @SuppressWarnings("unchecked")
@@ -45,7 +44,7 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
     private static Chart chartRT;
     private static Chart chartModalitiesRates;
     private static JComboBox deployType = new JComboBox(DeploymentTypes.getDeploymentTypes());
-    private static JComboBox graphicMode = new JComboBox(new String[]{"Graphic Mode", "Stats mode"});
+    private static JComboBox graphicMode = new JComboBox(new String[]{"Graphic Mode", "Stats mode", "Serial Sim Mode"});
     private static JComboBox chartType = new JComboBox(new String[]{"Throughput", "Successful Rate", "Depth Successful Rate", "Response Time", "Modalities Rates"});
     private static JComboBox protocolType = new JComboBox(new String[]{"Deterministic", "Probabilistic", "Combined"});
     private static List<String> deployStrings = new ArrayList<>();
@@ -357,10 +356,9 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
         add(gui);
 
         Collections.addAll(deployStrings, DeploymentTypes.getDeploymentTypes());
-        Collections.addAll(graphicStrings, "Graphic Mode", "Stats mode");
+        Collections.addAll(graphicStrings, "Graphic Mode", "Stats mode", "Serial Sim Mode");
         Collections.addAll(chartStrings, "Throughput", "Successful Rate", "Depth Successful Rate", "Response Time", "Modalities Rates");
         Collections.addAll(protocolStrings, "Deterministic", "Probabilistic", "Combined");
-
     }
 
     public static void createAndShowGUI () {
@@ -389,12 +387,12 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
         progressBar.setValue(0);
     }
 
-    public static void drawCharts (Collector collector, Map<Thread, SimContext> threads) {
-        chartThrougput = new ChartThroughput(collector, threads);
-        chartSR = new ChartSuccessfulRate(collector, threads);
-        chartDSR = new ChartDepthSuccessRate(collector, threads);
-        chartRT = new ChartResponseTime(collector, threads);
-        chartModalitiesRates = new ChartModalities(collector, threads);
+    public static void drawCharts (Collector collector, List<AbstractSimInstance> instances) {
+        chartThrougput = new ChartThroughput(collector, instances);
+        chartSR = new ChartSuccessfulRate(collector, instances);
+        chartDSR = new ChartDepthSuccessRate(collector, instances);
+        chartRT = new ChartResponseTime(collector, instances);
+        chartModalitiesRates = new ChartModalities(collector, instances);
 
         JFreeChart chart = null;
         switch (chartStrings.get(chartType.getSelectedIndex())) {
@@ -471,8 +469,9 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
             graphicMode.setSelectedIndex(graphicStrings.indexOf(item));
             assert item != null;
             H20Sim.CANVAS_MODE = item.equals("Graphic Mode");
+            H20Sim.SERIAL_SIM = item.equals("Serial Sim Mode");
         } else if (e.getSource() == check) {
-            H20Sim.SLOW_RETRANSMITION  = !H20Sim.SLOW_RETRANSMITION;
+            H20Sim.SLOW_RETRANSMITION = !H20Sim.SLOW_RETRANSMITION;
         } else if (e.getSource() == protocolType) {
             JComboBox cb = (JComboBox) e.getSource();
             String item = (String) cb.getSelectedItem();
