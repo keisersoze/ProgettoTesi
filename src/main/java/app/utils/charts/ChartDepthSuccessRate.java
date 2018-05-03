@@ -2,7 +2,6 @@ package app.utils.charts;
 
 import app.H20Sim;
 import app.sim.h20.AbstractSimInstance;
-import app.stats.Collector;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.block.BlockBorder;
@@ -21,13 +20,13 @@ public class ChartDepthSuccessRate implements Chart {
 
     private final JFreeChart chart;
 
-    public ChartDepthSuccessRate (Collector collector,List<AbstractSimInstance> instances) {
-        chart = createChart(createDataset(collector, instances));
+    public ChartDepthSuccessRate (List<AbstractSimInstance> instances) {
+        chart = createChart(createDataset(instances));
     }
 
     public static JFreeChart createChart (IntervalXYDataset dataset) {
 
-        final JFreeChart chart = ChartFactory.createXYBarChart("Depth Succesuful Rate", "% Frame Arrived", false, "Depth", dataset, PlotOrientation.VERTICAL, true, true, false);
+        final JFreeChart chart = ChartFactory.createXYBarChart("Depth Succesuful Rate", "Depth", false, "% Frame Arrived", dataset, PlotOrientation.VERTICAL, true, true, false);
         XYPlot plot = (XYPlot) chart.getPlot();
         plot.setBackgroundPaint(Color.white);
 
@@ -49,13 +48,13 @@ public class ChartDepthSuccessRate implements Chart {
     }
 
 
-    private static IntervalXYDataset createDataset (Collector collector, List<AbstractSimInstance> instances) {
+    private static IntervalXYDataset createDataset ( List<AbstractSimInstance> instances) {
         Map<Integer, Double> stats = new HashMap<>();
         XYSeries series = new XYSeries("Successful rate");
 
         for (int j = 0; j < H20Sim.N_SAMPLES; j++) {
-            for (Thread thread : instances) {
-                collector.getSourceSamples(thread.getName()).get(j).getDeptArrivalSuccessRate().forEach((k, v) -> stats.merge(k, v, (t, u) -> (t + u) / 2));
+            for (AbstractSimInstance context : instances) {
+                context.getCollector().getSourceSamples(context.getName()).get(j).getDeptArrivalSuccessRate().forEach((k, v) -> stats.merge(k, v, (t, u) -> (t + u) / 2));
             }
         }
 

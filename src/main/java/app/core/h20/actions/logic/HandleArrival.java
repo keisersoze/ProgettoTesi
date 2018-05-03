@@ -7,7 +7,6 @@ import app.factory.EventTypes;
 import app.model.Frame;
 import app.model.Sensor;
 import app.sim.SimContext;
-import app.utils.ConsoleColors;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -39,7 +38,7 @@ public class HandleArrival implements Action {
             // STATS
             context.getFramesArrived().put(frame, new LinkedList<>());
         } else {
-            System.out.println(ConsoleColors.RED + "WARNING: No sensors available to handle the ArrivalEvent " + this + ConsoleColors.RESET);
+            //System.out.println(ConsoleColors.RED + "WARNING: No sensors available to handle the ArrivalEvent " + this + ConsoleColors.RESET);
         }
     }
 }

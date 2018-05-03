@@ -12,7 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public interface SimContext {
+public interface SimContext{
     Scheduler getScheduler ();
 
     Collector getCollector ();
@@ -40,4 +40,8 @@ public interface SimContext {
     void setPercentageCompleted ();
 
     double getThreeshold ();
+
+    double getLambda();
+
+    double getSensorsNumber();
 }

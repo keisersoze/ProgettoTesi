@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public abstract class AbstractSimInstance extends Thread implements SimContext, Runnable {
+public abstract class AbstractSimInstance extends Thread implements SimContext {
     private final Scheduler scheduler;
     private final Collector collector;
     private final Map<Frame, LinkedList<Double>> framesArrived;
@@ -36,7 +36,7 @@ public abstract class AbstractSimInstance extends Thread implements SimContext, 
         this.scheduler = scheduler;
         simTime = 0.0;
         framesArrived = new ConcurrentHashMap<>();
-        modelFactory = new MyModelFactory();
+        modelFactory = new MyModelFactory(this);
         sensors = modelFactory.deploySensors(H20Sim.DEPLOYMENT_TYPE);
         nSamples = 0;
     }
@@ -97,6 +97,16 @@ public abstract class AbstractSimInstance extends Thread implements SimContext, 
         nSamples++;
     }
 
+    @Override
+    public double getLambda () {
+        return H20Sim.LAMBDA;
+    }
+
+    @Override
+    public double getSensorsNumber () {
+        return H20Sim.N_SENSORS;
+    }
+
     protected void initEvents () {
         Event move_evt = getCoreFactory().getEvent(EventTypes.MoveEvent, 0, this);
         Event arrival_evt = getCoreFactory().getEvent(EventTypes.ArrivalEvent, 0, this);
@@ -105,7 +115,7 @@ public abstract class AbstractSimInstance extends Thread implements SimContext, 
 
         //imposto gli eventi periodici
         move_evt.setInterval(H20Sim.MOVE_REFRESH);
-        stats_evt.setInterval(1 / H20Sim.LAMDA);
+        stats_evt.setInterval(1 / getLambda());
 
         //aggiungo gli eventi periodici allo scheduler
         getScheduler().addEvent(arrival_evt);
@@ -113,6 +123,5 @@ public abstract class AbstractSimInstance extends Thread implements SimContext, 
         if (H20Sim.MOVEMENT_SPEED > 0) {
             getScheduler().addEvent(move_evt);
         }
-
     }
 }

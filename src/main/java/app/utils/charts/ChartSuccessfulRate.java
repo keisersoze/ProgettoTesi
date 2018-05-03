@@ -2,7 +2,6 @@ package app.utils.charts;
 
 import app.H20Sim;
 import app.sim.h20.AbstractSimInstance;
-import app.stats.Collector;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.block.BlockBorder;
@@ -19,8 +18,8 @@ import java.util.List;
 public class ChartSuccessfulRate implements Chart {
     private JFreeChart chart;
 
-    public ChartSuccessfulRate (Collector collector, List<AbstractSimInstance> instances) {
-        chart = createChart(createDataset(collector, instances));
+    public ChartSuccessfulRate (List<AbstractSimInstance> instances) {
+        chart = createChart(createDataset(instances));
     }
 
     static JFreeChart createChart (XYDataset dataset) {
@@ -47,13 +46,13 @@ public class ChartSuccessfulRate implements Chart {
         return chart;
     }
 
-    private static XYDataset createDataset (Collector collector, List<AbstractSimInstance> instances) {
+    private static XYDataset createDataset (List<AbstractSimInstance> instances) {
 
         XYSeries series = new XYSeries("Successful rate");
         for (int j = 0; j < H20Sim.N_SAMPLES; j++) {
             double successfullRateAcc = 0;
-            for (Thread t : instances) {
-                successfullRateAcc += collector.getSourceSamples(t.getName()).get(j).getSuccessfullRate() * 100;
+            for (AbstractSimInstance context : instances) {
+                successfullRateAcc += context.getCollector().getSourceSamples(context.getName()).get(j).getSuccessfullRate() * 100;
             }
             series.add(j, successfullRateAcc / H20Sim.NTHREADS);
         }

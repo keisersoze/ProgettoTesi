@@ -1,6 +1,5 @@
 package app.stats.h20;
 
-import app.H20Sim;
 import app.model.Frame;
 import app.model.Sensor;
 import app.sim.SimContext;
@@ -11,20 +10,26 @@ import java.util.LinkedList;
 import java.util.Map;
 
 public class StatsSample implements Sample {
+    private final double rateFrameArrived;
     private double nFrames;
     private double nFramesArrived;
     private double simTime;
     private double avgResponseTime;
 
-    private Map<Integer, Double[]> intervalToSuccessfulRate;
     private Map<Integer, Double> intervalToSuccessful2Rate;
 
     private double nTransmitting;
     private double nReceiving;
     private double nSleep;
 
-    public StatsSample (SimContext context) {
+    private double rateTransmitting;
+    private double rateReceiving;
+    private double rateSleep;
 
+    private SimContext context;
+
+    public StatsSample (SimContext context) {
+        this.context = context;
         //throughput
         simTime = context.getSimTime();
 
@@ -39,9 +44,10 @@ public class StatsSample implements Sample {
             }
         }
         avgResponseTime /= nFramesArrived;
+        rateFrameArrived = nFramesArrived / nFrames;
 
         // Tiene traccia dei frame partiti da una certa profondità in relazione al successo di arrivo ai sink
-        intervalToSuccessfulRate = new HashMap<>();
+        Map<Integer, Double[]> intervalToSuccessfulRate = new HashMap<>();
         for (Map.Entry<Frame, LinkedList<Double>> entry : context.getFramesArrived().entrySet()) {
             double y = entry.getKey().getOwner().getY();
             if (!intervalToSuccessfulRate.containsKey(heightToIndex(y))) {
@@ -71,6 +77,9 @@ public class StatsSample implements Sample {
                 }
             }
         }
+        rateTransmitting = nTransmitting / context.getSensors().size() * 100;
+        rateReceiving = nReceiving / context.getSensors().size() * 100;
+        rateSleep = nSleep / context.getSensors().size() * 100;
     }
 
     private static int heightToIndex (double height) {
@@ -79,7 +88,7 @@ public class StatsSample implements Sample {
 
     @Override
     public double getSuccessfullRate () {
-        return nFramesArrived / nFrames;
+        return rateFrameArrived;
     }
 
     @Override
@@ -99,17 +108,17 @@ public class StatsSample implements Sample {
 
     @Override
     public double getTransmittingModeRate () {
-        return nTransmitting / H20Sim.N_SENSORS * 100;
+        return rateTransmitting;
     }
 
     @Override
     public double getReceivingModeRate () {
-        return nReceiving / H20Sim.N_SENSORS * 100;
+        return rateReceiving;
     }
 
     @Override
     public double getSleepModeRate () {
-        return nSleep / H20Sim.N_SENSORS * 100;
+        return rateSleep;
     }
 
     @Override

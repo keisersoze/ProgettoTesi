@@ -4,8 +4,8 @@ package app;
 import app.core.h20.scheduler.DefaultScheduler;
 import app.factory.DeploymentTypes;
 import app.sim.h20.AbstractSimInstance;
+import app.sim.h20.SensorNumberSim;
 import app.sim.h20.SimulationInstance;
-import app.sim.h20.ThreesholdGraphicSim;
 import app.sim.h20G.GraphicSim;
 import app.stats.h20.BaseCollector;
 import app.utils.Settings;
@@ -30,7 +30,7 @@ public class H20Sim {
     public static int NTHREADS = 1;
     public static int N_SAMPLES = 2000;
     //parametri simulazione
-    public static double LAMDA = 1;
+    public static double LAMBDA = 1;
     public static double CSMA_STRENGTH = 3;
     public static double N_SENSORS = 300;
     public static double MOVEMENT_SPEED = 0.5; // m/s
@@ -80,7 +80,7 @@ public class H20Sim {
                     collector.addStatSource(instance_name);
                     AbstractSimInstance context;
                     if (H20Sim.SERIAL_SIM) {
-                        context = new ThreesholdGraphicSim(collector, new DefaultScheduler(), instance_name);
+                        context = new SensorNumberSim(collector, new DefaultScheduler(), instance_name);
                     } else {
                         context = new SimulationInstance(collector, new DefaultScheduler(), instance_name);
                     }
@@ -100,7 +100,7 @@ public class H20Sim {
 
             //stampo le statistiche
             if (!STOPPED) {
-                Settings.drawCharts(collector, instances);
+                Settings.drawCharts(instances);
                 Settings.buttonStart.setEnabled(true);
                 Settings.buttonStop.setEnabled(false);
             }

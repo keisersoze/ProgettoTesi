@@ -7,7 +7,6 @@ package app.utils;
 import app.H20Sim;
 import app.factory.DeploymentTypes;
 import app.sim.h20.AbstractSimInstance;
-import app.stats.Collector;
 import app.utils.charts.*;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -158,7 +157,7 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
 
         valLambda = new JFormattedTextField(amountFormat);
         valLambda.setBackground(backgroudVal);
-        valLambda.setValue(H20Sim.LAMDA);
+        valLambda.setValue(H20Sim.LAMBDA);
         valLambda.setColumns(3);
         valLambda.addPropertyChangeListener("value", this);
 
@@ -387,12 +386,12 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
         progressBar.setValue(0);
     }
 
-    public static void drawCharts (Collector collector, List<AbstractSimInstance> instances) {
-        chartThrougput = new ChartThroughput(collector, instances);
-        chartSR = new ChartSuccessfulRate(collector, instances);
-        chartDSR = new ChartDepthSuccessRate(collector, instances);
-        chartRT = new ChartResponseTime(collector, instances);
-        chartModalitiesRates = new ChartModalities(collector, instances);
+    public static void drawCharts (List<AbstractSimInstance> instances) {
+        chartThrougput = new ChartThroughput(instances);
+        chartSR = new ChartSuccessfulRate(instances);
+        chartDSR = new ChartDepthSuccessRate(instances);
+        chartRT = new ChartResponseTime(instances);
+        chartModalitiesRates = new ChartModalities(instances);
 
         JFreeChart chart = null;
         switch (chartStrings.get(chartType.getSelectedIndex())) {
@@ -439,7 +438,7 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
         } else if (source == valFrequency) {
             H20Sim.SENSOR_FREQUENCY = ((Number) valFrequency.getValue()).doubleValue();
         } else if (source == valLambda) {
-            H20Sim.LAMDA = ((Number) valLambda.getValue()).doubleValue();
+            H20Sim.LAMBDA = ((Number) valLambda.getValue()).doubleValue();
         } else if (source == valFieldx) {
             H20Sim.FIELD_X = ((Number) valFieldx.getValue()).floatValue();
         } else if (source == valFieldy) {

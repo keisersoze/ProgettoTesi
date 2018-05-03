@@ -9,12 +9,19 @@ import app.model.Transmission;
 import app.model.h20.BaseFrame;
 import app.model.h20.BaseSensor;
 import app.model.h20.BaseTransmission;
+import app.sim.SimContext;
 import app.utils.MyLib;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MyModelFactory implements ModelFactory {
+    private final SimContext context;
+
+    public MyModelFactory (SimContext context) {
+        this.context = context;
+    }
+
     @Override
     public Sensor getSensor (float x, float y, float z) {
         return new BaseSensor(x, y, z);
@@ -59,9 +66,9 @@ public class MyModelFactory implements ModelFactory {
 
     private List<Sensor> invProportionalLayerDeployment () {
 
-        int p1 = (int) (H20Sim.N_SENSORS / 2);
-        int p2 = (int) (H20Sim.N_SENSORS / 3);
-        int p3 = (int) H20Sim.N_SENSORS - p1 - p2;
+        int p1 = (int) (context.getSensorsNumber() / 2);
+        int p2 = (int) (context.getSensorsNumber() / 3);
+        int p3 = (int) context.getSensorsNumber() - p1 - p2;
         List<Sensor> sensors = threeLayerDeployment(p1, p2, p3);
         deploySink(sensors);
 
@@ -70,9 +77,9 @@ public class MyModelFactory implements ModelFactory {
 
     private List<Sensor> proportionalLayerDeployment () {
 
-        int p1 = (int) (H20Sim.N_SENSORS / 2);
-        int p2 = (int) (H20Sim.N_SENSORS / 3);
-        int p3 = (int) H20Sim.N_SENSORS - p1 - p2;
+        int p1 = (int) (context.getSensorsNumber() / 2);
+        int p2 = (int) (context.getSensorsNumber() / 3);
+        int p3 = (int) context.getSensorsNumber() - p1 - p2;
         List<Sensor> sensors = threeLayerDeployment(p3, p2, p1);
         deploySink(sensors);
 
@@ -81,8 +88,8 @@ public class MyModelFactory implements ModelFactory {
 
     private List<Sensor> layerDeployment () {
 
-        int p1 = (int) (H20Sim.N_SENSORS / 3);
-        int p2 = (int) H20Sim.N_SENSORS - 2 * p1;
+        int p1 = (int) (context.getSensorsNumber() / 3);
+        int p2 = (int) context.getSensorsNumber() - 2 * p1;
         List<Sensor> sensors = threeLayerDeployment(p1, p1, p2);
         deploySink(sensors);
 
@@ -130,7 +137,7 @@ public class MyModelFactory implements ModelFactory {
     private List<Sensor> baseDeployment () {
         List<Sensor> sensors = new ArrayList<>();
 
-        for (int i = 0; i < H20Sim.N_SENSORS; i++) {
+        for (int i = 0; i < context.getSensorsNumber(); i++) {
             Sensor s1 = getSensor(MyLib.random(0, H20Sim.FIELD_X), MyLib.random(0, H20Sim.FIELD_Y - H20Sim.FIELD_Y / 10), MyLib.random(0, H20Sim.FIELD_Z));
             sensors.add(s1);
         }
