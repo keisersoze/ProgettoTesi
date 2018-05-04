@@ -34,7 +34,7 @@ public class HandleTransmission extends app.core.h20.actions.logic.HandleTransmi
 
         if (CSMA(sender, context)) {
             sender.setTransmitting(true);
-
+            getSensorTransmissionMap().put(sender,context.getSimTime());
             for (Sensor receiver : sender.getNeighbors()) {
                 Transmission transmission = context.getModelFactory().getTransmission(sender, receiver, frame, numHop);
                 transmission.setTime(context.getSimTime());    // Per il calcolo di quanto sta avanzando la trasmissione (la linea)
