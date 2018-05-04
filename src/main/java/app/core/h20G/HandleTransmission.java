@@ -9,6 +9,8 @@ import app.model.Transmission;
 import app.sim.SimContext;
 import app.utils.Canvas;
 
+import java.util.Map;
+
 import static org.apache.commons.math3.util.FastMath.log;
 
 public class HandleTransmission extends app.core.h20.actions.logic.HandleTransmission {
@@ -16,6 +18,7 @@ public class HandleTransmission extends app.core.h20.actions.logic.HandleTransmi
     private Canvas canvas;
 
     public HandleTransmission (Canvas canvas) {
+        super();
         this.canvas = canvas;
     }
 
