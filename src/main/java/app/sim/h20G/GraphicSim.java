@@ -74,6 +74,7 @@ public class GraphicSim extends AbstractSimInstance implements Runnable {
             }
         }
 
+        getSensors().addAll(getModelFactory().deploySensors(H20Sim.DEPLOYMENT_TYPE));
         for (Sensor sensor : getSensors()) {
             sensor.setNeighbors(MyLib.calculateNeighbors(sensor, this));
         }

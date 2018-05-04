@@ -2,9 +2,10 @@
  * Copyright (c) 2018. Tesi di laurea in Informatica Università Ca' Foscari di Venezia. Creato da Alessio Del Conte e Filippo Maganza
  */
 
-package app.sim.h20;
+package app.sim.h20serial;
 
 import app.core.Scheduler;
+import app.sim.h20serial.SerialSim;
 import app.stats.Collector;
 
 public class LambdaSim extends SerialSim {
@@ -14,6 +15,6 @@ public class LambdaSim extends SerialSim {
 
     @Override
     public double getLambda () {
-        return super.getProperty();
+        return super.getSerializedProperty();
     }
 }

@@ -44,4 +44,5 @@ public interface SimContext{
     double getLambda();
 
     double getSensorsNumber();
+
 }

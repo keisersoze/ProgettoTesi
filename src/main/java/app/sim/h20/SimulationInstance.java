@@ -27,6 +27,7 @@ public class SimulationInstance extends AbstractSimInstance {
 
     public void run () {
 
+        getSensors().addAll(getModelFactory().deploySensors(H20Sim.DEPLOYMENT_TYPE));
         for (Sensor sensor : getSensors()) {
             sensor.setNeighbors(MyLib.calculateNeighbors(sensor, this));
         }
@@ -48,9 +49,4 @@ public class SimulationInstance extends AbstractSimInstance {
         return coreFactory;
     }
 
-
-    @Override
-    public double getThreeshold () {
-        return H20Sim.THRESHOLD;
-    }
 }

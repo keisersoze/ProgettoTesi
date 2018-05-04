@@ -30,84 +30,89 @@ public abstract class AbstractSimInstance extends Thread implements SimContext {
     private double simTime;
     //Dati statistici che vengono utilizzati dal collector
 
-    public AbstractSimInstance (Collector collector, Scheduler scheduler) {
+    public AbstractSimInstance(Collector collector, Scheduler scheduler) {
         frames = new ArrayList<>();
         this.collector = collector;
         this.scheduler = scheduler;
         simTime = 0.0;
         framesArrived = new ConcurrentHashMap<>();
         modelFactory = new MyModelFactory(this);
-        sensors = modelFactory.deploySensors(H20Sim.DEPLOYMENT_TYPE);
+        sensors = new ArrayList<>();
         nSamples = 0;
     }
 
-    public Scheduler getScheduler () {
+    public Scheduler getScheduler() {
         return scheduler;
     }
 
-    public double getSimTime () {
+    public double getSimTime() {
         return simTime;
     }
 
     @Override
-    public void setSimTime (double simTime) {
+    public void setSimTime(double simTime) {
         this.simTime = simTime;
     }
 
 
     @Override
-    public MersenneTwister getMarsenneTwister () {
+    public MersenneTwister getMarsenneTwister() {
         return marsenneTwister;
     }
 
-    // metodi per l'update dei dati statistici
 
-    public Collector getCollector () {
+    public Collector getCollector() {
         return collector;
     }
 
     @Override
-    public Map<Frame, LinkedList<Double>> getFramesArrived () {
+    public Map<Frame, LinkedList<Double>> getFramesArrived() {
         return framesArrived;
     }
 
     @Override
-    public List<Sensor> getSensors () {
+    public List<Sensor> getSensors() {
         return sensors;
     }
 
     @Override
-    public List<Frame> getFrames () {
+    public List<Frame> getFrames() {
         return frames;
     }
 
     @Override
-    public ModelFactory getModelFactory () {
+    public ModelFactory getModelFactory() {
         return modelFactory;
     }
 
     @Override
-    public double getPercentageCompleted () {
+    public double getPercentageCompleted() {
         return nSamples / H20Sim.N_SAMPLES * 100;
     }
 
     @Override
-    public void setPercentageCompleted () {
-
+    public void setPercentageCompleted() {
         nSamples++;
     }
 
     @Override
-    public double getLambda () {
+    public double getLambda() {
         return H20Sim.LAMBDA;
     }
 
     @Override
-    public double getSensorsNumber () {
+    public double getSensorsNumber() {
         return H20Sim.N_SENSORS;
     }
 
-    protected void initEvents () {
+
+    @Override
+    public double getThreeshold() {
+        return H20Sim.THRESHOLD;
+    }
+
+
+    protected void initEvents() {
         Event move_evt = getCoreFactory().getEvent(EventTypes.MoveEvent, 0, this);
         Event arrival_evt = getCoreFactory().getEvent(EventTypes.ArrivalEvent, 0, this);
         Event stats_evt = getCoreFactory().getEvent(EventTypes.StatisticEvent, 0, this);
