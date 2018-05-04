@@ -10,9 +10,17 @@ import app.model.Transmission;
 import app.sim.SimContext;
 import app.utils.MyLib;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.apache.commons.math3.util.FastMath.log;
 
 public class HandleTransmission implements Action {
+    private Map<Sensor, Double> sensorTransmissionMap;
+
+    public HandleTransmission() {
+        this.sensorTransmissionMap = new HashMap<>();
+    }
 
     protected static boolean CSMA (Sensor sender, SimContext context) {
         return MyLib.tomW(H20Sim.SENSOR_POWER) / MyLib.calculateNoise(sender, context) >= H20Sim.CSMA_STRENGTH;
@@ -27,6 +35,7 @@ public class HandleTransmission implements Action {
         sender.setWaiting(false);
         if (CSMA(sender, context)) {
             sender.setTransmitting(true);
+            sensorTransmissionMap.put(sender,context.getSimTime());
             for (Sensor receiver : sender.getNeighbors()) {     // Per tutti i sensori che possono ricevere viene creato un nuovo evento
                 Transmission transmission = context.getModelFactory().getTransmission(sender, receiver, frame, numHop);
                 transmission.setTime(context.getSimTime());
@@ -48,4 +57,7 @@ public class HandleTransmission implements Action {
         }
     }
 
+    public Map<Sensor, Double> getSensorTransmissionMap() {
+        return sensorTransmissionMap;
+    }
 }
