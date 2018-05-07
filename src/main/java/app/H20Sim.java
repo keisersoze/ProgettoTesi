@@ -4,7 +4,6 @@ package app;
 import app.core.h20.scheduler.DefaultScheduler;
 import app.factory.DeploymentTypes;
 import app.sim.h20.AbstractSimInstance;
-import app.sim.h20serial.SensorNumberSim;
 import app.sim.h20.SimulationInstance;
 import app.sim.h20G.GraphicSim;
 import app.sim.h20serial.ThresholdSim;
@@ -68,11 +67,10 @@ public class H20Sim {
             Settings.resetProgressBar();
 
             if (CANVAS_MODE) {
-                GraphicSim context = new GraphicSim(collector, new DefaultScheduler());
+                GraphicSim context = new GraphicSim(collector, new DefaultScheduler(), "0");
                 collector.addStatSource("0");
-                Thread thread = new Thread(context, "0");
                 instances.add(context);
-                thread.start();
+                context.start();
             } else {
                 //inizializzazione
                 //avvio dei thread
@@ -91,7 +89,7 @@ public class H20Sim {
             }
 
             //aspetta che tutte le istanze siano terminate
-            for (AbstractSimInstance t : instances) {
+            for (Thread t : instances) {
                 try {
                     t.join();
                 } catch (InterruptedException e) {
