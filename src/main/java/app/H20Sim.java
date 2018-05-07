@@ -18,7 +18,6 @@ import java.util.List;
 public class H20Sim {
     public static final double K = 1.5;
     public static boolean SERIAL_SIM = false;
-    public static boolean SLOW_RETRANSMITION = true;
     public static final double ACK_TIMEOUT = 100; //s
     public static final int ACK_SIZE = 0; //bit
     public static String PROTOCOL = "Deterministic"; //Deterministic  Probabilistic
@@ -40,7 +39,7 @@ public class H20Sim {
     public static int SENSOR_BANDWIDTH = 1000; // b/s
     public static int MAX_FRAME_SIZE = 1000; //bit (200-1600)
     public static double MAX_FRAME_RATE = 0.9;
-    public static int THRESHOLD = 0;
+    public static int THRESHOLD = 500;
     public static double SENSIBILITY = -110; //dBm
     public static double SENSOR_POWER = -104; //dB
     public static double SENSOR_FREQUENCY = 25000; //HZ

@@ -23,7 +23,7 @@ public class HandleReception implements Action {
             Event e = context.getCoreFactory().getEvent(EventTypes.EndReceptionEvent, time, context, transmission); // Viene creato un evento per la fine della ricezione
             context.getScheduler().addEvent(e);
         } else {
-            transmission.setArrived(true); //TODO: da togliere
+            transmission.setArrived(true);
             transmission.getFrame().getTransmissions().remove(transmission); // Elimina la trasmissione
         }
     }

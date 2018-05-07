@@ -77,8 +77,6 @@ public class ChartModalities implements Chart {
         for (int j = 0; j < H20Sim.N_SAMPLES; j++) {
             double sleepModeRateAcc = 0;
             for (AbstractSimInstance context : instances) {
-                System.out.println(context.getCollector().getSourceSamples(context.getName()).get(j).getSleepModeRate());
-
                 sleepModeRateAcc += context.getCollector().getSourceSamples(context.getName()).get(j).getSleepModeRate();
             }
             series3.add(j, sleepModeRateAcc / H20Sim.NTHREADS);

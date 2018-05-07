@@ -1,6 +1,5 @@
 package app.core.h20G;
 
-import app.H20Sim;
 import app.core.Action;
 import app.core.Event;
 import app.factory.EventTypes;
@@ -36,8 +35,7 @@ public class HandleEndReception extends app.core.h20.actions.logic.HandleEndRece
         if (transmission.isSuccessfull()) {
             if (!receiver.isSink()) {
                 if (MyLib.deterministicProtocol(transmission, context)) {   // Decido se ritrasmettere in base alla profondità
-                    double time = H20Sim.SLOW_RETRANSMITION ? MyLib.random(0.2f, 0.4f) : 0;
-                    Event e = context.getCoreFactory().getEvent(EventTypes.TransmissionEvent, time, context, frame, receiver, numHop);
+                    Event e = context.getCoreFactory().getEvent(EventTypes.TransmissionEvent, 0, context, frame, receiver, numHop);
                     context.getScheduler().addEvent(e);
                 }
             } else {

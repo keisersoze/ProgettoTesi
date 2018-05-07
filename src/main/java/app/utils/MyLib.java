@@ -46,7 +46,7 @@ public class MyLib {
         for (Sensor s : context.getSensors()) {
             if (s.isTransmitting() && !s.equals(sender)) {
                 double distance = receiver.getEuclideanDistance(s);
-                if (context.getSimTime() - map.get(s) * H20Sim.SOUND_SPEED >= distance) // se il segnale di disturbo è arrivato
+                if ((context.getSimTime() - map.get(s)) * H20Sim.SOUND_SPEED >= distance) // se il segnale di disturbo è arrivato
                     acc += Math.pow(10, powerReceived(receiver.getEuclideanDistance(s)) / 10);
             }
         }
@@ -109,7 +109,7 @@ public class MyLib {
         if (H20Sim.PROTOCOL.equals("Probabilistic")) {
             return context.getMarsenneTwister().nextDouble() < 0.3;
         } else if (H20Sim.PROTOCOL.equals("Combined")) {
-            return context.getMarsenneTwister().nextDouble() < 0.7;
+            return context.getMarsenneTwister().nextDouble() < 0.55;
         }
         return true;
     }

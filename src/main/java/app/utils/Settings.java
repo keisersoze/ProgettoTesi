@@ -70,7 +70,6 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
     private JFormattedTextField valMRadius;
     private JFormattedTextField valCSMAStreght;
     private JFormattedTextField valNSensors;
-    JCheckBox check = new JCheckBox("Slow Retransmit");
 
     private Settings () {
         super();
@@ -277,9 +276,7 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
         protocolType.addActionListener(this);
         gridPanelSettings.add(protocolType);
 
-        check.addActionListener(this);
-        check.setSelected(H20Sim.SLOW_RETRANSMITION);
-        gridPanelSettings.add(check);
+        gridPanelSettings.add(new Container());
 
         buttonStart.addActionListener(this);
         gridPanelSettings.add(buttonStart);
@@ -469,8 +466,6 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
             assert item != null;
             H20Sim.CANVAS_MODE = item.equals("Graphic Mode");
             H20Sim.SERIAL_SIM = item.equals("Serial Sim Mode");
-        } else if (e.getSource() == check) {
-            H20Sim.SLOW_RETRANSMITION = !H20Sim.SLOW_RETRANSMITION;
         } else if (e.getSource() == protocolType) {
             JComboBox cb = (JComboBox) e.getSource();
             String item = (String) cb.getSelectedItem();
