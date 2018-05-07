@@ -20,16 +20,17 @@ import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
-public class GraphicSim extends AbstractSimInstance implements Runnable {
+public class GraphicSim extends AbstractSimInstance {
     public static int nanos;
     public static long millis = 1;
     private static Canvas canvas;
     private final CoreFactory coreFactory;
 
-    public GraphicSim (Collector collector, Scheduler scheduler) {
+    public GraphicSim (Collector collector, Scheduler scheduler, String instanceName) {
         super(collector, scheduler);
         canvas = new Canvas(this);
         coreFactory = new GraphicCoreFactory(canvas);
+        setName(instanceName);
     }
 
     private static void setSettings () {
