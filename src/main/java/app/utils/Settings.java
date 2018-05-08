@@ -46,10 +46,14 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
     private static JComboBox graphicMode = new JComboBox(new String[]{"Graphic Mode", "Stats mode", "Serial Sim Mode"});
     private static JComboBox chartType = new JComboBox(new String[]{"Throughput", "Successful Rate", "Depth Successful Rate", "Response Time", "Modalities Rates"});
     private static JComboBox protocolType = new JComboBox(new String[]{"Deterministic", "Probabilistic", "Combined"});
+    private static JComboBox serialSimType = new JComboBox(new String[]{"Threshold", "Lambda", "Sensors Number"});
+
     private static List<String> deployStrings = new ArrayList<>();
     private static List<String> graphicStrings = new ArrayList<>();
     private static List<String> chartStrings = new ArrayList<>();
     private static List<String> protocolStrings = new ArrayList<>();
+    private static List<String> serialSimStrings = new ArrayList<>();
+
     private static JFrame frame;
     //Formats to format and parse numbers
     private NumberFormat amountFormat;
@@ -276,7 +280,10 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
         protocolType.addActionListener(this);
         gridPanelSettings.add(protocolType);
 
-        gridPanelSettings.add(new Container());
+        serialSimType.setSelectedIndex(0);
+        serialSimType.addActionListener(this);
+        serialSimType.setEnabled(false);
+        gridPanelSettings.add(serialSimType);
 
         buttonStart.addActionListener(this);
         gridPanelSettings.add(buttonStart);
@@ -355,6 +362,7 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
         Collections.addAll(graphicStrings, "Graphic Mode", "Stats mode", "Serial Sim Mode");
         Collections.addAll(chartStrings, "Throughput", "Successful Rate", "Depth Successful Rate", "Response Time", "Modalities Rates");
         Collections.addAll(protocolStrings, "Deterministic", "Probabilistic", "Combined");
+        Collections.addAll(serialSimStrings, "Threshold", "Lambda", "Sensors Number");
     }
 
     public static void createAndShowGUI () {
@@ -466,12 +474,18 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
             assert item != null;
             H20Sim.CANVAS_MODE = item.equals("Graphic Mode");
             H20Sim.SERIAL_SIM = item.equals("Serial Sim Mode");
+            serialSimType.setEnabled(item.equals("Serial Sim Mode"));
         } else if (e.getSource() == protocolType) {
             JComboBox cb = (JComboBox) e.getSource();
             String item = (String) cb.getSelectedItem();
             protocolType.setSelectedIndex(protocolStrings.indexOf(item));
             H20Sim.PROTOCOL = item;
-        } else if (e.getSource() == buttonStart) {
+        } else if (e.getSource() == serialSimType) {
+            JComboBox cb = (JComboBox) e.getSource();
+            String item = (String) cb.getSelectedItem();
+            serialSimType.setSelectedIndex(serialSimStrings.indexOf(item));
+            H20Sim.SERIAL_SIM_TYPE = item;
+        }else if (e.getSource() == buttonStart) {
             buttonStart.setEnabled(false);
             buttonStop.setEnabled(true);
             H20Sim.START = true;

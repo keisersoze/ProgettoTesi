@@ -5,12 +5,11 @@
 package app.sim.h20serial;
 
 import app.core.Scheduler;
-import app.sim.h20serial.SerialSim;
 import app.stats.Collector;
 
 public class LambdaSim extends SerialSim {
     public LambdaSim (Collector collector, Scheduler scheduler, String instanceName) {
-        super(collector, scheduler, instanceName, 0.01, 5);
+        super(collector, scheduler, instanceName, 0.01, 1);
     }
 
     @Override

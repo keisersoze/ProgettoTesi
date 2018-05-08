@@ -27,8 +27,6 @@ public interface SimContext{
 
     Map<Frame, LinkedList<Double>> getFramesArrived ();
 
-    void run ();
-
     MersenneTwister getMarsenneTwister ();
 
     CoreFactory getCoreFactory ();

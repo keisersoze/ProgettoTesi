@@ -26,6 +26,13 @@ public class MoveSensors implements Action {
     @Override
     public void execute (Event event) {
         SimContext context = event.getContext();
+
+        if (!sensorsDeployment.containsKey(context.getSensors().get(0))) {  // risoluzione bug serial sim
+            collected = false;
+            sensorsDeployment.clear();
+            sensorsDirections.clear();
+        }
+
         if (!collected) {
             context.getSensors().forEach(sensor -> sensorsDeployment.put(sensor, new Vector3f(sensor.getPosition())));
             for (Map.Entry<Sensor, Vector3f> entry : sensorsDeployment.entrySet()) {
@@ -34,9 +41,7 @@ public class MoveSensors implements Action {
             collected = true;
         }
 
-
         for (Sensor sensor : context.getSensors()) {
-
             double distance = H20Sim.MOVEMENT_SPEED * H20Sim.MOVE_REFRESH;
             double total = sensor.getPosition().distance(sensorsDirections.get(sensor));
             double scalar = distance / total <= 1 ? distance / total : 1;

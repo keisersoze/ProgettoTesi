@@ -6,6 +6,8 @@ import app.factory.DeploymentTypes;
 import app.sim.h20.AbstractSimInstance;
 import app.sim.h20.SimulationInstance;
 import app.sim.h20G.GraphicSim;
+import app.sim.h20serial.LambdaSim;
+import app.sim.h20serial.SensorNumberSim;
 import app.sim.h20serial.ThresholdSim;
 import app.stats.h20.BaseCollector;
 import app.utils.Settings;
@@ -17,6 +19,7 @@ import java.util.List;
 
 public class H20Sim {
     public static final double K = 1.5;
+    public static String SERIAL_SIM_TYPE = "Threshold";
     public static boolean SERIAL_SIM = false;
     public static final double ACK_TIMEOUT = 100; //s
     public static final int ACK_SIZE = 0; //bit
@@ -78,11 +81,16 @@ public class H20Sim {
                     collector.addStatSource(instance_name);
                     AbstractSimInstance context;
                     if (H20Sim.SERIAL_SIM) {
-                        context = new ThresholdSim(collector, new DefaultScheduler(), instance_name);
+                        if (H20Sim.SERIAL_SIM_TYPE.equals("Threshold")) {
+                            context = new ThresholdSim(collector, new DefaultScheduler(), instance_name);
+                        } else if (H20Sim.SERIAL_SIM_TYPE.equals("Lambda")) {
+                            context = new LambdaSim(collector, new DefaultScheduler(), instance_name);
+                        } else {
+                            context = new SensorNumberSim(collector, new DefaultScheduler(), instance_name);
+                        }
                     } else {
                         context = new SimulationInstance(collector, new DefaultScheduler(), instance_name);
-                    }
-                    instances.add(context);
+                    } instances.add(context);
                     context.start();
                 }
             }

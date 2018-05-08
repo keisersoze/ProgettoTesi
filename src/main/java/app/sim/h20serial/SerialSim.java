@@ -8,13 +8,13 @@ import app.stats.Collector;
 import app.utils.MyLib;
 
 public abstract class SerialSim extends SimulationInstance {
-    private double max;
     private double min;
+    private double interval;
 
     public SerialSim (Collector collector, Scheduler scheduler, String instanceName, double min, double max) {
         super(collector, scheduler, instanceName);
         this.min = min;
-        this.max = max;
+        this.interval = (max - min) * 0.2;
         setName(instanceName);
     }
 
@@ -22,7 +22,8 @@ public abstract class SerialSim extends SimulationInstance {
     public void setPercentageCompleted () {
         super.setPercentageCompleted();
         if (super.getPercentageCompleted() % 20 == 0) { //TODO attenzione
-            min += (max - min) * 0.2;
+            min += interval;
+            System.out.println(min);
 
             //pulisco tutto
             getScheduler().clear();
@@ -41,7 +42,7 @@ public abstract class SerialSim extends SimulationInstance {
         }
     }
 
-    public double getSerializedProperty(){
+    public double getSerializedProperty () {
         return min;
     }
 }
