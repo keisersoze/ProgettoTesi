@@ -24,7 +24,7 @@ public class ChartSuccessfulRate implements Chart {
 
     static JFreeChart createChart (XYDataset dataset) {
 
-        JFreeChart chart = ChartFactory.createXYLineChart("Successful rate", "Samples", "% Frames arrived", dataset, PlotOrientation.VERTICAL, true, true, false);
+        JFreeChart chart = ChartFactory.createXYLineChart("Packet Delivery Ratio", "Samples", "% Frames arrived", dataset, PlotOrientation.VERTICAL, true, true, false);
 
         XYPlot plot = chart.getXYPlot();
 

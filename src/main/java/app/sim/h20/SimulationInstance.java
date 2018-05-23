@@ -4,7 +4,6 @@ import app.H20Sim;
 import app.core.Event;
 import app.core.Scheduler;
 import app.factory.CoreFactory;
-import app.factory.H20Probabilistic.ProbabilisticCoreFactory;
 import app.factory.h20.MyCoreFactory;
 import app.factory.h20Reliable.h20RCoreFactory;
 import app.model.Sensor;
@@ -20,7 +19,7 @@ public class SimulationInstance extends AbstractSimInstance {
         super(collector, scheduler);
         setName(instanceName);
         if (true) {
-            coreFactory = new ProbabilisticCoreFactory();
+            coreFactory = new MyCoreFactory();
         } else {
             coreFactory = new h20RCoreFactory();
         }

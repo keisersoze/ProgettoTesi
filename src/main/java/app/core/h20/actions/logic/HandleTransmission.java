@@ -33,7 +33,7 @@ public class HandleTransmission implements Action {
         Sensor sender = event.getSensor();
         int numHop = event.getInt();
         sender.setWaiting(false);
-        if (true) {
+        if (CSMA(sender, context)) {             //TODO: CSMA(sender, context);
             sender.setTransmitting(true);
             sensorTransmissionMap.put(sender,context.getSimTime());
             for (Sensor receiver : sender.getNeighbors()) {     // Per tutti i sensori che possono ricevere viene creato un nuovo evento

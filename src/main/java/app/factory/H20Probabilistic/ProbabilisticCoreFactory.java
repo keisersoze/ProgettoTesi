@@ -6,6 +6,8 @@ import app.core.h20.events.BaseEvent;
 import app.core.h20.events.SensorEvent;
 import app.core.h20.events.SensorFrameEvent;
 import app.core.h20.events.TransmissionEvent;
+import app.core.h20Probabilistic.HandleEndReception;
+import app.core.h20Probabilistic.HandleTransmission;
 import app.core.h20Probabilistic.ProbabilisticReception;
 import app.factory.ActionTypes;
 import app.factory.EventTypes;
@@ -17,6 +19,8 @@ import app.sim.SimContext;
 
 public class ProbabilisticCoreFactory extends MyCoreFactory {
     private ProbabilisticReception probabilisticReception;
+    private HandleEndReception handleEndReception;
+    private HandleTransmission handleTransmission;
 
     @Override
     public Action getAction (String type) {
@@ -25,8 +29,19 @@ public class ProbabilisticCoreFactory extends MyCoreFactory {
                 probabilisticReception = new ProbabilisticReception();
             }
             return probabilisticReception;
-        }
+        } else if (type.equalsIgnoreCase(ActionTypes.HandleEndReception)) {
+            if (handleEndReception == null) {
+                handleEndReception = new HandleEndReception();
+            }
+            return handleEndReception;
 
+        } else if (type.equalsIgnoreCase(ActionTypes.HandleTransmission)) {
+            if (handleTransmission == null) {
+                handleTransmission = new HandleTransmission();
+            }
+            return handleTransmission;
+
+        }
         return super.getAction(type);
     }
 

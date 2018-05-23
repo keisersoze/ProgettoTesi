@@ -34,9 +34,6 @@ public class ProbabilisticReception implements Action {
     private static boolean correctTransmission (double distance, SimContext context) {
         double gamma = calculateGamma(distance);
         double Qe = calculateQe(gamma);
-        if (pow((1 - Qe), 320) != 1.0) {
-            System.out.println(pow(1 - Qe, 320));
-        }
         return context.getMarsenneTwister().nextDouble() < pow(1 - Qe, 320);          //320 sono i bit del messaggio
     }
 }

@@ -44,7 +44,7 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
     private static Chart chartModalitiesRates;
     private static JComboBox deployType = new JComboBox(DeploymentTypes.getDeploymentTypes());
     private static JComboBox graphicMode = new JComboBox(new String[]{"Graphic Mode", "Stats mode", "Serial Sim Mode"});
-    private static JComboBox chartType = new JComboBox(new String[]{"Throughput", "Successful Rate", "Depth Successful Rate", "Response Time", "Modalities Rates"});
+    private static JComboBox chartType = new JComboBox(new String[]{"Throughput", "Packet Delivery Ratio", "Depth Successful Rate", "End-To-End Delay", "Modalities Rates"});
     private static JComboBox protocolType = new JComboBox(new String[]{"Deterministic", "Probabilistic", "Combined"});
     private static JComboBox serialSimType = new JComboBox(new String[]{"Threshold", "Lambda", "Sensors Number"});
 
@@ -360,7 +360,7 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
 
         Collections.addAll(deployStrings, DeploymentTypes.getDeploymentTypes());
         Collections.addAll(graphicStrings, "Graphic Mode", "Stats mode", "Serial Sim Mode");
-        Collections.addAll(chartStrings, "Throughput", "Successful Rate", "Depth Successful Rate", "Response Time", "Modalities Rates");
+        Collections.addAll(chartStrings, "Throughput", "Packet Delivery Ratio", "Depth Successful Rate", "End-To-End Delay", "Modalities Rates");
         Collections.addAll(protocolStrings, "Deterministic", "Probabilistic", "Combined");
         Collections.addAll(serialSimStrings, "Threshold", "Lambda", "Sensors Number");
     }
@@ -403,13 +403,13 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
             case "Throughput":
                 chart = chartThrougput.getChart();
                 break;
-            case "Successful Rate":
+            case "Packet Delivery Ratio":
                 chart = Settings.chartSR.getChart();
                 break;
             case "Depth Successful Rate":
                 chart = Settings.chartDSR.getChart();
                 break;
-            case "Response Time":
+            case "End-To-End Delay":
                 chart = Settings.chartRT.getChart();
                 break;
             case "Modalities Rates":
@@ -503,7 +503,7 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
                     chartPanel.setChart(chartThrougput.getChart());
                     frame.pack();
                     break;
-                case "Successful Rate":
+                case "Packet Delivery Ratio":
                     chartPanel.setChart(Settings.chartSR.getChart());
                     frame.pack();
                     break;
@@ -511,7 +511,7 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
                     chartPanel.setChart(Settings.chartDSR.getChart());
                     frame.pack();
                     break;
-                case "Response Time":
+                case "End-To-End Delay":
                     chartPanel.setChart(Settings.chartRT.getChart());
                     frame.pack();
                     break;
