@@ -138,7 +138,7 @@ public class MyModelFactory implements ModelFactory {
         List<Sensor> sensors = new ArrayList<>();
 
         for (int i = 0; i < context.getSensorsNumber(); i++) {
-            Sensor s1 = getSensor(MyLib.random(0, H20Sim.FIELD_X), MyLib.random(0, H20Sim.FIELD_Y - H20Sim.FIELD_Y / 10), MyLib.random(0, H20Sim.FIELD_Z));
+            Sensor s1 = getSensor(MyLib.random(0, H20Sim.FIELD_X), MyLib.random(0, H20Sim.FIELD_Y - 10), MyLib.random(0, H20Sim.FIELD_Z));
             sensors.add(s1);
         }
 

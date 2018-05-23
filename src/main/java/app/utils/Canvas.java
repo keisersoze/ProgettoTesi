@@ -101,8 +101,8 @@ public class Canvas extends SimpleApplication {
         initKeys();
 
         attachCoordinateAxes(Vector3f.ZERO);
-        attachGrid(field.x, field.y, field.z, 50f, ColorRGBA.White);
-        viewPort.setBackgroundColor(new ColorRGBA(21 / 255f, 22 / 255f, 0.15f, 1f));
+        attachGrid(field.x, field.y, field.z, 10f, ColorRGBA.White);
+        viewPort.setBackgroundColor(new ColorRGBA(221 / 255f, 255 / 255f, 250/255f, 1f));
         //generateTerrain();
 
         charged = true;
@@ -181,6 +181,13 @@ public class Canvas extends SimpleApplication {
         Geometry x_grid = gridGeometry(x, z, lineDist, color);
         Geometry y_grid = gridGeometry(y, z, lineDist, color);
         Geometry z_grid = gridGeometry(x, y, lineDist, color);
+
+        Material grid_material = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+        grid_material.setColor("Color", ColorRGBA.BlackNoAlpha);
+
+        x_grid.setMaterial(grid_material);
+        y_grid.setMaterial(grid_material);
+        z_grid.setMaterial(grid_material);
 
         Quaternion roll90 = new Quaternion();
         roll90.fromAngleAxis(FastMath.PI / 2, new Vector3f(0, 0, 1));

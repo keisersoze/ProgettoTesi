@@ -20,4 +20,8 @@ public class ActionTypes {
     public static final String HandleEndAckReception = "HandleEndAckReception";
     public static final String HandleEndAckTransmission = "HandleEndAckTransmission";
     public static final String HandleAckVerification = "HandleAckVerification";
+
+
+    //H20Probabilistic
+    public static final String ProbabilisticReception = "ProbabilisticReception";
 }
