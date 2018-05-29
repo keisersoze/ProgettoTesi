@@ -4,7 +4,6 @@
 
 package app.core.h20Probabilistic;
 
-import app.H20Sim;
 import app.core.Action;
 import app.core.Event;
 import app.factory.EventTypes;
@@ -32,7 +31,7 @@ public class HandleEndReception implements Action {
         if (transmission.isSuccessfull()) {
             if (!transmission.getReceiver().isSink()) {
                 if (MyLib.deterministicProtocol(transmission, context)) {
-                    Event e = context.getCoreFactory().getEvent(EventTypes.TransmissionEvent, MyLib.random(0, (float) -Math.log(Math.random() / H20Sim.LAMBDA)), context, frame, receiver, numHop);
+                    Event e = context.getCoreFactory().getEvent(EventTypes.TransmissionEvent, MyLib.random(0, 1), context, frame, receiver, numHop);
                     context.getScheduler().addEvent(e);
                 }
             } else {

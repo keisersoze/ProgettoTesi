@@ -4,6 +4,7 @@ import app.model.Frame;
 import app.model.Sensor;
 import app.sim.SimContext;
 import app.stats.Sample;
+import app.utils.MyLib;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -77,9 +78,10 @@ public class StatsSample implements Sample {
                 }
             }
         }
-        rateTransmitting = nTransmitting / context.getSensors().size() * 100;
-        rateReceiving = nReceiving / context.getSensors().size() * 100;
-        rateSleep = nSleep / context.getSensors().size() * 100;
+        double nSensor = context.getSensors().size() - MyLib.nSink(context);
+        rateTransmitting = nTransmitting / nSensor * 100;
+        rateReceiving = nReceiving / nSensor * 100;
+        rateSleep = nSleep / nSensor * 100;
     }
 
     private static int heightToIndex (double height) {

@@ -25,7 +25,7 @@ public class ChartModalities implements Chart {
 
     private static JFreeChart createChart (XYDataset dataset) {
 
-        JFreeChart chart = ChartFactory.createXYLineChart("Modalities rate", "Samples", "Rate", dataset, PlotOrientation.VERTICAL, true, true, false);
+        JFreeChart chart = ChartFactory.createXYLineChart("Sensor status ratio", "Samples", "Rate", dataset, PlotOrientation.VERTICAL, true, true, false);
 
         XYPlot plot = chart.getXYPlot();
 

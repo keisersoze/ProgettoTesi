@@ -12,7 +12,6 @@ import app.model.Frame;
 import app.model.Sensor;
 import app.model.Transmission;
 import app.sim.SimContext;
-import app.utils.MyLib;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,10 +21,6 @@ public class HandleTransmission implements Action {
 
     public HandleTransmission() {
         this.sensorTransmissionMap = new HashMap<>();
-    }
-
-    protected static boolean CSMA (Sensor sender, SimContext context) {
-        return MyLib.tomW(H20Sim.SENSOR_POWER) / MyLib.calculateNoise(sender, context) >= H20Sim.CSMA_STRENGTH;
     }
 
     @Override

@@ -16,6 +16,8 @@ import static java.lang.Math.log10;
 import static java.lang.Math.pow;
 
 public class MyLib {
+    static int nsink = -1;
+
     public static double map (double value, double low1, double high1, double low2, double high2) {
         return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
     }
@@ -27,7 +29,7 @@ public class MyLib {
     public static List<Sensor> calculateNeighbors (Sensor sensor, SimContext context) {
         List<Sensor> myNeighbors = new ArrayList<>();
         for (Sensor sensor1 : context.getSensors()) {
-            if (sensor.getEuclideanDistance(sensor1) <= 800) {//(powerReceived(sensor.getEuclideanDistance(sensor1)) > H20Sim.SENSIBILITY) {
+            if (sensor.getEuclideanDistance(sensor1) <= 700) {//(powerReceived(sensor.getEuclideanDistance(sensor1)) > H20Sim.SENSIBILITY) {
                 if (sensor != sensor1) {
                     myNeighbors.add(sensor1);
                 }
@@ -117,5 +119,18 @@ public class MyLib {
             return context.getMarsenneTwister().nextDouble() < 0.55;
         }
         return true;
+    }
+
+    public static int nSink(SimContext context){
+        if(nsink != -1){
+            return nsink;
+        }
+        nsink = 0;
+        for (Sensor sensor : context.getSensors()){
+            if (sensor.isSink()) {
+                nsink++;
+            }
+        }
+        return nsink;
     }
 }

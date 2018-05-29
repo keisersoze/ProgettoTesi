@@ -39,10 +39,10 @@ public class H20Sim {
     public static double MOVE_REFRESH = 30; // unità di sim time
     public static double MOVE_RADIUS = 200; //m
     public static float SCALE = 10f;
-    public static int SENSOR_BANDWIDTH = 1000; // b/s
+    public static int SENSOR_BANDWIDTH = 25000; // b/s
     public static int MAX_FRAME_SIZE = 320; //bit (200-1600)
     public static double MAX_FRAME_RATE = 1;
-    public static int THRESHOLD = 500;
+    public static int THRESHOLD = 100;
     public static double SENSIBILITY = 0; //dBm
     public static double SENSOR_POWER = 0; //dB
     public static double SENSOR_FREQUENCY = 0; //HZ
