@@ -24,7 +24,6 @@ public class UpdateSNR implements Action {
                 if (noise_power != 0 && power_received / noise_power < H20Sim.GAMMA) {
                     t.setSuccessfull(false);
                 }
-
             }
         }
     }
