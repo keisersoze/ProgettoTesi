@@ -88,8 +88,8 @@ public class Settings extends JPanel implements ActionListener, PropertyChangeLi
         JLabel labelMaxFrameSize = new JLabel("Max Frame Size (b): ");
         JLabel labelRateMaxFrame = new JLabel("Rate of frame with max size (0-1): ");
         JLabel labelThreshod = new JLabel("Threshold (only 1, 3 protocols): ");
-        JLabel labelSensibility = new JLabel("Sensibility of sensors (db): ");
-        JLabel labelPower = new JLabel("Power of sensors (db): ");
+        JLabel labelSensibility = new JLabel("Sensibility of sensors (dB): ");
+        JLabel labelPower = new JLabel("Power of sensors (dB): ");
         JLabel labelFrequency = new JLabel("Frequency of sensors (Hz): ");
         JLabel labelLambda = new JLabel("Lambda: ");
         JLabel labelField = new JLabel("Field (x,y,z): ");

@@ -101,17 +101,17 @@ public class MyModelFactory implements ModelFactory {
         List<Sensor> sensors = new ArrayList<>();
 
         for (int i = 0; i < p1; i++) {
-            Sensor s1 = getSensor(MyLib.random(0, FIELD_X), MyLib.random(0, FIELD_Y / 10), MyLib.random(0, FIELD_Z));
+            Sensor s1 = getSensor(MyLib.random(0, FIELD_X), MyLib.random(0, 100), MyLib.random(0, FIELD_Z));
             sensors.add(s1);
         }
 
         for (int i = 0; i < p2; i++) {
-            Sensor s1 = getSensor(MyLib.random(0, FIELD_X), MyLib.random(FIELD_Y / 2.75f, FIELD_Y / 2.5f), MyLib.random(0, FIELD_Z));
+            Sensor s1 = getSensor(MyLib.random(0, FIELD_X), MyLib.random(1950, 2050), MyLib.random(0, FIELD_Z));
             sensors.add(s1);
         }
 
         for (int i = 0; i < p3; i++) {
-            Sensor s1 = getSensor(MyLib.random(0, FIELD_X), MyLib.random(FIELD_Y / 1.5f, FIELD_Y / 1.35f), MyLib.random(0, FIELD_Z));
+            Sensor s1 = getSensor(MyLib.random(0, FIELD_X), MyLib.random(1050, 950), MyLib.random(0, FIELD_Z));
             sensors.add(s1);
         }
 

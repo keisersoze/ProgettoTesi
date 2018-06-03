@@ -9,7 +9,7 @@ import app.stats.Collector;
 
 public class LambdaSim extends SerialSim {
     public LambdaSim (Collector collector, Scheduler scheduler, String instanceName) {
-        super(collector, scheduler, instanceName, 0.01, 1);
+        super(collector, scheduler, instanceName, 1, 15);
     }
 
     @Override
