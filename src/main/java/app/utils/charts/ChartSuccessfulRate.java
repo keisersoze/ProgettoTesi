@@ -30,7 +30,8 @@ public class ChartSuccessfulRate implements Chart {
 
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
         renderer.setSeriesPaint(0, Color.RED);
-        renderer.setSeriesStroke(0, new BasicStroke(.5f));
+        renderer.setSeriesStroke(0, new BasicStroke(1.2f));
+        renderer.setShapesVisible(false);
 
         plot.setRenderer(renderer);
         plot.setBackgroundPaint(Color.white);

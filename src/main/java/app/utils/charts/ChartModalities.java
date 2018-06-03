@@ -30,8 +30,11 @@ public class ChartModalities implements Chart {
         XYPlot plot = chart.getXYPlot();
 
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
-        renderer.setSeriesPaint(0, Color.RED);
-        renderer.setSeriesStroke(0, new BasicStroke(.5f));
+        renderer.setSeriesPaint(2, Color.RED);
+        renderer.setSeriesPaint(0, Color.blue);
+        renderer.setSeriesPaint(1, Color.green);
+        renderer.setSeriesStroke(0, new BasicStroke(1.2f));
+        renderer.setShapesVisible(false);
 
         plot.setRenderer(renderer);
         plot.setBackgroundPaint(Color.white);

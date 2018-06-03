@@ -13,7 +13,6 @@ import app.model.Transmission;
 import app.sim.SimContext;
 import app.utils.MyLib;
 
-
 public class HandleEndReception implements Action {
 
     @Override
@@ -39,6 +38,4 @@ public class HandleEndReception implements Action {
             }
         }
     }
-
-
 }
