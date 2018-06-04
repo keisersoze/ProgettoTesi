@@ -3,6 +3,7 @@ package app.utils.charts;
 import app.H20Sim;
 import app.sim.h20.AbstractSimInstance;
 import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.plot.PlotOrientation;
@@ -13,6 +14,7 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 import java.awt.*;
+import java.io.File;
 import java.util.*;
 import java.util.List;
 
@@ -43,6 +45,12 @@ public class ChartDepthSuccessRate implements Chart {
         renderer.setMargin(0);
         chart.setAntiAlias(true);
         chart.setTextAntiAlias(true);
+
+        try {
+            ChartUtilities.saveChartAsPNG(new File("charts/DSR.png"), chart, 850, 600);
+        } catch (Exception e) {
+            System.out.println("Error.");
+        }
 
         return chart;
     }

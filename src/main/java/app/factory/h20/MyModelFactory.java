@@ -136,8 +136,8 @@ public class MyModelFactory implements ModelFactory {
     }*/
 
     private void deploySink (List<Sensor> sensors) {
-        for (int i = 0; i <= FIELD_X; i += 333) {
-            for (int j = 0; j <= FIELD_Z; j += 333) {
+        for (int i = 0; i <= FIELD_X; i += 500) {
+            for (int j = 0; j <= FIELD_Z; j += 500) {
                 Sensor sensor = getSensor(i, FIELD_Y, j);
                 sensor.setSink(true);
                 sensors.add(sensor);

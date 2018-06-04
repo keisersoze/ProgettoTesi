@@ -3,6 +3,7 @@ package app.utils.charts;
 import app.H20Sim;
 import app.sim.h20.AbstractSimInstance;
 import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.plot.PlotOrientation;
@@ -13,6 +14,7 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 import java.awt.*;
+import java.io.File;
 import java.util.List;
 
 public class ChartModalities implements Chart {
@@ -51,7 +53,11 @@ public class ChartModalities implements Chart {
                         new Font("Serif", java.awt.Font.BOLD, 18)
                 )
         );*/
-
+        try {
+            ChartUtilities.saveChartAsPNG(new File("charts/SSR.png"), chart, 850, 600);
+        } catch (Exception e) {
+            System.out.println("Error.");
+        }
         return chart;
 
     }
@@ -59,31 +65,46 @@ public class ChartModalities implements Chart {
     private static XYDataset createDataset (List<AbstractSimInstance> instances) {
 
         XYSeries series = new XYSeries("Trasmission modality rate");
+        double mean = 0;
         for (int j = 0; j < H20Sim.N_SAMPLES; j++) {
             double transmissionModeRateAcc = 0;
             for (AbstractSimInstance context : instances) {
                 transmissionModeRateAcc += context.getCollector().getSourceSamples(context.getName()).get(j).getTransmittingModeRate();
             }
+            if(j >= H20Sim.N_SAMPLES/2){
+                mean += transmissionModeRateAcc / H20Sim.NTHREADS;
+            }
             series.add(j, transmissionModeRateAcc / H20Sim.NTHREADS);
         }
+        System.out.println("transmitting: " + mean/(H20Sim.N_SAMPLES/2));
 
         XYSeries series2 = new XYSeries("Receiving modality rate");
+        mean = 0;
         for (int j = 0; j < H20Sim.N_SAMPLES; j++) {
             double receivingModeRateAcc = 0;
             for (AbstractSimInstance context : instances) {
                 receivingModeRateAcc += context.getCollector().getSourceSamples(context.getName()).get(j).getReceivingModeRate();
             }
+            if(j >= H20Sim.N_SAMPLES/2){
+                mean += receivingModeRateAcc / H20Sim.NTHREADS;
+            }
             series2.add(j, receivingModeRateAcc / H20Sim.NTHREADS);
         }
+        System.out.println("receiving: " + mean/(H20Sim.N_SAMPLES/2));
 
         XYSeries series3 = new XYSeries("Sleep modality rate");
+        mean = 0;
         for (int j = 0; j < H20Sim.N_SAMPLES; j++) {
             double sleepModeRateAcc = 0;
             for (AbstractSimInstance context : instances) {
                 sleepModeRateAcc += context.getCollector().getSourceSamples(context.getName()).get(j).getSleepModeRate();
             }
+            if (j >= H20Sim.N_SAMPLES / 2) {
+                mean += sleepModeRateAcc / H20Sim.NTHREADS;
+            }
             series3.add(j, sleepModeRateAcc / H20Sim.NTHREADS);
         }
+        System.out.println("sleep: " + mean/(H20Sim.N_SAMPLES/2));
 
         XYSeriesCollection dataset = new XYSeriesCollection();
         dataset.addSeries(series);
