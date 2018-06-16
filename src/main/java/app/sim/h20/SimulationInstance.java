@@ -20,7 +20,7 @@ public class SimulationInstance extends AbstractSimInstance {
         super(collector, scheduler);
         setName(instanceName);
         if (true) {
-            coreFactory = new MyCoreFactory();
+            coreFactory = new ProbabilisticCoreFactory();
         } else {
             coreFactory = new h20RCoreFactory();
         }

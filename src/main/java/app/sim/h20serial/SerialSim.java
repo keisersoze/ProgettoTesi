@@ -13,7 +13,7 @@ public abstract class SerialSim extends SimulationInstance {
 
     public SerialSim (Collector collector, Scheduler scheduler, String instanceName, double min, double max) {
         super(collector, scheduler, instanceName);
-        this.min = 400;
+        this.min = 50;
         this.interval = (max - min) * 0.2;
         setName(instanceName);
     }
@@ -23,7 +23,7 @@ public abstract class SerialSim extends SimulationInstance {
         super.setPercentageCompleted();
         if (super.getPercentageCompleted() % 25 == 0) { //TODO attenzione
             System.out.println(min);
-            min += 150;
+            min += 50;
 
             //pulisco tutto
             getScheduler().clear();

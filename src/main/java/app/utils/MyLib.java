@@ -29,7 +29,7 @@ public class MyLib {
     public static List<Sensor> calculateNeighbors (Sensor sensor, SimContext context) {
         List<Sensor> myNeighbors = new ArrayList<>();
         for (Sensor sensor1 : context.getSensors()) {
-            if (sensor.getEuclideanDistance(sensor1) <= 0) {//(powerReceived(sensor.getEuclideanDistance(sensor1)) > H20Sim.SENSIBILITY) {
+            if (sensor.getEuclideanDistance(sensor1) <= 700) {//(powerReceived(sensor.getEuclideanDistance(sensor1)) > H20Sim.SENSIBILITY) {
                 if (sensor != sensor1) {
                     myNeighbors.add(sensor1);
                 }

@@ -25,7 +25,7 @@ public class H20Sim {
     public static final int ACK_SIZE = 0; //bit
     public static String PROTOCOL = "Deterministic"; //Deterministic  Probabilistic
     public static float FIELD_X = 5000;
-    public static float FIELD_Y = 3000;
+    public static float FIELD_Y = 2000;
     public static float FIELD_Z = 5000;
     public static volatile boolean START = false;
     public static boolean STOPPED = false;
@@ -34,18 +34,18 @@ public class H20Sim {
     //parametri simulazione
     public static double LAMBDA = 1;
     public static double CSMA_STRENGTH = 3;
-    public static double N_SENSORS = 300;
+    public static double N_SENSORS = 2500;
     public static double MOVEMENT_SPEED = 0; // m/s
     public static double MOVE_REFRESH = 30; // unità di sim time
     public static double MOVE_RADIUS = 200; //m
     public static float SCALE = 10f;
     public static int SENSOR_BANDWIDTH = 25000; // b/s
-    public static int MAX_FRAME_SIZE = 1000; //bit (200-1600)
-    public static double MAX_FRAME_RATE = 0.9;
-    public static int THRESHOLD = 500;
+    public static int MAX_FRAME_SIZE = 320; //bit (200-1600)
+    public static double MAX_FRAME_RATE = 1;
+    public static int THRESHOLD = 100;
     public static double SENSIBILITY = 0; //dBm
-    public static double SENSOR_POWER = 9.215; //dB
-    public static double SENSOR_FREQUENCY = 25000; //HZ
+    public static double SENSOR_POWER = 0; //dB
+    public static double SENSOR_FREQUENCY = 0; //HZ
     public static String DEPLOYMENT_TYPE = DeploymentTypes.BaseDeployment;
 
     //variabili endogene
