@@ -30,7 +30,8 @@ public class ChartSuccessfulRate implements Chart {
 
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
         renderer.setSeriesPaint(0, Color.RED);
-        renderer.setSeriesStroke(0, new BasicStroke(.5f));
+        renderer.setSeriesStroke(0, new BasicStroke(1.2f));
+        renderer.setShapesVisible(false);
 
         plot.setRenderer(renderer);
         plot.setBackgroundPaint(Color.white);
@@ -48,7 +49,7 @@ public class ChartSuccessfulRate implements Chart {
 
     private static XYDataset createDataset (List<AbstractSimInstance> instances) {
 
-        XYSeries series = new XYSeries("Successful rate");
+        XYSeries series = new XYSeries("Packet delivery rate");
         for (int j = 0; j < H20Sim.N_SAMPLES; j++) {
             double successfullRateAcc = 0;
             for (AbstractSimInstance context : instances) {

@@ -26,7 +26,7 @@ public class ChartDepthSuccessRate implements Chart {
 
     public static JFreeChart createChart (IntervalXYDataset dataset) {
 
-        final JFreeChart chart = ChartFactory.createXYBarChart("Depth Succesuful Rate", "Depth", false, "% Frame Arrived", dataset, PlotOrientation.VERTICAL, true, true, false);
+        final JFreeChart chart = ChartFactory.createXYBarChart("Depth Succesuful Rate", "Depth", false, "%  Frame Arrived", dataset, PlotOrientation.VERTICAL, true, true, false);
         XYPlot plot = (XYPlot) chart.getPlot();
         plot.setBackgroundPaint(Color.white);
 

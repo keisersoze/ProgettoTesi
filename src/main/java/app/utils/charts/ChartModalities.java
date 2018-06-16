@@ -25,13 +25,14 @@ public class ChartModalities implements Chart {
 
     private static JFreeChart createChart (XYDataset dataset) {
 
-        JFreeChart chart = ChartFactory.createXYLineChart("Sensor status ratio", "Samples", "Rate", dataset, PlotOrientation.VERTICAL, true, true, false);
+        JFreeChart chart = ChartFactory.createXYLineChart("Sensor status rate", "Samples", "Rate", dataset, PlotOrientation.VERTICAL, true, true, false);
 
         XYPlot plot = chart.getXYPlot();
 
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
         renderer.setSeriesPaint(0, Color.RED);
-        renderer.setSeriesStroke(0, new BasicStroke(.5f));
+        renderer.setSeriesStroke(0, new BasicStroke(1.2f));
+        renderer.setShapesVisible(false);
 
         plot.setRenderer(renderer);
         plot.setBackgroundPaint(Color.white);
@@ -55,7 +56,7 @@ public class ChartModalities implements Chart {
 
     private static XYDataset createDataset (List<AbstractSimInstance> instances) {
 
-        XYSeries series = new XYSeries("Trasmission modality rate");
+        XYSeries series = new XYSeries("Transmission status rate");
         for (int j = 0; j < H20Sim.N_SAMPLES; j++) {
             double transmissionModeRateAcc = 0;
             for (AbstractSimInstance context : instances) {
@@ -64,7 +65,7 @@ public class ChartModalities implements Chart {
             series.add(j, transmissionModeRateAcc / H20Sim.NTHREADS);
         }
 
-        XYSeries series2 = new XYSeries("Receiving modality rate");
+        XYSeries series2 = new XYSeries("Receiving status rate");
         for (int j = 0; j < H20Sim.N_SAMPLES; j++) {
             double receivingModeRateAcc = 0;
             for (AbstractSimInstance context : instances) {
@@ -73,7 +74,7 @@ public class ChartModalities implements Chart {
             series2.add(j, receivingModeRateAcc / H20Sim.NTHREADS);
         }
 
-        XYSeries series3 = new XYSeries("Sleep modality rate");
+        XYSeries series3 = new XYSeries("Idle status rate");
         for (int j = 0; j < H20Sim.N_SAMPLES; j++) {
             double sleepModeRateAcc = 0;
             for (AbstractSimInstance context : instances) {
