@@ -29,13 +29,13 @@ public class MyLib {
     public static List<Sensor> calculateNeighbors (Sensor sensor, SimContext context) {
         List<Sensor> myNeighbors = new ArrayList<>();
         for (Sensor sensor1 : context.getSensors()) {
-            if (sensor.getEuclideanDistance(sensor1) <= 1500) {//(powerReceived(sensor.getEuclideanDistance(sensor1)) > H20Sim.SENSIBILITY) {
+            if (sensor.getEuclideanDistance(sensor1) <= 0) {//(powerReceived(sensor.getEuclideanDistance(sensor1)) > H20Sim.SENSIBILITY) {
                 if (sensor != sensor1) {
                     myNeighbors.add(sensor1);
                 }
             }
         }
-        System.out.println(myNeighbors.size());
+        //System.out.println(myNeighbors.size());
         return myNeighbors;
     }
 
@@ -76,6 +76,7 @@ public class MyLib {
         return acc;
     }
 
+
     /**
      * @param distance
      * @return dB
@@ -103,7 +104,7 @@ public class MyLib {
 
 
     public static boolean deterministicProtocol (Transmission transmission, SimContext context) {
-        if (transmission.getHop() > 3) {
+        if (transmission.getHop() > 5) {
             return false;
         }
         if (H20Sim.PROTOCOL.equals("Deterministic") || H20Sim.PROTOCOL.equals("Combined")) {

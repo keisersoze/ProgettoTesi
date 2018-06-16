@@ -27,7 +27,7 @@ public class ChartModalities implements Chart {
 
     private static JFreeChart createChart (XYDataset dataset) {
 
-        JFreeChart chart = ChartFactory.createXYLineChart("Sensor status ratio", "Samples", "Rate", dataset, PlotOrientation.VERTICAL, true, true, false);
+        JFreeChart chart = ChartFactory.createXYLineChart("Sensor status rate", "Samples", "Rate", dataset, PlotOrientation.VERTICAL, true, true, false);
 
         XYPlot plot = chart.getXYPlot();
 
@@ -64,7 +64,7 @@ public class ChartModalities implements Chart {
 
     private static XYDataset createDataset (List<AbstractSimInstance> instances) {
 
-        XYSeries series = new XYSeries("Trasmission modality rate");
+        XYSeries series = new XYSeries("Transmission status rate");
         double mean = 0;
         for (int j = 0; j < H20Sim.N_SAMPLES; j++) {
             double transmissionModeRateAcc = 0;
@@ -78,7 +78,7 @@ public class ChartModalities implements Chart {
         }
         System.out.println("transmitting: " + mean/(H20Sim.N_SAMPLES/2));
 
-        XYSeries series2 = new XYSeries("Receiving modality rate");
+        XYSeries series2 = new XYSeries("Receiving status rate");
         mean = 0;
         for (int j = 0; j < H20Sim.N_SAMPLES; j++) {
             double receivingModeRateAcc = 0;
@@ -92,7 +92,7 @@ public class ChartModalities implements Chart {
         }
         System.out.println("receiving: " + mean/(H20Sim.N_SAMPLES/2));
 
-        XYSeries series3 = new XYSeries("Sleep modality rate");
+        XYSeries series3 = new XYSeries("Idle status rate");
         mean = 0;
         for (int j = 0; j < H20Sim.N_SAMPLES; j++) {
             double sleepModeRateAcc = 0;

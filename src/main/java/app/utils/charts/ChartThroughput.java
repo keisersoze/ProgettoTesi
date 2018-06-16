@@ -26,7 +26,7 @@ public class ChartThroughput implements Chart {
 
     private static JFreeChart createChart (XYDataset dataset) {
 
-        JFreeChart chart = ChartFactory.createXYLineChart("Throughput", "Samples", "Frame/s", dataset, PlotOrientation.VERTICAL, true, true, false);
+        JFreeChart chart = ChartFactory.createXYLineChart("Goodput", "Samples", "Packets/s", dataset, PlotOrientation.VERTICAL, true, true, false);
 
         XYPlot plot = chart.getXYPlot();
 
@@ -61,7 +61,7 @@ public class ChartThroughput implements Chart {
 
     private static XYDataset createDataset (List<AbstractSimInstance> instances) {
 
-        XYSeries series = new XYSeries("Throughput");
+        XYSeries series = new XYSeries("Goodput");
         double mean = 0;
         for (int j = 0; j < H20Sim.N_SAMPLES; j++) {
             double successfullRateAcc = 0;

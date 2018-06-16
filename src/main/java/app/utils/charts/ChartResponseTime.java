@@ -26,7 +26,7 @@ public class ChartResponseTime implements Chart {
 
     static JFreeChart createChart (XYDataset dataset) {
 
-        JFreeChart chart = ChartFactory.createXYLineChart("End-To-End Delay", "Samples", "Response Time (s)", dataset, PlotOrientation.VERTICAL, true, true, false);
+        JFreeChart chart = ChartFactory.createXYLineChart("End-to-end Delay", "Samples", "Delay (s)", dataset, PlotOrientation.VERTICAL, true, true, false);
 
         XYPlot plot = chart.getXYPlot();
 
@@ -56,7 +56,7 @@ public class ChartResponseTime implements Chart {
     }
 
     private static XYDataset createDataset (List<AbstractSimInstance> instances) {
-        XYSeries series = new XYSeries("Response time");
+        XYSeries series = new XYSeries("End-to-end delay");
         double mean = 0;
         for (int j = 0; j < H20Sim.N_SAMPLES; j++) {
             double successfullRateAcc = 0;

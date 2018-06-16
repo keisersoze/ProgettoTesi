@@ -26,7 +26,7 @@ public class ChartSuccessfulRate implements Chart {
 
     static JFreeChart createChart (XYDataset dataset) {
 
-        JFreeChart chart = ChartFactory.createXYLineChart("Packet Delivery Ratio", "Samples", "% Frames arrived", dataset, PlotOrientation.VERTICAL, true, true, false);
+        JFreeChart chart = ChartFactory.createXYLineChart("Packet delivery rate", "Samples", "Rate", dataset, PlotOrientation.VERTICAL, true, true, false);
 
         XYPlot plot = chart.getXYPlot();
 
@@ -57,7 +57,7 @@ public class ChartSuccessfulRate implements Chart {
 
     private static XYDataset createDataset (List<AbstractSimInstance> instances) {
 
-        XYSeries series = new XYSeries("Successful rate");
+        XYSeries series = new XYSeries("Packet delivery rate");
         double mean = 0;
         for (int j = 0; j < H20Sim.N_SAMPLES; j++) {
             double successfullRateAcc = 0;

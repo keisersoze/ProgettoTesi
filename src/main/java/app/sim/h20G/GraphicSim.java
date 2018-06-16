@@ -42,7 +42,7 @@ public class GraphicSim extends AbstractSimInstance {
         GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
         DisplayMode[] modes = device.getDisplayModes();
         int i = 0; // note: there are usually several, let's pick the first
-        settings.setResolution(1400, 900);
+        settings.setResolution(1920, 1080);
         settings.setFrequency(modes[i].getRefreshRate());
         settings.setBitsPerPixel(modes[i].getBitDepth());
         settings.setFullscreen(false);
